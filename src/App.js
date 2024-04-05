@@ -14,10 +14,11 @@ const theme = createTheme({
     //   main: Colors.secondary,
     // },
     text: {
-      primary: Colors.black
+      primary: Colors.white
     }
   },
   typography: {
+    fontFamily: "Poppins",
     h1: {
       fontSize: "72px",
     },

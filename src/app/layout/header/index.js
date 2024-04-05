@@ -11,8 +11,6 @@ function Header(props) {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState(location.pathname)
-  console.log("🚀 ~ Header ~ currentPath:", currentPath)
-  console.log("🚀 ~ Header ~ location:", location)
   const drawerWidth = 240;
   const { window } = props;
   const navigate = useNavigate();
@@ -23,7 +21,7 @@ function Header(props) {
   };
 
   useEffect(() => {
-    setCurrentPath(location.pathname); // Update currentPath when location changes
+    setCurrentPath(location.pathname);
   }, [location.pathname]);
 
   return (
@@ -67,7 +65,7 @@ function Header(props) {
                 sx={{
                   color: '#fff',
                   backgroundColor: currentPath == item.path ? `${Colors.primary} !important` : "transparent",
-                  px: 2
+                  px: 4
                 }}
                 onClick={() => {
                   navigate(item.path);
