@@ -12,19 +12,23 @@ function Footer() {
     <Box
       sx={{
         backgroundImage: `url(${Images.footerBg})`,
-        height: "360px",
+        height: { md: "360px", sm: "100%", xs: "100%" },
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         p: 4
       }}
     >
-      <Grid container>
+      <Grid
+        container
+        flexDirection={{ md: "row", sm: "column", xs: "column" }}
+        alignItems={{ md: "flex-start", sm: "center", xs: "center" }}
+      >
         <Grid item md={4}>
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
-              alignItem: "flex-start",
+              alignItems: { md: "flex-start", sm: "center", xs: "center" },
               gap: "10px",
             }}
           >
@@ -32,7 +36,7 @@ function Footer() {
               variant='h5'
               sx={{
                 fontWeight: 900,
-                color: Colors.white
+                color: Colors.white,
               }}
             >
               Shine With Tara
@@ -97,9 +101,9 @@ function Footer() {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                height: "160px",
+                height: { md: "160px", sm: "100%", xs: "100%" },
                 justifyContent: "flex-start",
-                width: "360px",
+                width: { md: "360px", sm: "100%", xs: "100%" },
                 flexWrap: "wrap",
                 rowGap: "20px",
               }}
@@ -111,7 +115,7 @@ function Footer() {
                     backgroundColor: "transparent",
                     color: location.pathname == item.path ? Colors.purple : Colors.white,
                     width: "180px",
-                    justifyContent: "flex-start"
+                    justifyContent: { md: "flex-start", sm: "center", xs: "center" }
                   }}
                   onClick={() => navigate(item.path)}
                 >

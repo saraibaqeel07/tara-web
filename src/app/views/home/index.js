@@ -1,10 +1,26 @@
-import React, { useState } from 'react'
-import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup } from '@mui/material'
-import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images'
-import Colors from '../../styles/colors'
+import React, { useState } from 'react';
+import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup, TextField } from '@mui/material';
+import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images';
+import Colors from '../../styles/colors';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "../../../App.css"
+// import "slick-carousel/slick/slick-theme.css";
 
 function Home() {
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState("episode");
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    variableWidth: false, // Set to true if you want variable width slides
+    centerMode: true, // Set to true if you want to center the slides
+    centerPadding: '50px'
+  };
+
   const buttons = [
     <Button
       key="episode"
@@ -12,8 +28,7 @@ function Home() {
       sx={{
         width: "180px",
         px: 4,
-        // background: selected == "episode" ? Colors.primary : "transparent",
-        // color: selected == "episode" ? Colors.white : Colors.primary,
+        py: 1.5
       }}
       onClick={() => setSelected("episode")}
     >
@@ -25,14 +40,37 @@ function Home() {
       sx={{
         width: "180px",
         px: 4,
-        // background: selected == "merchandise" ? Colors.primary : "transparent",
-        // color: selected == "merchandise" ? Colors.white : Colors.primary,
+        py: 1.5
       }}
       onClick={() => setSelected("merchandise")}
     >
       Merchandise
     </Button>,
   ];
+
+  const sliderData = [
+    {
+      image: Images.sliderImage1,
+      title: "5 Pillars With The Neighbors"
+    },
+    {
+      image: Images.sliderImage2,
+      title: "Rome, Italy"
+    },
+    {
+      image: Images.sliderImage3,
+      title: "Rome, Italy"
+    },
+    {
+      image: Images.sliderImage4,
+      title: "Tag Game"
+    },
+    {
+      image: Images.sliderImage5,
+      title: "Dealing With Sibling"
+    },
+  ];
+
   return (
     <Box
       component={"main"}
@@ -51,7 +89,7 @@ function Home() {
         <Container>
           <Box
             sx={{
-              backgroundImage: `url(${Images.bannerBg})`,
+              backgroundImage: { md: `url(${Images.bannerBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
               width: "100%",
               height: "624px",
               backgroundSize: "cover",
@@ -78,7 +116,7 @@ function Home() {
                       color: Colors.white
                     }}
                   >
-                    <span style={{ color: Colors.orange }}>Follow</span>,Learn and Explore with Tara!
+                    <span style={{ color: Colors.orange }}>Follow</span>, Learn and Explore with Tara!
                   </Typography>
                   <Typography
                     variant='h3'
@@ -222,8 +260,8 @@ function Home() {
                 component={"img"}
                 src={Images.shineStar}
                 sx={{
-                  width: "70px",
-                  heigth: "70px",
+                  width: "80px",
+                  heigth: "80px",
                   objectFit: "contain"
                 }}
               />
@@ -241,8 +279,8 @@ function Home() {
                 component={"img"}
                 src={Images.shineStar}
                 sx={{
-                  width: "70px",
-                  heigth: "70px",
+                  width: "80px",
+                  heigth: "80px",
                   objectFit: "contain"
                 }}
               />
@@ -264,15 +302,221 @@ function Home() {
           </Box>
         </Container>
       </Box>
-      {/* <Box
+      <Box
         component={"section"}
         sx={{
-          background: Colors.darkblue,
-          height: "400px",
-          width: "100%"
+          background: "#3D5A98",
+          height: "520px",
+          width: "100%",
+          py: "72px"
         }}
       >
-      </Box> */}
+        <Slider {...settings}>
+          {sliderData.map((item, i) => (
+            <Box
+              key={i}
+            >
+              <CardMedia
+                component={"img"}
+                src={item.image}
+                sx={{
+                  width: "100%",
+                  height: "300px",
+                  objectFit: "contain",
+                }}
+              />
+              <Box
+                sx={{
+                  background: Colors.yellow,
+                  textAlign: "center",
+                  p: 3,
+                  mx: item.title == "Dealing With Sibling"
+                    ? "32px" : item.title == "5 Pillars With The Neighbors"
+                      ? "30px" : "31px"
+                }}
+              >
+                <Typography>
+                  {item.title}
+                </Typography>
+              </Box>
+            </Box>
+          ))}
+        </Slider>
+      </Box>
+      <Box
+        component={"section"}
+        sx={{
+          background: Colors.lightPurple,
+          py: "80px"
+        }}
+      >
+        <Container>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "40px"
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center"
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "10px",
+                  alignItems: "center"
+                }}
+              >
+                <CardMedia
+                  component={"img"}
+                  src={Images.shineStar}
+                  sx={{
+                    width: "70px",
+                    heigth: "70px",
+                    objectFit: "contain"
+                  }}
+                />
+                <Typography
+                  variant='h3'
+                  sx={{
+                    fontWeight: 600
+                  }}
+                >
+                  Collaborating With
+                </Typography>
+                <CardMedia
+                  component={"img"}
+                  src={Images.shineStar}
+                  sx={{
+                    width: "70px",
+                    heigth: "70px",
+                    objectFit: "contain"
+                  }}
+                />
+              </Box>
+              <Box>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    fontSize: "58px",
+                    fontWeight: 900,
+                    color: Colors.primary
+                  }}
+                >
+                  Islamic Relief Canada
+                </Typography>
+              </Box>
+            </Box>
+            <Box>
+              <CardMedia
+                component={"img"}
+                src={Images.islamicRelief}
+                sx={{
+                  width: "100%",
+                  height: "350px",
+                  objectFit: "contain"
+                }}
+              />
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+      <Box
+        component={"section"}
+        sx={{
+          background: Colors.whiteblue,
+          p: 8
+        }}
+      >
+        <Grid
+          container
+          sx={{
+            background: Colors.secondaryGradient,
+            borderRadius: "25px",
+            height: { md: "320px", sm: "100%", xs: "100%" },
+            justifyContent: "space-between",
+            alignItems: "center",
+            p: 2
+          }}
+        >
+          <Grid item md={2} display={{ md: "block", sm: "none", xs: "none" }}>
+            <CardMedia
+              component={"img"}
+              src={Images.girl1}
+              sx={{
+                width: "170px",
+                height: "250px",
+                objectFit: "contain"
+              }}
+            />
+          </Grid>
+          <Grid item md={8}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "50px"
+              }}
+            >
+              <Typography
+                variant='h5'
+                sx={{
+                  fontWeight: 600,
+                  textAlign: "center"
+                }}
+              >
+                Subscribe to get information, latest news and other
+                interesting offers about Shine With Tara
+              </Typography>
+              <TextField
+                placeholder={"Your email"}
+                sx={{
+                  background: Colors.white,
+                  borderRadius: "4px",
+                  width: "60%",
+                  "& fieldset": {
+                    border: "none",
+                  },
+                  "& .MuiOutlinedInput-input": {
+                    color: `${Colors.primary} !important`
+                  }
+                }}
+                InputProps={{
+                  endAdornment:
+                    <Button
+                      sx={{
+                        color: `${Colors.white} !important`,
+                        background: `${Colors.primary} !important`,
+                        px: 4,
+                        textTransform: "capitalize"
+                      }}
+                    >
+                      Subscribe
+                    </Button>
+                }}
+              />
+            </Box>
+          </Grid>
+          <Grid item md={2} display={{ md: "block", sm: "none", xs: "none" }}>
+            <CardMedia
+              component={"img"}
+              src={Images.finalPose}
+              sx={{
+                width: "200px",
+                height: "280px",
+                objectFit: "contain"
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Box>
     </Box>
   )
 }

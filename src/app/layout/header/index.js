@@ -11,10 +11,7 @@ function Header(props) {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState(location.pathname)
-  const drawerWidth = 240;
-  const { window } = props;
   const navigate = useNavigate();
-  const container = window !== undefined ? () => window().document.body : undefined;
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -35,18 +32,9 @@ function Header(props) {
         }}
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <Menu />
-          </IconButton>
           <Box
             component={"div"}
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            sx={{ flexGrow: 1 }}
           >
             <CardMedia
               component={"img"}
@@ -58,7 +46,7 @@ function Header(props) {
               }}
             />
           </Box>
-          <Box sx={{ display: { xs: 'none', sm: 'flex', gap: '20px' } }}>
+          <Box sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
             {navigation.map((item, i) => (
               <Button
                 key={i}
@@ -75,11 +63,21 @@ function Header(props) {
               </Button>
             ))}
           </Box>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{
+              display: mobileOpen ? "none" : "block"
+            }}
+          >
+            <Menu />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <nav>
         <Drawer
-          container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
@@ -87,14 +85,25 @@ function Header(props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            display: { xs: 'block', sm: 'block', md: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', background: Colors.primaryGradient },
           }}
         >
           <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ my: 2 }}>
-              MUI
-            </Typography>
+            <Box
+              component={"div"}
+              sx={{ p: 2 }}
+            >
+              <CardMedia
+                component={"img"}
+                src={Images.logo}
+                sx={{
+                  width: "180px",
+                  height: "35px",
+                  objectFit: "contain"
+                }}
+              />
+            </Box>
             <Divider />
             <List>
               {navigation.map((item, i) => (
@@ -113,7 +122,7 @@ function Header(props) {
           </Box>
         </Drawer>
       </nav>
-      <Toolbar />
+      {/* <Toolbar /> */}
     </Box>
   );
 }

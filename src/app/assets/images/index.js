@@ -4,6 +4,15 @@ const Images = {
   bannerBg: require("./bannerBg.png"),
   aboutImage: require("./about-us.png"),
   shineStar: require("./shine-03 (1) 3.png"),
+  sliderImage1: require("./Thumbnail - Rectangle 2.png"),
+  sliderImage2: require("./Thumbnail for Youtube_00203 1.png"),
+  sliderImage3: require("./THUMBNAIL Heartwarming Race 1.png"),
+  sliderImage4: require("./Thumbnail Rectangle 2.png"),
+  sliderImage5: require("./THUMBNAIL-01 1.png"),
+  islamicRelief: require("./Group 48095491.png"),
+  girl1: require("./girl1.png"),
+  finalPose: require("./finalPose.png"),
+  backgroundSm: require("./background-sm.png")
 }
 
 export default Images;
