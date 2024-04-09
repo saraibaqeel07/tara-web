@@ -74,7 +74,7 @@ function About() {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "flex-start",
-                    gap: "40px",
+                    gap: "20px",
                     pt: "60px",
                     pl: { md: `60px !important`, sm: "12px", xs: "12px" },
                     pr: { md: 0, sm: "12px", xs: "12px" }
@@ -100,6 +100,14 @@ function About() {
                     }}
                   >
                     Shine With Tara
+                  </Typography>
+                  <Typography
+                    variant='h3'
+                    sx={{
+                      fontSize: { md: "38px", sm: "28px", xs: "20px" }
+                    }}
+                  >
+                    Halal Education Animation
                   </Typography>
                   <Grid container spacing={2} alignItems={"center"}>
                     <Grid item md={4} sm={5} xs={12}>
@@ -153,10 +161,10 @@ function About() {
           background: Colors.whiteblue,
           backgroundImage: selected == "mission" ? `url(${Images.forAbout})` : `url(${Images.forAbout2})`,
           pt: "80px",
-          
+
           height: { md: "770px", sm: "100%", xs: "100%" },
           backgroundSize: "contain",
-          backgroundRepeat:'no-repeat',
+          backgroundRepeat: 'no-repeat',
           backgroundPosition: selected == "mission" ? "bottom center" : "bottom right"
         }}
       >
@@ -247,7 +255,7 @@ function About() {
         <Grid container >
           <Grid item md={10} xs={12}>
             <Box
-              sx={{ p: 5,mb:20}}
+              sx={{ p: 5, mb: 20 }}
             >
               {selected == "mission" ? (
                 <Typography>

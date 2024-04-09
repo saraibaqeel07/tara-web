@@ -26,6 +26,20 @@ const Images = {
   aboutBg: require("./aboutBack.png"),
   forAbout: require("./forAbout.png"),
   forAbout2: require("./flag.png"),
+  characterBg: require("./characterBg.png"),
+  tara: require("./tara.png"),
+  ahmed: require("./ahmed.png"),
+  laila: require("./laila.png"),
+  shine: require("./shine.png"),
+  logoTara: require("./logoTara.png"),
+  logoAhmed: require("./logoAhmed.png"),
+  logoLaila: require("./logoLaila.png"),
+  logoShine: require("./logoShine.png"),
+  flower: require("./flower.png"),
+  contentWriter: require("./contentWriter.png"),
+  storyBoard: require("./storyBoard.png"),
+  webDeveloper: require("./webDeveloper.png"),
+  illustrator: require("./illustrator.png")
 }
 
 export default Images;
