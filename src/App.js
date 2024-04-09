@@ -10,9 +10,9 @@ const theme = createTheme({
     primary: {
       main: Colors.primary,
     },
-    // secondary: {
-    //   main: Colors.secondary,
-    // },
+    secondary: {
+      main: Colors.darkblue,
+    },
     text: {
       primary: Colors.white
     }

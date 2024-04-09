@@ -69,7 +69,7 @@ function Header(props) {
             edge="start"
             onClick={handleDrawerToggle}
             sx={{
-              display: mobileOpen ? "none" : "block"
+              display: { md: "none", sm: mobileOpen ? "none" : "flex", xs: mobileOpen ? "none" : "flex" }
             }}
           >
             <Menu />

@@ -11,8 +11,9 @@ function Footer() {
   return (
     <Box
       sx={{
-        backgroundImage: `url(${Images.footerBg})`,
-        height: { md: "360px", sm: "100%", xs: "100%" },
+        backgroundImage: { md: `url(${Images.footerBg})`, sm: "none", xs: "none" },
+        backgroundColor: { md: "none", sm: Colors.darkblue, xs: Colors.darkblue },
+        height: "100%",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         p: 4
@@ -127,24 +128,41 @@ function Footer() {
         </Grid>
       </Grid>
       <Divider sx={{ borderColor: Colors.white, width: "80%", margin: "0 auto" }} />
-      <Container>
+      <Container sx={{ display: { md: "block", xs: "none" } }}>
         <Box
           sx={{
             width: "100%",
-            py: 3,
-            px: 4
+            py: 2,
+            px: { md: 4, xs: 0 }
           }}
         >
           <Typography
             sx={{
               textAlign: "center",
-              px: "35px"
+              px: { md: "35px", xs: 0 }
             }}
           >
             Content, including images, displayed on this website is protected by copyright laws. Downloading, republication, retransmission or reproduction of content on this website is strictly prohibited. Terms of Use | Privacy Policy
           </Typography>
         </Box>
       </Container>
+      <Box
+        sx={{
+          display: { md: "none", xs: "block" },
+          width: "100%",
+          py: 3,
+          px: { md: 4, xs: 0 }
+        }}
+      >
+        <Typography
+          sx={{
+            textAlign: "center",
+            px: { md: "35px", xs: 0 }
+          }}
+        >
+          Content, including images, displayed on this website is protected by copyright laws. Downloading, republication, retransmission or reproduction of content on this website is strictly prohibited. Terms of Use | Privacy Policy
+        </Typography>
+      </Box>
     </Box>
   )
 }

@@ -12,7 +12,20 @@ const Images = {
   islamicRelief: require("./Group 48095491.png"),
   girl1: require("./girl1.png"),
   finalPose: require("./finalPose.png"),
-  backgroundSm: require("./background-sm.png")
+  backgroundSm: require("./background-sm.png"),
+  merchBg: require("./merchandiseBg.png"),
+  cardImg1: require("./cardImg1.png"),
+  cardImg2: require("./cardImg2.png"),
+  cardImg3: require("./cardImg3.png"),
+  cardImg4: require("./cardImg4.png"),
+  cardImg5: require("./cardImg5.png"),
+  cardImg6: require("./cardImg6.png"),
+  mainBackground: require("./background.png"),
+  colorfullBack: require("./colorfullBack.png"),
+  topper: require("./topper.png"),
+  aboutBg: require("./aboutBack.png"),
+  forAbout: require("./forAbout.png"),
+  forAbout2: require("./forAbout2.png"),
 }
 
 export default Images;
