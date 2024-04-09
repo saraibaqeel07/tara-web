@@ -151,10 +151,12 @@ function About() {
         component={"section"}
         sx={{
           background: Colors.whiteblue,
-          backgroundImage: { md: selected == "mission" ? `url(${Images.forAbout})` : `url(${Images.forAbout2})` },
-          py: "80px",
+          backgroundImage: selected == "mission" ? `url(${Images.forAbout})` : `url(${Images.forAbout2})`,
+          pt: "80px",
+          
           height: { md: "770px", sm: "100%", xs: "100%" },
-          backgroundSize: "cover",
+          backgroundSize: "contain",
+          backgroundRepeat:'no-repeat',
           backgroundPosition: selected == "mission" ? "bottom center" : "bottom right"
         }}
       >
@@ -242,10 +244,10 @@ function About() {
             </Box>
           </Box>
         </Container>
-        <Grid container sx={{ mt: { md: "140px", sm: "0px", xs: "0px" } }}>
-          <Grid item md={7}>
+        <Grid container >
+          <Grid item md={10} xs={12}>
             <Box
-              sx={{ px: { md: "150px", sm: "20px", xs: "10px" } }}
+              sx={{ p: 5,mb:20}}
             >
               {selected == "mission" ? (
                 <Typography>

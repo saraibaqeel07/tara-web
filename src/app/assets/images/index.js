@@ -25,7 +25,7 @@ const Images = {
   topper: require("./topper.png"),
   aboutBg: require("./aboutBack.png"),
   forAbout: require("./forAbout.png"),
-  forAbout2: require("./forAbout2.png"),
+  forAbout2: require("./flag.png"),
 }
 
 export default Images;

@@ -437,6 +437,7 @@ function Home() {
             {sliderData.map((item, i) => (
               <Box
                 key={i}
+                sx={{p:3}}
               >
                 <CardMedia
                   component={"img"}
