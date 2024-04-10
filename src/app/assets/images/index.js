@@ -39,7 +39,9 @@ const Images = {
   contentWriter: require("./contentWriter.png"),
   storyBoard: require("./storyBoard.png"),
   webDeveloper: require("./webDeveloper.png"),
-  illustrator: require("./illustrator.png")
+  illustrator: require("./illustrator.png"),
+  contactBg: require("./contactBg.png"),
+  contactImg: require("./contactImg.png"),
 }
 
 export default Images;
