@@ -62,7 +62,7 @@ function Contact() {
                       pr: { md: "150px", sm: 0, xs: 0 }
                     }}
                   >
-                    To <span style={{ color: Colors.primary, fontSize: { md: "56px !important", sm: "48px !important", xs: "40px !important" } }}>Explore</span> More About Tara And Shine. <span style={{ color: Colors.darkblue, fontSize: { md: "56px !important", sm: "48px !important", xs: "40px !important" } }}>Contact Us!</span>
+                    To <Typography component={"span"} sx={{ fontFamily: Fonts.righteous, color: Colors.primary, fontSize: { md: "56px", sm: "48px", xs: "40px" } }}>Explore</Typography> More About Tara And Shine. <Typography component={"span"} sx={{ fontFamily: Fonts.righteous, color: Colors.darkblue, fontSize: { md: "56px !important", sm: "48px !important", xs: "40px !important" } }}>Contact Us!</Typography>
                   </Typography>
                   <Grid container spacing={2} alignItems={"center"}>
                     <Grid item md={5} sm={5} xs={12}>
@@ -110,7 +110,7 @@ function Contact() {
             </Grid>
           </Box>
         </Container>
-      </Box>
+      </Box >
       <Box
         component={"section"}
         sx={{
@@ -301,7 +301,7 @@ function Contact() {
           </Grid>
         </Container>
       </Box>
-    </Box>
+    </Box >
   )
 }
 
