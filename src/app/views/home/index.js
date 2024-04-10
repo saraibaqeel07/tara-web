@@ -437,7 +437,7 @@ function Home() {
             {sliderData.map((item, i) => (
               <Box
                 key={i}
-                sx={{p:3}}
+                sx={{ p: 3 }}
               >
                 <CardMedia
                   component={"img"}
@@ -594,7 +594,7 @@ function Home() {
         component={"section"}
         sx={{
           background: Colors.whiteblue,
-          p: 8
+          p: { md: "64px", sm: "40px", xs: "20px" }
         }}
       >
         <Grid
