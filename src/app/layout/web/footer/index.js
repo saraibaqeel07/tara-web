@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, Button, Container, Divider, Grid, IconButton, Typography } from '@mui/material'
-import Images, { CreditCard, Facebook, Instagram, PayPal, Tiktok, Youtube } from '../../assets/images'
-import Colors from '../../styles/colors'
-import navigation from '../../../Navigation'
+import Images, { CreditCard, Facebook, Instagram, PayPal, Tiktok, Youtube } from '../../../assets/images'
+import Colors from '../../../styles/colors'
+import navigation from '../../../../Navigation'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 function Footer() {

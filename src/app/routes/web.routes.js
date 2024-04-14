@@ -3,6 +3,8 @@ import About from "../views/about";
 import Character from "../views/character";
 import Colorfull from "../views/colorfull";
 import Contact from "../views/contact";
+import Login from "../views/auth/signup";
+
 
 const Webroutes = [
   {
@@ -24,6 +26,10 @@ const Webroutes = [
   {
     path: "/contact-us",
     component: <Contact />
+  },
+  {
+    path: "/login",
+    component: <Login />
   },
 ];
 

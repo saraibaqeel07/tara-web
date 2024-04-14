@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box, AppBar, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button, CardMedia } from '@mui/material';
-import navigation from '../../../Navigation';
+import navigation from '../../../../Navigation';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu } from '@mui/icons-material';
-import Images from '../../assets/images';
-import Colors from '../../styles/colors';
+import Images from '../../../assets/images';
+import Colors from '../../../styles/colors';
 
 function Header(props) {
   const location = useLocation();
