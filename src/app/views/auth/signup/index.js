@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom"
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword  } from "firebase/auth";
 import Colors from '../../../styles/colors';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -62,12 +62,15 @@ export default function Login() {
       const user = await signInWithEmailAndPassword(auth, formData.email, formData.password);
       if (user.user.uid) {
         localStorage.setItem("token", user.user.uid)
+        console.log(user,'sasas');
         navigate("/admin/create-post");
+       
       }
     } catch (error) {
       console.log("error => ", error)
     } finally {
       setLoading(false);
+   
     }
   };
 

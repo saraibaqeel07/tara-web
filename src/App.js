@@ -55,7 +55,26 @@ const theme = createTheme({
 })
 
 function App() {
-  const token = localStorage.getItem("token")
+  let token = localStorage.getItem("token")
+  console.log(token);
+  const [tokenState, setTokenState] = useState(null)
+
+  useEffect(() => {
+    token = localStorage.getItem("token")
+    console.log(localStorage.getItem("token"), 'asasasas');
+    if (localStorage.getItem("token")) {
+
+      setTokenState(localStorage.getItem("token"))
+    }
+    else {
+      
+    }
+  }, [])
+  // useEffect(() => {
+
+  //   setTokenState(localStorage.getItem("token"))
+
+  // }, [tokenState])
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,11 +85,11 @@ function App() {
               <Route key={i} path={item.path} element={item.component} />
             ))}
           </Route>
-          <Route path="/admin" element={token ? <AdminLayout /> : <Navigate to="/login" />}>
+          {<Route path="/admin" element={tokenState && <AdminLayout />}>
             {Adminroutes.map((item, i) => (
               <Route key={i} path={item.path} element={item.component} />
             ))}
-          </Route>
+          </Route>}
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

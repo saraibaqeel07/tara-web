@@ -33,6 +33,11 @@ export default function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href='/login'
+
+  };
 
   useEffect(() => {
     const currentLocation = authNavigation.map((item) => {
@@ -77,8 +82,8 @@ export default function Header() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem sx={{color:'black'}} onClick={handleLogout}>Logout</MenuItem>
+                <MenuItem sx={{color:'black'}} onClick={handleClose}>My account</MenuItem>
               </Menu>
             </div>
           )}
