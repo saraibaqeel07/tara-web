@@ -8,6 +8,7 @@ import Colors from "./app/styles/colors";
 import Webroutes from "./app/routes/web.routes";
 import Adminroutes from "./app/routes/admin.routes";
 import Login from "./app/views/auth/signup";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const theme = createTheme({
   palette: {
@@ -53,6 +54,11 @@ const theme = createTheme({
     }
   }
 })
+const initialOptions = {
+  "client-id": "AREP4G_VceJonpjvYxcCFWeA8LM95EUrya0fRgRTaqzAlvfhSK4A7_4Evw31YmMcfslQA0UZ6VNJNSqD",
+  currency: "USD",
+  intent: "capture",
+};
 
 function App() {
   let token = localStorage.getItem("token")
@@ -77,6 +83,7 @@ function App() {
   // }, [tokenState])
 
   return (
+    <PayPalScriptProvider options={initialOptions}>
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
@@ -93,6 +100,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
+    </PayPalScriptProvider>
   );
 }
 

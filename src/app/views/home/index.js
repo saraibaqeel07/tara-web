@@ -6,6 +6,8 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "../../../App.css"
 import Fonts from '../../styles/fonts';
+import ProductModal from '../modal/ProductModal';
+import { Link } from 'react-router-dom';
 // import "slick-carousel/slick/slick-theme.css";
 
 function Home() {
@@ -479,6 +481,10 @@ function Home() {
           <Container>
             <Grid container spacing={2} justifyContent={"center"}>
               {cardData.map((card, i) => (
+              <>
+               
+                
+                <Link to={"/checkout"}>
                 <Grid key={i} item md={5}>
                   <Box
                     sx={{
@@ -513,6 +519,8 @@ function Home() {
                     </Box>
                   </Box>
                 </Grid>
+                </Link>
+              </>
               ))}
             </Grid>
           </Container>
