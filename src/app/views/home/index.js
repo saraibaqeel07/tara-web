@@ -13,8 +13,12 @@ import { Link } from 'react-router-dom';
 function Home() {
   const [selected, setSelected] = useState("episode");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
+  const [cardProduct, setCardProduct] = useState({})
+  const [count, setCount] = useState(1);
+  const showModal = (item) => {
     setIsModalOpen(true);
+    setCardProduct(item)
+    setCount(1)
   };
   const handleOk = () => {
     setIsModalOpen(false);
@@ -492,7 +496,7 @@ function Home() {
               {cardData.map((card, i) => (
               <React.Fragment key={i}>
 
-                <Grid   md={5} item onClick={showModal}>
+                <Grid   md={5} item onClick={() =>showModal(card)}>
                   <Box
                     sx={{
                       display: "flex",
@@ -526,10 +530,10 @@ function Home() {
                     </Box>
                   </Box>
                 </Grid>
-                <ProductModal pData={card} isModalOpens={isModalOpen} handleOks={handleOk} handleCancels={handleCancel} />
               </React.Fragment>
               ))}
             </Grid>
+              <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} />
           </Container>
         </Box>
       )}

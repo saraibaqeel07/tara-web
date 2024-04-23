@@ -2,22 +2,22 @@ import { Box, Button, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import {  Modal } from 'antd';
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
-const ProductModal = ({isModalOpens,handleOks,handleCancels,pData}) => {
+const ProductModal = ({isModalOpens,handleOks,handleCancels,pData,UpdateCount,valueCount}) => {
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [currency, setCurrency] = useState(options.currency);
-    const [count, setCount] = useState(1);
+  
 
     const handleIncrement = () => {
-      if (count < 5) {
-        setCount(prevCount => prevCount + 1);
+      if (valueCount < 5) {
+        UpdateCount(valueCount => valueCount + 1);
       } else {
         alert("You can't add more than 5 products.");
       }
     };
   
     const handleDecrement = () => {
-      if (count > 0) {
-        setCount(prevCount => prevCount - 1);
+      if (valueCount > 0) {
+        UpdateCount(valueCount => valueCount - 1);
       } else {
         alert("You can't have less than 0 products.");
       }
@@ -38,7 +38,7 @@ const ProductModal = ({isModalOpens,handleOks,handleCancels,pData}) => {
             purchase_units: [
                 {
                     amount: {
-                        value: (Number(pData?.price.split("$")[1]) * Number(count)),
+                        value: (Number(pData?.price.split("$")[1]) * Number(valueCount)),
                     },
                 },
             ],
@@ -55,7 +55,7 @@ const ProductModal = ({isModalOpens,handleOks,handleCancels,pData}) => {
 
 <>
 {isModalOpens &&   
-     <Modal title={pData?.title} open={isModalOpens} footer={[]}>
+     <Modal title={pData?.title} open={isModalOpens} onCancel={handleCancels} footer={[]}>
        <Box >
        <Typography>
                         {pData.price}
@@ -64,7 +64,7 @@ const ProductModal = ({isModalOpens,handleOks,handleCancels,pData}) => {
       <Button onClick={handleDecrement} variant="contained" color="secondary">
         -
       </Button>
-      <input type={"number"} disabled maxLength={5} minLength={0} value={count} className='inputcount' />
+      <input type={"number"} disabled maxLength={5} minLength={0} value={valueCount} className='inputcount' />
       <Button onClick={handleIncrement} variant="contained" color="secondary">
         +
       </Button>
@@ -73,7 +73,7 @@ const ProductModal = ({isModalOpens,handleOks,handleCancels,pData}) => {
 
     <ul className='totalprize'>
         <li><h5>Total Prize</h5>
-        <b>${Number(pData?.price.split("$")[1]) * Number(count)}</b>
+        <b>${Number(pData?.price.split("$")[1]) * Number(valueCount)}</b>
         </li>
     </ul>
 
