@@ -6,7 +6,7 @@ const ProductModal = ({isModalOpens,handleOks,handleCancels,pData,UpdateCount,va
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [currency, setCurrency] = useState(options.currency);
   
-
+console.log(pData);
     const handleIncrement = () => {
       if (valueCount < 5) {
         UpdateCount(valueCount => valueCount + 1);
@@ -38,7 +38,7 @@ const ProductModal = ({isModalOpens,handleOks,handleCancels,pData,UpdateCount,va
             purchase_units: [
                 {
                     amount: {
-                        value: (Number(pData?.price.split("$")[1]) * Number(valueCount)),
+                        value: (parseFloat(pData?.price) * parseFloat(valueCount)),
                     },
                 },
             ],
@@ -58,7 +58,7 @@ const ProductModal = ({isModalOpens,handleOks,handleCancels,pData,UpdateCount,va
      <Modal title={pData?.title} open={isModalOpens} onCancel={handleCancels} footer={[]}>
        <Box >
        <Typography>
-                        {pData.price}
+                        {pData?.price}
                       </Typography>
     <div className='mb-2 countBOx'>
       <Button onClick={handleDecrement} variant="contained" color="secondary">
@@ -73,7 +73,7 @@ const ProductModal = ({isModalOpens,handleOks,handleCancels,pData,UpdateCount,va
 
     <ul className='totalprize'>
         <li><h5>Total Prize</h5>
-        <b>${Number(pData?.price.split("$")[1]) * Number(valueCount)}</b>
+        <b>${parseFloat(pData?.price) * parseFloat(valueCount)}</b>
         </li>
     </ul>
 

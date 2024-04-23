@@ -46,6 +46,7 @@ function Home() {
   const [count, setCount] = useState(1);
   const showModal = (item) => {
     setIsModalOpen(true);
+    console.log(item);
     setCardProduct(item)
     setCount(1)
   };
@@ -526,7 +527,7 @@ function Home() {
         >
           <Container>
             <Grid container spacing={2} justifyContent={"center"}>
-              {cardData?.map((card, i) => (
+              {Array.isArray(products) && products?.map((card, i) => (
               <React.Fragment key={i}>
 
                 <Grid   md={5} item onClick={() =>showModal(card)}>
