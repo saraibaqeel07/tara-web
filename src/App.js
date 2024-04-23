@@ -8,6 +8,8 @@ import Colors from "./app/styles/colors";
 import Webroutes from "./app/routes/web.routes";
 import Adminroutes from "./app/routes/admin.routes";
 import Login from "./app/views/auth/signup";
+import { ToasterContainer } from "./app/components/Toaster";
+
 
 const theme = createTheme({
   palette: {
@@ -62,14 +64,31 @@ function App() {
   useEffect(() => {
     token = localStorage.getItem("token")
     console.log(localStorage.getItem("token"), 'asasasas');
-    if (localStorage.getItem("token")) {
+    if (window.location.pathname.includes("admin")){
 
-      setTokenState(localStorage.getItem("token"))
-    }
-    else {
-      
+      if (localStorage.getItem("token")) {
+  
+        setTokenState(localStorage.getItem("token"))
+      }
+      else {
+        window.location.href='/login'
+      }
     }
   }, [])
+  useEffect(() => {
+    token = localStorage.getItem("token")
+    console.log(localStorage.getItem("token"), 'asasasas');
+    if (window.location.pathname.includes("admin")){
+
+      if (localStorage.getItem("token")) {
+  
+        setTokenState(localStorage.getItem("token"))
+      }
+      else {
+        window.location.href='/login'
+      }
+    }
+  }, [tokenState])
   // useEffect(() => {
 
   //   setTokenState(localStorage.getItem("token"))
@@ -78,14 +97,16 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <ToasterContainer/>
       <BrowserRouter>
+    
         <Routes>
           <Route path="/" element={<Layout />}>
             {Webroutes.map((item, i) => (
               <Route key={i} path={item.path} element={item.component} />
             ))}
           </Route>
-          {<Route path="/admin" element={tokenState && <AdminLayout />}>
+          {<Route path="/admin" element={ <AdminLayout />}>
             {Adminroutes.map((item, i) => (
               <Route key={i} path={item.path} element={item.component} />
             ))}

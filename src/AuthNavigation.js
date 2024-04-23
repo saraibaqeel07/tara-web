@@ -1,7 +1,7 @@
 const authNavigation = [
   {
     path: "/admin/create-post",
-    name: "Create Post"
+    name: "Products"
   },
   {
     path: "/admin/edit-post",

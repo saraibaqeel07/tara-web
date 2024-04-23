@@ -22,14 +22,23 @@ import Colors from '../../../styles/colors';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// const firebaseConfig = {
+//   apiKey: "AIzaSyB859K8L2v-rwWiKZpKBw_xMlTjhpUd2yc",
+//   authDomain: "tara-dashboard-login.firebaseapp.com",
+//   projectId: "tara-dashboard-login",
+//   storageBucket: "tara-dashboard-login.appspot.com",
+//   messagingSenderId: "424103744596",
+//   appId: "1:424103744596:web:a67a82a72acb28cf04c9c1",
+//   measurementId: "G-0VCKM2N5YH"
+// };
 const firebaseConfig = {
-  apiKey: "AIzaSyB859K8L2v-rwWiKZpKBw_xMlTjhpUd2yc",
-  authDomain: "tara-dashboard-login.firebaseapp.com",
-  projectId: "tara-dashboard-login",
-  storageBucket: "tara-dashboard-login.appspot.com",
-  messagingSenderId: "424103744596",
-  appId: "1:424103744596:web:a67a82a72acb28cf04c9c1",
-  measurementId: "G-0VCKM2N5YH"
+  apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
+  authDomain: "shinetara-86ec0.firebaseapp.com",
+  projectId: "shinetara-86ec0",
+  storageBucket: "shinetara-86ec0.appspot.com",
+  messagingSenderId: "182521981077",
+  appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
+  measurementId: "G-BHYZDHJCK9"
 };
 
 // Initialize Firebase

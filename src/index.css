@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
+  color: black !important;
+
+}

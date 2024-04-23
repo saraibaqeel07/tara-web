@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup, TextField } from '@mui/material';
 import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images';
 import Colors from '../../styles/colors';
@@ -6,10 +6,38 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "../../../App.css"
 import Fonts from '../../styles/fonts';
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
 // import "slick-carousel/slick/slick-theme.css";
 
 function Home() {
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
+    authDomain: "shinetara-86ec0.firebaseapp.com",
+    projectId: "shinetara-86ec0",
+    storageBucket: "shinetara-86ec0.appspot.com",
+    messagingSenderId: "182521981077",
+    appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
+    measurementId: "G-BHYZDHJCK9"
+  };
+  let productId=''
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
   const [selected, setSelected] = useState("episode");
+  const [products, setProducts] = useState([])
+
+  const getProducts = async () => {
+    const q = query(collection(db, "products"));
+
+    const querySnapshot = await getDocs(q);
+    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    console.log(dataArray);
+    setProducts(dataArray)
+
+  }
 
   const buttons = [
     <Button
@@ -95,6 +123,10 @@ function Home() {
       price: "$13"
     },
   ]
+  useEffect(() => {
+    getProducts()
+  }, [])
+  
 
   return (
     <Box
@@ -478,7 +510,7 @@ function Home() {
         >
           <Container>
             <Grid container spacing={2} justifyContent={"center"}>
-              {cardData.map((card, i) => (
+              {products?.map((card, i) => (
                 <Grid key={i} item md={5}>
                   <Box
                     sx={{
@@ -489,7 +521,7 @@ function Home() {
                   >
                     <CardMedia
                       component={"img"}
-                      src={card.image}
+                      src={card?.imgUrl}
                       sx={{
                         height: "400px",
                         borderRadius: "20px 20px 0px 0px"
@@ -505,10 +537,10 @@ function Home() {
                       }}
                     >
                       <Typography>
-                        {card.title}
+                        {card?.name}
                       </Typography>
                       <Typography>
-                        {card.price}
+                        {card?.price}
                       </Typography>
                     </Box>
                   </Box>
