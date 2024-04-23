@@ -6,9 +6,6 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "../../../App.css"
 import Fonts from '../../styles/fonts';
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
 // import "slick-carousel/slick/slick-theme.css";
 
 function Home() {
@@ -26,18 +23,6 @@ function Home() {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const [selected, setSelected] = useState("episode");
-  const [products, setProducts] = useState([])
-
-  const getProducts = async () => {
-    const q = query(collection(db, "products"));
-
-    const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-    console.log(dataArray);
-    setProducts(dataArray)
-
-  }
 
   const buttons = [
     <Button
@@ -510,7 +495,7 @@ function Home() {
         >
           <Container>
             <Grid container spacing={2} justifyContent={"center"}>
-              {products?.map((card, i) => (
+              {cardData.map((card, i) => (
                 <Grid key={i} item md={5}>
                   <Box
                     sx={{
@@ -545,8 +530,10 @@ function Home() {
                     </Box>
                   </Box>
                 </Grid>
+              </React.Fragment>
               ))}
             </Grid>
+              <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} />
           </Container>
         </Box>
       )}
