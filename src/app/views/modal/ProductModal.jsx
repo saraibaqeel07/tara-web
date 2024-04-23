@@ -1,10 +1,27 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import {  Modal } from 'antd';
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
-const ProductModal = ({}) => {
+const ProductModal = ({isModalOpens,handleOks,handleCancels,pData}) => {
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [currency, setCurrency] = useState(options.currency);
+    const [count, setCount] = useState(1);
 
+    const handleIncrement = () => {
+      if (count < 5) {
+        setCount(prevCount => prevCount + 1);
+      } else {
+        alert("You can't add more than 5 products.");
+      }
+    };
+  
+    const handleDecrement = () => {
+      if (count > 0) {
+        setCount(prevCount => prevCount - 1);
+      } else {
+        alert("You can't have less than 0 products.");
+      }
+    };
     const onCurrencyChange = ({ target: { value } }) => {
         setCurrency(value);
         dispatch({
@@ -21,7 +38,7 @@ const ProductModal = ({}) => {
             purchase_units: [
                 {
                     amount: {
-                        value: "8.99",
+                        value: (Number(pData?.price.split("$")[1]) * Number(count)),
                     },
                 },
             ],
@@ -35,18 +52,34 @@ const ProductModal = ({}) => {
         });
     }
   return (
-   <Box sx={{mt:10}}>
-    <Typography variant='h3' color='black'>
-        Checkout
-    </Typography>
+
+<>
+{isModalOpens &&   
+     <Modal title={pData?.title} open={isModalOpens} footer={[]}>
+       <Box >
+       <Typography>
+                        {pData.price}
+                      </Typography>
+    <div className='mb-2 countBOx'>
+      <Button onClick={handleDecrement} variant="contained" color="secondary">
+        -
+      </Button>
+      <input type={"number"} disabled maxLength={5} minLength={0} value={count} className='inputcount' />
+      <Button onClick={handleIncrement} variant="contained" color="secondary">
+        +
+      </Button>
+      <br />
+    </div>
+
+    <ul className='totalprize'>
+        <li><h5>Total Prize</h5>
+        <b>${Number(pData?.price.split("$")[1]) * Number(count)}</b>
+        </li>
+    </ul>
 
     <div className="checkout">
             {isPending ? <p>LOADING...</p> : (
                 <>
-                    <select value={currency} onChange={onCurrencyChange}>
-                            <option value="USD">💵 USD</option>
-                            <option value="EUR">💶 Euro</option>
-                    </select>
                     <PayPalButtons 
                         style={{ layout: "vertical" }}
                         createOrder={(data, actions) => onCreateOrder(data, actions)}
@@ -56,6 +89,9 @@ const ProductModal = ({}) => {
             )}
         </div>
    </Box>
+      </Modal>
+    }
+   </>
   )
 }
 

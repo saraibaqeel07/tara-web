@@ -12,7 +12,16 @@ import { Link } from 'react-router-dom';
 
 function Home() {
   const [selected, setSelected] = useState("episode");
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const buttons = [
     <Button
       key="episode"
@@ -481,11 +490,9 @@ function Home() {
           <Container>
             <Grid container spacing={2} justifyContent={"center"}>
               {cardData.map((card, i) => (
-              <>
-               
-                
-                <Link to={"/checkout"}>
-                <Grid key={i} item md={5}>
+              <React.Fragment key={i}>
+
+                <Grid   md={5} item onClick={showModal}>
                   <Box
                     sx={{
                       display: "flex",
@@ -519,8 +526,8 @@ function Home() {
                     </Box>
                   </Box>
                 </Grid>
-                </Link>
-              </>
+                <ProductModal pData={card} isModalOpens={isModalOpen} handleOks={handleOk} handleCancels={handleCancel} />
+              </React.Fragment>
               ))}
             </Grid>
           </Container>
