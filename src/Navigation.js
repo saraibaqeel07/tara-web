@@ -13,7 +13,7 @@ const navigation = [
   },
   {
     path: "/colorfull-club",
-    name: "Colorfull Club"
+    name: "Colorful Club"
   },
   {
     path: "/contact-us",

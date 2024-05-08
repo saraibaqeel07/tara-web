@@ -53,28 +53,28 @@ function Footer() {
                   p: 0
                 }}
               >
-                <Facebook />
+                <Facebook href='https://www.facebook.com/profile.php?id=61554711500749' />
               </IconButton>
               <IconButton
                 sx={{
                   p: 0
                 }}
               >
-                <Instagram />
+                <Instagram href='https://www.instagram.com/shineswithtara/ ' />
               </IconButton>
               <IconButton
                 sx={{
                   p: 0
                 }}
               >
-                <Tiktok />
+                <Tiktok href='https://www.tiktok.com/@shinewithtara' />
               </IconButton>
               <IconButton
                 sx={{
                   p: 0
                 }}
               >
-                <Youtube />
+                <Youtube href='https://www.youtube.com/@Shinewithtara' />
               </IconButton>
             </Box>
             <Typography

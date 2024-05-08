@@ -120,6 +120,7 @@ function About() {
                           textTransform: "capitalize",
                           fontSize: "18px"
                         }}
+                        href='https://www.youtube.com/@Shinewithtara'
                       >
                         Start Adventure
                       </Button>
@@ -127,22 +128,22 @@ function About() {
                     <Grid item md={8} sm={7} xs={12}>
                       <Grid container spacing={2} sx={{ justifyContent: { md: "flex-start", sm: "flex-start", xs: "center" } }} gap={"10px"}>
                         <Grid item md={1}>
-                          <Button>
+                          <Button href='https://www.facebook.com/profile.php?id=61554711500749'>
                             <FacebookRounded />
                           </Button>
                         </Grid>
                         <Grid item md={1}>
-                          <Button>
+                          <Button href='https://www.instagram.com/shineswithtara/ '>
                             <InstagramRounded />
                           </Button>
                         </Grid>
                         <Grid item md={1}>
-                          <Button>
+                          <Button href='https://www.youtube.com/@Shinewithtara'>
                             <YoutubeRounded />
                           </Button>
                         </Grid>
                         <Grid item md={1}>
-                          <Button>
+                          <Button href='https://www.tiktok.com/@shinewithtara'>
                             <TiktokRounded />
                           </Button>
                         </Grid>

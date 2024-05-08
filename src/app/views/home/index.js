@@ -214,6 +214,7 @@ function Home() {
                           textTransform: "capitalize",
                           fontSize: "18px"
                         }}
+                        href='https://www.youtube.com/@Shinewithtara'
                       >
                         Start Adventure
                       </Button>
@@ -221,22 +222,22 @@ function Home() {
                     <Grid item md={7} sm={7} xs={12}>
                       <Grid container spacing={2} sx={{ justifyContent: { md: "flex-start", sm: "flex-start", xs: "center" } }}>
                         <Grid item md={2}>
-                          <Button>
+                          <Button href='https://www.facebook.com/profile.php?id=61554711500749'>
                             <FacebookRounded />
                           </Button>
                         </Grid>
                         <Grid item md={2}>
-                          <Button>
+                          <Button href='https://www.instagram.com/shineswithtara/ '>
                             <InstagramRounded />
                           </Button>
                         </Grid>
                         <Grid item md={2}>
-                          <Button>
+                          <Button href='https://www.youtube.com/@Shinewithtara'>
                             <YoutubeRounded />
                           </Button>
                         </Grid>
                         <Grid item md={2}>
-                          <Button>
+                          <Button href='https://www.tiktok.com/@shinewithtara'>
                             <TiktokRounded />
                           </Button>
                         </Grid>
