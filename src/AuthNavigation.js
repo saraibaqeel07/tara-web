@@ -1,12 +1,9 @@
 const authNavigation = [
   {
     path: "/admin/create-post",
-    name: "Products"
+    name: " Manage Products"
   },
-  {
-    path: "/admin/edit-post",
-    name: "Edit Post"
-  },
+  
 ]
 
 export default authNavigation;
