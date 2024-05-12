@@ -24,12 +24,12 @@ function Home() {
     appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
     measurementId: "G-BHYZDHJCK9"
   };
-  let productId=''
+  let productId = ''
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const [selected, setSelected] = useState("episode");
   const [products, setProducts] = useState([])
-
+  const [textColor, setTextColor] = useState(Colors.orange)
   const getProducts = async () => {
     const q = query(collection(db, "products"));
 
@@ -143,7 +143,37 @@ function Home() {
   useEffect(() => {
     getProducts()
   }, [])
-  
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // Generate a random color
+     
+      let element = document.getElementById('follow-text')
+      let element2 = document.getElementById('learn-text')
+      let element3 = document.getElementById('explore-text')
+      if(element){
+        console.log(element.style.color)
+        if(element.style.color =='rgb(254, 157, 4)'){
+          element.style.color='white'
+          element2.style.color=Colors.darkblue
+          element3.style.color='white'
+        }
+        
+        else if(element3.style.color == 'white'){
+          element.style.color='white'
+          element2.style.color='white'
+          element3.style.color=Colors.pink
+        }
+        else{
+          element.style.color='rgb(254, 157, 4)'
+          element2.style.color='white'
+          element3.style.color='white'
+        }
+      }
+    }, 1000); // Change color every 1000ms (1 second)
+
+    return () => clearInterval(intervalId);
+  }, []);
+
 
   return (
     <Box
@@ -193,7 +223,7 @@ function Home() {
                       color: Colors.white,
                     }}
                   >
-                    <span style={{ color: Colors.orange }}>Follow</span>, Learn and Explore with Tara!
+                    <span id='follow-text' style={{color:Colors.orange}}  >Follow</span>, <span id='learn-text'>Learn</span> and <span id='explore-text'>Explore</span> with Tara!
                   </Typography>
                   <Typography
                     variant='h3'
@@ -529,46 +559,46 @@ function Home() {
           <Container>
             <Grid container spacing={2} justifyContent={"center"}>
               {Array.isArray(products) && products?.map((card, i) => (
-              <React.Fragment key={i}>
+                <React.Fragment key={i}>
 
-                <Grid   md={5} item onClick={() =>showModal(card)}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      borderRadius: "20px"
-                    }}
-                  >
-                    <CardMedia
-                      component={"img"}
-                      src={card?.imgUrl}
-                      sx={{
-                        height: "400px",
-                        borderRadius: "20px 20px 0px 0px"
-                      }}
-                    />
+                  <Grid md={5} item onClick={() => showModal(card)}>
                     <Box
                       sx={{
-                        backgroundColor: "#C77805",
-                        p: 2,
                         display: "flex",
-                        justifyContent: "space-between",
-                        borderRadius: "0px 0px 20px 20px"
+                        flexDirection: "column",
+                        borderRadius: "20px"
                       }}
                     >
-                      <Typography>
-                        {card?.name}
-                      </Typography>
-                      <Typography>
-                        {card?.price}
-                      </Typography>
+                      <CardMedia
+                        component={"img"}
+                        src={card?.imgUrl}
+                        sx={{
+                          height: "400px",
+                          borderRadius: "20px 20px 0px 0px"
+                        }}
+                      />
+                      <Box
+                        sx={{
+                          backgroundColor: "#C77805",
+                          p: 2,
+                          display: "flex",
+                          justifyContent: "space-between",
+                          borderRadius: "0px 0px 20px 20px"
+                        }}
+                      >
+                        <Typography>
+                          {card?.name}
+                        </Typography>
+                        <Typography>
+                          {card?.price}
+                        </Typography>
+                      </Box>
                     </Box>
-                  </Box>
-                </Grid>
-              </React.Fragment>
+                  </Grid>
+                </React.Fragment>
               ))}
             </Grid>
-              <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} />
+            <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} />
           </Container>
         </Box>
       )}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button, ButtonGroup, CardMedia, Container, Grid, Typography } from '@mui/material'
 import Colors from '../../styles/colors'
 import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images'
@@ -41,6 +41,36 @@ function About() {
       Vision
     </Button>,
   ];
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // Generate a random color
+     
+      let element = document.getElementById('muslim-text')
+      let element2 = document.getElementById('islamic-text')
+      let element3 = document.getElementById('cartoon-text')
+      if(element){
+        console.log(element.style.color)
+        if(element.style.color =='rgb(254, 157, 4)'){
+          element.style.color='white'
+          element2.style.color=Colors.darkblue
+          element3.style.color='white'
+        }
+        
+        else if(element3.style.color == 'white'){
+          element.style.color='white'
+          element2.style.color='white'
+          element3.style.color=Colors.pink
+        }
+        else{
+          element.style.color='rgb(254, 157, 4)'
+          element2.style.color='white'
+          element3.style.color='white'
+        }
+      }
+    }, 1000); // Change color every 1000ms (1 second)
+
+    return () => clearInterval(intervalId);
+  }, []);
   return (
     <Box
       component={"main"}
@@ -89,7 +119,7 @@ function About() {
                       color: Colors.white,
                     }}
                   >
-                    <span style={{ color: Colors.orange }}>Muslim</span> Islamic Cartoon
+                    <span id='muslim-text' style={{ color: Colors.orange }}>Muslim</span> <span id='islamic-text'> Islamic</span> <span id='cartoon-text'>Cartoon</span>
                   </Typography>
                   <Typography
                     variant='h3'
