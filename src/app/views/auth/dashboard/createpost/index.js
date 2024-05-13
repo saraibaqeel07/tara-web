@@ -192,13 +192,13 @@ function CreatePost() {
         <Grid container>
           <Grid item xs={6}>
 
-            <TextField className='text-color'  sx={{color:'black'}}  {...register('productName', { required: true })} error={!!errors.productName}
+            <TextField inputProps={{sx:{color:'black !important'}}} sx={{color:'black'}}  {...register('productName', { required: true })} error={!!errors.productName}
               helperText={errors.productName ? "Product name is required" : ""} size='small' id="outlined-basic" label="Product Name" variant="outlined" />
           </Grid>
 
           <Grid item xs={6}>
 
-            <TextField  className='text-color'  sx={{color:'black'}}  {...register('productPrice', { required: true })} error={!!errors.productPrice} type='number'
+            <TextField inputProps={{sx:{color:'black !important'}}}  className='text-color'  sx={{color:'black'}}  {...register('productPrice', { required: true })} error={!!errors.productPrice} type='number'
               helperText={errors.productPrice ? "Product price is required" : ""} size='small' id="outlined-basic" label="Product Price" variant="outlined" />
           </Grid>
 
