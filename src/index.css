@@ -50,3 +50,6 @@ margin: 0;
   color: #8F52A1;
   font-size: 1.2rem;
 }
+.text-color{
+  color: black !important;
+}
