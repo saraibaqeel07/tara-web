@@ -1,5 +1,5 @@
 import { Box, Button, CardMedia, Container, Grid, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Colors from '../../styles/colors'
 import Fonts from '../../styles/fonts'
 import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images'
@@ -59,7 +59,32 @@ function Character() {
       image: Images.illustrator
     },
   ]
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // Generate a random color
+     
+      let element = document.getElementById('main-text')
+      let element2 = document.getElementById('character-text')
+    
+      if(element){
+        console.log(element.style.color)
+        if(element.style.color =='rgb(2, 27, 81)'){
+          element.style.color='white'
+          element2.style.color=Colors.pink
 
+        }
+        
+        
+        else{
+          element.style.color=Colors.darkblue
+          element2.style.color='white'
+      
+        }
+      }
+    }, 1000); // Change color every 1000ms (1 second)
+
+    return () => clearInterval(intervalId);
+  }, []);
   return (
     <Box
       component={"main"}
@@ -107,7 +132,7 @@ function Character() {
                       fontWeight: 700,
                     }}
                   >
-                    Unveil The Stories Behind Our <span style={{ color: Colors.primary }}>Main Characters</span>
+                    Unveil The Stories Behind <br/> <span style={{ color: Colors.orange }}> Our</span> <span id='main-text' style={{ color: Colors.darkblue }}>Main </span> <span id='character-text'>Characters</span>
                   </Typography>
                   <Typography
                     variant='h3'

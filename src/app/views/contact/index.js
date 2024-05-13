@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Button, CardMedia, Container, Grid, Typography, TextField } from '@mui/material'
 import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images'
 import Colors from '../../styles/colors'
@@ -12,7 +12,36 @@ function Contact() {
   const onSubmit = (formData) => {
     console.log("🚀 ~ onSubmit ~ formData:", formData)
   }
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // Generate a random color
+     
+      let element = document.getElementById('contact-text')
+      let element2 = document.getElementById('Us-text')
+      let element3 = document.getElementById('mark-text')
+      if(element){
+        console.log(element.style.color)
+        if(element.style.color =='rgb(254, 157, 4)'){
+          element.style.color='white'
+          element2.style.color=Colors.darkblue
+          element3.style.color='white'
+        }
+        
+        else if(element3.style.color == 'white'){
+          element.style.color='white'
+          element2.style.color='white'
+          element3.style.color=Colors.pink
+        }
+        else{
+          element.style.color='rgb(254, 157, 4)'
+          element2.style.color='white'
+          element3.style.color='white'
+        }
+      }
+    }, 1000); // Change color every 1000ms (1 second)
 
+    return () => clearInterval(intervalId);
+  }, []);
   return (
     <Box
       component={"main"}
@@ -62,7 +91,7 @@ function Contact() {
                       pr: { md: "150px", sm: 0, xs: 0 }
                     }}
                   >
-                    To <Typography component={"span"} sx={{ fontFamily: Fonts.righteous, color: Colors.primary, fontSize: { md: "56px", sm: "48px", xs: "40px" } }}>Explore</Typography> More About Tara And Shine. <Typography component={"span"} sx={{ fontFamily: Fonts.righteous, color: Colors.darkblue, fontSize: { md: "56px !important", sm: "48px !important", xs: "40px !important" } }}>Contact Us!</Typography>
+                    To <Typography component={"span"} sx={{ fontFamily: Fonts.righteous, color: Colors.primary, fontSize: { md: "56px", sm: "48px", xs: "40px" } }}>Explore</Typography> More About Tara And Shine. <Typography component={"span"} id='contact-text' sx={{ fontFamily: Fonts.righteous, color: Colors.darkblue, fontSize: { md: "56px !important", sm: "48px !important", xs: "40px !important" } }}>Contact </Typography> <span id='Us-text'>Us</span> <span id='mark-text'>!</span>
                   </Typography>
                   <Grid container spacing={2} alignItems={"center"}>
                     <Grid item md={5} sm={5} xs={12}>

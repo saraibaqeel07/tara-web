@@ -1,10 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup, TextField } from '@mui/material';
 import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images';
 import Colors from '../../styles/colors';
 import Slider from 'react-slick';
 
 function Colorfull() {
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // Generate a random color
+     
+      let element = document.getElementById('color-text')
+      let element2 = document.getElementById('with-text')
+      let element3 = document.getElementById('tara-text')
+      if(element){
+        console.log(element.style.color)
+        if(element.style.color =='rgb(254, 157, 4)'){
+          element.style.color='white'
+          element2.style.color=Colors.darkblue
+          element3.style.color='white'
+        }
+        
+        else if(element3.style.color == 'white'){
+          element.style.color='white'
+          element2.style.color='white'
+          element3.style.color=Colors.pink
+        }
+        else{
+          element.style.color='rgb(254, 157, 4)'
+          element2.style.color='white'
+          element3.style.color='white'
+        }
+      }
+    }, 1000); // Change color every 1000ms (1 second)
+
+    return () => clearInterval(intervalId);
+  }, []);
   return (
     <Box
       component={"main"}
@@ -53,7 +84,7 @@ function Colorfull() {
                       textAlign: 'center'
                     }}
                   >
-                    Come And  <span style={{ color: Colors.primary }}>Color</span>  <span style={{ color: "#F9BF29 " }}>with</span> <span style={{ color: "#021B51" }}> Tara</span>
+                    Come And  <span id='color-text' style={{ color: Colors.primary }}>Color</span>  <span id='with-text' style={{ color: "#F9BF29 " }}>with</span> <span id='tara-text'style={{ color: "#021B51" }}> Tara</span>
                   </Typography>
 
                 </Box>
