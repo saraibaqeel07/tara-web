@@ -19,6 +19,7 @@ const navigation = [
     path: "/contact-us",
     name: "Contact us"
   },
+  
 ]
 
 export default navigation;

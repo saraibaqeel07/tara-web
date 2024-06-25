@@ -41,7 +41,11 @@ const Images = {
   webDeveloper: require("./webDeveloper.png"),
   illustrator: require("./illustrator.png"),
   contactBg: require("./contactBg.png"),
-  contactImg: require("./contactImg.png"),
+  books: require("./books.png"),
+  activity: require("./activity.png"),
+  coloring: require("./coloring.png"),
+  extra: require("./extra.png"),
+ 
 }
 
 export default Images;

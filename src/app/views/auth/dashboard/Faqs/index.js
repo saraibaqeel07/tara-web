@@ -15,19 +15,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
-function CreatePost() {
+function Faqs() {
 
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: { errors },
-    reset
-  } = useForm();
-  
-  const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 }, control: control2 } = useForm();
+    const { register, handleSubmit,getValues, formState: { errors },reset } = useForm();
+
 
   const firebaseConfig = {
     apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
@@ -38,7 +32,7 @@ function CreatePost() {
     appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
     measurementId: "G-BHYZDHJCK9"
   };
-  let productId=''
+
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const [open, setOpen] = React.useState(false);
@@ -79,54 +73,27 @@ function CreatePost() {
     setOpen1(false);
   };
 
-  const handleImageChange = (e) => {
-    const selectedImage = e.target.files[0];
-    uploadBytes(storageRef, e.target.files[0]).then((snapshot) => {
-      console.log('Uploaded a blob or file!');
-      console.log(snapshot);
-
-      // Get the download URL of the uploaded file
-      getDownloadURL(snapshot.ref)
-        .then((url) => {
-          // `url` is the download URL of the uploaded file
-          console.log('Download URL:', url);
-          setImgUrl(url)
-          // You can use this URL for various purposes, such as displaying the image in an <img> element
-          const img = document.getElementById('myimg');
-          img.setAttribute('src', url);
-        })
-        .catch((error) => {
-          // Handle any errors
-          console.error('Error getting download URL:', error);
-        });
-    })
-      .catch((error) => {
-        // Handle any errors during upload
-        console.error('Error uploading file:', error);
-      });
 
 
-    if (selectedImage) {
-      setImage(URL.createObjectURL(selectedImage));
-    }
-  };
-
-  const addProduct = async () => {
+  const addFaq = async () => {
     console.log('submit');
+    if(!getValues('question') || !getValues('answer')){
+        return
+    }
     try {
 
       // Add a new document with a generated id.
-      const docRef = await addDoc(collection(db, "products"), {
-        name: getValues('productName'),
-        price: getValues('productPrice'),
-        imgUrl: imgUrl
+      const docRef = await addDoc(collection(db, "Faq"), {
+        question: getValues('question'),
+        answer: getValues('answer'),
+       
       });
       console.log("Document written with ID: ", docRef.id);
       if (docRef.id) {
 
-        SuccessToaster('Product Add Succesfully')
+        SuccessToaster('Faq Add Succesfully')
         reset()
-        setImage('')
+        
         getProducts()
       }
       else {
@@ -138,33 +105,9 @@ function CreatePost() {
     }
   };
 
-  const editProduct = async (id) => {
 
-    try {
-
-      const productRef = doc(db,'products',tableId);
-
-      // Update the product fields
-      await updateDoc(productRef, {
-        
-        price: modalValue,  // Update the product price
-       
-      })
-      .then(() => {
-        console.log("Document successfully updated!");
-        getProducts()
-        handleClose()
-      })
-      .catch((error) => {
-        console.error("Error updating document: ", error);
-      });
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const getProducts = async () => {
-    const q = query(collection(db, "products"));
+    const q = query(collection(db, "Faq"));
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -177,9 +120,9 @@ function CreatePost() {
   const handleDelete = async (id) => {
     console.log(id);
     console.log(tableId);
-    let result = await deleteDoc(doc(db, "products", tableId));
+    let result = await deleteDoc(doc(db, "Faq", tableId));
     console.log(result);
-    SuccessToaster('Product Deleted Successfully')
+    SuccessToaster('Faq Deleted Successfully')
     setOpen(false)
     getProducts()
 
@@ -222,76 +165,27 @@ function CreatePost() {
         </DialogActions>
       </Dialog>
 
-      <Dialog  open={open1} onClose={handleClose}>
-        <DialogTitle sx={{width:'500px',color:'black'}} >{"Edit Price"}</DialogTitle>
-        <Box sx={{display:'flex',p:'20px'}}>
-        <TextField
-        inputProps={{ sx: { color: 'black !important' } }}
-        className='text-color'
-        value={modalValue}
-        sx={{ color: 'black' }}
-        error={!!errors.productPricemodal}
-        type='number'
-        helperText={errors.productPricemodal ? "Product price is required" : ""}
-        size='small'
-        id="outlined-basic"
-        label="Product Price"
-        variant="outlined"
-        {...register('productPricemodal', {
-          required: true,
-          onChange: (e) => {
-            setModalValue(e.target.value);
-           
-          }
-        })}
-      />
-              
-</Box>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={()=> editProduct()} color="primary" autoFocus>
-            Update
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Box component={'form'} onSubmit={handleSubmit(addProduct)} sx={{ width: "80%", margin: '0 auto', mt: 10 }}>
+   
+      <Box component={'form'} onSubmit={handleSubmit(addFaq)} sx={{ width: "80%", margin: '0 auto', mt: 10 }}>
 
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
 
-            <TextField inputProps={{sx:{color:'black !important'}}} sx={{color:'black'}}  {...register('productName', { required: true })} error={!!errors.productName}
-              helperText={errors.productName ? "Product name is required" : ""} size='small' id="outlined-basic" label="Book Name" variant="outlined" />
+            <TextField fullWidth inputProps={{sx:{color:'black !important'}}} sx={{color:'black'}}  {...register('question', { required: true })} error={!!errors.question}
+              helperText={errors.question ? "question name is required" : ""} size='small' id="outlined-basic" label="Question" variant="outlined" />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={12} mt={5}>
 
-            <TextField inputProps={{sx:{color:'black !important'}}}  className='text-color'  sx={{color:'black'}}  {...register('productPrice', { required: true })} error={!!errors.productPrice} type='number'
-              helperText={errors.productPrice ? "Product price is required" : ""} size='small' id="outlined-basic" label="Book Price" variant="outlined" />
+            <TextField fullWidth inputProps={{sx:{color:'black !important'}}} rows={4}  className='text-color'  sx={{color:'black'}}  {...register('answer', { required: true })} error={!!errors.answer}
+              helperText={errors.answer ? "answer  is required" : ""} size='small' id="outlined-basic" label="Answer" variant="outlined" />
           </Grid>
 
-          <Grid container justifyContent={'space-between'}>
-            <Grid item xs={4} mt={5}>
-
-              <TextField size='small' type='file' onChange={handleImageChange} required={true} />
-            </Grid>
-            <Grid item xs={4} mt={5}>
-
-              {image && (
-                <div>
-                  <h4>Image Preview:</h4>
-                  <img src={image} alt="Preview" style={{ maxWidth: '100%' }} />
-                </div>
-              )}
-            </Grid>
-
-          </Grid>
 
         </Grid>
 
         <Grid container xs={9} mt={5} justifyContent={'flex-end'} s>
-          <Button type='submit' variant="contained">Add</Button>
+          <Button type='submit' onClick={addFaq} variant="contained">Add</Button>
 
         </Grid>
       </Box>
@@ -301,9 +195,9 @@ function CreatePost() {
             <TableRow>
               <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Sr.</TableCell>
 
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }}>Name</TableCell>
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Price</TableCell>
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Picture</TableCell>
+              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }}>Question</TableCell>
+              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Answer</TableCell>
+
               <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Action</TableCell>
             </TableRow>
           </TableHead>
@@ -317,15 +211,15 @@ function CreatePost() {
                   {index + 1}
                 </TableCell>
 
-                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.name}</TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.price}</TableCell>
+                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.question}</TableCell>
+                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.answer}</TableCell>
                 <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >
 
                   <Box component={'img'} src={item?.imgUrl} sx={{ width: '80px', textAlign: 'center' }} >
 
                   </Box>
                 </TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span  onClick={()=> {setOpen1(true); setModalValue(item?.price);  setTableId(item?.id)}} >Edit</span></TableCell>
+
                 <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => {setOpen(true)
                 setTableId(item?.id)}} >Delete</span></TableCell>
 
@@ -338,4 +232,4 @@ function CreatePost() {
   )
 }
 
-export default CreatePost
+export default Faqs

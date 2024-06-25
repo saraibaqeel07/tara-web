@@ -1,5 +1,9 @@
+import ManageExtraSheets from "../views/auth/dashboard/Extra";
+import Faqs from "../views/auth/dashboard/Faqs";
+import ManageActivitySheets from "../views/auth/dashboard/activitySheets";
 import CreatePost from "../views/auth/dashboard/createpost";
-import EditPost from "../views/auth/dashboard/editpost";
+import ManageColoringSheets from "../views/auth/dashboard/manageColoringSheets";
+import Orders from "../views/auth/dashboard/orders";
 
 const Adminroutes = [
   {
@@ -8,8 +12,24 @@ const Adminroutes = [
     component: <CreatePost />
   },
   {
-    path: "edit-post",
-    component: <EditPost />
+    path: "coloring-sheets",
+    component: <ManageColoringSheets />
+  },
+  {
+    path: "activity-sheets",
+    component: <ManageActivitySheets />
+  },
+  {
+    path: "extra-sheets",
+    component: <ManageExtraSheets />
+  },
+  {
+    path: "orders",
+    component: <Orders />
+  },
+  {
+    path: "faqs",
+    component: <Faqs />
   },
 ]
 

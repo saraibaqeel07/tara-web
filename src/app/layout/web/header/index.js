@@ -1,22 +1,63 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import CssBaseline from '@mui/material/CssBaseline';
-import { Box, AppBar, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button, CardMedia } from '@mui/material';
+import { Box, AppBar, Divider, Drawer, IconButton, Menu, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button, CardMedia, MenuItem } from '@mui/material';
 import navigation from '../../../../Navigation';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu } from '@mui/icons-material';
+
 import Images from '../../../assets/images';
 import Colors from '../../../styles/colors';
+import { signInWithPopup, signOut } from 'firebase/auth';
+import { auth, provider } from '../../../config/firebase.config';
+import { AuthContext } from '../../../Context/AuthContext';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Avatar } from 'antd';
 
 function Header(props) {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState(location.pathname)
   const navigate = useNavigate();
+  let loginUser = localStorage.getItem('user')
+  loginUser = JSON.parse(loginUser)
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const { user, setUser } = useContext(AuthContext);
+  console.log(user, 'useruseruser');
+  const handleLogout = () => {
+
+    signOut(auth).then(() => {
+      console.log('logout');
+      setUser('')
+    }).catch((error) => {
+      // An error happened.
+    });
+
+  }
 
   const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
+    setMobileOpen(!mobileOpen);
   };
 
+
+  const handleGoogleLogin = async () => {
+
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log("User Info: ", user);
+      localStorage.setItem('user', JSON.stringify(user))
+      setUser(user)
+      // Handle user info here (e.g., save to state, context, or redirect)
+    } catch (error) {
+      console.error("Error during Google login: ", error);
+    }
+  };
   useEffect(() => {
     setCurrentPath(location.pathname);
   }, [location.pathname]);
@@ -46,7 +87,7 @@ function Header(props) {
               }}
             />
           </Box>
-          <Box sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
+          <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
             {navigation.map((item, i) => (
               <Button
                 key={i}
@@ -63,16 +104,58 @@ function Header(props) {
               </Button>
             ))}
           </Box>
+          {!user && !loginUser ?
+            <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button> : <Box sx={{ display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>
+             
+              <Button
+                id="basic-button"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+                sx={{color:'white', display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}
+              >
+                <Avatar alt="Remy Sharp"  sx={{ width: 56, height: 56 }}
+   src={loginUser.photoURL} />
+                {loginUser?.displayName}
+              </Button>
+              <Button
+                id="basic-button"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+                sx={{color:'white', display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}
+              >
+                <Avatar alt="Remy Sharp" sx={{ width: 56, height: 56 }} src={loginUser.photoURL} />
+               
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+
+              >
+                {/* <MenuItem sx={{ color: 'black' }} onClick={handleClose}>Profile</MenuItem> */}
+                <MenuItem sx={{ color: 'black' }} onClick={() => navigate('/myorders')}>My Orders</MenuItem>
+                <MenuItem sx={{ color: 'black' }} onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
+            </Box>}
+
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
             sx={{
-              display: { md: "none", sm: mobileOpen ? "none" : "flex", xs: mobileOpen ? "none" : "flex" }
+              display: { lg: 'none', md: "block", sm: "block", xs: "block" }
             }}
           >
-            <Menu />
+            <MenuIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -85,7 +168,7 @@ function Header(props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'block', md: 'none' },
+            display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', background: Colors.primaryGradient },
           }}
         >
@@ -105,6 +188,39 @@ function Header(props) {
               />
             </Box>
             <Divider />
+            {!user && !loginUser ? <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button> :
+              <Box mb={1} mt={1}> <Box >{loginUser.displayName}</Box>
+                
+              </Box>
+            }
+            {!user && !loginUser ?
+              <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button> :
+              <Box sx={{ display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                  sx={{ color: 'white' }}
+                >
+                  {loginUser?.displayName}
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                  }}
+
+                >
+                  {/* <MenuItem sx={{ color: 'black' }} onClick={handleClose}>Profile</MenuItem> */}
+                  <MenuItem sx={{ color: 'black' }} onClick={() => navigate('/myorders')}>My Orders</MenuItem>
+                  <MenuItem sx={{ color: 'black' }} onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </Box>}
             <List>
               {navigation.map((item, i) => (
                 <ListItem key={i} disablePadding>

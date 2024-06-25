@@ -5,6 +5,8 @@ import Colorfull from "../views/colorfull";
 import Contact from "../views/contact";
 import Login from "../views/auth/signup";
 import ProductModal from "../views/modal/ProductModal";
+import Order from "../views/order";
+import MyOrders from "../views/myOrders";
 
 
 const Webroutes = [
@@ -27,6 +29,14 @@ const Webroutes = [
   {
     path: "/contact-us",
     component: <Contact />
+  },
+  {
+    path: "/order",
+    component: <Order />
+  },
+  {
+    path: "/myorders",
+    component: <MyOrders />
   },
   {
     path: "/checkout",

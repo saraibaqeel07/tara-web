@@ -13,6 +13,7 @@ import { ToasterContainer } from "./app/components/Toaster";
 
 
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { AuthContext } from "./app/Context/AuthContext";
 
 
 const theme = createTheme({
@@ -67,9 +68,9 @@ const initialOptions = {
 
 function App() {
   let token = localStorage.getItem("token")
-  console.log(token);
+  console.log(Adminroutes);
   const [tokenState, setTokenState] = useState(null)
-
+  const [user, setUser] = useState("");
   useEffect(() => {
     token = localStorage.getItem("token")
     console.log(localStorage.getItem("token"), 'asasasas');
@@ -107,6 +108,7 @@ function App() {
   return (
     <PayPalScriptProvider options={initialOptions}>
     <ThemeProvider theme={theme}>
+    <AuthContext.Provider value={{ user, setUser }}>
       <ToasterContainer/>
       <BrowserRouter>
     
@@ -123,6 +125,7 @@ function App() {
           </Route>}
         </Routes>
       </BrowserRouter>
+      </AuthContext.Provider>
     </ThemeProvider>
     </PayPalScriptProvider>
   );

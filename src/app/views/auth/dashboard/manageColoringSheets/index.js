@@ -17,7 +17,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
 
 
-function CreatePost() {
+function ManageColoringSheets() {
 
   const {
     register,
@@ -78,45 +78,51 @@ function CreatePost() {
   const handleClose = () => {
     setOpen1(false);
   };
-
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
-    uploadBytes(storageRef, e.target.files[0]).then((snapshot) => {
-      console.log('Uploaded a blob or file!');
-      console.log(snapshot);
-
-      // Get the download URL of the uploaded file
-      getDownloadURL(snapshot.ref)
-        .then((url) => {
-          // `url` is the download URL of the uploaded file
-          console.log('Download URL:', url);
-          setImgUrl(url)
-          // You can use this URL for various purposes, such as displaying the image in an <img> element
-          const img = document.getElementById('myimg');
-          img.setAttribute('src', url);
-        })
-        .catch((error) => {
-          // Handle any errors
-          console.error('Error getting download URL:', error);
-        });
-    })
-      .catch((error) => {
-        // Handle any errors during upload
-        console.error('Error uploading file:', error);
-      });
-
 
     if (selectedImage) {
       setImage(URL.createObjectURL(selectedImage));
+  
+      uploadBytes(storageRef, selectedImage)
+        .then((snapshot) => {
+          console.log('Uploaded a blob or file!');
+          console.log(snapshot);
+  
+          // Get the download URL of the uploaded file
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              console.log('Download URL:', url);
+              setImgUrl(url);
+              // You can use this URL for various purposes, such as displaying the image in an <img> element
+              const img = document.getElementById('myimg');
+              if (img) {
+                img.setAttribute('src', url);
+              } else {
+                console.error('Image element not found');
+              }
+            })
+            .catch((error) => {
+              // Handle any errors
+              console.error('Error getting download URL:', error);
+            });
+        })
+        .catch((error) => {
+          // Handle any errors during upload
+          console.error('Error uploading file:', error);
+        });
+    } else {
+      console.error('No file selected');
     }
   };
+
 
   const addProduct = async () => {
     console.log('submit');
     try {
 
       // Add a new document with a generated id.
-      const docRef = await addDoc(collection(db, "products"), {
+      const docRef = await addDoc(collection(db, "coloringsheets"), {
         name: getValues('productName'),
         price: getValues('productPrice'),
         imgUrl: imgUrl
@@ -142,7 +148,7 @@ function CreatePost() {
 
     try {
 
-      const productRef = doc(db,'products',tableId);
+      const productRef = doc(db,'coloringsheets',tableId);
 
       // Update the product fields
       await updateDoc(productRef, {
@@ -164,7 +170,7 @@ function CreatePost() {
     }
   };
   const getProducts = async () => {
-    const q = query(collection(db, "products"));
+    const q = query(collection(db, "coloringsheets"));
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -177,7 +183,7 @@ function CreatePost() {
   const handleDelete = async (id) => {
     console.log(id);
     console.log(tableId);
-    let result = await deleteDoc(doc(db, "products", tableId));
+    let result = await deleteDoc(doc(db, "coloringsheets", tableId));
     console.log(result);
     SuccessToaster('Product Deleted Successfully')
     setOpen(false)
@@ -237,7 +243,7 @@ function CreatePost() {
         id="outlined-basic"
         label="Product Price"
         variant="outlined"
-        {...register('productPricemodal', {
+        {...register2('productPricemodal', {
           required: true,
           onChange: (e) => {
             setModalValue(e.target.value);
@@ -281,7 +287,7 @@ function CreatePost() {
               {image && (
                 <div>
                   <h4>Image Preview:</h4>
-                  <img src={image} alt="Preview" style={{ maxWidth: '100%' }} />
+                  <img src={image} id='myimg' alt="Preview" style={{ maxWidth: '100%' }} />
                 </div>
               )}
             </Grid>
@@ -338,4 +344,4 @@ function CreatePost() {
   )
 }
 
-export default CreatePost
+export default ManageColoringSheets
