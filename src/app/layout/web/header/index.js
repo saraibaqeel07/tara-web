@@ -33,6 +33,7 @@ function Header(props) {
 
     signOut(auth).then(() => {
       console.log('logout');
+      localStorage.clear()
       setUser('')
     }).catch((error) => {
       // An error happened.

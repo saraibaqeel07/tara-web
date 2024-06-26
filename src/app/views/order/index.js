@@ -73,14 +73,20 @@ function Order() {
     const onSubmit = (formData) => {
         let User = localStorage.getItem('user')
         User = JSON.parse(User)
+
+        console.log(User,'UserUserUser');
         if (!User) {
             handleGoogleLogin()
 
+
+        }
+        else {
+            setModalOpen(true)
         }
 
         console.log("🚀 ~ onSubmit ~ formData:", formData)
-        setModalOpen(true)
-        
+
+
 
     }
     const handleGoogleLogin = async () => {
@@ -111,7 +117,7 @@ function Order() {
                 amount: totalPrice,
                 status: 'pending',
                 details: state,
-                
+
                 created_at: moment().format('MMMM Do YYYY, h:mm a')
 
 
@@ -142,7 +148,7 @@ function Order() {
                 lname: getValues('lName'),
                 email: getValues('email'),
                 comment: comment,
-                profile:User.photoURL,
+                profile: User.photoURL,
                 rating: rating,
                 created_at: moment().format('MMMM Do YYYY, h:mm a')
 
@@ -166,7 +172,7 @@ function Order() {
         }
     };
 
-    const onCreateOrder = (data,actions) => {
+    const onCreateOrder = (data, actions) => {
         return actions.order.create({
             purchase_units: [
                 {
@@ -178,7 +184,7 @@ function Order() {
         });
     }
 
-    const onApproveOrder = (data,actions) => {
+    const onApproveOrder = (data, actions) => {
         return actions.order.capture().then((details) => {
             const name = details.payer.name.given_name;
             alert(`Transaction completed by ${name}`);
@@ -232,9 +238,9 @@ function Order() {
                 width: "100%"
             }}
         >
-            <Modal  open={modalOpen} onCancel={handleModalClose} footer={[]}>
-                <Box sx={{mt:'20px'}}>
-                    
+            <Modal open={modalOpen} onCancel={handleModalClose} footer={[]}>
+                <Box sx={{ mt: '20px' }}>
+
 
 
                     <ul className='totalprize'>
@@ -382,7 +388,7 @@ function Order() {
             </Grid>
           </Box>
         </Container> */}
-               
+
                 <Typography sx={{ fontSize: '30px', color: 'black', fontWeight: 'bold', textAlign: 'center', mb: '20px' }} variant="h6">
                     Order Summary
                 </Typography>
