@@ -1,5 +1,6 @@
 import ManageExtraSheets from "../views/auth/dashboard/Extra";
 import Faqs from "../views/auth/dashboard/Faqs";
+import Reviews from "../views/auth/dashboard/Reviews";
 import ManageActivitySheets from "../views/auth/dashboard/activitySheets";
 import CreatePost from "../views/auth/dashboard/createpost";
 import ManageColoringSheets from "../views/auth/dashboard/manageColoringSheets";
@@ -30,6 +31,10 @@ const Adminroutes = [
   {
     path: "faqs",
     component: <Faqs />
+  },
+  {
+    path: "reviews",
+    component: <Reviews />
   },
 ]
 

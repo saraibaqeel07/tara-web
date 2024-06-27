@@ -147,6 +147,7 @@ function Order() {
                 fname: getValues('fName'),
                 lname: getValues('lName'),
                 email: getValues('email'),
+                name:getValues('fname')+getValues('lname'),
                 comment: comment,
                 profile: User.photoURL,
                 rating: rating,

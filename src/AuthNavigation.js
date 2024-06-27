@@ -23,6 +23,10 @@ const authNavigation = [
     path: "/admin/faqs",
     name: " Faqs"
   },
+  {
+    path: "/admin/reviews",
+    name: "Reviews"
+  },
 ]
 
 export default authNavigation;
