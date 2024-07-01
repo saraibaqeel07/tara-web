@@ -5,7 +5,9 @@ import Fonts from '../../styles/fonts'
 import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images'
 
 function Character() {
-
+  const handleEmailClick = (emailAddress) => {
+    window.location.href = `mailto:${emailAddress}`;
+  };
   const characterData = [
     {
       name: "Tara",
@@ -416,11 +418,15 @@ function Character() {
                       >
                         {item.profession}
                       </Typography>
+                      <Box component={'div'} sx={{cursor:'pointer',textDecoration:'underline',color:'blue'}} onClick={()=> handleEmailClick(item.email)} >
                       <Typography
+                      
                         variant='caption'
+                        
                       >
                         {item.email}
                       </Typography>
+                      </Box>
                     </Box>
                   </Box>
                 </Grid>

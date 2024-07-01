@@ -141,23 +141,28 @@ function Home() {
   const sliderData = [
     {
       image: Images.sliderImage1,
-      title: "5 Pillars With The Neighbors"
+      title: "Jungle Adventure",
+      url:'https://www.youtube.com/watch?v=JjEc2iIPaYE'
     },
     {
       image: Images.sliderImage2,
-      title: "Rome, Italy"
+      title: "Bugs Adventure",
+      url:'https://www.youtube.com/watch?v=vbu-5oSw_zU'
     },
     {
       image: Images.sliderImage3,
-      title: "Rome, Italy"
+      title: "Space Adventure",
+      url:'https://www.youtube.com/watch?v=SCyHeBrBgbI'
     },
     {
       image: Images.sliderImage4,
-      title: "Tag Game"
+      title: "Heart Warming Sibling Race",
+      url:'https://www.youtube.com/watch?v=sG8hhCjMOXo'
     },
     {
       image: Images.sliderImage5,
-      title: "Dealing With Sibling"
+      title: "Story Of Miraj",
+      url:'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
     },
   ];
 
@@ -193,6 +198,7 @@ function Home() {
       price: "$13"
     },
   ]
+  
 
 
   const getProducts = async () => {
@@ -560,6 +566,16 @@ function Home() {
                 >
                   What <span style={{ color: Colors.purple }}>Shine And Tara</span> Have For You
                 </Typography>
+                <Typography
+                  variant='h3'
+                  sx={{
+                    mt:'20px',
+                    fontSize: { md: "44px", xs: "32px" },
+                    fontWeight: 900
+                  }}
+                >
+                  <span style={{ color: Colors.purple }}>Shop</span> 
+                </Typography>
               </Box>
               <Grid container columnSpacing={2} justifyContent={"center"} alignItems={"center"}>
                 <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
@@ -706,7 +722,9 @@ function Home() {
               {sliderData.map((item, i) => (
                 <Box
                   key={i}
-                  sx={{ p: 3 }}
+                  sx={{ p: 3,borderRadius:'20px' ,cursor:'pointer'}}
+                  component={'div'}
+                  onClick={() => window.open(item?.url, '_blank')}
                 >
                   <CardMedia
                     component={"img"}
@@ -715,12 +733,16 @@ function Home() {
                       width: "100%",
                       height: "100%",
                       objectFit: "contain",
+                      borderTopLeftRadius:'20px',
+                      borderTopRightRadius:'20px'
                     }}
                   />
                   <Box
                     sx={{
                       background: Colors.yellow,
                       textAlign: "center",
+                      borderBottomLeftRadius:'20px',
+                      borderBottomRightRadius:'20px',
                       p: 3,
                       // mx: item.title == "Dealing With Sibling"
                       //   ? "32px" : item.title == "5 Pillars With The Neighbors"
@@ -1126,6 +1148,26 @@ function Home() {
                   objectFit: "contain"
                 }}
               />
+            </Box>
+            <Box sx={{display:'flex',justifyContent:'center'}}>
+            <Grid container justifyContent={"center"} lg={6} md={6} sm={12}>
+            <Button
+                          fullWidth
+                          variant='contained'
+                          sx={{
+                          mt:2,
+                            py: 2,
+                            px: 1,
+                            textTransform: "capitalize",
+                            fontSize: "18px",
+                            textAlign:'center'
+                          }}
+                          target='blank'
+                          href='https://www.youtube.com/playlist?list=PLDQNq7EHiGH9lHkx1jYLhwwv4AtCXesaK'
+                        >
+                          See More
+                        </Button>
+            </Grid>
             </Box>
           </Container>
         </Box>
