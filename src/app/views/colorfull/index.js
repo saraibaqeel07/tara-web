@@ -6,9 +6,9 @@ import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
 
 function Colorfull() {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   useEffect(() => {
-    
+
     const intervalId = setInterval(() => {
       // Generate a random color
 
@@ -158,86 +158,86 @@ function Colorfull() {
                 </Box>
                 <Box>
                   <Grid container justifyContent={'space-between'}>
-                  <Grid md={5} item >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        borderRadius: "20px",
-                        position: 'relative'
-                      }}
-                    >
-
-
-                      <CardMedia
-                        component={"img"}
-                        src={Images?.colorCardImg1}
-                        sx={{
-                          height: "400px",
-                          borderRadius: "20px 20px 0px 0px"
-                        }}
-                      />
+                    <Grid md={5} item >
                       <Box
-                      component={'div'}
-                      onClick={()=> navigate('/')}
                         sx={{
-                          backgroundColor: "#C77805",
-                          p: 2,
                           display: "flex",
-                          justifyContent: "space-between",
-                          borderRadius: "0px 0px 20px 20px",
-                          cursor:'pointer'
+                          flexDirection: "column",
+                          borderRadius: "20px",
+                          position: 'relative'
                         }}
                       >
-                        <Typography sx={{ textAlign: 'center' }}>
-                          Learning & Activity
-                        </Typography>
-                        <Typography sx={{ textAlign: 'center' }}>
-                          See More
-                        </Typography>
+
+
+                        <CardMedia
+                          component={"img"}
+                          src={Images?.colorCardImg1}
+                          sx={{
+                            height: "400px",
+                            borderRadius: "20px 20px 0px 0px"
+                          }}
+                        />
+                        <Box
+                          component={'div'}
+                          onClick={() => navigate('/')}
+                          sx={{
+                            backgroundColor: "#C77805",
+                            p: 2,
+                            display: "flex",
+                            justifyContent: "space-between",
+                            borderRadius: "0px 0px 20px 20px",
+                            cursor: 'pointer'
+                          }}
+                        >
+                          <Typography sx={{ textAlign: 'center' }}>
+                            Learning & Activity
+                          </Typography>
+                          <Typography sx={{ textAlign: 'center' }}>
+                            See More
+                          </Typography>
+                        </Box>
                       </Box>
-                    </Box>
-                  </Grid>
-                  <Grid md={5} item >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        borderRadius: "20px",
-                        position: 'relative'
-                      }}
-                    >
-
-
-                      <CardMedia
-                        component={"img"}
-                        src={Images?.colorCardImg2}
-                        sx={{
-                          height: "400px",
-                          borderRadius: "20px 20px 0px 0px"
-                        }}
-                      />
+                    </Grid>
+                    <Grid md={5} item >
                       <Box
-                       component={'div'}
-                       onClick={()=> navigate('/')}
                         sx={{
-                          backgroundColor: "#C77805",
-                          p: 2,
                           display: "flex",
-                          justifyContent: "space-between",
-                          borderRadius: "0px 0px 20px 20px",
-                          cursor:'pointer'
+                          flexDirection: "column",
+                          borderRadius: "20px",
+                          position: 'relative'
                         }}
                       >
-                        <Typography sx={{ textAlign: 'center' }}>
-                          Coloring Book
-                        </Typography>
-                        <Typography sx={{ textAlign: 'center' }}>
-                          See More
-                        </Typography>
+
+
+                        <CardMedia
+                          component={"img"}
+                          src={Images?.colorCardImg2}
+                          sx={{
+                            height: "400px",
+                            borderRadius: "20px 20px 0px 0px"
+                          }}
+                        />
+                        <Box
+                          component={'div'}
+                          onClick={() => navigate('/')}
+                          sx={{
+                            backgroundColor: "#C77805",
+                            p: 2,
+                            display: "flex",
+                            justifyContent: "space-between",
+                            borderRadius: "0px 0px 20px 20px",
+                            cursor: 'pointer'
+                          }}
+                        >
+                          <Typography sx={{ textAlign: 'center' }}>
+                            Coloring Book
+                          </Typography>
+                          <Typography sx={{ textAlign: 'center' }}>
+                            See More
+                          </Typography>
+                        </Box>
                       </Box>
-                    </Box>
-                  </Grid>
+                    </Grid>
                   </Grid>
                 </Box>
                 <Box
@@ -246,7 +246,7 @@ function Colorfull() {
                     justifyContent: "center",
                     gap: "10px",
                     alignItems: "center",
-                    mt:'100px'
+                    mt: '100px'
                   }}
                 >
                   <CardMedia
@@ -282,10 +282,11 @@ function Colorfull() {
                 <Grid item xs={12} md={6}>
                   <Box sx={{ mt: 20 }}>
                     <Typography
+                      onClick={() => navigate('/')}
                       variant='p'
                       sx={{
                         fontSize: { md: '18px', xs: '18px', lg: '18px' },
-
+                        cursor: 'pointer',
                         color: Colors.white,
                         textAlign: 'center'
                       }}
@@ -305,10 +306,11 @@ function Colorfull() {
                         }}
                       />
                       <Typography
+                        onClick={() => navigate('/')}
                         variant='p'
                         sx={{
                           fontSize: { md: '18px', xs: '18px', lg: '18px' },
-
+                          cursor: 'pointer',
                           color: Colors.white,
                           textAlign: 'left'
                         }}
@@ -336,10 +338,11 @@ function Colorfull() {
                         }}
                       />
                       <Typography
+                        onClick={() => navigate('/')}
                         variant='p'
                         sx={{
                           fontSize: { md: '18px', xs: '18px', lg: '18px' },
-
+                          cursor: 'pointer',
                           color: Colors.white,
                           textAlign: 'left'
                         }}
@@ -367,10 +370,11 @@ function Colorfull() {
                         }}
                       />
                       <Typography
+                        onClick={() => navigate('/')}
                         variant='p'
                         sx={{
                           fontSize: { md: '18px', xs: '18px', lg: '18px' },
-
+                          cursor: 'pointer',
                           color: Colors.white,
                           textAlign: 'left'
                         }}
@@ -412,7 +416,7 @@ function Colorfull() {
           </Container>
         </Box>
       </Box>
-    </Box>
+    </Box >
   )
 }
 
