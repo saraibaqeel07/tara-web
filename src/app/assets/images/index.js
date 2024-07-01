@@ -20,6 +20,8 @@ const Images = {
   cardImg4: require("./cardImg4.png"),
   cardImg5: require("./cardImg5.png"),
   cardImg6: require("./cardImg6.png"),
+  colorCardImg1: require("./colorCard1.png"),
+  colorCardImg2: require("./colorCard2.png"),
   mainBackground: require("./background.png"),
   colorfullBack: require("./colorfullBack.png"),
   topper: require("./topper.png"),
