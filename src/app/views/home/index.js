@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup, TextField, Drawer, Accordion, AccordionSummary, AccordionDetails, Rating } from '@mui/material';
 import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images';
 import Colors from '../../styles/colors';
@@ -10,7 +10,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
 import ProductModal from '../modal/ProductModal';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Avatar, Divider } from 'antd';
 import CloseIcon from '@mui/icons-material/Close';
@@ -19,12 +19,16 @@ import { Star } from '@mui/icons-material';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import 'swiper/css';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { CartContext } from '../../Context/CartContext';
 
 // import "slick-carousel/slick/slick-theme.css";
 
 
 
 function Home() {
+const {state}=useLocation()
+const { cartVisible } = useContext(CartContext);
+console.log(cartVisible,'cartVisible');
 
   const firebaseConfig = {
     apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
@@ -64,6 +68,7 @@ function Home() {
     }, 0);
     setTotalAmount(totalPrice)
     setCartItems(updatedData);
+    localStorage.setItem('cartData',updatedData)
   };
 
   const handleDecrement = (id) => {
@@ -73,6 +78,7 @@ function Home() {
     }, 0);
     setTotalAmount(totalPrice)
     setCartItems(updatedData);
+    localStorage.setItem('cartData',updatedData)
   };
 
   const toggleDrawer = (isOpen) => (event) => {
@@ -207,8 +213,14 @@ function Home() {
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-    console.log('books', dataArray);
-    setProducts(dataArray)
+    
+    const sortedData = dataArray.sort((a, b) => {
+      return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
+    });
+    console.log('books', sortedData);
+    // Update state with sorted data
+    setProducts(sortedData);
+   
 
   }
 
@@ -217,8 +229,11 @@ function Home() {
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const sortedData = dataArray.sort((a, b) => {
+      return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
+    });
 
-    setActivitySheets(dataArray)
+    setActivitySheets(sortedData)
 
 
   }
@@ -229,10 +244,13 @@ function Home() {
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
+    const sortedData = dataArray.sort((a, b) => {
+      return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
+    });
 
-    console.log('getColoringSheets', dataArray);
-
-    setColoringSheets(dataArray)
+    // Update state with sorted data
+    setColoringSheets(sortedData);
+    
   }
 
   const getExtrasheets = async () => {
@@ -240,8 +258,11 @@ function Home() {
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const sortedData = dataArray.sort((a, b) => {
+      return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
+    });
 
-    setExtraSheets(dataArray)
+    setExtraSheets(sortedData)
 
   }
 
@@ -284,7 +305,16 @@ function Home() {
     getExtrasheets()
     getReviews()
     getFaqs()
+    if(state){
+      setSelected('merchandise')
+    }
   }, [])
+useEffect(() => {
+  
+  setOpen(true)
+  
+ 
+}, [cartVisible])
 
 
   return (
@@ -313,6 +343,7 @@ function Home() {
                     }, 0);
                     setTotalAmount(totalPrice)
                     setCartItems(updatedData)
+                    localStorage.setItem('cartData',updatedData)
                   }}
                   sx={{ color: 'black', cursor: 'pointer' }}
                 >
@@ -785,7 +816,7 @@ function Home() {
                   {Array.isArray(products) && products?.map((card, i) => (
                     <React.Fragment key={i}>
 
-                      <Grid md={5} item >
+                      <Grid md={5} sm={8} xs={12} item >
                         <Box
                           sx={{
                             display: "flex",
@@ -794,7 +825,7 @@ function Home() {
                             position: 'relative'
                           }}
                         >
-                          <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer' }} onClick={() => {
+                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer',color:Colors.darkblue }} onClick={() => {
 
                             if (cartItems.find(item => item.id === card.id)) {
                               setOpen(true)
@@ -809,17 +840,19 @@ function Home() {
                               setOpen(true)
                             }
 
-                          }} />
+                          }} />}
 
                           <CardMedia
                             component={"img"}
                             src={card?.imgUrl}
                             sx={{
-                              height: "400px",
-                              borderRadius: "20px 20px 0px 0px"
+                              width:"100%",
+                              height: card?.price != 0 ? "400px" : '455px',
+                              borderRadius:card?.price != 0 ? "20px 20px 0px 0px" : "20px",
+                              objectFit:'cover'
                             }}
                           />
-                          <Box
+                          {card?.price != 0 && <Box
                             sx={{
                               backgroundColor: "#C77805",
                               p: 2,
@@ -832,9 +865,9 @@ function Home() {
                               {card?.name}
                             </Typography>
                             <Typography>
-                              {card?.price}
+                              $ {card?.price}
                             </Typography>
-                          </Box>
+                          </Box>}
                         </Box>
                       </Grid>
                     </React.Fragment>
@@ -878,7 +911,7 @@ function Home() {
                             position: 'relative'
                           }}
                         >
-                          <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer' }} onClick={() => {
+                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer',color:Colors.darkblue }} onClick={() => {
 
                             if (cartItems.find(item => item.id === card.id)) {
                               setOpen(true)
@@ -888,16 +921,17 @@ function Home() {
                               setOpen(true)
                             }
 
-                          }} />
+                          }} />}
                           <CardMedia
                             component={"img"}
                             src={card?.imgUrl}
                             sx={{
-                              height: "400px",
-                              borderRadius: "20px 20px 0px 0px"
+                              height: card?.price != 0 ? "400px" : '455px',
+                              borderRadius:card?.price != 0 ? "20px 20px 0px 0px" : "20px",
+                               objectFit:'cover'
                             }}
                           />
-                          <Box
+                          {card?.price != 0 && <Box
                             sx={{
                               backgroundColor: "#C77805",
                               p: 2,
@@ -910,9 +944,9 @@ function Home() {
                               {card?.name}
                             </Typography>
                             <Typography>
-                              {card?.price}
+                              $ {card?.price}
                             </Typography>
-                          </Box>
+                          </Box>}
                         </Box>
                       </Grid>
                     </React.Fragment>
@@ -956,7 +990,7 @@ function Home() {
                             position: 'relative'
                           }}
                         >
-                          <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer' }} onClick={() => {
+                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer',color:Colors.darkblue }} onClick={() => {
 
                             if (cartItems.find(item => item.id === card.id)) {
                               setOpen(true)
@@ -966,16 +1000,16 @@ function Home() {
                               setOpen(true)
                             }
 
-                          }} />
+                          }} />}
                           <CardMedia
                             component={"img"}
                             src={card?.imgUrl}
                             sx={{
-                              height: "400px",
-                              borderRadius: "20px 20px 0px 0px"
+                              height: card?.price != 0 ? "400px" : '455px',
+                              borderRadius:card?.price != 0 ? "20px 20px 0px 0px" : "20px"
                             }}
                           />
-                          <Box
+                         {card?.price != 0 && <Box
                             sx={{
                               backgroundColor: "#C77805",
                               p: 2,
@@ -988,9 +1022,9 @@ function Home() {
                               {card?.name}
                             </Typography>
                             <Typography>
-                              {card?.price}
+                              $ {card?.price}
                             </Typography>
-                          </Box>
+                          </Box>}
                         </Box>
                       </Grid>
                     </React.Fragment>
@@ -1034,7 +1068,7 @@ function Home() {
                             position: 'relative'
                           }}
                         >
-                          <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer' }} onClick={() => {
+                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer',color:Colors.darkblue }} onClick={() => {
 
                             if (cartItems.find(item => item.id === card.id)) {
                               setOpen(true)
@@ -1044,16 +1078,16 @@ function Home() {
                               setOpen(true)
                             }
 
-                          }} />
+                          }} />}
                           <CardMedia
                             component={"img"}
                             src={card?.imgUrl}
                             sx={{
-                              height: "400px",
-                              borderRadius: "20px 20px 0px 0px"
+                              height: card?.price != 0 ? "400px" : '455px',
+                              borderRadius:card?.price != 0 ? "20px 20px 0px 0px" : "20px"
                             }}
                           />
-                          <Box
+                          {card?.price != 0 && <Box
                             sx={{
                               backgroundColor: "#C77805",
                               p: 2,
@@ -1066,9 +1100,9 @@ function Home() {
                               {card?.name}
                             </Typography>
                             <Typography>
-                              {card?.price}
+                              $ {card?.price}
                             </Typography>
-                          </Box>
+                          </Box>}
                         </Box>
                       </Grid>
                     </React.Fragment>
@@ -1335,7 +1369,8 @@ function Home() {
                         display: "flex",
                         flexDirection: "column",
                         gap: "10px",
-                        backgroundColor: '#021b51'
+                        backgroundColor: '#021b51',
+                        height:'180px'
                       }}
                     >
                       <Box

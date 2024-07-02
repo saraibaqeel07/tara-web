@@ -53,3 +53,8 @@ margin: 0;
 .text-color{
   color: black !important;
 }
+@media only screen and (min-width: 1350px) {
+ .footer-img{
+  background-position-y: 70%;
+ }
+}

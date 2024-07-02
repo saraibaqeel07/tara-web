@@ -7,10 +7,16 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 function Footer() {
   const navigate = useNavigate();
+  const handleEmailClick = (emailAddress) => {
+    window.location.href = `mailto:${emailAddress}`;
+  };
   const location = useLocation();
   return (
     <Box
+    component={'div'}
+    className='footer-img'
       sx={{
+        
         backgroundImage: { md: `url(${Images.footerBg})`, sm: "none", xs: "none" },
         backgroundColor: { md: "none", sm: Colors.darkblue, xs: Colors.darkblue },
         height: "100%",
@@ -77,6 +83,7 @@ function Footer() {
                 <Youtube href='https://www.youtube.com/@Shinewithtara' />
               </IconButton>
             </Box>
+            <Box component={'div'} sx={{cursor:'pointer',color:'blue'}} onClick={()=> handleEmailClick('shineswithtara@gmail.com')} >
             <Typography
               sx={{
                 color: Colors.white
@@ -84,6 +91,7 @@ function Footer() {
             >
               shineswithtara@gmail.com
             </Typography>
+            </Box>
             <Box>
               <CreditCard />
               <PayPal />

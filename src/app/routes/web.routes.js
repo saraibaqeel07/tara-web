@@ -7,6 +7,8 @@ import Login from "../views/auth/signup";
 import ProductModal from "../views/modal/ProductModal";
 import Order from "../views/order";
 import MyOrders from "../views/myOrders";
+import { useContext } from "react";
+import { CartContext } from "../Context/CartContext";
 
 
 const Webroutes = [

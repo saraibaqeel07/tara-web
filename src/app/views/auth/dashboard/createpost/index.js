@@ -93,7 +93,10 @@ function CreatePost() {
           setImgUrl(url)
           // You can use this URL for various purposes, such as displaying the image in an <img> element
           const img = document.getElementById('myimg');
-          img.setAttribute('src', url);
+          if(img){
+            img.setAttribute('src', url);
+          }
+         
         })
         .catch((error) => {
           // Handle any errors
@@ -113,28 +116,31 @@ function CreatePost() {
 
   const addProduct = async () => {
     console.log('submit');
-    try {
+    if( !getValues('productName') ||  !getValues('productName') || !imgUrl){
 
-      // Add a new document with a generated id.
-      const docRef = await addDoc(collection(db, "products"), {
-        name: getValues('productName'),
-        price: getValues('productPrice'),
-        imgUrl: imgUrl
-      });
-      console.log("Document written with ID: ", docRef.id);
-      if (docRef.id) {
-
-        SuccessToaster('Product Add Succesfully')
-        reset()
-        setImage('')
-        getProducts()
+      try {
+  
+        // Add a new document with a generated id.
+        const docRef = await addDoc(collection(db, "products"), {
+          name: getValues('productName'),
+          price: getValues('productPrice'),
+          imgUrl: imgUrl
+        });
+        console.log("Document written with ID: ", docRef.id);
+        if (docRef.id) {
+  
+          SuccessToaster('Product Add Succesfully')
+          reset()
+          setImage('')
+          getProducts()
+        }
+        else {
+          ErrorToaster('Something Went Wrong')
+        }
+  
+      } catch (error) {
+        console.log(error);
       }
-      else {
-        ErrorToaster('Something Went Wrong')
-      }
-
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -290,8 +296,8 @@ function CreatePost() {
 
         </Grid>
 
-        <Grid container xs={9} mt={5} justifyContent={'flex-end'} s>
-          <Button type='submit' variant="contained">Add</Button>
+        <Grid container xs={9} mt={5} justifyContent={'flex-end'} >
+          <Button  onClick={()=> addProduct()} variant="contained">Add</Button>
 
         </Grid>
       </Box>

@@ -11,9 +11,12 @@ import { auth, provider } from '../../../config/firebase.config';
 import { AuthContext } from '../../../Context/AuthContext';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Avatar } from 'antd';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { CartContext } from '../../../Context/CartContext';
 
 function Header(props) {
   const location = useLocation();
+  const { cart, toggleCartVisibility } = useContext(CartContext);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState(location.pathname)
   const navigate = useNavigate();
@@ -105,8 +108,11 @@ function Header(props) {
               </Button>
             ))}
           </Box>
+          {location.pathname === '/' && <ShoppingCartIcon onClick={toggleCartVisibility} sx={{cursor:"pointer"}} />} &nbsp;&nbsp;
           {!user && !loginUser ?
-            <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button> : <Box sx={{ display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>
+           <>
+     
+           <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button></>  : <Box sx={{ display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>
              
               <Button
                 id="basic-button"

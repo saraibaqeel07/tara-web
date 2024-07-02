@@ -306,7 +306,10 @@ function Colorfull() {
                         }}
                       />
                       <Typography
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate(
+                          `/`,
+                          { state: true }
+                        )}
                         variant='p'
                         sx={{
                           fontSize: { md: '18px', xs: '18px', lg: '18px' },
@@ -338,7 +341,10 @@ function Colorfull() {
                         }}
                       />
                       <Typography
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate(
+                          `/`,
+                          { state: true }
+                        )}
                         variant='p'
                         sx={{
                           fontSize: { md: '18px', xs: '18px', lg: '18px' },
@@ -370,7 +376,10 @@ function Colorfull() {
                         }}
                       />
                       <Typography
-                        onClick={() => navigate('/')}
+                       onClick={() => navigate(
+                        `/`,
+                        { state: true }
+                      )}
                         variant='p'
                         sx={{
                           fontSize: { md: '18px', xs: '18px', lg: '18px' },

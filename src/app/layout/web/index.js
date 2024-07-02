@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from "./header/index";
 import Footer from "./footer/index";
 import { Outlet } from 'react-router-dom';
 import { Box } from '@mui/material';
+import { CartContext } from '../../Context/CartContext';
 
 function Layout() {
+
   return (
     <Box
       sx={{
