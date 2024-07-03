@@ -308,7 +308,7 @@ function Colorfull() {
                       <Typography
                         onClick={() => navigate(
                           `/`,
-                          { state: true }
+                          { state: {colorful: true,section:'coloring-section'} }
                         )}
                         variant='p'
                         sx={{
@@ -343,7 +343,7 @@ function Colorfull() {
                       <Typography
                         onClick={() => navigate(
                           `/`,
-                          { state: true }
+                          { state: {colorful: true,section:'activity-section'} }
                         )}
                         variant='p'
                         sx={{
@@ -378,7 +378,7 @@ function Colorfull() {
                       <Typography
                        onClick={() => navigate(
                         `/`,
-                        { state: true }
+                        { state: {colorful: true,section:'activity-section'} }
                       )}
                         variant='p'
                         sx={{

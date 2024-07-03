@@ -26,9 +26,10 @@ import { CartContext } from '../../Context/CartContext';
 
 
 function Home() {
-const {state}=useLocation()
-const { cartVisible } = useContext(CartContext);
-console.log(cartVisible,'cartVisible');
+  const { state } = useLocation()
+  const { cartVisible, toggleCartVisibility } = useContext(CartContext);
+
+  console.log(cartVisible, 'cartVisible');
 
   const firebaseConfig = {
     apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
@@ -68,7 +69,7 @@ console.log(cartVisible,'cartVisible');
     }, 0);
     setTotalAmount(totalPrice)
     setCartItems(updatedData);
-    localStorage.setItem('cartData',updatedData)
+    localStorage.setItem('cartData', updatedData)
   };
 
   const handleDecrement = (id) => {
@@ -78,12 +79,13 @@ console.log(cartVisible,'cartVisible');
     }, 0);
     setTotalAmount(totalPrice)
     setCartItems(updatedData);
-    localStorage.setItem('cartData',updatedData)
+    localStorage.setItem('cartData', updatedData)
   };
 
   const toggleDrawer = (isOpen) => (event) => {
     console.log('dasdasas');
     setOpen(!open);
+    toggleCartVisibility()
   };
   const getFaqs = async () => {
     const q = query(collection(db, "Faq"));
@@ -148,27 +150,27 @@ console.log(cartVisible,'cartVisible');
     {
       image: Images.sliderImage1,
       title: "Jungle Adventure",
-      url:'https://www.youtube.com/watch?v=JjEc2iIPaYE'
+      url: 'https://www.youtube.com/watch?v=JjEc2iIPaYE'
     },
     {
       image: Images.sliderImage2,
       title: "Bugs Adventure",
-      url:'https://www.youtube.com/watch?v=vbu-5oSw_zU'
+      url: 'https://www.youtube.com/watch?v=vbu-5oSw_zU'
     },
     {
       image: Images.sliderImage3,
       title: "Space Adventure",
-      url:'https://www.youtube.com/watch?v=SCyHeBrBgbI'
+      url: 'https://www.youtube.com/watch?v=SCyHeBrBgbI'
     },
     {
       image: Images.sliderImage4,
       title: "Heart Warming Sibling Race",
-      url:'https://www.youtube.com/watch?v=sG8hhCjMOXo'
+      url: 'https://www.youtube.com/watch?v=sG8hhCjMOXo'
     },
     {
       image: Images.sliderImage5,
       title: "Story Of Miraj",
-      url:'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
+      url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
     },
   ];
 
@@ -204,7 +206,7 @@ console.log(cartVisible,'cartVisible');
       price: "$13"
     },
   ]
-  
+
 
 
   const getProducts = async () => {
@@ -213,14 +215,14 @@ console.log(cartVisible,'cartVisible');
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-    
+
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
     console.log('books', sortedData);
     // Update state with sorted data
     setProducts(sortedData);
-   
+
 
   }
 
@@ -250,7 +252,7 @@ console.log(cartVisible,'cartVisible');
 
     // Update state with sorted data
     setColoringSheets(sortedData);
-    
+
   }
 
   const getExtrasheets = async () => {
@@ -299,22 +301,36 @@ console.log(cartVisible,'cartVisible');
 
 
   useEffect(() => {
-    getProducts()
-    getColoringSheets()
-    getActivitySheets()
-    getExtrasheets()
-    getReviews()
-    getFaqs()
-    if(state){
-      setSelected('merchandise')
+    getProducts();
+    getColoringSheets();
+    getActivitySheets();
+    getExtrasheets();
+    getReviews();
+    getFaqs();
+
+    if (state?.colorful) {
+      setSelected('merchandise');
+
+      // Delay execution by 2 seconds
+      setTimeout(() => {
+        
+        let element = document.getElementById(state?.section);
+        console.log(element, 'element');
+        if (element) {
+          console.log(element, 'eeee');
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 2000);
     }
-  }, [])
-useEffect(() => {
-  
-  setOpen(true)
-  
- 
-}, [cartVisible])
+  }, []);
+
+
+  useEffect(() => {
+
+    setOpen(cartVisible)
+
+
+  }, [cartVisible])
 
 
   return (
@@ -343,7 +359,7 @@ useEffect(() => {
                     }, 0);
                     setTotalAmount(totalPrice)
                     setCartItems(updatedData)
-                    localStorage.setItem('cartData',updatedData)
+                    localStorage.setItem('cartData', updatedData)
                   }}
                   sx={{ color: 'black', cursor: 'pointer' }}
                 >
@@ -600,12 +616,12 @@ useEffect(() => {
                 <Typography
                   variant='h3'
                   sx={{
-                    mt:'20px',
+                    mt: '20px',
                     fontSize: { md: "44px", xs: "32px" },
                     fontWeight: 900
                   }}
                 >
-                  <span style={{ color: Colors.purple }}>Shop</span> 
+                  <span style={{ color: Colors.purple }}>Shop</span>
                 </Typography>
               </Box>
               <Grid container columnSpacing={2} justifyContent={"center"} alignItems={"center"}>
@@ -753,7 +769,7 @@ useEffect(() => {
               {sliderData.map((item, i) => (
                 <Box
                   key={i}
-                  sx={{ p: 3,borderRadius:'20px' ,cursor:'pointer'}}
+                  sx={{ p: 3, borderRadius: '20px', cursor: 'pointer' }}
                   component={'div'}
                   onClick={() => window.open(item?.url, '_blank')}
                 >
@@ -764,16 +780,16 @@ useEffect(() => {
                       width: "100%",
                       height: "100%",
                       objectFit: "contain",
-                      borderTopLeftRadius:'20px',
-                      borderTopRightRadius:'20px'
+                      borderTopLeftRadius: '20px',
+                      borderTopRightRadius: '20px'
                     }}
                   />
                   <Box
                     sx={{
                       background: Colors.yellow,
                       textAlign: "center",
-                      borderBottomLeftRadius:'20px',
-                      borderBottomRightRadius:'20px',
+                      borderBottomLeftRadius: '20px',
+                      borderBottomRightRadius: '20px',
                       p: 3,
                       // mx: item.title == "Dealing With Sibling"
                       //   ? "32px" : item.title == "5 Pillars With The Neighbors"
@@ -825,7 +841,7 @@ useEffect(() => {
                             position: 'relative'
                           }}
                         >
-                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer',color:Colors.darkblue }} onClick={() => {
+                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }} onClick={() => {
 
                             if (cartItems.find(item => item.id === card.id)) {
                               setOpen(true)
@@ -846,10 +862,10 @@ useEffect(() => {
                             component={"img"}
                             src={card?.imgUrl}
                             sx={{
-                              width:"100%",
+                              width: "100%",
                               height: card?.price != 0 ? "400px" : '455px',
-                              borderRadius:card?.price != 0 ? "20px 20px 0px 0px" : "20px",
-                              objectFit:'cover'
+                              borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px",
+                              objectFit: 'cover'
                             }}
                           />
                           {card?.price != 0 && <Box
@@ -878,6 +894,7 @@ useEffect(() => {
             </Box>
             <Box
               component={"section"}
+              id='activity-section'
               sx={{
                 background: Colors.whiteblue,
                 height: "100%",
@@ -911,7 +928,7 @@ useEffect(() => {
                             position: 'relative'
                           }}
                         >
-                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer',color:Colors.darkblue }} onClick={() => {
+                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }} onClick={() => {
 
                             if (cartItems.find(item => item.id === card.id)) {
                               setOpen(true)
@@ -927,8 +944,8 @@ useEffect(() => {
                             src={card?.imgUrl}
                             sx={{
                               height: card?.price != 0 ? "400px" : '455px',
-                              borderRadius:card?.price != 0 ? "20px 20px 0px 0px" : "20px",
-                               objectFit:'cover'
+                              borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px",
+                              objectFit: 'cover'
                             }}
                           />
                           {card?.price != 0 && <Box
@@ -957,6 +974,7 @@ useEffect(() => {
             </Box>
             <Box
               component={"section"}
+              id='coloring-section'
               sx={{
                 background: Colors.whiteblue,
                 height: "100%",
@@ -976,7 +994,7 @@ useEffect(() => {
                 }}
               >
               </Box>
-              <Container>
+              <Container  >
                 <Grid container spacing={2} justifyContent={"center"}>
                   {Array.isArray(coloringSheets) && coloringSheets?.map((card, i) => (
                     <React.Fragment key={i}>
@@ -990,7 +1008,7 @@ useEffect(() => {
                             position: 'relative'
                           }}
                         >
-                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer',color:Colors.darkblue }} onClick={() => {
+                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }} onClick={() => {
 
                             if (cartItems.find(item => item.id === card.id)) {
                               setOpen(true)
@@ -1006,10 +1024,10 @@ useEffect(() => {
                             src={card?.imgUrl}
                             sx={{
                               height: card?.price != 0 ? "400px" : '455px',
-                              borderRadius:card?.price != 0 ? "20px 20px 0px 0px" : "20px"
+                              borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px"
                             }}
                           />
-                         {card?.price != 0 && <Box
+                          {card?.price != 0 && <Box
                             sx={{
                               backgroundColor: "#C77805",
                               p: 2,
@@ -1035,6 +1053,7 @@ useEffect(() => {
             </Box>
             <Box
               component={"section"}
+               
               sx={{
                 background: Colors.whiteblue,
                 height: "100%",
@@ -1068,7 +1087,7 @@ useEffect(() => {
                             position: 'relative'
                           }}
                         >
-                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer',color:Colors.darkblue }} onClick={() => {
+                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }} onClick={() => {
 
                             if (cartItems.find(item => item.id === card.id)) {
                               setOpen(true)
@@ -1084,7 +1103,7 @@ useEffect(() => {
                             src={card?.imgUrl}
                             sx={{
                               height: card?.price != 0 ? "400px" : '455px',
-                              borderRadius:card?.price != 0 ? "20px 20px 0px 0px" : "20px"
+                              borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px"
                             }}
                           />
                           {card?.price != 0 && <Box
@@ -1183,25 +1202,25 @@ useEffect(() => {
                 }}
               />
             </Box>
-            <Box sx={{display:'flex',justifyContent:'center'}}>
-            <Grid container justifyContent={"center"} lg={6} md={6} sm={12}>
-            <Button
-                          fullWidth
-                          variant='contained'
-                          sx={{
-                          mt:2,
-                            py: 2,
-                            px: 1,
-                            textTransform: "capitalize",
-                            fontSize: "18px",
-                            textAlign:'center'
-                          }}
-                          target='blank'
-                          href='https://www.youtube.com/playlist?list=PLDQNq7EHiGH9lHkx1jYLhwwv4AtCXesaK'
-                        >
-                          See More
-                        </Button>
-            </Grid>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Grid container justifyContent={"center"} lg={6} md={6} sm={12}>
+                <Button
+                  fullWidth
+                  variant='contained'
+                  sx={{
+                    mt: 2,
+                    py: 2,
+                    px: 1,
+                    textTransform: "capitalize",
+                    fontSize: "18px",
+                    textAlign: 'center'
+                  }}
+                  target='blank'
+                  href='https://www.youtube.com/playlist?list=PLDQNq7EHiGH9lHkx1jYLhwwv4AtCXesaK'
+                >
+                  See More
+                </Button>
+              </Grid>
             </Box>
           </Container>
         </Box>
@@ -1370,7 +1389,7 @@ useEffect(() => {
                         flexDirection: "column",
                         gap: "10px",
                         backgroundColor: '#021b51',
-                        height:'180px'
+                        height: '180px'
                       }}
                     >
                       <Box
@@ -1418,8 +1437,8 @@ useEffect(() => {
                             }}
                           >
 
-                          </Box> 
-                          <Rating name="read-only" value={item?.rating} sx={{borderColor:'white'}} readOnly />
+                          </Box>
+                          <Rating name="read-only" value={item?.rating} sx={{ borderColor: 'white' }} readOnly />
                         </Box>
                       </Box>
                       <Typography
