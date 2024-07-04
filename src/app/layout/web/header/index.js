@@ -21,7 +21,7 @@ function Header(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState(location.pathname)
   const { count } = useContext(CartCounter);
- 
+
   const navigate = useNavigate();
   let loginUser = localStorage.getItem('user')
   loginUser = JSON.parse(loginUser)
@@ -68,9 +68,9 @@ function Header(props) {
   useEffect(() => {
     setCurrentPath(location.pathname);
   }, [location.pathname]);
-useEffect(() => {
- console.log(count,'count');
-}, [count])
+  useEffect(() => {
+    console.log(count, 'count');
+  }, [count])
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -114,22 +114,22 @@ useEffect(() => {
               </Button>
             ))}
           </Box>
-          {location.pathname === '/' && <Badge badgeContent={count} color="primary"> <ShoppingCartIcon onClick={toggleCartVisibility} sx={{cursor:"pointer"}} /></Badge>} &nbsp;&nbsp;
+          {true && <Badge badgeContent={count} color="primary"> <ShoppingCartIcon onClick={toggleCartVisibility} sx={{ cursor: "pointer" }} /></Badge>} &nbsp;&nbsp;
           {!user && !loginUser ?
-           <>
-     
-           <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button></>  : <Box sx={{ display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>
-             
+            <>
+
+              <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button></> : <Box sx={{ display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>
+
               <Button
                 id="basic-button"
                 aria-controls={open ? 'basic-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
-                sx={{color:'white', display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}
+                sx={{ color: 'white', display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}
               >
-                <Avatar alt="Remy Sharp"  sx={{ width: 56, height: 56 }}
-   src={loginUser.photoURL} />
+                <Avatar alt="Remy Sharp" sx={{ width: 56, height: 56 }}
+                  src={loginUser.photoURL} /> &nbsp;&nbsp;
                 {loginUser?.displayName}
               </Button>
               <Button
@@ -138,10 +138,10 @@ useEffect(() => {
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
-                sx={{color:'white', display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}
+                sx={{ color: 'white', display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}
               >
                 <Avatar alt="Remy Sharp" sx={{ width: 56, height: 56 }} src={loginUser.photoURL} />
-               
+
               </Button>
               <Menu
                 id="basic-menu"
@@ -203,7 +203,7 @@ useEffect(() => {
             <Divider />
             {!user && !loginUser ? <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button> :
               <Box mb={1} mt={1}> <Box >{loginUser.displayName}</Box>
-                
+
               </Box>
             }
             {!user && !loginUser ?

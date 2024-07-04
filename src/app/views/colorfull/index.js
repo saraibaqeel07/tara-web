@@ -1,14 +1,99 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup, TextField } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
+import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup, TextField, Divider, Drawer } from '@mui/material';
 import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images';
 import Colors from '../../styles/colors';
 import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
+import { CartContext } from '../../Context/CartContext';
+import { CartCounter } from '../../Context/CartCounter';
+import CloseIcon from '@mui/icons-material/Close';
+import Fonts from '../../styles/fonts';
 
 function Colorfull() {
   const navigate = useNavigate()
+  
+  const [selected, setSelected] = useState("mission");
+  const [cartItems, setCartItems] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0)
+  const { cartVisible, toggleCartVisibility } = useContext(CartContext);
+  const { setCount } = useContext(CartCounter);
+  const [open, setOpen] = useState(false);
+
+  console.log(cartVisible, 'cartVisible');
+  const buttons = [
+    <Button
+      key="mission"
+      variant={selected == 'mission' ? "contained" : "outlined"}
+      color="secondary"
+      sx={{
+        // width: { md: "180px", sm: "150px", xs: "100%" },
+        // background: selected == "mission" ? Colors.darkblue : "transparent",
+        // color: selected == "mission" ? Colors.white : Colors.darkblue,
+        width: "100%",
+        px: 4,
+        py: 1.5
+      }}
+      onClick={() => setSelected("mission")}
+    >
+      Mission
+    </Button>,
+    <Button
+      key="vision"
+      variant={selected == 'vision' ? "contained" : "outlined"}
+      color="secondary"
+      sx={{
+        // width: { md: "180px", sm: "150px", xs: "100%" },
+        // background: selected == "vision" ? Colors.darkblue : "transparent",
+        // color: selected == "vision" ? Colors.white : Colors.darkblue,
+        width: "100%",
+        px: 4,
+        py: 1.5
+      }}
+      onClick={() => setSelected("vision")}
+    >
+      Vision
+    </Button>,
+  ];
+
+
+  const handleIncrement = (id) => {
+    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item)
+    const totalPrice = updatedData.reduce((total, item) => {
+      return total + (parseFloat(item.price) * item.quantity);
+    }, 0);
+    setTotalAmount(totalPrice)
+    setCartItems(updatedData);
+    setCount(updatedData?.length)
+    localStorage.setItem('cartData', JSON.stringify(updatedData))
+  };
+
+  const handleDecrement = (id) => {
+    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 0 } : item)
+    const totalPrice = updatedData.reduce((total, item) => {
+      return total + (parseFloat(item.price) * item.quantity);
+    }, 0);
+    setTotalAmount(totalPrice)
+    setCartItems(updatedData);
+    setCount(updatedData?.length)
+    localStorage.setItem('cartData', JSON.stringify(updatedData))
+  };
+  const toggleDrawer = (isOpen) => (event) => {
+    console.log('dasdasas');
+    setOpen(!open);
+    toggleCartVisibility()
+  };
   useEffect(() => {
 
+    let cart = localStorage.getItem('cartData')
+    cart = JSON.parse(cart)
+    if (cart?.length > 0) {
+      setCartItems(cart)
+      setCount(cart.length)
+      const totalPrice = cart.reduce((total, item) => {
+        return total + (parseFloat(item.price) * item.quantity);
+      }, 0);
+      setTotalAmount(totalPrice)
+    }
     const intervalId = setInterval(() => {
       // Generate a random color
 
@@ -38,6 +123,13 @@ function Colorfull() {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  useEffect(() => {
+
+    setOpen(cartVisible)
+
+
+  }, [cartVisible])
   return (
     <Box
       component={"main"}
@@ -45,6 +137,89 @@ function Colorfull() {
         width: "100%"
       }}
     >
+       <Drawer
+        anchor="right"
+        open={open}
+        onClose={toggleDrawer(false)}
+      >
+        <Box
+          sx={{ width: 400, padding: 2 }}
+          role="presentation"
+
+        >
+          <Box display="flex" flexWrap="wrap">
+
+            {cartItems?.length > 0 ? cartItems?.map((product, index) => (
+              <React.Fragment key={index}>
+                <Box
+                  component={'div'}
+                  onClick={() => {
+                    const updatedData = cartItems.filter(item => product.id != item.id)
+                    const totalPrice = updatedData.reduce((total, item) => {
+                      return total + (parseFloat(item.price) * item.quantity);
+                    }, 0);
+                    setTotalAmount(totalPrice)
+                    setCartItems(updatedData)
+                    setCount(updatedData?.length)
+                    localStorage.setItem('cartData', JSON.stringify(updatedData))
+                  }}
+                  sx={{ color: 'black', cursor: 'pointer',width:'100%' }}
+                >
+                  <CloseIcon />
+                </Box>
+             
+                <Box
+                  sx={{
+                    height: 100,
+                    display: 'flex',
+                    padding: 2,
+                    textAlign: 'center',
+                  }}
+                >
+
+                  <img
+                    src={product.imgUrl}
+                    alt={product.name}
+                    style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                  />
+                  <Typography sx={{ fontSize: '12px', color: 'black', width: '100px' }} variant="h6">
+                    {product.name}
+                  </Typography>
+                  <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1">
+                    ${product.price}
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: '12px', color: 'black', width: '50px', fontWeight: 'bold' }}
+                    variant="body1"
+                  >
+                    ${product.quantity ? product.quantity * product.price : 1 * product.price}
+                  </Typography>
+                  <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: '10px' }} marginTop={1}>
+                    <Button variant="contained" color="secondary" onClick={() => handleDecrement(product.id)}>
+                      -
+                    </Button>
+                    <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1" marginX={2}>
+                      {product.quantity ? product.quantity : 1}
+                    </Typography>
+                    <Button variant="contained" color="secondary" onClick={() => handleIncrement(product.id)}>
+                      +
+                    </Button>
+
+                  </Box>
+                </Box>
+                <Divider />
+              </React.Fragment>
+            )) : <Box sx={{ color: 'black', fontWeight: 'bold', margin: '0 auto' }}>No Items in Cart</Box>}
+          </Box>
+          <Box sx={{ color: 'black', fontSize: '27px', textAlign: 'center', fontFamily: Fonts.righteous, }}>Sub Total :  $ {totalAmount}</Box>
+        </Box>
+        <Button sx={{ width: '90%', textAlign: 'center', margin: '0 auto' }} variant="contained" color="secondary" onClick={() => navigate(
+          `/order`,
+          { state: cartItems }
+        )}>
+          CheckOut
+        </Button>
+      </Drawer>
       <Box
         component={"section"}
         sx={{

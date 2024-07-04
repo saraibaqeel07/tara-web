@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import { Box, Button, ButtonGroup, CardMedia, Container, Grid, Typography } from '@mui/material'
+import React, { useContext, useEffect, useState } from 'react'
+import { Box, Button, ButtonGroup, CardMedia, Container, Divider, Drawer, Grid, Typography } from '@mui/material'
 import Colors from '../../styles/colors'
 import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images'
 import Fonts from '../../styles/fonts'
+import { CartContext } from '../../Context/CartContext'
+import { CartCounter } from '../../Context/CartCounter'
+import { useNavigate } from 'react-router-dom'
+import CloseIcon from '@mui/icons-material/Close';
 
 function About() {
+  const navigate = useNavigate()
   const [selected, setSelected] = useState("mission");
+  const [cartItems, setCartItems] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0)
+  const { cartVisible, toggleCartVisibility } = useContext(CartContext);
+  const { setCount } = useContext(CartCounter);
+  const [open, setOpen] = useState(false);
 
+  console.log(cartVisible, 'cartVisible');
   const buttons = [
     <Button
       key="mission"
@@ -41,36 +52,82 @@ function About() {
       Vision
     </Button>,
   ];
+
+
+  const handleIncrement = (id) => {
+    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item)
+    const totalPrice = updatedData.reduce((total, item) => {
+      return total + (parseFloat(item.price) * item.quantity);
+    }, 0);
+    setTotalAmount(totalPrice)
+    setCartItems(updatedData);
+    setCount(updatedData?.length)
+    localStorage.setItem('cartData', JSON.stringify(updatedData))
+  };
+
+  const handleDecrement = (id) => {
+    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 0 } : item)
+    const totalPrice = updatedData.reduce((total, item) => {
+      return total + (parseFloat(item.price) * item.quantity);
+    }, 0);
+    setTotalAmount(totalPrice)
+    setCartItems(updatedData);
+    setCount(updatedData?.length)
+    localStorage.setItem('cartData', JSON.stringify(updatedData))
+  };
+  const toggleDrawer = (isOpen) => (event) => {
+    console.log('dasdasas');
+    setOpen(!open);
+    toggleCartVisibility()
+  };
   useEffect(() => {
+
+    let cart = localStorage.getItem('cartData')
+    cart = JSON.parse(cart)
+    if (cart?.length > 0) {
+      setCartItems(cart)
+      setCount(cart.length)
+      const totalPrice = cart.reduce((total, item) => {
+        return total + (parseFloat(item.price) * item.quantity);
+      }, 0);
+      setTotalAmount(totalPrice)
+    }
     const intervalId = setInterval(() => {
       // Generate a random color
-     
+
       let element = document.getElementById('muslim-text')
       let element2 = document.getElementById('islamic-text')
       let element3 = document.getElementById('cartoon-text')
-      if(element){
+      if (element) {
         console.log(element.style.color)
-        if(element.style.color =='rgb(254, 157, 4)'){
-          element.style.color='white'
-          element2.style.color=Colors.darkblue
-          element3.style.color='white'
+        if (element.style.color == 'rgb(254, 157, 4)') {
+          element.style.color = 'white'
+          element2.style.color = Colors.darkblue
+          element3.style.color = 'white'
         }
-        
-        else if(element3.style.color == 'white'){
-          element.style.color='white'
-          element2.style.color='white'
-          element3.style.color=Colors.pink
+
+        else if (element3.style.color == 'white') {
+          element.style.color = 'white'
+          element2.style.color = 'white'
+          element3.style.color = Colors.pink
         }
-        else{
-          element.style.color='rgb(254, 157, 4)'
-          element2.style.color='white'
-          element3.style.color='white'
+        else {
+          element.style.color = 'rgb(254, 157, 4)'
+          element2.style.color = 'white'
+          element3.style.color = 'white'
         }
       }
     }, 1000); // Change color every 1000ms (1 second)
 
     return () => clearInterval(intervalId);
   }, []);
+
+  useEffect(() => {
+
+    setOpen(cartVisible)
+
+
+  }, [cartVisible])
   return (
     <Box
       component={"main"}
@@ -78,6 +135,91 @@ function About() {
         width: "100%"
       }}
     >
+
+
+      <Drawer
+        anchor="right"
+        open={open}
+        onClose={toggleDrawer(false)}
+      >
+        <Box
+          sx={{ width: 400, padding: 2 }}
+          role="presentation"
+
+        >
+          <Box display="flex" flexWrap="wrap">
+
+            {cartItems?.length > 0 ? cartItems?.map((product, index) => (
+              <React.Fragment key={index}>
+                <Box
+                  component={'div'}
+                  onClick={() => {
+                    const updatedData = cartItems.filter(item => product.id != item.id)
+                    const totalPrice = updatedData.reduce((total, item) => {
+                      return total + (parseFloat(item.price) * item.quantity);
+                    }, 0);
+                    setTotalAmount(totalPrice)
+                    setCartItems(updatedData)
+                    setCount(updatedData?.length)
+                    localStorage.setItem('cartData', JSON.stringify(updatedData))
+                  }}
+                  sx={{ color: 'black', cursor: 'pointer',width:'100%' }}
+                >
+                  <CloseIcon />
+                </Box>
+             
+                <Box
+                  sx={{
+                    height: 100,
+                    display: 'flex',
+                    padding: 2,
+                    textAlign: 'center',
+                  }}
+                >
+
+                  <img
+                    src={product.imgUrl}
+                    alt={product.name}
+                    style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                  />
+                  <Typography sx={{ fontSize: '12px', color: 'black', width: '100px' }} variant="h6">
+                    {product.name}
+                  </Typography>
+                  <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1">
+                    ${product.price}
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: '12px', color: 'black', width: '50px', fontWeight: 'bold' }}
+                    variant="body1"
+                  >
+                    ${product.quantity ? product.quantity * product.price : 1 * product.price}
+                  </Typography>
+                  <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: '10px' }} marginTop={1}>
+                    <Button variant="contained" color="secondary" onClick={() => handleDecrement(product.id)}>
+                      -
+                    </Button>
+                    <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1" marginX={2}>
+                      {product.quantity ? product.quantity : 1}
+                    </Typography>
+                    <Button variant="contained" color="secondary" onClick={() => handleIncrement(product.id)}>
+                      +
+                    </Button>
+
+                  </Box>
+                </Box>
+                <Divider />
+              </React.Fragment>
+            )) : <Box sx={{ color: 'black', fontWeight: 'bold', margin: '0 auto' }}>No Items in Cart</Box>}
+          </Box>
+          <Box sx={{ color: 'black', fontSize: '27px', textAlign: 'center', fontFamily: Fonts.righteous, }}>Sub Total :  $ {totalAmount}</Box>
+        </Box>
+        <Button sx={{ width: '90%', textAlign: 'center', margin: '0 auto' }} variant="contained" color="secondary" onClick={() => navigate(
+          `/order`,
+          { state: cartItems }
+        )}>
+          CheckOut
+        </Button>
+      </Drawer>
       <Box
         component={"section"}
         sx={{

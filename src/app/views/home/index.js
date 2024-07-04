@@ -72,7 +72,7 @@ function Home() {
     setTotalAmount(totalPrice)
     setCartItems(updatedData);
     setCount(updatedData?.length)
-    localStorage.setItem('cartData', updatedData)
+    localStorage.setItem('cartData', JSON.stringify(updatedData))
   };
 
   const handleDecrement = (id) => {
@@ -83,7 +83,7 @@ function Home() {
     setTotalAmount(totalPrice)
     setCartItems(updatedData);
     setCount(updatedData?.length)
-    localStorage.setItem('cartData', updatedData)
+    localStorage.setItem('cartData', JSON.stringify(updatedData))
   };
 
   const toggleDrawer = (isOpen) => (event) => {
@@ -326,6 +326,13 @@ function Home() {
         }
       }, 2000);
     }
+
+    let cart = localStorage.getItem('cartData')
+    cart = JSON.parse(cart)
+    if (cart?.length > 0) {
+      setCartItems(cart)
+      setCount(cart.length )
+    }
   }, []);
 
 
@@ -364,7 +371,7 @@ function Home() {
                     setTotalAmount(totalPrice)
                     setCartItems(updatedData)
                     setCount(updatedData?.length)
-                    localStorage.setItem('cartData', updatedData)
+                    localStorage.setItem('cartData', JSON.stringify(updatedData))
                   }}
                   sx={{ color: 'black', cursor: 'pointer' }}
                 >
@@ -859,6 +866,7 @@ function Home() {
                                 return total + (parseFloat(item.price) * item.quantity);
                               }, 0);
                               setCount(cartItems.length)
+                              localStorage.setItem('cartData', JSON.stringify(cartItems))
                               setTotalAmount(totalPrice)
                               console.log(totalPrice);
                               setOpen(true)
