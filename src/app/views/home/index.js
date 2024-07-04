@@ -20,6 +20,7 @@ import { SwiperSlide, Swiper } from 'swiper/react';
 import 'swiper/css';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { CartContext } from '../../Context/CartContext';
+import { CartCounter } from '../../Context/CartCounter';
 
 // import "slick-carousel/slick/slick-theme.css";
 
@@ -28,6 +29,7 @@ import { CartContext } from '../../Context/CartContext';
 function Home() {
   const { state } = useLocation()
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
+  const { setCount } = useContext(CartCounter);
 
   console.log(cartVisible, 'cartVisible');
 
@@ -54,7 +56,7 @@ function Home() {
   const [coloringSheets, setColoringSheets] = useState([])
   const [activitySheets, setActivitySheets] = useState([])
   const [extraSheets, setExtraSheets] = useState([])
-  const [count, setCount] = useState(1);
+
   const [open, setOpen] = useState(false);
   const [cartArray, setCartArray] = useState([])
   const [cartItems, setCartItems] = useState(products);
@@ -69,6 +71,7 @@ function Home() {
     }, 0);
     setTotalAmount(totalPrice)
     setCartItems(updatedData);
+    setCount(updatedData?.length)
     localStorage.setItem('cartData', updatedData)
   };
 
@@ -79,6 +82,7 @@ function Home() {
     }, 0);
     setTotalAmount(totalPrice)
     setCartItems(updatedData);
+    setCount(updatedData?.length)
     localStorage.setItem('cartData', updatedData)
   };
 
@@ -109,7 +113,7 @@ function Home() {
     setIsModalOpen(true);
     console.log(item);
     setCardProduct(item)
-    setCount(1)
+
   };
   const handleOk = () => {
     setIsModalOpen(false);
@@ -313,7 +317,7 @@ function Home() {
 
       // Delay execution by 2 seconds
       setTimeout(() => {
-        
+
         let element = document.getElementById(state?.section);
         console.log(element, 'element');
         if (element) {
@@ -359,6 +363,7 @@ function Home() {
                     }, 0);
                     setTotalAmount(totalPrice)
                     setCartItems(updatedData)
+                    setCount(updatedData?.length)
                     localStorage.setItem('cartData', updatedData)
                   }}
                   sx={{ color: 'black', cursor: 'pointer' }}
@@ -816,6 +821,8 @@ function Home() {
               }}
             >
               <Box
+                component={'div'}
+                className='product-heading-img'
                 sx={{
                   backgroundImage: `url(${Images.books})`,
                   width: "100%",
@@ -851,6 +858,7 @@ function Home() {
                               const totalPrice = cartItems.reduce((total, item) => {
                                 return total + (parseFloat(item.price) * item.quantity);
                               }, 0);
+                              setCount(cartItems.length)
                               setTotalAmount(totalPrice)
                               console.log(totalPrice);
                               setOpen(true)
@@ -903,6 +911,8 @@ function Home() {
               }}
             >
               <Box
+                component={'div'}
+                className='product-heading-img'
                 sx={{
                   backgroundImage: `url(${Images.activity})`,
                   width: "100%",
@@ -935,6 +945,7 @@ function Home() {
                             }
                             else {
                               cartItems.push({ ...card, quantity: 1 })
+                              setCount(cartItems.length)
                               setOpen(true)
                             }
 
@@ -983,6 +994,8 @@ function Home() {
               }}
             >
               <Box
+                component={'div'}
+                className='product-heading-img'
                 sx={{
                   backgroundImage: `url(${Images.coloring})`,
                   width: "100%",
@@ -1015,6 +1028,7 @@ function Home() {
                             }
                             else {
                               cartItems.push({ ...card, quantity: 1 })
+                              setCount(cartItems.length)
                               setOpen(true)
                             }
 
@@ -1053,7 +1067,7 @@ function Home() {
             </Box>
             <Box
               component={"section"}
-               
+
               sx={{
                 background: Colors.whiteblue,
                 height: "100%",
@@ -1062,6 +1076,8 @@ function Home() {
               }}
             >
               <Box
+                component={'div'}
+                className='product-heading-img'
                 sx={{
                   backgroundImage: `url(${Images.extra})`,
                   width: "100%",
@@ -1094,6 +1110,7 @@ function Home() {
                             }
                             else {
                               cartItems.push({ ...card, quantity: 1 })
+                              setCount(cartItems.length)
                               setOpen(true)
                             }
 

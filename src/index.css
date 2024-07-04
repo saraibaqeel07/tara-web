@@ -60,3 +60,14 @@ margin: 0;
   background-position-y: 70%;
  }
 }
+
+@media only screen and (max-width: 800px) {
+  .product-heading-img{
+   height: 100px !important;
+  }
+ }
+ @media only screen and (max-width: 400px) {
+  .product-heading-img{
+   height: 70px !important;
+  }
+ }

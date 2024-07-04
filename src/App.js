@@ -15,6 +15,7 @@ import { ToasterContainer } from "./app/components/Toaster";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { AuthContext } from "./app/Context/AuthContext";
 import { CartContext } from "./app/Context/CartContext";
+import { CartCounter } from "./app/Context/CartCounter";
 
 
 const theme = createTheme({
@@ -73,6 +74,7 @@ function App() {
   const [tokenState, setTokenState] = useState(null)
   const [user, setUser] = useState("");
   const [cart, setCart] = useState("");
+  const [count, setCount] = useState(0)
 
   const [cartVisible, setCartVisible] = useState(false);
 
@@ -118,6 +120,7 @@ function App() {
     <ThemeProvider theme={theme}>
     <AuthContext.Provider value={{ user, setUser }}>
     <CartContext.Provider value={{ cart, setCart, cartVisible, toggleCartVisibility }}>
+    <CartCounter.Provider value={{ count, setCount }}>
       <ToasterContainer/>
       <BrowserRouter>
     
@@ -134,6 +137,7 @@ function App() {
           </Route>}
         </Routes>
       </BrowserRouter>
+      </CartCounter.Provider>
       </CartContext.Provider>
       </AuthContext.Provider>
       

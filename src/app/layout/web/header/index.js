@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CssBaseline from '@mui/material/CssBaseline';
-import { Box, AppBar, Divider, Drawer, IconButton, Menu, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button, CardMedia, MenuItem } from '@mui/material';
+import { Box, AppBar, Divider, Drawer, IconButton, Menu, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button, CardMedia, MenuItem, Badge } from '@mui/material';
 import navigation from '../../../../Navigation';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -13,12 +13,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Avatar } from 'antd';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { CartContext } from '../../../Context/CartContext';
+import { CartCounter } from '../../../Context/CartCounter';
 
 function Header(props) {
   const location = useLocation();
   const { cart, toggleCartVisibility } = useContext(CartContext);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState(location.pathname)
+  const { count } = useContext(CartCounter);
+ 
   const navigate = useNavigate();
   let loginUser = localStorage.getItem('user')
   loginUser = JSON.parse(loginUser)
@@ -65,6 +68,9 @@ function Header(props) {
   useEffect(() => {
     setCurrentPath(location.pathname);
   }, [location.pathname]);
+useEffect(() => {
+ console.log(count,'count');
+}, [count])
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -108,7 +114,7 @@ function Header(props) {
               </Button>
             ))}
           </Box>
-          {location.pathname === '/' && <ShoppingCartIcon onClick={toggleCartVisibility} sx={{cursor:"pointer"}} />} &nbsp;&nbsp;
+          {location.pathname === '/' && <Badge badgeContent={count} color="primary"> <ShoppingCartIcon onClick={toggleCartVisibility} sx={{cursor:"pointer"}} /></Badge>} &nbsp;&nbsp;
           {!user && !loginUser ?
            <>
      
