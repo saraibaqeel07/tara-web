@@ -14,8 +14,25 @@ import { Avatar } from 'antd';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { CartContext } from '../../../Context/CartContext';
 import { CartCounter } from '../../../Context/CartCounter';
+import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import firebase from 'firebase/compat/app';
+import { initializeApp } from 'firebase/app';
+import moment from 'moment';
 
 function Header(props) {
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
+    authDomain: "shinetara-86ec0.firebaseapp.com",
+    projectId: "shinetara-86ec0",
+    storageBucket: "shinetara-86ec0.appspot.com",
+    messagingSenderId: "182521981077",
+    appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
+    measurementId: "G-BHYZDHJCK9"
+  };
+  
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
   const location = useLocation();
   const { cart, toggleCartVisibility } = useContext(CartContext);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -58,6 +75,16 @@ function Header(props) {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log("User Info: ", user);
+      if(user){
+         // Add a new document with a generated id.
+         const docRef = await addDoc(collection(db, "users"), {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          lastLogin: moment().format('DD/MM/YYYY')
+        });
+        console.log("Document written with ID: ", docRef.id);
+      }
       localStorage.setItem('user', JSON.stringify(user))
       setUser(user)
       // Handle user info here (e.g., save to state, context, or redirect)
@@ -82,10 +109,10 @@ function Header(props) {
           background: Colors.primaryGradient
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{display:'flex',justifyContent:'space-between'}}>
           <Box
             component={"div"}
-            sx={{ flexGrow: 1 }}
+            sx={{ width:'20%' }}
           >
             <CardMedia
               component={"img"}
@@ -97,7 +124,7 @@ function Header(props) {
               }}
             />
           </Box>
-          <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
+          <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'none' ,xl:'block' },width:'60%' }}>
             {navigation.map((item, i) => (
               <Button
                 key={i}
@@ -114,6 +141,7 @@ function Header(props) {
               </Button>
             ))}
           </Box>
+          <Box sx={{width:'20%',display:'flex',alignItems:'center',justifyContent:'flex-end'}}>
           {true && <Badge badgeContent={count} color="primary"> <ShoppingCartIcon onClick={toggleCartVisibility} sx={{ cursor: "pointer" }} /></Badge>} &nbsp;&nbsp;
           {!user && !loginUser ?
             <>
@@ -158,18 +186,19 @@ function Header(props) {
                 <MenuItem sx={{ color: 'black' }} onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </Box>}
-
+            
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
             sx={{
-              display: { lg: 'none', md: "block", sm: "block", xs: "block" }
+              display: {xl:'none', lg: 'block', md: "block", sm: "block", xs: "block" }
             }}
           >
             <MenuIcon />
           </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
       <nav>
@@ -181,7 +210,7 @@ function Header(props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' },
+            display: { xs: 'block', sm: 'block', md: 'block', lg: 'block' ,xl:"none"},
             '& .MuiDrawer-paper': { boxSizing: 'border-box', background: Colors.primaryGradient },
           }}
         >

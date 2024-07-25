@@ -9,12 +9,27 @@ import Order from "../views/order";
 import MyOrders from "../views/myOrders";
 import { useContext } from "react";
 import { CartContext } from "../Context/CartContext";
+import Shop from "../views/shop";
+import Watch from "../views/watch";
+import EventShow from "../views/event";
 
 
 const Webroutes = [
   {
     path: "/",
     component: <Home />
+  },
+  {
+    path: "/shop",
+    component: <Shop />
+  },
+  {
+    path: "/watch",
+    component: <Watch />
+  },
+  {
+    path: "/event-show",
+    component: <EventShow />
   },
   {
     path: "/about",

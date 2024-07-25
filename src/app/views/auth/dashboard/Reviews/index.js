@@ -85,7 +85,7 @@ function Reviews() {
             // Add a new document with a generated id.
             const docRef = await addDoc(collection(db, "reviews"), {
                 name: getValues('name'),
-                comment: getValues('rating'),
+                comment: getValues('comment'),
                 rating: getValues('rating'),
 
             });
@@ -181,16 +181,37 @@ function Reviews() {
                         <TextField fullWidth inputProps={{ sx: { color: 'black !important' } }} rows={4} className='text-color' sx={{ color: 'black' }}  {...register('comment', { required: true })} error={!!errors.answer}
                             helperText={errors.comment ? "comment  is required" : ""} size='small' id="outlined-basic" label="Comment" variant="outlined" />
                     </Grid>
-                    <Grid item xs={4} >
-
-                        <TextField fullWidth inputProps={{ sx: { color: 'black !important' } }} rows={4} className='text-color' sx={{ color: 'black' }} type='number'  {...register('rating', { required: true })} error={!!errors.answer}
-                            helperText={errors.rating ? "rating  is required" : ""} size='small' id="outlined-basic" label="Rating" variant="outlined" />
-                    </Grid>
+                    <Grid item xs={4}>
+        <TextField
+          fullWidth
+          inputProps={{ 
+            sx: { color: 'black !important' }, 
+            max: 5 // this ensures that the maximum value entered cannot be more than 5
+          }}
+          rows={4}
+          className='text-color'
+          sx={{ color: 'black' }}
+          type='number'
+          {...register('rating', { 
+            required: true, 
+            max: {
+              value: 5,
+              message: "Rating cannot be more than 5" // custom error message
+            } 
+          })}
+          error={!!errors.rating}
+          helperText={errors.rating ? errors.rating.message : ""}
+          size='small'
+          id="outlined-basic"
+          label="Rating"
+          variant="outlined"
+        />
+      </Grid>
 
                 </Grid>
 
                 <Grid container xs={9} mt={5} justifyContent={'flex-end'} s>
-                    <Button type='submit' onClick={addReview} variant="contained">Add</Button>
+                    <Button type='submit'  variant="contained">Add</Button>
 
                 </Grid>
             </Box>

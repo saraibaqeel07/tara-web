@@ -92,16 +92,26 @@ function Order() {
     const handleGoogleLogin = async () => {
 
         try {
-            const result = await signInWithPopup(auth, provider);
-            const user = result.user;
-            console.log("User Info: ", user);
-            localStorage.setItem('user', JSON.stringify(user))
-            setUser(user)
-            // Handle user info here (e.g., save to state, context, or redirect)
+          const result = await signInWithPopup(auth, provider);
+          const user = result.user;
+          console.log("User Info: ", user);
+          if(user){
+             // Add a new document with a generated id.
+             const docRef = await addDoc(collection(db, "users"), {
+              uid: user.uid,
+              displayName: user.displayName,
+              email: user.email,
+              lastLogin: moment().format('DD/MM/YYYY')
+            });
+            console.log("Document written with ID: ", docRef.id);
+          }
+          localStorage.setItem('user', JSON.stringify(user))
+          setUser(user)
+          // Handle user info here (e.g., save to state, context, or redirect)
         } catch (error) {
-            console.error("Error during Google login: ", error);
+          console.error("Error during Google login: ", error);
         }
-    };
+      };
     const placeOrder = async () => {
         console.log('submit');
         try {

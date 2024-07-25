@@ -4,8 +4,20 @@ const navigation = [
     name: "Home"
   },
   {
+    path: "/shop",
+    name: "Shop"
+  },
+  {
+    path: "/watch",
+    name: "Watch"
+  },
+  {
     path: "/about",
     name: "About"
+  },
+  {
+    path: "/event-show",
+    name: "Event Show"
   },
   {
     path: "/main-character",
@@ -21,5 +33,9 @@ const navigation = [
   },
   
 ]
+// const navigation = [
+
+  
+// ]
 
 export default navigation;

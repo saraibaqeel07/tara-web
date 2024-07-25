@@ -76,7 +76,7 @@ function Home() {
   };
 
   const handleDecrement = (id) => {
-    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 0 } : item)
+    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 1 } : item)
     const totalPrice = updatedData.reduce((total, item) => {
       return total + (parseFloat(item.price) * item.quantity);
     }, 0);
@@ -331,7 +331,7 @@ function Home() {
     cart = JSON.parse(cart)
     if (cart?.length > 0) {
       setCartItems(cart)
-      setCount(cart.length )
+      setCount(cart.length)
     }
   }, []);
 
@@ -357,6 +357,7 @@ function Home() {
           role="presentation"
 
         >
+          {console.log(cartItems)}
           <Box display="flex" flexWrap="wrap">
 
             {cartItems?.length > 0 ? cartItems?.map((product, index) => (
@@ -846,7 +847,7 @@ function Home() {
                   {Array.isArray(products) && products?.map((card, i) => (
                     <React.Fragment key={i}>
 
-                      <Grid md={5} sm={8} xs={12} item >
+                      <Grid className='product-card' md={5} sm={8} xs={12} item >
                         <Box
                           sx={{
                             display: "flex",
@@ -855,26 +856,28 @@ function Home() {
                             position: 'relative'
                           }}
                         >
-                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }} onClick={() => {
+                          {/* {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }}
+                            onClick={() => {
 
-                            if (cartItems.find(item => item.id === card.id)) {
-                              setOpen(true)
-                            }
-                            else {
-                              cartItems.push({ ...card, quantity: 1 })
-                              const totalPrice = cartItems.reduce((total, item) => {
-                                return total + (parseFloat(item.price) * item.quantity);
-                              }, 0);
-                              setCount(cartItems.length)
-                              localStorage.setItem('cartData', JSON.stringify(cartItems))
-                              setTotalAmount(totalPrice)
-                              console.log(totalPrice);
-                              setOpen(true)
-                            }
+                              if (cartItems.find(item => item.id === card.id)) {
+                                setOpen(true)
+                              }
+                              else {
+                                cartItems.push({ ...card, quantity: 1 })
+                                const totalPrice = cartItems.reduce((total, item) => {
+                                  return total + (parseFloat(item.price) * item.quantity);
+                                }, 0);
+                                setCount(cartItems.length)
+                                localStorage.setItem('cartData', JSON.stringify(cartItems))
+                                setTotalAmount(totalPrice)
+                                console.log(totalPrice);
+                                setOpen(true)
+                              }
 
-                          }} />}
+                            }} />} */}
 
                           <CardMedia
+                            className='product-image'
                             component={"img"}
                             src={card?.imgUrl}
                             sx={{
@@ -901,6 +904,26 @@ function Home() {
                             </Typography>
                           </Box>}
                         </Box>
+                        {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }} onClick={() => {
+
+                          if (cartItems.find(item => item.id === card.id)) {
+                            setOpen(true)
+                          }
+                          else {
+                            cartItems.push({ ...card, quantity: 1 })
+                            const totalPrice = cartItems.reduce((total, item) => {
+                              return total + (parseFloat(item.price) * item.quantity);
+                            }, 0);
+                            setCount(cartItems.length)
+                            localStorage.setItem('cartData', JSON.stringify(cartItems))
+                            setTotalAmount(totalPrice)
+                            console.log(totalPrice);
+                            setOpen(true)
+                          }
+
+                        }}>
+                          Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
+                        </div>}
                       </Grid>
                     </React.Fragment>
                   ))}
@@ -937,7 +960,7 @@ function Home() {
                   {Array.isArray(activitySheets) && activitySheets?.map((card, i) => (
                     <React.Fragment key={i}>
 
-                      <Grid md={5} item >
+                      <Grid className='product-card' md={5} item >
                         <Box
                           sx={{
                             display: "flex",
@@ -946,19 +969,21 @@ function Home() {
                             position: 'relative'
                           }}
                         >
-                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }} onClick={() => {
+                          {/* {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }}
+                            onClick={() => {
 
-                            if (cartItems.find(item => item.id === card.id)) {
-                              setOpen(true)
-                            }
-                            else {
-                              cartItems.push({ ...card, quantity: 1 })
-                              setCount(cartItems.length)
-                              setOpen(true)
-                            }
+                              if (cartItems.find(item => item.id === card.id)) {
+                                setOpen(true)
+                              }
+                              else {
+                                cartItems.push({ ...card, quantity: 1 })
+                                setCount(cartItems.length)
+                                setOpen(true)
+                              }
 
-                          }} />}
+                            }} />} */}
                           <CardMedia
+                            className='product-image'
                             component={"img"}
                             src={card?.imgUrl}
                             sx={{
@@ -984,6 +1009,30 @@ function Home() {
                             </Typography>
                           </Box>}
                         </Box>
+                        {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }}
+                          onClick={() => {
+
+                            if (cartItems.find(item => item.id === card.id)) {
+                              setOpen(true)
+                            }
+                            else {
+                              cartItems.push({ ...card, quantity: 1 })
+
+
+                              const totalPrice = cartItems.reduce((total, item) => {
+                                return total + (parseFloat(item.price) * item.quantity);
+                              }, 0);
+                              setCount(cartItems.length)
+                              localStorage.setItem('cartData', JSON.stringify(cartItems))
+                              setTotalAmount(totalPrice)
+                              console.log(totalPrice);
+                              setOpen(true)
+
+                            }
+
+                          }} >
+                          Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
+                        </div>}
                       </Grid>
                     </React.Fragment>
                   ))}
@@ -1020,7 +1069,7 @@ function Home() {
                   {Array.isArray(coloringSheets) && coloringSheets?.map((card, i) => (
                     <React.Fragment key={i}>
 
-                      <Grid md={5} item >
+                      <Grid className='product-card' md={5} item >
                         <Box
                           sx={{
                             display: "flex",
@@ -1029,19 +1078,21 @@ function Home() {
                             position: 'relative'
                           }}
                         >
-                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }} onClick={() => {
+                          {/* {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }}
+                            onClick={() => {
 
-                            if (cartItems.find(item => item.id === card.id)) {
-                              setOpen(true)
-                            }
-                            else {
-                              cartItems.push({ ...card, quantity: 1 })
-                              setCount(cartItems.length)
-                              setOpen(true)
-                            }
+                              if (cartItems.find(item => item.id === card.id)) {
+                                setOpen(true)
+                              }
+                              else {
+                                cartItems.push({ ...card, quantity: 1 })
+                                setCount(cartItems.length)
+                                setOpen(true)
+                              }
 
-                          }} />}
+                            }} />} */}
                           <CardMedia
+                            className='product-image'
                             component={"img"}
                             src={card?.imgUrl}
                             sx={{
@@ -1066,6 +1117,29 @@ function Home() {
                             </Typography>
                           </Box>}
                         </Box>
+                        {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }}
+                          onClick={() => {
+
+                            if (cartItems.find(item => item.id === card.id)) {
+                              setOpen(true)
+                            }
+                            else {
+                              cartItems.push({ ...card, quantity: 1 })
+
+                              const totalPrice = cartItems.reduce((total, item) => {
+                                return total + (parseFloat(item.price) * item.quantity);
+                              }, 0);
+                              setCount(cartItems.length)
+                              localStorage.setItem('cartData', JSON.stringify(cartItems))
+                              setTotalAmount(totalPrice)
+                              console.log(totalPrice);
+
+                              setOpen(true)
+                            }
+
+                          }}>
+                          Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
+                        </div>}
                       </Grid>
                     </React.Fragment>
                   ))}
@@ -1102,7 +1176,7 @@ function Home() {
                   {Array.isArray(extraSheets) && extraSheets?.map((card, i) => (
                     <React.Fragment key={i}>
 
-                      <Grid md={5} item >
+                      <Grid className='product-card' md={5} item >
                         <Box
                           sx={{
                             display: "flex",
@@ -1111,19 +1185,27 @@ function Home() {
                             position: 'relative'
                           }}
                         >
-                          {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }} onClick={() => {
+                          {/* {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }}
+                            onClick={() => {
 
-                            if (cartItems.find(item => item.id === card.id)) {
-                              setOpen(true)
-                            }
-                            else {
-                              cartItems.push({ ...card, quantity: 1 })
-                              setCount(cartItems.length)
-                              setOpen(true)
-                            }
+                              if (cartItems.find(item => item.id == card.id)) {
+                                setOpen(true)
+                              }
+                              else {
+                                cartItems.push({ ...card, quantity: 1 })
+                                const totalPrice = cartItems.reduce((total, item) => {
+                                  return total + (parseFloat(item.price) * item.quantity);
+                                }, 0);
+                                setCount(cartItems.length)
+                                localStorage.setItem('cartData', JSON.stringify(cartItems))
+                                setTotalAmount(totalPrice)
+                                console.log(totalPrice);
+                                setOpen(true)
+                              }
 
-                          }} />}
+                            }} />} */}
                           <CardMedia
+                            className='product-image'
                             component={"img"}
                             src={card?.imgUrl}
                             sx={{
@@ -1148,6 +1230,27 @@ function Home() {
                             </Typography>
                           </Box>}
                         </Box>
+                        {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }}
+                          onClick={() => {
+
+                            if (cartItems.find(item => item.id == card.id)) {
+                              setOpen(true)
+                            }
+                            else {
+                              cartItems.push({ ...card, quantity: 1 })
+                              const totalPrice = cartItems.reduce((total, item) => {
+                                return total + (parseFloat(item.price) * item.quantity);
+                              }, 0);
+                              setCount(cartItems.length)
+                              localStorage.setItem('cartData', JSON.stringify(cartItems))
+                              setTotalAmount(totalPrice)
+                              console.log(totalPrice);
+                              setOpen(true)
+                            }
+
+                          }}>
+                          Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
+                        </div>}
                       </Grid>
                     </React.Fragment>
                   ))}
@@ -1340,7 +1443,7 @@ function Home() {
             </Grid>
           </Grid>
         </Box>
-        <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
+        {/* <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
           <Grid container justifyContent={"center"} alignItems={"center"} mb={5}>
             <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
               <CardMedia
@@ -1430,7 +1533,7 @@ function Home() {
                             height: 64
                           }}
                           src={item.profile}
-                          alt={`avatar${ind}`}
+                          alt={item.name}
                         />
                         <Box
                           sx={{
@@ -1448,7 +1551,7 @@ function Home() {
                               color: 'white'
                             }}
                           >
-                            {item?.fname + " " + item?.lname}
+                            {item?.name}
                             <Typography
                               variant='body2'
                               sx={{ fontWeight: 400 }}
@@ -1481,8 +1584,8 @@ function Home() {
               </Swiper>
             </Grid>
           </Box>
-        </Box>
-        <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
+        </Box> */}
+        {/* <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
           <Grid container justifyContent={"center"} alignItems={"center"} mb={5}>
             <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
               <CardMedia
@@ -1539,7 +1642,7 @@ function Home() {
               </Grid>
             ))}
           </Grid>
-        </Box>
+        </Box> */}
 
       </Box>
     </>

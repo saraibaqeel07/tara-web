@@ -1,5 +1,9 @@
 const authNavigation = [
   {
+    path: "/admin/users",
+    name: "Users List"
+  },
+  {
     path: "/admin/create-post",
     name: " Manage Books"
   },

@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./app/layout/web";
 import AdminLayout from "./app/layout/admin";
 import "@fontsource/poppins";
+
 import Colors from "./app/styles/colors";
 import Webroutes from "./app/routes/web.routes";
 import Adminroutes from "./app/routes/admin.routes";

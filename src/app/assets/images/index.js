@@ -1,5 +1,16 @@
 const Images = {
   logo: require("./Group 48095472.png"),
+  pic1: require("./WhatsApp Image 2024-07-24 at 1.12.45 AM.jpeg"),
+  pic2: require("./WhatsApp Image 2024-07-24 at 1.13.30 AM (1).jpeg"),
+  pic3: require("./WhatsApp Image 2024-07-24 at 1.13.30 AM.jpeg"),
+  pic4: require("./WhatsApp Image 2024-07-24 at 1.13.31 AM (1).jpeg"),
+  pic5: require("./WhatsApp Image 2024-07-24 at 1.13.31 AM (2).jpeg"),
+  pic6: require("./WhatsApp Image 2024-07-24 at 1.13.31 AM.jpeg"),
+  pic7: require("./WhatsApp Image 2024-07-24 at 1.13.32 AM.jpeg"),
+  pic8: require("./WhatsApp Image 2024-07-24 at 1.13.33 AM.jpeg"),
+  pic9: require("./WhatsApp Image 2024-07-24 at 1.13.35 AM.jpeg"),
+  pic10: require("./WhatsApp Image 2024-07-24 at 1.13.36 AM.jpeg"),
+  
   footerBg: require("./footer.png"),
   bannerBg: require("./bannerBg.png"),
   aboutImage: require("./about-us.png"),
@@ -51,6 +62,28 @@ const Images = {
 }
 
 export default Images;
+
+
+export const Videos = {
+  video1: require("./VID-20240719-WA0015.mp4"),
+  video2: require("./VID-20240719-WA0016.mp4"),
+  video3: require("./VID-20240719-WA0017.mp4"),
+  video4: require("./VID-20240719-WA0018.mp4"),
+  video5: require("./VID-20240719-WA0019.mp4"),
+  video6: require("./VID-20240719-WA0020.mp4"),
+  video7: require("./VID-20240719-WA0021.mp4"),
+  video8: require("./VID-20240719-WA0022.mp4"),
+  video9: require("./VID-20240719-WA0023.mp4"),
+  video10: require("./VID-20240719-WA0024.mp4"),
+  video11: require("./VID-20240719-WA0025.mp4"),
+  video12: require("./VID-20240719-WA0026.mp4"),
+  video13: require("./VID-20240719-WA0027.mp4"),
+ 
+ 
+ 
+}
+
+  
 
 export const PayPal = () => {
   return (
