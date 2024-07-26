@@ -328,10 +328,13 @@ function Home() {
     }
 
     let cart = localStorage.getItem('cartData')
-    cart = JSON.parse(cart)
-    if (cart?.length > 0) {
-      setCartItems(cart)
-      setCount(cart.length)
+    if (cart) {
+
+      cart = JSON.parse(cart)
+      if (cart?.length > 0) {
+        setCartItems(cart)
+        setCount(cart.length)
+      }
     }
   }, []);
 
@@ -594,7 +597,7 @@ function Home() {
             </Grid>
           </Container>
         </Box>
-        <Box
+        {/* <Box
           component={"section"}
           sx={{
             background: Colors.lightPurple,
@@ -856,25 +859,7 @@ function Home() {
                             position: 'relative'
                           }}
                         >
-                          {/* {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }}
-                            onClick={() => {
-
-                              if (cartItems.find(item => item.id === card.id)) {
-                                setOpen(true)
-                              }
-                              else {
-                                cartItems.push({ ...card, quantity: 1 })
-                                const totalPrice = cartItems.reduce((total, item) => {
-                                  return total + (parseFloat(item.price) * item.quantity);
-                                }, 0);
-                                setCount(cartItems.length)
-                                localStorage.setItem('cartData', JSON.stringify(cartItems))
-                                setTotalAmount(totalPrice)
-                                console.log(totalPrice);
-                                setOpen(true)
-                              }
-
-                            }} />} */}
+                         
 
                           <CardMedia
                             className='product-image'
@@ -928,7 +913,7 @@ function Home() {
                     </React.Fragment>
                   ))}
                 </Grid>
-                {/* <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} /> */}
+               
               </Container>
             </Box>
             <Box
@@ -969,19 +954,7 @@ function Home() {
                             position: 'relative'
                           }}
                         >
-                          {/* {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }}
-                            onClick={() => {
-
-                              if (cartItems.find(item => item.id === card.id)) {
-                                setOpen(true)
-                              }
-                              else {
-                                cartItems.push({ ...card, quantity: 1 })
-                                setCount(cartItems.length)
-                                setOpen(true)
-                              }
-
-                            }} />} */}
+                          
                           <CardMedia
                             className='product-image'
                             component={"img"}
@@ -1037,7 +1010,7 @@ function Home() {
                     </React.Fragment>
                   ))}
                 </Grid>
-                {/* <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} /> */}
+             
               </Container>
             </Box>
             <Box
@@ -1078,19 +1051,7 @@ function Home() {
                             position: 'relative'
                           }}
                         >
-                          {/* {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }}
-                            onClick={() => {
-
-                              if (cartItems.find(item => item.id === card.id)) {
-                                setOpen(true)
-                              }
-                              else {
-                                cartItems.push({ ...card, quantity: 1 })
-                                setCount(cartItems.length)
-                                setOpen(true)
-                              }
-
-                            }} />} */}
+                      
                           <CardMedia
                             className='product-image'
                             component={"img"}
@@ -1144,7 +1105,7 @@ function Home() {
                     </React.Fragment>
                   ))}
                 </Grid>
-                {/* <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} /> */}
+             
               </Container>
             </Box>
             <Box
@@ -1185,25 +1146,7 @@ function Home() {
                             position: 'relative'
                           }}
                         >
-                          {/* {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }}
-                            onClick={() => {
-
-                              if (cartItems.find(item => item.id == card.id)) {
-                                setOpen(true)
-                              }
-                              else {
-                                cartItems.push({ ...card, quantity: 1 })
-                                const totalPrice = cartItems.reduce((total, item) => {
-                                  return total + (parseFloat(item.price) * item.quantity);
-                                }, 0);
-                                setCount(cartItems.length)
-                                localStorage.setItem('cartData', JSON.stringify(cartItems))
-                                setTotalAmount(totalPrice)
-                                console.log(totalPrice);
-                                setOpen(true)
-                              }
-
-                            }} />} */}
+                          
                           <CardMedia
                             className='product-image'
                             component={"img"}
@@ -1255,11 +1198,11 @@ function Home() {
                     </React.Fragment>
                   ))}
                 </Grid>
-                {/* <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} /> */}
+             
               </Container>
             </Box>
           </>
-        )}
+        )} */}
         <Box
           component={"section"}
           sx={{

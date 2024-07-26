@@ -83,14 +83,17 @@ function About() {
   useEffect(() => {
 
     let cart = localStorage.getItem('cartData')
-    cart = JSON.parse(cart)
-    if (cart?.length > 0) {
-      setCartItems(cart)
-      setCount(cart.length)
-      const totalPrice = cart.reduce((total, item) => {
-        return total + (parseFloat(item.price) * item.quantity);
-      }, 0);
-      setTotalAmount(totalPrice)
+    if(cart){
+
+      cart = JSON.parse(cart)
+      if (cart?.length > 0) {
+        setCartItems(cart)
+        setCount(cart.length)
+        const totalPrice = cart.reduce((total, item) => {
+          return total + (parseFloat(item.price) * item.quantity);
+        }, 0);
+        setTotalAmount(totalPrice)
+      }
     }
     const intervalId = setInterval(() => {
       // Generate a random color

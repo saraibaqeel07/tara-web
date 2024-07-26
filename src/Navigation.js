@@ -33,9 +33,47 @@ const navigation = [
   },
   
 ]
-// const navigation = [
-
+export const navigationNested = [
+  {
+    path: "/",
+    name: "Home"
+  },
+  {
+    path: "/shop",
+    name: "Shop"
+  },
+ 
+  {
+    path: "/about",
+    name: "About"
+  },
   
-// ]
+  {
+    path: "/main-character",
+    name: "Main Character"
+  },
+  {
+    path: "/contact-us",
+    name: "Contact us"
+  },
+
+  {
+    path: "",
+    name: "More",
+    children:[  {
+      path: "/watch",
+      name: "Watch"
+    },
+    {
+      path: "/event-show",
+      name: "Event Show"
+    },
+    {
+      path: "/colorfull-club",
+      name: "Colorful Club"
+    },]
+  },
+  
+]
 
 export default navigation;

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box, AppBar, Divider, Drawer, IconButton, Menu, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button, CardMedia, MenuItem, Badge } from '@mui/material';
-import navigation from '../../../../Navigation';
+import navigation, { navigationNested } from '../../../../Navigation';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import Images from '../../../assets/images';
@@ -30,7 +30,7 @@ function Header(props) {
     appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
     measurementId: "G-BHYZDHJCK9"
   };
-  
+
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const location = useLocation();
@@ -44,11 +44,19 @@ function Header(props) {
   loginUser = JSON.parse(loginUser)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [anchorEl1, setAnchorEl1] = React.useState(null);
+  const open1 = Boolean(anchorEl1);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const handleClick1 = (event) => {
+    setAnchorEl1(event.currentTarget);
+  };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleClose1 = () => {
+    setAnchorEl1(null);
   };
   const { user, setUser } = useContext(AuthContext);
   console.log(user, 'useruseruser');
@@ -75,9 +83,9 @@ function Header(props) {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log("User Info: ", user);
-      if(user){
-         // Add a new document with a generated id.
-         const docRef = await addDoc(collection(db, "users"), {
+      if (user) {
+        // Add a new document with a generated id.
+        const docRef = await addDoc(collection(db, "users"), {
           uid: user.uid,
           displayName: user.displayName,
           email: user.email,
@@ -109,10 +117,10 @@ function Header(props) {
           background: Colors.primaryGradient
         }}
       >
-        <Toolbar sx={{display:'flex',justifyContent:'space-between'}}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box
             component={"div"}
-            sx={{ width:'20%' }}
+            sx={{ width: '20%' }}
           >
             <CardMedia
               component={"img"}
@@ -124,80 +132,118 @@ function Header(props) {
               }}
             />
           </Box>
-          <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'none' ,xl:'block' },width:'60%' }}>
-            {navigation.map((item, i) => (
-              <Button
-                key={i}
-                sx={{
-                  color: '#fff',
-                  backgroundColor: currentPath == item.path ? `${Colors.primary} !important` : "transparent",
-                  px: 4
-                }}
-                onClick={() => {
-                  navigate(item.path);
-                }}
-              >
-                {item.name}
-              </Button>
+          <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'flex', xl: 'flex' }, width: '60%' }}>
+            {navigationNested.map((item, i) => (
+              <>
+                {!item?.children ? <Button
+                  key={i}
+                  sx={{
+                    color: '#fff',
+                    backgroundColor: currentPath == item.path ? `${Colors.primary} !important` : "transparent",
+                    px: 4
+                  }}
+                  onClick={() => {
+                    navigate(item.path);
+                  }}
+                >
+                  {item.name}
+                </Button> : <> <Button
+                  id="basic-button"
+                  aria-controls={open1 ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open1 ? 'true' : undefined}
+                  onClick={handleClick1}
+                  sx={{ color: 'white', display: { xs: 'block', sm: 'block', md: 'block', lg: 'block' } }}
+                >{item?.name}
+
+
+                </Button>
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl1}
+                    open={open1}
+                    onClose={handleClose1}
+                    MenuListProps={{
+                      'aria-labelledby': 'basic-button',
+                    }}
+
+                  >
+                    {/* <MenuItem sx={{ color: 'black' }} onClick={handleClose}>Profile</MenuItem> */}
+
+                    {item?.children?.map((item, index) => (
+                      <MenuItem
+                        key={index}
+                        sx={{ color: 'black' }}
+                        onClick={() => {
+                          if (item.path) {
+                            navigate(item.path);
+                          } 
+                        }}
+                      >
+                        {item.name}
+                      </MenuItem>
+                    ))}
+                  </Menu> </>}
+              </>
             ))}
           </Box>
-          <Box sx={{width:'20%',display:'flex',alignItems:'center',justifyContent:'flex-end'}}>
-          {true && <Badge badgeContent={count} color="primary"> <ShoppingCartIcon onClick={toggleCartVisibility} sx={{ cursor: "pointer" }} /></Badge>} &nbsp;&nbsp;
-          {!user && !loginUser ?
-            <>
+          <Box sx={{ width: '20%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+            {true && <Badge badgeContent={count} color="primary"> <ShoppingCartIcon onClick={toggleCartVisibility} sx={{ cursor: "pointer" }} /></Badge>} &nbsp;&nbsp;
+            {!user && !loginUser ?
+              <>
 
-              <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button></> : <Box sx={{ display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>
+                <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>&nbsp;&nbsp;&nbsp;</> : <Box sx={{ display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>
 
-              <Button
-                id="basic-button"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-                sx={{ color: 'white', display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}
-              >
-                <Avatar alt="Remy Sharp" sx={{ width: 56, height: 56 }}
-                  src={loginUser.photoURL} /> &nbsp;&nbsp;
-                {loginUser?.displayName}
-              </Button>
-              <Button
-                id="basic-button"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-                sx={{ color: 'white', display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}
-              >
-                <Avatar alt="Remy Sharp" sx={{ width: 56, height: 56 }} src={loginUser.photoURL} />
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                  sx={{ color: 'white', display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}
+                >
+                  <Avatar alt="Remy Sharp" sx={{ width: 56, height: 56 }}
+                    src={loginUser.photoURL} /> &nbsp;&nbsp;
+                  {loginUser?.displayName}
+                </Button>
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                  sx={{ color: 'white', display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}
+                >
+                  <Avatar alt="Remy Sharp" sx={{ width: 56, height: 56 }} src={loginUser.photoURL} />
 
-              </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                  }}
 
-              >
-                {/* <MenuItem sx={{ color: 'black' }} onClick={handleClose}>Profile</MenuItem> */}
-                <MenuItem sx={{ color: 'black' }} onClick={() => navigate('/myorders')}>My Orders</MenuItem>
-                <MenuItem sx={{ color: 'black' }} onClick={handleLogout}>Logout</MenuItem>
-              </Menu>
-            </Box>}
-            
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{
-              display: {xl:'none', lg: 'block', md: "block", sm: "block", xs: "block" }
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
+                >
+                  {/* <MenuItem sx={{ color: 'black' }} onClick={handleClose}>Profile</MenuItem> */}
+                  <MenuItem sx={{ color: 'black' }} onClick={() => navigate('/myorders')}>My Orders</MenuItem>
+                  <MenuItem sx={{ color: 'black' }} onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </Box>}
+
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{
+                display: { xl: 'none', lg: 'block', md: "block", sm: "block", xs: "block" }
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
@@ -210,14 +256,15 @@ function Header(props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'block', md: 'block', lg: 'block' ,xl:"none"},
+            
+            display: { xs: 'block', sm: 'block', md: 'block', lg: 'block', xl: "none" },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', background: Colors.primaryGradient },
           }}
         >
           <Box sx={{ textAlign: 'center' }}>
             <Box
               component={"div"}
-              sx={{ p: 2 }}
+              sx={{ p: 2 ,width:'300px',}}
             >
               <CardMedia
                 component={"img"}
@@ -230,11 +277,11 @@ function Header(props) {
               />
             </Box>
             <Divider />
-            {!user && !loginUser ? <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button> :
+            {/* {!user && !loginUser ? <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button> :
               <Box mb={1} mt={1}> <Box >{loginUser.displayName}</Box>
 
               </Box>
-            }
+            } */}
             {!user && !loginUser ?
               <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button> :
               <Box sx={{ display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>

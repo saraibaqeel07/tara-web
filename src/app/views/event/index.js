@@ -405,10 +405,13 @@ function EventShow() {
     }
 
     let cart = localStorage.getItem('cartData')
-    cart = JSON.parse(cart)
-    if (cart?.length > 0) {
-      setCartItems(cart)
-      setCount(cart.length)
+    if(cart){
+
+      cart = JSON.parse(cart)
+      if (cart?.length > 0) {
+        setCartItems(cart)
+        setCount(cart.length)
+      }
     }
   }, []);
 
