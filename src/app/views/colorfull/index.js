@@ -232,15 +232,16 @@ function Colorfull() {
 
         }}
       >
-        <Container>
+       
           <Box
             sx={{
               backgroundImage: `url(${Images.mainBackground})`,
-              width: "100%",
+              width: "95%",
               height: { md: '700px', xs: '320px' },
               borderRadius: '20px',
               backgroundSize: "cover",
-              backgroundPosition: "center center"
+              backgroundPosition: "center center",
+              margin:'0 auto'
             }}
           >
             <Grid container>
@@ -290,7 +291,7 @@ function Colorfull() {
               </Grid>
             </Grid>
           </Box>
-        </Container>
+       
         <Box
           component={"section"}
           sx={{

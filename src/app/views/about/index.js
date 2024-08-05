@@ -231,15 +231,16 @@ function About() {
           py: "80px"
         }}
       >
-        <Container>
+      
           <Box
             sx={{
               backgroundImage: { md: `url(${Images.aboutBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
-              width: "100%",
+              width: "95%",
               height: { md: "624px", xs: "490px" },
               backgroundSize: "cover",
               backgroundPosition: "center center",
-              borderRadius: "20px"
+              borderRadius: "20px",
+              margin:'0 auto'
             }}
           >
             <Grid container>
@@ -329,7 +330,7 @@ function About() {
               </Grid>
             </Grid>
           </Box>
-        </Container>
+       
       </Box>
       <Box
         component={"section"}

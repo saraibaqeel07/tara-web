@@ -745,7 +745,10 @@ function EventShow() {
                   <Box sx={{ position: 'relative', paddingTop: '56.25%' /* 16:9 Aspect Ratio */ }}>
                     <video
                       src={video}
-                      controls
+                      controls={true}
+                      muted={true}
+                      autoPlay={true}
+
                       style={{
                         position: 'absolute',
                         top: 0,
