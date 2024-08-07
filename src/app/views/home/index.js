@@ -21,6 +21,7 @@ import 'swiper/css';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { CartContext } from '../../Context/CartContext';
 import { CartCounter } from '../../Context/CartCounter';
+import navigation from '../../../Navigation';
 
 // import "slick-carousel/slick/slick-theme.css";
 
@@ -28,6 +29,7 @@ import { CartCounter } from '../../Context/CartCounter';
 
 function Home() {
   const { state } = useLocation()
+
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
 
@@ -448,96 +450,96 @@ function Home() {
             py: "80px"
           }}
         >
-        
-            <Box
-              sx={{
-                backgroundImage: { md: `url(${Images.bannerBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
-                width: "95%",
-                height: { md: "624px", xs: "490px" },
-                backgroundSize: "cover",
-                backgroundPosition: "center center",
-                borderRadius: "20px",
-                margin:'0 auto'
-              }}
-            >
-              <Grid container>
-                <Grid item md={7} sm={12} xs={12}>
-                  <Box
+
+          <Box
+            sx={{
+              backgroundImage: { md: `url(${Images.bannerBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
+              width: "95%",
+              height: { md: "624px", xs: "490px" },
+              backgroundSize: "cover",
+              backgroundPosition: "center center",
+              borderRadius: "20px",
+              margin: '0 auto'
+            }}
+          >
+            <Grid container>
+              <Grid item md={7} sm={12} xs={12}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    gap: "40px",
+                    pt: "60px",
+                    pl: { md: `48px !important`, sm: "12px", xs: "12px" },
+                    pr: { md: 0, sm: "12px", xs: "12px" }
+                  }}
+                >
+                  <Typography
+                    variant='h1'
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      gap: "40px",
-                      pt: "60px",
-                      pl: { md: `48px !important`, sm: "12px", xs: "12px" },
-                      pr: { md: 0, sm: "12px", xs: "12px" }
+                      fontFamily: Fonts.righteous,
+                      fontSize: { md: "70px", sm: "50px", xs: "40px" },
+                      fontWeight: 700,
+                      color: Colors.white,
                     }}
                   >
-                    <Typography
-                      variant='h1'
-                      sx={{
-                        fontFamily: Fonts.righteous,
-                        fontSize: { md: "70px", sm: "50px", xs: "40px" },
-                        fontWeight: 700,
-                        color: Colors.white,
-                      }}
-                    >
-                      <span id='follow-text' style={{ color: Colors.orange }}  >Follow</span>, <span id='learn-text'>Learn</span> and <span id='explore-text'>Explore</span> with Tara!
-                    </Typography>
-                    <Typography
-                      variant='h3'
-                      sx={{
-                        fontSize: { md: "38px", sm: "28px", xs: "20px" }
-                      }}
-                    >
-                      Click To See Latest Adventures!
-                    </Typography>
-                    <Grid container spacing={2} alignItems={"center"}>
-                      <Grid item md={5} sm={5} xs={12}>
-                        <Button
-                          fullWidth
-                          variant='contained'
-                          sx={{
-                            py: 1,
-                            px: 4,
-                            textTransform: "capitalize",
-                            fontSize: "18px"
-                          }}
-                          href='https://www.youtube.com/@Shinewithtara'
-                        >
-                          Start Adventure
-                        </Button>
-                      </Grid>
-                      <Grid item md={7} sm={7} xs={12}>
-                        <Grid container spacing={2} sx={{ justifyContent: { md: "flex-start", sm: "flex-start", xs: "center" } }}>
-                          <Grid item md={2}>
-                            <Button href='https://www.facebook.com/profile.php?id=61554711500749'>
-                              <FacebookRounded />
-                            </Button>
-                          </Grid>
-                          <Grid item md={2}>
-                            <Button href='https://www.instagram.com/shineswithtara/ '>
-                              <InstagramRounded />
-                            </Button>
-                          </Grid>
-                          <Grid item md={2}>
-                            <Button href='https://www.youtube.com/@Shinewithtara'>
-                              <YoutubeRounded />
-                            </Button>
-                          </Grid>
-                          <Grid item md={2}>
-                            <Button href='https://www.tiktok.com/@shinewithtara'>
-                              <TiktokRounded />
-                            </Button>
-                          </Grid>
+                    <span id='follow-text' style={{ color: Colors.orange }}  >Follow</span>, <span id='learn-text'>Learn</span> and <span id='explore-text'>Explore</span> with Tara!
+                  </Typography>
+                  <Typography
+                    variant='h3'
+                    sx={{
+                      fontSize: { md: "38px", sm: "28px", xs: "20px" }
+                    }}
+                  >
+                    Click To See Latest Adventures!
+                  </Typography>
+                  <Grid container spacing={2} alignItems={"center"}>
+                    <Grid item md={5} sm={5} xs={12}>
+                      <Button
+                        fullWidth
+                        variant='contained'
+                        sx={{
+                          py: 1,
+                          px: 4,
+                          textTransform: "capitalize",
+                          fontSize: "18px"
+                        }}
+                        href='https://www.youtube.com/@Shinewithtara'
+                      >
+                        Start Adventure
+                      </Button>
+                    </Grid>
+                    <Grid item md={7} sm={7} xs={12}>
+                      <Grid container spacing={2} sx={{ justifyContent: { md: "flex-start", sm: "flex-start", xs: "center" } }}>
+                        <Grid item md={2}>
+                          <Button href='https://www.facebook.com/profile.php?id=61554711500749'>
+                            <FacebookRounded />
+                          </Button>
+                        </Grid>
+                        <Grid item md={2}>
+                          <Button href='https://www.instagram.com/shineswithtara/ '>
+                            <InstagramRounded />
+                          </Button>
+                        </Grid>
+                        <Grid item md={2}>
+                          <Button href='https://www.youtube.com/@Shinewithtara'>
+                            <YoutubeRounded />
+                          </Button>
+                        </Grid>
+                        <Grid item md={2}>
+                          <Button href='https://www.tiktok.com/@shinewithtara'>
+                            <TiktokRounded />
+                          </Button>
                         </Grid>
                       </Grid>
                     </Grid>
-                  </Box>
-                </Grid>
+                  </Grid>
+                </Box>
               </Grid>
-            </Box>
-         
+            </Grid>
+          </Box>
+
         </Box>
         <Box
           component={"section"}
@@ -547,6 +549,38 @@ function Home() {
           }}
         >
           <Container>
+            <Typography
+              variant='h3'
+              sx={{
+                fontSize: { md: "48px", xs: "40px" },
+                fontWeight: 900,
+                textAlign: 'center'
+              }}
+            >
+              Explore <span style={{ color: Colors.darkblue }}>Tara and Shine</span>
+            </Typography>
+            <Grid container mb={10} spacing={2}>
+              {navigation.map((item, index) => {
+                return (
+                  <Grid item lg={4} md={6} xs={12} display={'flex'} justifyContent={'center'} mt={5}>
+                    <Button
+                      fullWidth
+                      variant='contained'
+                      sx={{
+                        py: 1,
+                        px: 4,
+                        textTransform: "capitalize",
+                        fontSize: "18px"
+                      }}
+                      onClick={() => navigate(item?.path)}
+                    >
+                      {item?.name}
+                    </Button>
+                  </Grid>
+                )
+              })}
+
+            </Grid>
             <Grid
               container
               sx={{

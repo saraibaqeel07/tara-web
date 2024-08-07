@@ -52,7 +52,7 @@ function Character() {
     {
       name: "Tara",
       detail: "Tara is 9 years old. She is a shy Muslim girl. Her imaginary best friend is Shine. She is very kind, helpful, and loving. Her special skill is drawing. She gets nervous around a lot of people, but Shine overcomes her weakness.",
-      image: Images.tara,
+      image: Images.Tara,
       logo: Images.logoTara
     },
     {
@@ -73,6 +73,73 @@ function Character() {
       image: Images.laila,
       logo: Images.logoLaila
     },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.Sara,
+      logo: Images.logoLaila
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.Fatima,
+      logo: Images.logoLaila
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.Taha,
+      logo: Images.logoLaila
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.ali,
+      logo: Images.logoLaila
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.Maya,
+      logo: Images.logoLaila
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.Mom,
+      logo: Images.logoLaila
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.Dad,
+      logo: Images.logoLaila
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.annie,
+      logo: Images.logoLaila
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.Omar,
+      logo: Images.logoLaila
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.grandma,
+      logo: Images.logoLaila
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.Faiz,
+      logo: Images.logoLaila
+    },
+  
   ];
 
   const teamData = [
@@ -395,9 +462,9 @@ function Character() {
             </Box>
           </Grid>
           <Grid item md={12} sm={12} xs={12}>
-            <Grid container rowSpacing={4} justifyContent={"center"}>
+            <Grid container rowSpacing={4} gap={2} justifyContent={"center"}>
               {characterData.map((item, i) => (
-                <Grid key={i} item md={8} sm={12} xs={12}>
+                <Grid key={i} item md={4} sm={4} xs={12}>
                   <Grid
                     container
                     sx={{
@@ -405,7 +472,7 @@ function Character() {
                       borderRadius: "20px"
                     }}
                   >
-                    <Grid item md={8} sm={12} xs={12}>
+                    {/* <Grid item md={8} sm={12} xs={12}>
                       <Box
                         sx={{
                           backgroundColor: item.name == "Tara"
@@ -448,8 +515,8 @@ function Character() {
                           </Typography>
                         </Box>
                       </Box>
-                    </Grid>
-                    <Grid item md={4} sm={12} xs={12} sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}>
+                    </Grid> */}
+                    <Grid item md={12} sm={12} xs={12} sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}>
                       <Box
                         sx={{
                           width: "100%",

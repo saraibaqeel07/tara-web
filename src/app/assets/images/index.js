@@ -58,6 +58,28 @@ const Images = {
   activity: require("./activity.png"),
   coloring: require("./coloring.png"),
   extra: require("./extra.png"),
+  Tara: require("./tara.jpg"),
+  Omar: require("./omar.jpg"),
+  Sara: require("./sara.jpg"),
+  Shine: require("./shine.jpg"),
+  Taha: require("./taha.jpg"),
+  Maya: require("./maya.jpg"),
+  Mom: require("./mom.jpg"),
+  Laila: require("./laila.png"),
+  Grand: require("./grandma.jpg"),
+  Fatima: require("./fatima.jpg"),
+  Faiz: require("./faiz.jpg"),
+  Dad: require("./dad.jpg"),
+  colorfull: require("./Colorfull.jpg"),
+  ContactUs: require("./ContactUs.jpg"),
+  EventShow: require("./eventshow.jpg"),
+  watch: require("./watch.jpg"),
+  about: require("./about.jpg"),
+  ali: require("./ali.jpg"),
+  annie: require("./annie.jpg"),
+  grandma: require("./grandma.jpg"),
+  Shop: require("./Shop.jpg"),
+
  
 }
 

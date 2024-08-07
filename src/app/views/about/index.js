@@ -332,6 +332,13 @@ function About() {
           </Box>
        
       </Box>
+      <Grid container justifyContent={'center'} p={4} sx={{ background: Colors.whiteblue}}>
+          <Grid item md={6} sm={12}>
+            <Box component={'img'} src={Images.about} width={'100%'}>
+
+            </Box>
+          </Grid>
+        </Grid>
       <Box
         component={"section"}
         sx={{
@@ -346,6 +353,7 @@ function About() {
         }}
       >
         <Container>
+          
           <Box
             sx={{
               display: "flex",

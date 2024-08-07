@@ -328,7 +328,7 @@ function Shop() {
     }
 
     let cart = localStorage.getItem('cartData')
-    if(cart){
+    if (cart) {
 
       cart = JSON.parse(cart)
       if (cart?.length > 0) {
@@ -440,6 +440,7 @@ function Shop() {
           width: "100%"
         }}
       >
+       
         {/* <Box
           component={"section"}
           sx={{
@@ -831,6 +832,13 @@ function Shop() {
                 py: "72px"
               }}
             >
+            <Grid container justifyContent={'center'} p={4}>
+        <Grid item md={6} sm={12}>
+          <Box component={'img'} src={Images.Shop} width={'100%'}>
+
+          </Box>
+        </Grid>
+      </Grid>
               <Box
                 component={'div'}
                 className='product-heading-img'
