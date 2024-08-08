@@ -296,13 +296,7 @@ function Contact() {
         }}
       >
         <Container>
-        <Grid container justifyContent={'center'} p={4}>
-          <Grid item md={6} sm={12}>
-            <Box component={'img'} src={Images.ContactUs} width={'100%'}>
-
-            </Box>
-          </Grid>
-        </Grid>
+        
           <Grid container rowGap={"20px"} justifyContent={"center"}>
             <Grid item md={9} sm={12} xs={12}>
               <Box sx={{ textAlign: "center" }}>

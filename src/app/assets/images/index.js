@@ -79,6 +79,8 @@ const Images = {
   annie: require("./annie.jpg"),
   grandma: require("./grandma.jpg"),
   Shop: require("./Shop.jpg"),
+  character:require("./character.jpg"),
+  faq:require("./FAQ.jpg")
 
  
 }

@@ -12,6 +12,7 @@ import { CartContext } from "../Context/CartContext";
 import Shop from "../views/shop";
 import Watch from "../views/watch";
 import EventShow from "../views/event";
+import FAQ from "../views/Faq";
 
 
 const Webroutes = [
@@ -46,6 +47,10 @@ const Webroutes = [
   {
     path: "/contact-us",
     component: <Contact />
+  },
+  {
+    path: "/faq",
+    component: <FAQ />
   },
   {
     path: "/order",

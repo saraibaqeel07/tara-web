@@ -26,7 +26,7 @@ import { CartCounter } from '../../Context/CartCounter';
 
 
 
-function Watch() {
+function FAQ() {
   const { state } = useLocation()
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
@@ -608,308 +608,24 @@ function Watch() {
           }}
         >
           <Container>
+          <Grid container justifyContent={'center'} p={4}>
           
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "40px"
-              }}
-            >
-              <Box
+        </Grid>
+        <Typography
+                variant="h3"
                 sx={{
                   textAlign: "center",
-                  mt:5
+                  fontSize: { md: "58px", xs: "40px" },
+                  fontWeight: 900,
+                  color: Colors.primary
                 }}
               >
-                <Typography
-                  variant='h3'
-                  sx={{
-                    fontSize: { md: "44px", xs: "32px" },
-                    fontWeight: 900
-                  }}
-                >
-                  Watch Islamic Halal Cartoon <span style={{ color: Colors.purple }}>Shine And Tara</span>
-                  <p>With One Click </p> 
-                </Typography>
-                
-              </Box>
-              <Box
-              component={'div'}
-              onClick={() => window.open('https://www.youtube.com/channel/UCDPkatnNvtWdiITSvzneBEw', '_blank')}
-                sx={{
-                  textAlign: "center",
-                  mt:5,
-                  cursor:'pointer'
-                }}
-              >
-                <Typography
-                  variant='h3'
-                  sx={{
-                    fontSize: { md: "44px", xs: "32px" },
-                    fontWeight: 900,
-                    color:'black',
-                    display:'flex',
-                    alignItems:'center',
-                    justifyContent:'center'
-                  }}
-                >
-                <YoutubeRounded  />&nbsp; YouTube
-                </Typography>
-                
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "20px"
-                }}
-              >
-                {/* {selected == "episode" ? (
-                  <Fragment>
-                    <Typography>
-                      Come along with Tara and Shine as they explore enchanting locations and go about their daily activities, discovering important lessons about Islam, being good people, and the importance of family.In their exciting adventures, Tara and Shine visit magical places and experience everyday situations that teach them valuable things. They learn about Islamic teachings, how to be kind and do the right things, and why family is so special.
-                    </Typography>
-                    <Typography>
-                      This amazing series is made to be fun and educational for kids. Tara and Shine's journeys will help children understand Islamic values, learn good morals, and appreciate the love within their familie.Get ready to join Tara and Shine on their wonderful journey, where they learn, grow, and have lots of fun!
-                    </Typography>
-                  </Fragment>
-                ) : (
-                  <Grid container>
-                    <Grid item md={7}>
-                      <Typography>
-                        Each episode will provide day-to-day life coloring sheets.
-                        Worksheets - will have all different types of activities, coloring,
-                      </Typography>
-                      <Typography>
-                        Copyright 2024 © All rights Reserved By Shine With Tara Design by Sana Kazmi
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                )} */}
-              </Box>
-            </Box>
+                FAQ's & Reviews
+              </Typography>
           </Container>
         </Box> 
-        {selected == "episode" ? (
-          <Box
-            component={"section"}
-            sx={{
-              background: Colors.lightPurple,
-              height: "100%",
-              width: "100%",
-              py: "72px"
-            }}
-          >
-            <Slider
-              dots={false}
-              infinite={true}
-              speed={500}
-              slidesToShow={3}
-              slidesToScroll={1}
-              adaptiveHeight={true}
-              variableWidth={false}
-              centerMode={true}
-              responsive={[
-                {
-                  breakpoint: 1024,
-                  settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    dots: false,
-                    adaptiveHeight: true,
-                    variableWidth: false,
-                    centerMode: true,
-                  }
-                },
-                {
-                  breakpoint: 768,
-                  settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    dots: false,
-                    centerMode: true,
-                    variableWidth: false,
-                    adaptiveHeight: true
-                  }
-                },
-                {
-                  breakpoint: 480,
-                  settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    dots: false,
-                    centerMode: true,
-                    variableWidth: false,
-                    adaptiveHeight: true
-                  }
-                }
-              ]}
-            >
-              {sliderData.map((item, i) => (
-                <Box
-                  key={i}
-                  sx={{ p: 3, borderRadius: '20px', cursor: 'pointer' }}
-                  component={'div'}
-                  onClick={() => window.open(item?.url, '_blank')}
-                >
-                  <CardMedia
-                    component={"img"}
-                    src={item.image}
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "contain",
-                      borderTopLeftRadius: '20px',
-                      borderTopRightRadius: '20px'
-                    }}
-                  />
-                  <Box
-                    sx={{
-                      background: Colors.yellow,
-                      textAlign: "center",
-                      borderBottomLeftRadius: '20px',
-                      borderBottomRightRadius: '20px',
-                      p: 3,
-                      // mx: item.title == "Dealing With Sibling"
-                      //   ? "32px" : item.title == "5 Pillars With The Neighbors"
-                      //     ? "30px" : "31px"
-                    }}
-                  >
-                    <Typography>
-                      {item.title}
-                    </Typography>
-                  </Box>
-                </Box>
-              ))}
-            </Slider>
-          </Box>
-        ) : (
-          <>
-            <Box
-              component={"section"}
-              sx={{
-                background: Colors.whiteblue,
-                height: "100%",
-                width: "100%",
-                py: "72px"
-              }}
-            >
-              
-           
-            </Box>
-           
-            <Box
-              component={"section"}
-              id='coloring-section'
-              sx={{
-                background: Colors.whiteblue,
-                height: "100%",
-                width: "100%",
-                py: "72px"
-              }}
-            >
-           
-             
-            </Box>
-      
-          </>
-        )}
-        <Box
-          component={"section"}
-          sx={{
-            background: Colors.lightPurple,
-            py: "80px"
-          }}
-        >
-          <Container>
-            <Grid container justifyContent={"center"} alignItems={"center"}>
-              <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-                <CardMedia
-                  component={"img"}
-                  src={Images.shineStar}
-                  sx={{
-                    width: "70px",
-                    heigth: "70px",
-                    objectFit: "contain"
-                  }}
-                />
-              </Grid>
-              <Grid item md={5.5}>
-                <Typography
-                  variant='h3'
-                  sx={{
-                    fontSize: { md: "48px", sm: "40px", xs: "32px" },
-                    fontWeight: 600,
-                    textAlign: "center"
-                  }}
-                >
-                  Collaborating With
-                </Typography>
-              </Grid>
-              <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-                <CardMedia
-                  component={"img"}
-                  src={Images.shineStar}
-                  sx={{
-                    width: "70px",
-                    heigth: "70px",
-                    objectFit: "contain"
-                  }}
-                />
-              </Grid>
-              <Grid item md={12}>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    textAlign: "center",
-                    fontSize: { md: "58px", xs: "40px" },
-                    fontWeight: 900,
-                    color: Colors.primary
-                  }}
-                >
-                  Islamic Relief Canada
-                </Typography>
-              </Grid>
-            </Grid>
-            <Box>
-            </Box>
-            <Box>
-              <CardMedia
-                component={"img"}
-                src={Images.islamicRelief}
-                sx={{
-                  width: "100%",
-                  height: { md: "350px", xs: "150px" },
-                  objectFit: "contain"
-                }}
-              />
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Grid container justifyContent={"center"} lg={6} md={6} sm={12}>
-                <Button
-                  fullWidth
-                  variant='contained'
-                  sx={{
-                    mt: 2,
-                    py: 2,
-                    px: 1,
-                    textTransform: "capitalize",
-                    fontSize: "18px",
-                    textAlign: 'center'
-                  }}
-                  target='blank'
-                  href='https://www.youtube.com/playlist?list=PLDQNq7EHiGH9lHkx1jYLhwwv4AtCXesaK'
-                >
-                  See More
-                </Button>
-              </Grid>
-            </Box>
-          </Container>
-        </Box> 
+        
+        
               {/* <Box
           component={"section"}
           sx={{
@@ -1001,7 +717,66 @@ function Watch() {
             </Grid>
           </Grid>
         </Box> */}
-        {/* <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
+       
+        <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
+          <Grid container justifyContent={"center"} alignItems={"center"} mb={5}>
+            <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
+              <CardMedia
+                component={"img"}
+                src={Images.shineStar}
+                sx={{
+                  width: "70px",
+                  heigth: "70px",
+                  objectFit: "contain"
+                }}
+              />
+            </Grid>
+            <Grid item md={5.5}>
+              <Typography
+                variant="h3"
+                sx={{
+                  textAlign: "center",
+                  fontSize: { md: "58px", xs: "40px" },
+                  fontWeight: 900,
+                  color: Colors.primary
+                }}
+              >
+                FAQ's
+              </Typography>
+            </Grid>
+            <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
+              <CardMedia
+                component={"img"}
+                src={Images.shineStar}
+                sx={{
+                  width: "70px",
+                  heigth: "70px",
+                  objectFit: "contain"
+                }}
+              />
+            </Grid>
+
+          </Grid>
+          <Grid container spacing={2} sx={{ padding: '20px' }}>
+            {faqData.map((faq, index) => (
+              <Grid item xs={12} sm={6} key={index}>
+                <Accordion sx={{ backgroundColor: 'transparent' }}>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls={`panel${index}-content`}
+                    id={`panel${index}-header`}
+                  >
+                    <Typography sx={{ color: 'black', fontSize: '12px' }}>{faq.question}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography sx={{ color: 'black', fontSize: '12px' }}>{faq.answer}</Typography>
+                  </AccordionDetails>
+                </Accordion>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+        <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
           <Grid container justifyContent={"center"} alignItems={"center"} mb={5}>
             <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
               <CardMedia
@@ -1142,69 +917,10 @@ function Watch() {
               </Swiper>
             </Grid>
           </Box>
-        </Box> */}
-        {/* <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
-          <Grid container justifyContent={"center"} alignItems={"center"} mb={5}>
-            <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.shineStar}
-                sx={{
-                  width: "70px",
-                  heigth: "70px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
-            <Grid item md={5.5}>
-              <Typography
-                variant="h3"
-                sx={{
-                  textAlign: "center",
-                  fontSize: { md: "58px", xs: "40px" },
-                  fontWeight: 900,
-                  color: Colors.primary
-                }}
-              >
-                FAQS
-              </Typography>
-            </Grid>
-            <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.shineStar}
-                sx={{
-                  width: "70px",
-                  heigth: "70px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
-
-          </Grid>
-          <Grid container spacing={2} sx={{ padding: '20px' }}>
-            {faqData.map((faq, index) => (
-              <Grid item xs={12} sm={6} key={index}>
-                <Accordion sx={{ backgroundColor: 'transparent' }}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls={`panel${index}-content`}
-                    id={`panel${index}-header`}
-                  >
-                    <Typography sx={{ color: 'black', fontSize: '12px' }}>{faq.question}</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography sx={{ color: 'black', fontSize: '12px' }}>{faq.answer}</Typography>
-                  </AccordionDetails>
-                </Accordion>
-              </Grid>
-            ))}
-          </Grid>
-        </Box> */}
-
+        </Box>
       </Box>
     </>
   )
 }
 
-export default Watch
+export default FAQ

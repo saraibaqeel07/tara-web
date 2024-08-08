@@ -832,13 +832,7 @@ function Shop() {
                 py: "72px"
               }}
             >
-            <Grid container justifyContent={'center'} p={4}>
-        <Grid item md={6} sm={12}>
-          <Box component={'img'} src={Images.Shop} width={'100%'}>
-
-          </Box>
-        </Grid>
-      </Grid>
+            
               <Box
                 component={'div'}
                 className='product-heading-img'

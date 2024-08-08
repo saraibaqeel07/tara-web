@@ -16,21 +16,23 @@ const navigation = [
     name: "About"
   },
   {
-    path: "/event-show",
-    name: "Event Show"
-  },
-  {
     path: "/main-character",
     name: "Main Character"
-  },
-  {
-    path: "/colorfull-club",
-    name: "Colorful Club"
   },
   {
     path: "/contact-us",
     name: "Contact us"
   },
+  {
+    path: "/event-show",
+    name: "Event Show"
+  },
+  
+  {
+    path: "/colorfull-club",
+    name: "Colorful Club"
+  },
+ 
   
 ]
 export const navigationNested = [
@@ -42,35 +44,41 @@ export const navigationNested = [
     path: "/shop",
     name: "Shop"
   },
+  {
+    path: "/watch",
+    name: "Watch"
+  },
  
   {
-    path: "/about",
-    name: "About"
+    path: "/event-show",
+    name: "Event Show"
   },
-  
   {
     path: "/main-character",
     name: "Main Character"
   },
-  {
-    path: "/contact-us",
-    name: "Contact us"
-  },
+  
+  
 
   {
     path: "",
     name: "More",
-    children:[  {
-      path: "/watch",
-      name: "Watch"
+    children:[ 
+    {
+      path: "/contact-us",
+      name: "Contact us"
     },
     {
-      path: "/event-show",
-      name: "Event Show"
+      path: "/about",
+      name: "About"
     },
+   
     {
       path: "/colorfull-club",
       name: "Colorful Club"
+    },{
+      path: "/faq",
+      name: "FAQ"
     },]
   },
   

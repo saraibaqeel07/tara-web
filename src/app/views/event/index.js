@@ -685,13 +685,7 @@ function EventShow() {
           }}
         >
           <Container>
-          <Grid container justifyContent={'center'} p={4}>
-          <Grid item md={6} sm={12}>
-            <Box component={'img'} src={Images.EventShow} width={'100%'}>
-
-            </Box>
-          </Grid>
-        </Grid>
+        
             <Box
               sx={{
                 display: "flex",

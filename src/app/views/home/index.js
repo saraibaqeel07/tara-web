@@ -180,6 +180,67 @@ function Home() {
     },
   ];
 
+  const routingData = [
+    {
+      name: "Tara",
+      detail: "Tara is 9 years old. She is a shy Muslim girl. Her imaginary best friend is Shine. She is very kind, helpful, and loving. Her special skill is drawing. She gets nervous around a lot of people, but Shine overcomes her weakness.",
+      image: Images.Shop,
+      logo: Images.logoTara,
+      path: '/shop'
+    },
+    {
+      name: "Shine",
+      detail: "Tara's best imaginary friend is named Shine. She always lends a hand to Tara. She has a lot of energy. She has a bold personality and inspires confidence",
+      image: Images.watch,
+      logo: Images.logoShine,
+      path: '/watch'
+    },
+    {
+      name: "Ahmed",
+      detail: "Ahmed is Tara’s younger brother; he is 8 years old. Ahmed is very kind and helpful boy. He loves to play video games.",
+      image: Images.about,
+      logo: Images.logoAhmed,
+      path: '/about'
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.character,
+      logo: Images.logoLaila,
+      path: '/main-character'
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.faq,
+      logo: Images.logoLaila,
+      path: '/faq'
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.ContactUs,
+      logo: Images.logoLaila,
+      path: '/contact-us'
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.EventShow,
+      logo: Images.logoLaila,
+      path: '/event-show'
+    },
+    {
+      name: "Laila",
+      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.colorfull,
+      logo: Images.logoLaila,
+      path: '/colorfull-club'
+    },
+
+
+  ];
+
   const cardData = [
     {
       image: Images.cardImg1,
@@ -560,7 +621,7 @@ function Home() {
               Explore <span style={{ color: Colors.darkblue }}>Tara and Shine</span>
             </Typography>
             <Grid container mb={10} spacing={2}>
-              {navigation.map((item, index) => {
+              {/* {navigation.map((item, index) => {
                 return (
                   <Grid item lg={4} md={6} xs={12} display={'flex'} justifyContent={'center'} mt={5}>
                     <Button
@@ -578,8 +639,40 @@ function Home() {
                     </Button>
                   </Grid>
                 )
-              })}
+              })} */}
+              {routingData.map((item, i) => (
+                <Grid key={i} component={'div'} sx={{ cursor: 'pointer' }} onClick={() => navigate(item?.path)} item md={4} sm={4} xs={12}>
+                  <Grid
+                    container
+                    sx={{
+                      border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
+                      borderRadius: "20px"
+                    }}
+                  >
 
+                    <Grid item md={12} sm={12} xs={12} sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}>
+                      <Box
+                        sx={{
+                          width: "100%",
+                          height: "100%"
+                        }}
+
+                      >
+                        <CardMedia
+                          component={"img"}
+                          src={item.image}
+                          sx={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            borderRadius: { md: "0px 12px 12px 0px", sm: "0px 0px 12px 12px", xs: "0px 0px 12px 12px" },
+                          }}
+                        />
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              ))}
             </Grid>
             <Grid
               container
@@ -1245,7 +1338,7 @@ function Home() {
             py: "80px"
           }}
         >
-          <Container>
+          {/* <Container>
             <Grid container justifyContent={"center"} alignItems={"center"}>
               <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
                 <CardMedia
@@ -1328,7 +1421,7 @@ function Home() {
                 </Button>
               </Grid>
             </Box>
-          </Container>
+          </Container> */}
         </Box>
         <Box
           component={"section"}
