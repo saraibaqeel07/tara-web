@@ -22,6 +22,8 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { CartContext } from '../../Context/CartContext';
 import { CartCounter } from '../../Context/CartCounter';
 import navigation from '../../../Navigation';
+import Aos from 'aos';
+import 'aos/dist/aos.css';
 
 // import "slick-carousel/slick/slick-theme.css";
 
@@ -29,6 +31,7 @@ import navigation from '../../../Navigation';
 
 function Home() {
   const { state } = useLocation()
+  Aos.init();
 
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
@@ -400,6 +403,14 @@ function Home() {
       }
     }
   }, []);
+  useEffect(() => {
+    Aos.init({
+      duration: 1000, // Animation duration
+      easing: 'ease-in-out', // Easing option
+      once: false, // Whether animation should happen only once
+      mirror: false, // Whether elements should animate out while scrolling past them
+    });
+  }, []);
 
 
   useEffect(() => {
@@ -610,70 +621,7 @@ function Home() {
           }}
         >
           <Container>
-            <Typography
-              variant='h3'
-              sx={{
-                fontSize: { md: "48px", xs: "40px" },
-                fontWeight: 900,
-                textAlign: 'center'
-              }}
-            >
-              Explore <span style={{ color: Colors.darkblue }}>Tara and Shine</span>
-            </Typography>
-            <Grid container mb={10} spacing={2}>
-              {/* {navigation.map((item, index) => {
-                return (
-                  <Grid item lg={4} md={6} xs={12} display={'flex'} justifyContent={'center'} mt={5}>
-                    <Button
-                      fullWidth
-                      variant='contained'
-                      sx={{
-                        py: 1,
-                        px: 4,
-                        textTransform: "capitalize",
-                        fontSize: "18px"
-                      }}
-                      onClick={() => navigate(item?.path)}
-                    >
-                      {item?.name}
-                    </Button>
-                  </Grid>
-                )
-              })} */}
-              {routingData.map((item, i) => (
-                <Grid key={i} component={'div'} sx={{ cursor: 'pointer' }} onClick={() => navigate(item?.path)} item md={4} sm={4} xs={12}>
-                  <Grid
-                    container
-                    sx={{
-                      border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
-                      borderRadius: "20px"
-                    }}
-                  >
-
-                    <Grid item md={12} sm={12} xs={12} sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}>
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: "100%"
-                        }}
-
-                      >
-                        <CardMedia
-                          component={"img"}
-                          src={item.image}
-                          sx={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            borderRadius: { md: "0px 12px 12px 0px", sm: "0px 0px 12px 12px", xs: "0px 0px 12px 12px" },
-                          }}
-                        />
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              ))}
-            </Grid>
+           
             <Grid
               container
               sx={{
@@ -722,6 +670,73 @@ function Home() {
                   </Typography>
                 </Box>
               </Grid>
+            </Grid>
+            <Typography
+              variant='h3'
+              sx={{
+                fontSize: { md: "48px", xs: "40px" },
+                fontWeight: 900,
+                textAlign: 'center',
+                mt:15
+              }}
+            >
+              What <span style={{ color: Colors.darkblue }}>Shine And Tara Have For You</span>
+            </Typography>
+            <Grid container mt={5} mb={10} spacing={2}>
+              {/* {navigation.map((item, index) => {
+                return (
+                  <Grid item lg={4} md={6} xs={12} display={'flex'} justifyContent={'center'} mt={5}>
+                    <Button
+                      fullWidth
+                      variant='contained'
+                      sx={{
+                        py: 1,
+                        px: 4,
+                        textTransform: "capitalize",
+                        fontSize: "18px"
+                      }}
+                      onClick={() => navigate(item?.path)}
+                    >
+                      {item?.name}
+                    </Button>
+                  </Grid>
+                )
+              })} */}
+              {routingData.map((item, i) => (
+                <Grid key={i} component={'div'} sx={{ cursor: 'pointer',mt:4 }} onClick={() => navigate(item?.path)} item md={4} sm={4} xs={12}>
+                  <Grid
+                    container
+                    sx={{
+                      // border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
+                      borderRadius: "20px"
+                    }}
+                  >
+
+                    <Grid data-aos="flip-left" item md={12} sm={12} xs={12} 
+                    // sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}
+                    >
+                      <Box
+                        sx={{
+                          width: "100%",
+                          height: "100%"
+                        }}
+
+                      >
+                        <CardMedia
+                          component={"img"}
+                          src={item.image}
+                          sx={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            borderRadius: '12px',
+                          }}
+                        />
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              ))}
             </Grid>
           </Container>
         </Box>
