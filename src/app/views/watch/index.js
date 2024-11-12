@@ -826,7 +826,7 @@ function Watch() {
           }}
         >
           <Container>
-            <Grid container justifyContent={"center"} alignItems={"center"}>
+            <Grid container justifyContent={"space-between"} alignItems={"center"} spacing={'10px'}>
               <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
                 <CardMedia
                   component={"img"}
@@ -861,21 +861,19 @@ function Watch() {
                   }}
                 />
               </Grid>
-              <Grid item md={12}>
+              <Grid item md={6}>
                 <Typography
                   variant="h3"
                   sx={{
                     textAlign: "center",
-                    fontSize: { md: "58px", xs: "40px" },
+                    fontSize: { md: "45px", xs: "30px" },
                     fontWeight: 900,
                     color: Colors.primary
                   }}
                 >
                   Islamic Relief Canada
                 </Typography>
-              </Grid>
-            </Grid>
-            <Box>
+                <Box>
             </Box>
             <Box>
               <CardMedia
@@ -888,6 +886,36 @@ function Watch() {
                 }}
               />
             </Box>
+              </Grid>
+              <Grid item md={6}>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    textAlign: "center",
+                    fontSize: { md: "45px", xs: "30px" },
+                    fontWeight: 900,
+                    color: Colors.primary
+                  }}
+                >
+                  Kalam Kids
+                </Typography>
+                <Box>
+            </Box>
+            <Box>
+              <CardMedia
+                component={"img"}
+                src={Images.islamicRelief}
+                sx={{
+                  width: "100%",
+                  height: { md: "350px", xs: "150px" },
+                  objectFit: "contain"
+                }}
+              />
+              Coming Soon
+            </Box>
+              </Grid>
+            </Grid>
+          
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <Grid container justifyContent={"center"} lg={6} md={6} sm={12}>
                 <Button

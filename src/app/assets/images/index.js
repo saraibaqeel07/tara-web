@@ -80,7 +80,12 @@ const Images = {
   grandma: require("./grandma.jpg"),
   Shop: require("./Shop.jpg"),
   character:require("./character.jpg"),
-  faq:require("./FAQ.jpg")
+  faq:require("./FAQ.jpg"),
+  test:require("./hometest.jpg"),
+  EventShows:require("./Event.png"),
+  mainBg:require("./mianbg.png"),
+  Book:require("./Book.png"),
+  Family:require("./Family.png"),
 
  
 }

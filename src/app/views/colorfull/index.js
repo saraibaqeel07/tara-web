@@ -277,7 +277,7 @@ function Colorfull() {
                     backgroundImage: `url(${Images.colorfullBack})`,
                     width: '100%',
                     height: { md: '500px', xs: '200px' },
-                    backgroundSize: "contain",
+                    backgroundSize: "cover",
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: "center center",
                     gap: "40px",

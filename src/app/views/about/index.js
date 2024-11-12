@@ -228,23 +228,134 @@ function About() {
         sx={{
           background: Colors.primaryGradient,
           width: "100%",
-          py: "80px"
+       
         }}
       >
-      
+         <Box
+            component={"section"}
+            sx={{
+              background: Colors.primaryGradient,
+              width: "100%",
+              borderRadius:'20px'
+           
+            }}
+          >
+
+            <Box
+          component={"section"}
+          sx={{
+            background: Colors.primaryGradient,
+            width: "100%",
+            py: "80px"
+          }}
+        >
+
           <Box
             sx={{
               backgroundImage: { md: `url(${Images.aboutBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
-              width: "95%",
+              width: "100%",
               height: { md: "624px", xs: "490px" },
               backgroundSize: "cover",
               backgroundPosition: "center center",
               borderRadius: "20px",
-              margin:'0 auto'
+              margin: '0 auto',
+              padding:'4%'
             }}
           >
             <Grid container>
-              <Grid item md={10} sm={12} xs={12}>
+              <Grid item md={7} sm={12} xs={12}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    gap: "40px",
+                    pt: "0px",
+                    pl: { md: `48px !important`, sm: "12px", xs: "12px" },
+                    pr: { md: 0, sm: "12px", xs: "12px" }
+                  }}
+                >
+                  <Typography
+                    variant='h1'
+                    sx={{
+                      fontFamily: Fonts.righteous,
+                      fontSize: { md: "70px", sm: "50px", xs: "40px" },
+                      fontWeight: 700,
+                      color: Colors.white,
+                    }}
+                  >
+                      <span id='muslim-text' style={{ color: Colors.orange }}>Muslim</span> <span id='islamic-text'> Islamic</span> <span id='cartoon-text'>Cartoon</span>
+                  </Typography>
+                  <Typography
+                    variant='h3'
+                    sx={{
+                      fontSize: { md: "38px", sm: "28px", xs: "20px" }
+                    }}
+                  >
+                    Click To See Latest Adventures!
+                  </Typography>
+                  <Grid container spacing={2} alignItems={"center"}>
+                    <Grid item md={5} sm={5} xs={12}>
+                      <Button
+                        fullWidth
+                        variant='contained'
+                        sx={{
+                          py: 1,
+                          px: 4,
+                          textTransform: "capitalize",
+                          fontSize: "18px"
+                        }}
+                        href='https://www.youtube.com/@Shinewithtara'
+                      >
+                        Start Adventure
+                      </Button>
+                    </Grid>
+                    <Grid item md={7} sm={7} xs={12}>
+                      <Grid container spacing={2} sx={{ justifyContent: { md: "flex-start", sm: "flex-start", xs: "center" } }}>
+                        <Grid item md={2}>
+                          <Button href='https://www.facebook.com/profile.php?id=61554711500749'>
+                            <FacebookRounded />
+                          </Button>
+                        </Grid>
+                        <Grid item md={2}>
+                          <Button href='https://www.instagram.com/shineswithtara/ '>
+                            <InstagramRounded />
+                          </Button>
+                        </Grid>
+                        <Grid item md={2}>
+                          <Button href='https://www.youtube.com/@Shinewithtara'>
+                            <YoutubeRounded />
+                          </Button>
+                        </Grid>
+                        <Grid item md={2}>
+                          <Button href='https://www.tiktok.com/@shinewithtara'>
+                            <TiktokRounded />
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+
+        </Box>
+          </Box>
+          {/* <Box
+            sx={{
+              backgroundImage: { md: `url(${Images.aboutBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
+              width: "100%",
+              height: { md: "624px", xs: "490px" },
+              backgroundSize:  { md: "contain", sm: "cover" },
+              backgroundPosition: "center center",
+              borderRadius: "20px",
+              backgroundRepeat:'no-repeat',
+              margin:'0 auto'
+            }}
+          >
+            <Grid container justifyContent={'center'} sx={{paddingLeft:'45px'}}>
+              <Grid item md={10} sm={12} xs={12} >
                 <Box
                   sx={{
                     display: "flex",
@@ -329,7 +440,8 @@ function About() {
                 </Box>
               </Grid>
             </Grid>
-          </Box>
+          </Box> */}
+           
        
       </Box>
       

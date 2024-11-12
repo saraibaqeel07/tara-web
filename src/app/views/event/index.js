@@ -225,7 +225,7 @@ function EventShow() {
     Videos.video11,
     Videos.video12,
     Videos.video13,
- 
+
   ];
   const sliderData = [
     {
@@ -405,7 +405,7 @@ function EventShow() {
     }
 
     let cart = localStorage.getItem('cartData')
-    if(cart){
+    if (cart) {
 
       cart = JSON.parse(cart)
       if (cart?.length > 0) {
@@ -679,13 +679,145 @@ function EventShow() {
           sx={{
             background: Colors.lightPurple,
             backgroundImage: { md: selected == "merchandise" ? `url(${Images.merchBg})` : "none", sm: "none", xs: "none" },
-            py: "80px",
+         
             height: { md: selected == "merchandise" ? "770px" : "100%", sm: "100%", xs: "100%" },
             backgroundSize: "cover",
           }}
         >
+          <Box
+            component={"section"}
+            sx={{
+              background: Colors.primaryGradient,
+              width: "100%",
+              py: "80px"
+            }}
+          >
+
+            <Box
+              sx={{
+                backgroundImage: { md: `url(${Images.mainBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
+                width: "95%",
+                height: { md: "624px", xs: "490px" },
+                backgroundSize: "cover",
+                backgroundPosition: "center center",
+                borderRadius: "20px",
+                margin: '0 auto'
+              }}
+            >
+              <Grid container>
+                <Grid item md={6} sm={12} xs={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      gap: "40px",
+                      pt: "60px",
+                      pl: { md: `48px !important`, sm: "12px", xs: "12px" },
+                      pr: { md: 0, sm: "12px", xs: "12px" }
+                    }}
+                  >
+                    <Typography
+                      variant='h1'
+                      sx={{
+                        fontFamily: Fonts.righteous,
+                        fontSize: { md: "70px", sm: "50px", xs: "40px" },
+                        fontWeight: 700,
+                        color: Colors.white,
+                      }}
+                    >
+                      <span id='follow-text' style={{ color: Colors.orange }}  >Follow</span>, <span id='learn-text'>Learn</span> and <span id='explore-text'>Explore</span> with Tara!
+                    </Typography>
+                    <Typography
+                      variant='h3'
+                      sx={{
+                        fontSize: { md: "38px", sm: "28px", xs: "20px" }
+                      }}
+                    >
+                      Click To See Latest Adventures!
+                    </Typography>
+                    <Grid container spacing={2} alignItems={"center"}>
+                      <Grid item md={5} sm={5} xs={12}>
+                        <Button
+                          fullWidth
+                          variant='contained'
+                          sx={{
+                            py: 1,
+                            px: 4,
+                            textTransform: "capitalize",
+                            fontSize: "18px"
+                          }}
+                          href='https://www.youtube.com/@Shinewithtara'
+                        >
+                          Start Adventure
+                        </Button>
+                      </Grid>
+                      <Grid item md={7} sm={7} xs={12}>
+                        <Grid container spacing={2} sx={{ justifyContent: { md: "flex-start", sm: "flex-start", xs: "center" } }}>
+                          <Grid item md={2}>
+                            <Button href='https://www.facebook.com/profile.php?id=61554711500749'>
+                              <FacebookRounded />
+                            </Button>
+                          </Grid>
+                          <Grid item md={2}>
+                            <Button href='https://www.instagram.com/shineswithtara/ '>
+                              <InstagramRounded />
+                            </Button>
+                          </Grid>
+                          <Grid item md={2}>
+                            <Button href='https://www.youtube.com/@Shinewithtara'>
+                              <YoutubeRounded />
+                            </Button>
+                          </Grid>
+                          <Grid item md={2}>
+                            <Button href='https://www.tiktok.com/@shinewithtara'>
+                              <TiktokRounded />
+                            </Button>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Grid>
+                <Grid item sx={{
+                  display: {
+                    lg: 'block',  // Show block on large screens and up
+                    md: 'none',   // Hide on medium screens
+                    xs: 'none'    // Hide on extra-small screens as well
+                  }
+                }} md={6} sm={12} xs={12}>
+                  <Grid container justifyContent={'center'}>
+                    <Grid component={'div'} sx={{ cursor: 'pointer', mt: 4 }} item md={12} sm={12} xs={12}>
+
+                      <Box
+                        sx={{
+                          width: "100%",
+                          height: "100%"
+                        }}
+
+                      >
+                        <CardMedia
+                          component={"img"}
+                          src={Images.EventShows}
+                          sx={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            borderRadius: '12px',
+                          }}
+                        />
+                      </Box>
+
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Box>
+
+          </Box>
           <Container>
-        
+
+
             <Box
               sx={{
                 display: "flex",
