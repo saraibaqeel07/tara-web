@@ -145,7 +145,7 @@ function App() {
     </ThemeProvider> */}
     <ThemeProvider theme={theme}>
       <div style={{ textAlign: 'center', marginTop: '20%', fontSize: '24px', color: Colors.darkblue }}>
-        Site is currently not available.
+        Site is currently not available.  
       </div>
     </ThemeProvider>
     </PayPalScriptProvider>
