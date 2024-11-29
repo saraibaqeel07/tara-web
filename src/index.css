@@ -20,12 +20,11 @@
   font-weight: 'normal';
   font-style: 'normal';
 }
-body {
+.para-text  p{
   font-family: 'Adiana', sans-serif !important;
 }
-*{
-  font-family: 'Adiana', sans-serif !important;
-}
+
+
 .heading-font{
   font-family: 'Arco', sans-serif !important;
 }

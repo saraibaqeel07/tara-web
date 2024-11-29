@@ -15,13 +15,15 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Avatar, Divider } from 'antd';
 import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Star } from '@mui/icons-material';
+import { Directions, Star } from '@mui/icons-material';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import 'swiper/css';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { CartContext } from '../../Context/CartContext';
 import { CartCounter } from '../../Context/CartCounter';
 import navigation from '../../../Navigation';
+import introImage from "../../assets/images/intro-pic.png"
+import taraImage from "../../assets/images/tara-pic.png"
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 
@@ -522,184 +524,288 @@ function Home() {
 
           }}
         >
-
           <Box
             sx={{
-              backgroundImage: { md: `url(${Images.bannerBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
-              width: "100%",
-              height: { md: "578px", xs: "490px" },
+              backgroundImage: `url(${Images.bannerBg})`,
+
               backgroundSize: "cover",
               backgroundPosition: "center center",
-              
-              margin: '0 auto'
+              width: "100%",
+              height: { md: "578px", xs: "490px" },
+              position: "relative", // Ensure child content is positioned relative to this container
+              overflow: "hidden", // Prevent content from going outside
             }}
           >
-            <Grid container >
+            {/* Right-side Image */}
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 0,
+                right: 0,
+                width: { md: "50%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
+                height: "100%", // Full height of the parent container
+                backgroundImage: `url(${Images.mainTara})`,
+                backgroundSize: { md: "cover", xl: "contain", lg: "contain", },
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center bottom", // Ensures the image is aligned at the bottom
+                display: { md: "block", xl: "block", lg: "block", sm: "none", xs: "none" }, // Show image only for medium and larger screens
+              }}
+            />
+
+            {/* Content Section */}
+            <Grid container sx={{ height: "100%" }}>
               <Grid item md={7} sm={12} xs={12}>
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "flex-start",
-                    gap: "40px",
-                    pt: "60px",
-                    pl: { md: `48px !important`, sm: "12px", xs: "12px" },
-                    pr: { md: 0, sm: "12px", xs: "12px" }
+                    gap: "24px",
+                    pt: "120px", // Vertical padding (top and bottom)
+                    px: { md: "48px", sm: "12px", xs: "12px" }, // Horizontal padding
+                    position: "relative", // Ensures icons stay within the content area
                   }}
                 >
+                  {/* Typography Section */}
                   <Typography
-                    variant='h1'
-                    className='heading-font'
+                    variant="h1"
+                    className="heading-font"
                     sx={{
                       fontFamily: Fonts.righteous,
                       fontSize: { md: "100px", sm: "70px", xs: "60px" },
                       fontWeight: 700,
-                      mt:15
-
+                      whiteSpace: "nowrap", // Prevents text wrapping
+                      overflow: "hidden", // Ensures no unwanted overflow
+                      textOverflow: "ellipsis", // Optional, adds ellipsis if content overflows
                     }}
                   >
-                    <span className='heading-font' style={{
-                      color: '#F9BF29', WebkitTextStroke: '1px #f9bf29',
-                      WebkitTextFillColor: '#f49604',
-                    }}> I</span> <span className='heading-font' style={{ color: 'white' ,WebkitTextStroke: '1px #f9bf29',
-                      WebkitTextFillColor: 'white'}}> AM TARA</span>
+                    <span
+                      className="heading-font"
+                      style={{
+                        color: "#F9BF29",
+                        WebkitTextStroke: "1px #f9bf29",
+                        WebkitTextFillColor: "#f49604",
+                      }}
+                    >
+                      I
+                    </span>{" "}
+                    <span
+                      className="heading-font"
+                      style={{
+                        color: "white",
+                        WebkitTextStroke: "1px #f9bf29",
+                        WebkitTextFillColor: "white",
+                      }}
+                    >
+                      AM TARA
+                    </span>
                   </Typography>
+
+
+                  {/* Subtitle */}
                   <Typography
-                    variant='h3'
+                    variant="h3"
                     sx={{
-                      fontSize: { md: "38px", sm: "28px", xs: "20px" }
+                      fontSize: { md: "38px", sm: "28px", xs: "20px" },
                     }}
                   >
                     Click To See Latest Adventures!
                   </Typography>
-                  <Grid container spacing={2} alignItems={"center"}>
-                    <Grid item md={5} sm={5} xs={12}>
-                      <Button
-                        fullWidth
-                        variant='contained'
-                        sx={{
-                          py: 1,
-                          px: 4,
-                          textTransform: "capitalize",
-                          fontSize: "18px"
-                        }}
-                        href='https://www.youtube.com/@Shinewithtara'
-                      >
-                        Start Adventure
-                      </Button>
-                    </Grid>
-                    <Grid item md={7} sm={7} xs={12}>
-                      <Grid container spacing={2} sx={{ justifyContent: { md: "flex-start", sm: "flex-start", xs: "center" } }}>
-                        <Grid item md={2}>
-                          <Button href='https://www.facebook.com/profile.php?id=61554711500749'>
-                            <FacebookRounded />
-                          </Button>
-                        </Grid>
-                        <Grid item md={2}>
-                          <Button href='https://www.instagram.com/shineswithtara/ '>
-                            <InstagramRounded />
-                          </Button>
-                        </Grid>
-                        <Grid item md={2}>
-                          <Button href='https://www.youtube.com/@Shinewithtara'>
-                            <YoutubeRounded />
-                          </Button>
-                        </Grid>
-                        <Grid item md={2}>
-                          <Button href='https://www.tiktok.com/@shinewithtara'>
-                            <TiktokRounded />
-                          </Button>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-              <Grid item md={5} sm={12} xs={12}>
-                <Box
-                  component={'img'}
-                  src={Images.mainTara}
-                  width={'100%'}
-                  height={'100%'}
-                >
-                  
+
+                  {/* Button */}
+                  <Button
+                    variant="contained"
+                    sx={{
+                      py: 1.2,
+                      px: 2,
+                      backgroundColor: "#f49604",
+                      textTransform: "capitalize",
+                      fontWeight: "bold",
+                      fontSize: "18px",
+                      alignSelf: "flex-start", // Align button with other content
+                    }}
+                    href="https://www.youtube.com/@Shinewithtara"
+                  >
+                    START ADVENTURE
+                  </Button>
+
+                  {/* Social Media Icons */}
+                  <Box
+                    sx={{
+                      mt: 2, // Space above icons
+                      display: "flex",
+                      gap: 0.5,
+                      flexDirection: "row",
+                      position: "relative", // Ensures it stays within parent bounds
+                      zIndex: 1, // Ensure icons are visible above background
+                    }}
+                  >
+                    <Button href="https://www.facebook.com/profile.php?id=61554711500749">
+                      <FacebookRounded />
+                    </Button>
+                    <Button href="https://www.instagram.com/shineswithtara/">
+                      <InstagramRounded />
+                    </Button>
+                    <Button href="https://www.youtube.com/@Shinewithtara">
+                      <YoutubeRounded />
+                    </Button>
+                    <Button href="https://www.tiktok.com/@shinewithtara">
+                      <TiktokRounded />
+                    </Button>
+                  </Box>
                 </Box>
               </Grid>
             </Grid>
           </Box>
 
+
+
+
+
+
         </Box>
-        <Box
-          component={"section"}
+
+
+        <Grid
+          container
           sx={{
-            background: Colors.whiteblue,
-            py: "80px"
+            backgroundColor: "#CA6680",
+            minHeight: "80vh", // Ensures full height of the section
+            padding: 0,
+            margin: 0,
+            position: "relative", // Needed for absolute positioning of child elements
           }}
         >
-
-
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: "0 !important",
+              margin: 0,
+              padding: 0,
+              right: 0,
+              width: { md: "50%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
+              height: "60%", // Full height of the parent container
+              backgroundImage: `url(${introImage})`,
+              backgroundSize: { md: "contain", xl: "contain", lg: "contain", },
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center bottom", // Ensures the image is aligned at the bottom
+              display: { md: "block", xl: "block", lg: "block", sm: "none", xs: "none" }, // Show image only for medium and larger screens
+            }}
+          />
+          {/* Flex container for image and heading */}
           <Grid
             container
+            spacing={2}
+            alignItems="center"
             sx={{
-              background: `url(${Images.aboutImage})`,
-              backgroundSize: "cover",
-              backgroundPositionY: "center"
+              display: "flex",
+              justifyContent: "center", // Centers the heading horizontally
+              flexWrap: "nowrap", // Prevent wrapping
+              padding: "80px 0 50px 0", // Top and bottom padding
             }}
           >
-            <Grid item md={8}>
+            {/* Left Side: Image */}
+            <Grid item sx={{ flexShrink: 0, ml: 6 }}>
               <Box
                 sx={{
-                  mb: "40px"
+                  width: "143.56px",
+                  height: "139px",
+                  backgroundImage: `url(${taraImage})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
                 }}
-              >
+              />
+            </Grid>
+
+            {/* Right Side: Heading */}
+            <Grid item sx={{ textAlign: "center", flexGrow: 1 }}>
+              <Box>
                 <Typography
-                  variant='h3'
+                  variant="h1"
+                  className="heading-font"  
                   sx={{
-                    fontSize: { md: "48px", xs: "40px" },
-                    fontWeight: 900
+                    fontSize: { md: "100px", sm: "70px", xs: "60px" },
+                    fontWeight: 600,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    paddingBottom: 6,
+                    textTransform: "uppercase",
+                  }}
+                  style={{
+                    WebkitTextStroke: "1px white",
+                    WebkitTextFillColor: "#F9BF29",
                   }}
                 >
-                  Introducing <span style={{ color: Colors.darkblue }}>Tara and Shine</span>
+                  <span>Introducing</span>
+                  <span
+                    style={{
+                      display: "block",
+                      WebkitTextStroke: "1px white",
+                      WebkitTextFillColor: "#4FAAFB",
+                    }}
+                  >
+                    Tara and Shine
+                  </span>
                 </Typography>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "40px"
-                }}
-              >
-                <Typography>
-                  At the heart of this initiative is Tara, a nine years old, a delightful character,
-                  and her imaginary companion, Shine. Together, they embody the essence
-                  of Islamic teachings and virtues.
-                </Typography>
-                <Typography>
-                  He delightful best friends who radiate joy, curiosity, and affection. Together, they embark on extraordinary journeys, captivating friends from all corners
-                  of the world and whisking them away into a realm of enchantment.
-                </Typography>
-                <Typography>
-                  Tara and Shine explore magical escapades that effortlessly impart Islamic teachings, moral values, and the importance of family bonds. The crux of our efforts revolves around delving into the profound teachings of Hadith from the Quran, the enchanting recitation of the Quran, and a fundamental introduction to Arabic. We aim to elucidate the Arabic alphabet, numbers, months, and more, ensuring a holistic understanding.
-                </Typography>
-                <Typography>
-                  This captivating series is specifically tailored for Muslim kids worldwide, aiming to foster spiritual and character development in their young children. Join Tara and Shine as they weave a tapestry of thrilling adventures, educational experiences, and heartwarming moments that will leave a lasting impact on young minds.
-                </Typography>
+
               </Box>
             </Grid>
           </Grid>
-          <Typography
-            variant='h3'
+
+          {/* Paragraph and Image Section */}
+          <Grid
+            container
+            className='para-text'
             sx={{
-              fontSize: { md: "48px", xs: "40px" },
-              fontWeight: 900,
-              textAlign: 'center',
-              mt: 15
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+              gap: "20px",
+              width: "100%",
             }}
           >
-            What <span style={{ color: Colors.darkblue }}>Shine And Tara Have For You</span>
-          </Typography>
-          <Grid container mt={5} mb={10} spacing={2}>
-            {/* {navigation.map((item, index) => {
+            {/* Left Side: Paragraph */}
+            <Grid item md={5} xs={12}>
+              <Box   className='para-text' sx={{ textAlign: "left", paddingLeft: 6 }}>
+                <Typography   className='para-text' sx={{ paddingBottom: 3 }}>Welcome to "Shine with Tara"! ✨</Typography>
+                <Typography   className='para-text' sx={{ paddingBottom: 2 }}>
+                  "Shine with Tara" is an enchanting Islamic cartoon series designed especially for Muslim children worldwide. At the heart of our stories is Tara, a delightful, adventurous character, and her imaginary friend Shine, a radiant companion who brings joy, curiosity, and wonder to every journey. Together, Tara and Shine travel through magical realms, bringing Islamic teachings to life in a way that captivates and inspires.        </Typography>
+                <Typography   className='para-text' sx={{ paddingBottom: 2 }}>
+                  Through each adventure, Tara and Shine explore timeless stories from the Qur'an, dive into the beautiful recitation of verses, and share the moral lessons of the Hadith. They weave essential values like kindness, courage, and the importance of family into every episode, making spiritual growth and character building both enjoyable and relatable for young minds.        </Typography>
+                <Typography   className='para-text' sx={{ paddingBottom: 5 }}>
+                  Join us as Tara and Shine illuminate the wonders of Islamic teachings, taking young viewers on a path filled with thrilling discoveries, heartfelt moments, and lessons that will stay with them for life. Perfect for nurturing your child’s faith, values, and character! 🌙        </Typography>
+              </Box>
+            </Grid>
+
+            {/* Right Side: Image */}
+
+          </Grid>
+        </Grid>
+
+
+
+
+
+
+
+
+
+
+
+        <Typography
+          variant='h3'
+          sx={{
+            fontSize: { md: "48px", xs: "40px" },
+            fontWeight: 900,
+            textAlign: 'center',
+            mt: 15
+          }}
+        >
+          What <span style={{ color: Colors.darkblue }}>Shine And Tara Have For You</span>
+        </Typography>
+        <Grid container mt={5} mb={10} spacing={2}>
+          {/* {navigation.map((item, index) => {
                 return (
                   <Grid item lg={4} md={6} xs={12} display={'flex'} justifyContent={'center'} mt={5}>
                     <Button
@@ -718,44 +824,44 @@ function Home() {
                   </Grid>
                 )
               })} */}
-            {routingData.map((item, i) => (
-              <Grid key={i} component={'div'} sx={{ cursor: 'pointer', mt: 4 }} onClick={() => navigate(item?.path)} item md={4} sm={4} xs={12}>
-                <Grid
-                  container
-                  sx={{
-                    // border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
-                    borderRadius: "20px"
-                  }}
-                >
+          {routingData.map((item, i) => (
+            <Grid key={i} component={'div'} sx={{ cursor: 'pointer', mt: 4 }} onClick={() => navigate(item?.path)} item md={4} sm={4} xs={12}>
+              <Grid
+                container
+                sx={{
+                  // border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
+                  borderRadius: "20px"
+                }}
+              >
 
-                  <Grid data-aos="flip-left" item md={12} sm={12} xs={12}
-                  // sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}
+                <Grid data-aos="flip-left" item md={12} sm={12} xs={12}
+                // sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}
+                >
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "100%"
+                    }}
+
                   >
-                    <Box
+                    <CardMedia
+                      component={"img"}
+                      src={item.image}
                       sx={{
                         width: "100%",
-                        height: "100%"
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: '12px',
                       }}
-
-                    >
-                      <CardMedia
-                        component={"img"}
-                        src={item.image}
-                        sx={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          borderRadius: '12px',
-                        }}
-                      />
-                    </Box>
-                  </Grid>
+                    />
+                  </Box>
                 </Grid>
               </Grid>
-            ))}
-          </Grid>
+            </Grid>
+          ))}
+        </Grid>
 
-        </Box>
+
         {/* <Box
           component={"section"}
           sx={{
@@ -1746,7 +1852,7 @@ function Home() {
           </Grid>
         </Box> */}
 
-      </Box>
+      </Box >
     </>
   )
 }
