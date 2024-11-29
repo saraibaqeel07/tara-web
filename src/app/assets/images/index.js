@@ -86,8 +86,8 @@ const Images = {
   mainBg:require("./mianbg.png"),
   Book:require("./Book.png"),
   Family:require("./Family.png"),
-
- 
+  cartIcon:require("./cartIcon.png"),
+  mainTara:require("./mainTara.png"),
 }
 
 export default Images;

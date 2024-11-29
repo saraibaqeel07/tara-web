@@ -519,22 +519,22 @@ function Home() {
           sx={{
             background: Colors.primaryGradient,
             width: "100%",
-            py: "80px"
+
           }}
         >
 
           <Box
             sx={{
               backgroundImage: { md: `url(${Images.bannerBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
-              width: "95%",
-              height: { md: "624px", xs: "490px" },
+              width: "100%",
+              height: { md: "578px", xs: "490px" },
               backgroundSize: "cover",
               backgroundPosition: "center center",
-              borderRadius: "20px",
+              
               margin: '0 auto'
             }}
           >
-            <Grid container>
+            <Grid container >
               <Grid item md={7} sm={12} xs={12}>
                 <Box
                   sx={{
@@ -549,14 +549,20 @@ function Home() {
                 >
                   <Typography
                     variant='h1'
+                    className='heading-font'
                     sx={{
                       fontFamily: Fonts.righteous,
-                      fontSize: { md: "70px", sm: "50px", xs: "40px" },
+                      fontSize: { md: "100px", sm: "70px", xs: "60px" },
                       fontWeight: 700,
-                      color: Colors.white,
+                      mt:15
+
                     }}
                   >
-                    <span id='follow-text' style={{ color: Colors.orange }}  >Follow</span>, <span id='learn-text'>Learn</span> and <span id='explore-text'>Explore</span> with Tara!
+                    <span className='heading-font' style={{
+                      color: '#F9BF29', WebkitTextStroke: '1px #f9bf29',
+                      WebkitTextFillColor: '#f49604',
+                    }}> I</span> <span className='heading-font' style={{ color: 'white' ,WebkitTextStroke: '1px #f9bf29',
+                      WebkitTextFillColor: 'white'}}> AM TARA</span>
                   </Typography>
                   <Typography
                     variant='h3'
@@ -609,6 +615,16 @@ function Home() {
                   </Grid>
                 </Box>
               </Grid>
+              <Grid item md={5} sm={12} xs={12}>
+                <Box
+                  component={'img'}
+                  src={Images.mainTara}
+                  width={'100%'}
+                  height={'100%'}
+                >
+                  
+                </Box>
+              </Grid>
             </Grid>
           </Box>
 
@@ -620,70 +636,70 @@ function Home() {
             py: "80px"
           }}
         >
-          <Container>
-           
-            <Grid
-              container
-              sx={{
-                background: `url(${Images.aboutImage})`,
-                backgroundSize: "cover",
-                backgroundPositionY: "center"
-              }}
-            >
-              <Grid item md={8}>
-                <Box
+
+
+          <Grid
+            container
+            sx={{
+              background: `url(${Images.aboutImage})`,
+              backgroundSize: "cover",
+              backgroundPositionY: "center"
+            }}
+          >
+            <Grid item md={8}>
+              <Box
+                sx={{
+                  mb: "40px"
+                }}
+              >
+                <Typography
+                  variant='h3'
                   sx={{
-                    mb: "40px"
+                    fontSize: { md: "48px", xs: "40px" },
+                    fontWeight: 900
                   }}
                 >
-                  <Typography
-                    variant='h3'
-                    sx={{
-                      fontSize: { md: "48px", xs: "40px" },
-                      fontWeight: 900
-                    }}
-                  >
-                    Introducing <span style={{ color: Colors.darkblue }}>Tara and Shine</span>
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "40px"
-                  }}
-                >
-                  <Typography>
-                    At the heart of this initiative is Tara, a nine years old, a delightful character,
-                    and her imaginary companion, Shine. Together, they embody the essence
-                    of Islamic teachings and virtues.
-                  </Typography>
-                  <Typography>
-                    He delightful best friends who radiate joy, curiosity, and affection. Together, they embark on extraordinary journeys, captivating friends from all corners
-                    of the world and whisking them away into a realm of enchantment.
-                  </Typography>
-                  <Typography>
-                    Tara and Shine explore magical escapades that effortlessly impart Islamic teachings, moral values, and the importance of family bonds. The crux of our efforts revolves around delving into the profound teachings of Hadith from the Quran, the enchanting recitation of the Quran, and a fundamental introduction to Arabic. We aim to elucidate the Arabic alphabet, numbers, months, and more, ensuring a holistic understanding.
-                  </Typography>
-                  <Typography>
-                    This captivating series is specifically tailored for Muslim kids worldwide, aiming to foster spiritual and character development in their young children. Join Tara and Shine as they weave a tapestry of thrilling adventures, educational experiences, and heartwarming moments that will leave a lasting impact on young minds.
-                  </Typography>
-                </Box>
-              </Grid>
+                  Introducing <span style={{ color: Colors.darkblue }}>Tara and Shine</span>
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "40px"
+                }}
+              >
+                <Typography>
+                  At the heart of this initiative is Tara, a nine years old, a delightful character,
+                  and her imaginary companion, Shine. Together, they embody the essence
+                  of Islamic teachings and virtues.
+                </Typography>
+                <Typography>
+                  He delightful best friends who radiate joy, curiosity, and affection. Together, they embark on extraordinary journeys, captivating friends from all corners
+                  of the world and whisking them away into a realm of enchantment.
+                </Typography>
+                <Typography>
+                  Tara and Shine explore magical escapades that effortlessly impart Islamic teachings, moral values, and the importance of family bonds. The crux of our efforts revolves around delving into the profound teachings of Hadith from the Quran, the enchanting recitation of the Quran, and a fundamental introduction to Arabic. We aim to elucidate the Arabic alphabet, numbers, months, and more, ensuring a holistic understanding.
+                </Typography>
+                <Typography>
+                  This captivating series is specifically tailored for Muslim kids worldwide, aiming to foster spiritual and character development in their young children. Join Tara and Shine as they weave a tapestry of thrilling adventures, educational experiences, and heartwarming moments that will leave a lasting impact on young minds.
+                </Typography>
+              </Box>
             </Grid>
-            <Typography
-              variant='h3'
-              sx={{
-                fontSize: { md: "48px", xs: "40px" },
-                fontWeight: 900,
-                textAlign: 'center',
-                mt:15
-              }}
-            >
-              What <span style={{ color: Colors.darkblue }}>Shine And Tara Have For You</span>
-            </Typography>
-            <Grid container mt={5} mb={10} spacing={2}>
-              {/* {navigation.map((item, index) => {
+          </Grid>
+          <Typography
+            variant='h3'
+            sx={{
+              fontSize: { md: "48px", xs: "40px" },
+              fontWeight: 900,
+              textAlign: 'center',
+              mt: 15
+            }}
+          >
+            What <span style={{ color: Colors.darkblue }}>Shine And Tara Have For You</span>
+          </Typography>
+          <Grid container mt={5} mb={10} spacing={2}>
+            {/* {navigation.map((item, index) => {
                 return (
                   <Grid item lg={4} md={6} xs={12} display={'flex'} justifyContent={'center'} mt={5}>
                     <Button
@@ -702,43 +718,43 @@ function Home() {
                   </Grid>
                 )
               })} */}
-              {routingData.map((item, i) => (
-                <Grid key={i} component={'div'} sx={{ cursor: 'pointer',mt:4 }} onClick={() => navigate(item?.path)} item md={4} sm={4} xs={12}>
-                  <Grid
-                    container
-                    sx={{
-                      // border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
-                      borderRadius: "20px"
-                    }}
-                  >
+            {routingData.map((item, i) => (
+              <Grid key={i} component={'div'} sx={{ cursor: 'pointer', mt: 4 }} onClick={() => navigate(item?.path)} item md={4} sm={4} xs={12}>
+                <Grid
+                  container
+                  sx={{
+                    // border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
+                    borderRadius: "20px"
+                  }}
+                >
 
-                    <Grid data-aos="flip-left" item md={12} sm={12} xs={12} 
-                    // sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}
+                  <Grid data-aos="flip-left" item md={12} sm={12} xs={12}
+                  // sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}
+                  >
+                    <Box
+                      sx={{
+                        width: "100%",
+                        height: "100%"
+                      }}
+
                     >
-                      <Box
+                      <CardMedia
+                        component={"img"}
+                        src={item.image}
                         sx={{
                           width: "100%",
-                          height: "100%"
+                          height: "100%",
+                          objectFit: "cover",
+                          borderRadius: '12px',
                         }}
-
-                      >
-                        <CardMedia
-                          component={"img"}
-                          src={item.image}
-                          sx={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            borderRadius: '12px',
-                          }}
-                        />
-                      </Box>
-                    </Grid>
+                      />
+                    </Box>
                   </Grid>
                 </Grid>
-              ))}
-            </Grid>
-          </Container>
+              </Grid>
+            ))}
+          </Grid>
+
         </Box>
         {/* <Box
           component={"section"}

@@ -118,7 +118,7 @@ function App() {
 
   return (
     <PayPalScriptProvider options={initialOptions}>
-    {/* <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
     <AuthContext.Provider value={{ user, setUser }}>
     <CartContext.Provider value={{ cart, setCart, cartVisible, toggleCartVisibility }}>
     <CartCounter.Provider value={{ count, setCount }}>
@@ -142,12 +142,12 @@ function App() {
       </CartContext.Provider>
       </AuthContext.Provider>
       
-    </ThemeProvider> */}
-    <ThemeProvider theme={theme}>
+    </ThemeProvider>
+    {/* <ThemeProvider theme={theme}>
       <div style={{ textAlign: 'center', marginTop: '20%', fontSize: '24px', color: Colors.darkblue }}>
         Site is currently not available.  
       </div>
-    </ThemeProvider>
+    </ThemeProvider> */}
     </PayPalScriptProvider>
   );
 }

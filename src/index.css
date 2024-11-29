@@ -6,6 +6,29 @@
   --white: #ffffff;
   --lightScrollbar: #764aab;
 }
+@font-face {
+  font-family: 'Adiana';
+  src: url('/src/app/assets/fonts/Adigiana\ Extreme.ttf') format('opentype');  
+  
+  font-weight: 'normal';
+  font-style: 'normal';
+}
+@font-face {
+  font-family: 'Arco';
+  src: url('/src/app/assets/fonts/arco-cyrillic.otf') format('opentype');  
+  
+  font-weight: 'normal';
+  font-style: 'normal';
+}
+body {
+  font-family: 'Adiana', sans-serif !important;
+}
+*{
+  font-family: 'Adiana', sans-serif !important;
+}
+.heading-font{
+  font-family: 'Arco', sans-serif !important;
+}
 
 ::selection {
   background: var(--primary);

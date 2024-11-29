@@ -114,7 +114,7 @@ function Header(props) {
         component="nav"
         sx={{
           boxShadow: "none",
-          background: Colors.primaryGradient
+          background: '#5B73AD'
         }}
       >
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -188,11 +188,11 @@ function Header(props) {
             ))}
           </Box>
           <Box sx={{ width: '20%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-            {true && <Badge badgeContent={count} color="primary"> <ShoppingCartIcon onClick={toggleCartVisibility} sx={{ cursor: "pointer" }} /></Badge>} &nbsp;&nbsp;
+            {true && <Box component={'img'} src={Images.cartIcon} width={'30px'} onClick={()=> toggleCartVisibility()}></Box>} &nbsp;&nbsp;
             {!user && !loginUser ?
               <>
 
-                <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>&nbsp;&nbsp;&nbsp;</> : <Box sx={{ display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>
+               &nbsp; <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid #FF9D04', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>&nbsp;&nbsp;&nbsp;</> : <Box sx={{ display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>
 
                 <Button
                   id="basic-button"
