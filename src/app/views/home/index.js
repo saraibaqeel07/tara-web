@@ -667,121 +667,172 @@ function Home() {
 
 
         <Grid
-          container
-          sx={{
-            backgroundColor: "#CA6680",
-            minHeight: "80vh", // Ensures full height of the section
-            padding: 0,
-            margin: 0,
-            position: "relative", // Needed for absolute positioning of child elements
-          }}
-        >
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: "0 !important",
-              margin: 0,
-              padding: 0,
-              right: 0,
-              width: { md: "50%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
-              height: "60%", // Full height of the parent container
-              backgroundImage: `url(${introImage})`,
-              backgroundSize: { md: "contain", xl: "contain", lg: "contain", },
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center bottom", // Ensures the image is aligned at the bottom
-              display: { md: "block", xl: "block", lg: "block", sm: "none", xs: "none" }, // Show image only for medium and larger screens
-            }}
-          />
-          {/* Flex container for image and heading */}
-          <Grid
-            container
-            spacing={2}
-            alignItems="center"
-            sx={{
-              display: "flex",
-              justifyContent: "center", // Centers the heading horizontally
-              flexWrap: "nowrap", // Prevent wrapping
-              padding: "80px 0 50px 0", // Top and bottom padding
-            }}
-          >
-            {/* Left Side: Image */}
-            <Grid item sx={{ flexShrink: 0, ml: 6 }}>
-              <Box
-                sx={{
-                  width: "143.56px",
-                  height: "139px",
-                  backgroundImage: `url(${taraImage})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              />
-            </Grid>
+  container
+  sx={{
+    backgroundColor: "#CA6680",
+    minHeight: "80vh", // Ensures full height of the section
+    padding: 0,
+    margin: 0,
+    position: "relative", // Needed for absolute positioning of child elements
+  }}
+>
+  {/* Background Image Box */}
+<Box
+  sx={{
+    position: "absolute",
+    bottom: 0,
+    right: 0, // Ensures the image touches the right edge
+    margin: 0,
+    padding: 0,
+    width: "450px", // Set a fixed width (e.g., 500px)
+    height: "500px", // Set a fixed height (e.g., 500px)
+    backgroundImage: `url(${introImage})`,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center bottom", // Ensures the image aligns to the bottom
+    display: { md: "block", sm: "none", xs: "none" }, // Show image only on md and larger screens
+  }}
+/>
 
-            {/* Right Side: Heading */}
-            <Grid item sx={{ textAlign: "center", flexGrow: 1 }}>
-              <Box>
-                <Typography
-                  variant="h1"
-                  className="heading-font"  
-                  sx={{
-                    fontSize: { md: "100px", sm: "70px", xs: "60px" },
-                    fontWeight: 600,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    paddingBottom: 6,
-                    textTransform: "uppercase",
-                  }}
-                  style={{
-                    WebkitTextStroke: "1px white",
-                    WebkitTextFillColor: "#F9BF29",
-                  }}
-                >
-                  <span>Introducing</span>
-                  <span
-                    style={{
-                      display: "block",
-                      WebkitTextStroke: "1px white",
-                      WebkitTextFillColor: "#4FAAFB",
-                    }}
-                  >
-                    Tara and Shine
-                  </span>
-                </Typography>
 
-              </Box>
-            </Grid>
-          </Grid>
+  {/* Flex container for image and heading */}
+  <Grid
+  container
+  sx={{
+    backgroundColor: "#CA6680",
+    minHeight: "80vh",
+    position: "relative",
+    display: "flex",
+    justifyContent: "center", // Centers content horizontally
+    alignItems: "center", // Centers content vertically
+    padding: { xs: 2, sm: 3, md: 4 }, // Adjusts padding for smaller screens
+  }}
+>
+  {/* Container for Image and Heading */}
+  <Box
+    sx={{
+      position: "relative", // Allows absolute positioning for the image
+      textAlign: "center", // Centers the heading text
+      width: "100%", // Ensures proper alignment
+    }}
+  >
+    {/* Tara Image */}
+    <Box
+      sx={{
+        position: "absolute", // Positioned relative to the container
+        top: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts vertical positioning
+        left: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts horizontal positioning
+        transform: {
+          xl: "translate(-450%, -90%)",
+          lg: "translate(-450%, -90%)",
+          md: "translate(-400%, -70%)",
+          sm: "translate(-290%, -50%)",
+          xs: "translate(-220%, -40%)",
+        }, // Dynamically adjusts based on screen size
+        width: { xl: "143.56px", lg: "130px", md: "110px", sm: "90px", xs: "70px" },
+        height: { xl: "139px", lg: "120px", md: "100px", sm: "80px", xs: "60px" },
+        backgroundImage: `url(${taraImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    />
 
-          {/* Paragraph and Image Section */}
-          <Grid
-            container
-            className='para-text'
-            sx={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "space-between",
-              gap: "20px",
-              width: "100%",
-            }}
-          >
-            {/* Left Side: Paragraph */}
-            <Grid item md={5} xs={12}>
-              <Box   className='para-text' sx={{ textAlign: "left", paddingLeft: 6 }}>
-                <Typography   className='para-text' sx={{ paddingBottom: 3 }}>Welcome to "Shine with Tara"! ✨</Typography>
-                <Typography   className='para-text' sx={{ paddingBottom: 2 }}>
-                  "Shine with Tara" is an enchanting Islamic cartoon series designed especially for Muslim children worldwide. At the heart of our stories is Tara, a delightful, adventurous character, and her imaginary friend Shine, a radiant companion who brings joy, curiosity, and wonder to every journey. Together, Tara and Shine travel through magical realms, bringing Islamic teachings to life in a way that captivates and inspires.        </Typography>
-                <Typography   className='para-text' sx={{ paddingBottom: 2 }}>
-                  Through each adventure, Tara and Shine explore timeless stories from the Qur'an, dive into the beautiful recitation of verses, and share the moral lessons of the Hadith. They weave essential values like kindness, courage, and the importance of family into every episode, making spiritual growth and character building both enjoyable and relatable for young minds.        </Typography>
-                <Typography   className='para-text' sx={{ paddingBottom: 5 }}>
-                  Join us as Tara and Shine illuminate the wonders of Islamic teachings, taking young viewers on a path filled with thrilling discoveries, heartfelt moments, and lessons that will stay with them for life. Perfect for nurturing your child’s faith, values, and character! 🌙        </Typography>
-              </Box>
-            </Grid>
+    {/* Heading */}
+    <Typography
+      variant="h1"
+      className="heading-font"
+      sx={{
+        fontSize: {
+          xl: "100px",
+          lg: "90px",
+          md: "70px",
+          sm: "45px",
+          xs: "35px",
+        }, // Adjusts font size for different screens
+        fontWeight: 600,
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        textTransform: "uppercase",
+        paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+        position: "relative", // Ensures alignment with image
+        zIndex: 1, // Keeps heading above the image
+      }}
+      style={{
+        WebkitTextStroke: "1px white",
+        WebkitTextFillColor: "#F9BF29",
+      }}
+    >
+      <span>Introducing</span>
+      <span
+        style={{
+          display: "block",
+          WebkitTextStroke: "1px white",
+          WebkitTextFillColor: "#4FAAFB",
+        }}
+      >
+        Tara and Shine
+      </span>
+    </Typography>
+  </Box>
+</Grid>
 
-            {/* Right Side: Image */}
 
-          </Grid>
-        </Grid>
+  {/* Paragraph and Image Section */}
+  <Grid
+    container
+    className="para-text"
+    sx={{
+      display: "flex",
+      alignItems: "flex-start",
+      justifyContent: "space-between",
+      gap: "20px",
+      width: "100%",
+    }}
+  >
+    {/* Left Side: Paragraph */}
+    <Grid
+      item
+      md={5}
+      xs={12}
+      sx={{
+        textAlign: "left",
+        paddingLeft: { lg: 6, md: 4, sm: 2, xs: 2 }, // Adjust padding based on screen size
+      }}
+    >
+      <Box
+        className="para-text"
+        sx={{
+          textAlign: "left",
+          padding: { lg: 6, md: 4, sm: 3, xs: 2 }, // Adjust padding
+          width:"100%"
+        }}
+      >
+        <Typography className="para-text" sx={{ paddingBottom: 3, fontSize: { sm: "18px", xs: "16px" } }}>
+          Welcome to "Shine with Tara"! ✨
+        </Typography>
+        <Typography className="para-text" sx={{ paddingBottom: 2, fontSize: { sm: "18px", xs: "16px" } }}>
+          "Shine with Tara" is an enchanting Islamic cartoon series designed especially for Muslim children worldwide.
+          At the heart of our stories is Tara, a delightful, adventurous character, and her imaginary friend Shine, a
+          radiant companion who brings joy, curiosity, and wonder to every journey. Together, Tara and Shine travel
+          through magical realms, bringing Islamic teachings to life in a way that captivates and inspires.
+        </Typography>
+        <Typography className="para-text" sx={{ paddingBottom: 2, fontSize: { sm: "18px", xs: "16px" } }}>
+          Through each adventure, Tara and Shine explore timeless stories from the Qur'an, dive into the beautiful
+          recitation of verses, and share the moral lessons of the Hadith. They weave essential values like kindness,
+          courage, and the importance of family into every episode, making spiritual growth and character building both
+          enjoyable and relatable for young minds.
+        </Typography>
+        <Typography className="para-text" sx={{ paddingBottom: 5, fontSize: { sm: "18px", xs: "16px" } }}>
+          Join us as Tara and Shine illuminate the wonders of Islamic teachings, taking young viewers on a path filled
+          with thrilling discoveries, heartfelt moments, and lessons that will stay with them for life. Perfect for
+          nurturing your child’s faith, values, and character! 🌙
+        </Typography>
+      </Box>
+    </Grid>
+  </Grid>
+</Grid>
+
 
 
 
