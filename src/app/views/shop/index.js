@@ -21,6 +21,8 @@ import 'swiper/css';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { CartContext } from '../../Context/CartContext';
 import { CartCounter } from '../../Context/CartCounter';
+import taraImage from "../../assets/images/tara-pic.png"
+import shopImg1 from "../../assets/images/shop-intro.png"
 
 // import "slick-carousel/slick/slick-theme.css";
 
@@ -440,137 +442,42 @@ function Shop() {
           width: "100%"
         }}
       >
-           <Box
-            component={"section"}
+
+
+        <Box
+          sx={{
+            backgroundImage: `url(${Images.bannerBg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center center",
+            width: "100%",
+            height: { md: "578px", xs: "490px" },
+            position: "relative", // Ensure child content is positioned relative to this container
+            overflow: "hidden", // Prevent content from going outside
+          }}
+        >
+          {/* Right-side Image */}
+          <Box
             sx={{
-              background: Colors.primaryGradient,
-              width: "100%",
-              py: "80px"
+              position: "absolute",
+              boxShadow: "none",
+              border: "none",
+              bottom: 0,
+              left: "50%", // Center the image horizontally
+              transform: "translateX(-50%)", // Adjust to ensure exact centering
+              width: { md: "80%", xl: "35%", lg: "40%", sm: "70%", xs: "100%" }, // Full width of the parent container
+              height: "100%", // Full height of the parent container
+              backgroundImage: `url(${shopImg1})`,
+              backgroundSize: "cover", // Ensure image covers the area
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center center", // Ensures the image is centered both horizontally and vertically
+              display: "block", // Ensure the image is always visible
             }}
-          >
+          />
+        </Box>
 
-            <Box
-              sx={{
-                backgroundImage: { md: `url(${Images.mainBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
-                width: "95%",
-                height: { md: "624px", xs: "490px" },
-                backgroundSize: "cover",
-                backgroundPosition: "center center",
-                borderRadius: "20px",
-                margin: '0 auto'
-              }}
-            >
-              <Grid container>
-                <Grid item md={6} sm={12} xs={12}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      gap: "40px",
-                      pt: "60px",
-                      pl: { md: `48px !important`, sm: "12px", xs: "12px" },
-                      pr: { md: 0, sm: "12px", xs: "12px" }
-                    }}
-                  >
-                    <Typography
-                      variant='h1'
-                      sx={{
-                        fontFamily: Fonts.righteous,
-                        fontSize: { md: "70px", sm: "50px", xs: "40px" },
-                        fontWeight: 700,
-                        color: Colors.white,
-                      }}
-                    >
-                      <span id='follow-text' style={{ color: Colors.orange }}  >Follow</span>, <span id='learn-text'>Learn</span> and <span id='explore-text'>Explore</span> with Tara!
-                    </Typography>
-                    <Typography
-                      variant='h3'
-                      sx={{
-                        fontSize: { md: "38px", sm: "28px", xs: "20px" }
-                      }}
-                    >
-                      Click To See Latest Adventures!
-                    </Typography>
-                    <Grid container spacing={2} alignItems={"center"}>
-                      <Grid item md={5} sm={5} xs={12}>
-                        <Button
-                          fullWidth
-                          variant='contained'
-                          sx={{
-                            py: 1,
-                            px: 4,
-                            textTransform: "capitalize",
-                            fontSize: "18px"
-                          }}
-                          href='https://www.youtube.com/@Shinewithtara'
-                        >
-                          Start Adventure
-                        </Button>
-                      </Grid>
-                      <Grid item md={7} sm={7} xs={12}>
-                        <Grid container spacing={2} sx={{ justifyContent: { md: "flex-start", sm: "flex-start", xs: "center" } }}>
-                          <Grid item md={2}>
-                            <Button href='https://www.facebook.com/profile.php?id=61554711500749'>
-                              <FacebookRounded />
-                            </Button>
-                          </Grid>
-                          <Grid item md={2}>
-                            <Button href='https://www.instagram.com/shineswithtara/ '>
-                              <InstagramRounded />
-                            </Button>
-                          </Grid>
-                          <Grid item md={2}>
-                            <Button href='https://www.youtube.com/@Shinewithtara'>
-                              <YoutubeRounded />
-                            </Button>
-                          </Grid>
-                          <Grid item md={2}>
-                            <Button href='https://www.tiktok.com/@shinewithtara'>
-                              <TiktokRounded />
-                            </Button>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
-                <Grid item sx={{
-                  display: {
-                    lg: 'block',  // Show block on large screens and up
-                    md: 'none',   // Hide on medium screens
-                    xs: 'none'    // Hide on extra-small screens as well
-                  }
-                }} md={6} sm={12} xs={12}>
-                  <Grid container justifyContent={'center'}>
-                    <Grid component={'div'} sx={{ cursor: 'pointer', mt: 4 }} item md={12} sm={12} xs={12}>
 
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: "100%"
-                        }}
 
-                      >
-                        <CardMedia
-                          component={"img"}
-                          src={Images.Book}
-                          sx={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            borderRadius: '12px',
-                          }}
-                        />
-                      </Box>
 
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Box>
-
-          </Box>
         {/* <Box
           component={"section"}
           sx={{
@@ -956,27 +863,134 @@ function Shop() {
             <Box
               component={"section"}
               sx={{
-                background: Colors.whiteblue,
+                backgroundColor:"#CA6680",
                 height: "100%",
                 width: "100%",
                 py: "72px"
               }}
             >
-            
+
               <Box
-                component={'div'}
-                className='product-heading-img'
                 sx={{
-                  backgroundImage: `url(${Images.books})`,
-                  width: "100%",
-                  height: '200px',
-                  backgroundSize: "cover",
-                  backgroundPosition: "center center",
-                  borderRadius: "20px",
-                  mb: "100px"
+                  position: "relative", // Allows absolute positioning for the image
+                  textAlign: "center", // Centers the heading text
+                  width: "100%", // Ensures proper alignment
                 }}
               >
+                {/* Tara Image */}
+                <Box
+                  sx={{
+                    position: "absolute", // Positioned relative to the container
+                    top: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts vertical positioning
+                    left: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts horizontal positioning
+                    transform: {
+                      xl: "translate(-450%, -90%)",
+                      lg: "translate(-450%, -90%)",
+                      md: "translate(-400%, -70%)",
+                      sm: "translate(-290%, -50%)",
+                      xs: "translate(-220%, -40%)",
+                    }, // Dynamically adjusts based on screen size
+                    width: { xl: "143.56px", lg: "130px", md: "110px", sm: "90px", xs: "70px" },
+                    height: { xl: "139px", lg: "120px", md: "100px", sm: "80px", xs: "60px" },
+                    backgroundImage: `url(${taraImage})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                />
+
+                {/* Heading */}
+                <Typography
+                  variant="h1"
+                  className="heading-font"
+                  sx={{
+                    fontSize: {
+                      xl: "100px",
+                      lg: "90px",
+                      md: "70px",
+                      sm: "45px",
+                      xs: "35px",
+                    }, // Adjusts font size for different screens
+                    fontWeight: 600,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    textTransform: "uppercase",
+                    paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+                    position: "relative", // Ensures alignment with image
+                    zIndex: 1, // Keeps heading above the image
+                  }}
+                  style={{
+                    WebkitTextStroke: "1px white",
+                    WebkitTextFillColor: "#F9BF29",
+                  }}
+                >
+                  shop
+
+                </Typography>
+
               </Box>
+              <Box
+      sx={{
+        display: "flex", // Use flexbox to center the content
+        justifyContent: "center", // Horizontally center the container
+        alignItems: "center", // Vertically center the container
+        height: "70vh", // Take full viewport height to center content
+        marginBottom: "10rem",
+      }}
+    >
+      <Box
+        sx={{
+          width: "800px", // Fixed width
+          height: "350px", // Fixed height
+          display: "grid", // Use grid layout
+          gridTemplateColumns: "repeat(3, 1fr)", // 3 boxes per row
+          gap: "32px", // 32px gap between boxes
+          overflow: "hidden", // Hide overflow content
+        }}
+      >
+        {/* Create 8 boxes */}
+        {Array.from({ length: 8 }).map((_, index) => (
+          <Box
+            key={index}
+            sx={{
+              backgroundColor: index === 7 ? "#F9BF29" : "#5B73AD", // Last box gets the yellow background
+              borderRadius: "8px", // Optional: Round corners for the boxes
+              height: "100%", // Fill the height of the container
+              display: "flex",
+              justifyContent: "center", // Center the content horizontally
+              alignItems: "center", // Center the content vertically
+            }}
+          >
+            {/* Text inside each box */}
+            {index !== 7 ? (
+              <Typography
+                variant="h6"
+                className='heading-font'
+                sx={{
+                  color: "white", // Text color for the boxes
+                  textAlign: "center", // Center the text
+                  fontWeight: "bold",
+                }}
+              >
+                {["Books", "Activity Sheets", "Coloring Sheets", "Calendars", "Stickers", "Bookmarks", "Puzzles"][index]}
+              </Typography>
+            ) : (
+              <Typography
+              className='heading-font'
+                variant="h6"
+                sx={{
+                  color: "white", // Text color for the last box
+                  textAlign: "center", // Center the text
+                  fontWeight: "bold",
+                }}
+              >
+                Show All Products
+              </Typography>
+            )}
+          </Box>
+        ))}
+      </Box>
+    </Box>
               <Container>
                 <Grid container spacing={2} justifyContent={"center"}>
                   {Array.isArray(products) && products?.map((card, i) => (
@@ -1065,7 +1079,11 @@ function Shop() {
                 </Grid>
                 {/* <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} /> */}
               </Container>
+
+   
+
             </Box>
+            
             <Box
               component={"section"}
               id='activity-section'

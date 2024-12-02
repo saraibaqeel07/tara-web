@@ -24,6 +24,14 @@ import { CartCounter } from '../../Context/CartCounter';
 import navigation from '../../../Navigation';
 import introImage from "../../assets/images/intro-pic.png"
 import taraImage from "../../assets/images/tara-pic.png"
+import starImg from "../../assets/images/star.png"
+import rainbowImg from "../../assets/images/rainbow.png"
+import haveforyou from "../../assets/images/haveforyou.png"
+import shopFrame from "../../assets/images/Shop-Frame.png"
+import cloudImg from "../../assets/images/cloud.png"
+import reviewSection from "../../assets/images/review-section.png"
+import Character1 from "../../assets/images/Character1.png"
+import Character2 from "../../assets/images/Character2.png"
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 
@@ -605,6 +613,7 @@ function Home() {
                   {/* Subtitle */}
                   <Typography
                     variant="h3"
+                    className='para-text'
                     sx={{
                       fontSize: { md: "38px", sm: "28px", xs: "20px" },
                     }}
@@ -615,6 +624,8 @@ function Home() {
                   {/* Button */}
                   <Button
                     variant="contained"
+                    className='para-text'
+
                     sx={{
                       py: 1.2,
                       px: 2,
@@ -667,196 +678,408 @@ function Home() {
 
 
         <Grid
-  container
-  sx={{
-    backgroundColor: "#CA6680",
-    minHeight: "80vh", // Ensures full height of the section
-    padding: 0,
-    margin: 0,
-    position: "relative", // Needed for absolute positioning of child elements
-  }}
->
-  {/* Background Image Box */}
-<Box
-  sx={{
-    position: "absolute",
-    bottom: 0,
-    right: 0, // Ensures the image touches the right edge
-    margin: 0,
-    padding: 0,
-    width: "450px", // Set a fixed width (e.g., 500px)
-    height: "500px", // Set a fixed height (e.g., 500px)
-    backgroundImage: `url(${introImage})`,
-    backgroundSize: "contain",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center bottom", // Ensures the image aligns to the bottom
-    display: { md: "block", sm: "none", xs: "none" }, // Show image only on md and larger screens
-  }}
-/>
-
-
-  {/* Flex container for image and heading */}
-  <Grid
-  container
-  sx={{
-    backgroundColor: "#CA6680",
-    minHeight: "80vh",
-    position: "relative",
-    display: "flex",
-    justifyContent: "center", // Centers content horizontally
-    alignItems: "center", // Centers content vertically
-    padding: { xs: 2, sm: 3, md: 4 }, // Adjusts padding for smaller screens
-  }}
->
-  {/* Container for Image and Heading */}
-  <Box
-    sx={{
-      position: "relative", // Allows absolute positioning for the image
-      textAlign: "center", // Centers the heading text
-      width: "100%", // Ensures proper alignment
-    }}
-  >
-    {/* Tara Image */}
-    <Box
-      sx={{
-        position: "absolute", // Positioned relative to the container
-        top: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts vertical positioning
-        left: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts horizontal positioning
-        transform: {
-          xl: "translate(-450%, -90%)",
-          lg: "translate(-450%, -90%)",
-          md: "translate(-400%, -70%)",
-          sm: "translate(-290%, -50%)",
-          xs: "translate(-220%, -40%)",
-        }, // Dynamically adjusts based on screen size
-        width: { xl: "143.56px", lg: "130px", md: "110px", sm: "90px", xs: "70px" },
-        height: { xl: "139px", lg: "120px", md: "100px", sm: "80px", xs: "60px" },
-        backgroundImage: `url(${taraImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    />
-
-    {/* Heading */}
-    <Typography
-      variant="h1"
-      className="heading-font"
-      sx={{
-        fontSize: {
-          xl: "100px",
-          lg: "90px",
-          md: "70px",
-          sm: "45px",
-          xs: "35px",
-        }, // Adjusts font size for different screens
-        fontWeight: 600,
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        textTransform: "uppercase",
-        paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
-        position: "relative", // Ensures alignment with image
-        zIndex: 1, // Keeps heading above the image
-      }}
-      style={{
-        WebkitTextStroke: "1px white",
-        WebkitTextFillColor: "#F9BF29",
-      }}
-    >
-      <span>Introducing</span>
-      <span
-        style={{
-          display: "block",
-          WebkitTextStroke: "1px white",
-          WebkitTextFillColor: "#4FAAFB",
-        }}
-      >
-        Tara and Shine
-      </span>
-    </Typography>
-  </Box>
-</Grid>
-
-
-  {/* Paragraph and Image Section */}
-  <Grid
-    container
-    className="para-text"
-    sx={{
-      display: "flex",
-      alignItems: "flex-start",
-      justifyContent: "space-between",
-      gap: "20px",
-      width: "100%",
-    }}
-  >
-    {/* Left Side: Paragraph */}
-    <Grid
-      item
-      md={5}
-      xs={12}
-      sx={{
-        textAlign: "left",
-        paddingLeft: { lg: 6, md: 4, sm: 2, xs: 2 }, // Adjust padding based on screen size
-      }}
-    >
-      <Box
-        className="para-text"
-        sx={{
-          textAlign: "left",
-          padding: { lg: 6, md: 4, sm: 3, xs: 2 }, // Adjust padding
-          width:"100%"
-        }}
-      >
-        <Typography className="para-text" sx={{ paddingBottom: 3, fontSize: { sm: "18px", xs: "16px" } }}>
-          Welcome to "Shine with Tara"! ✨
-        </Typography>
-        <Typography className="para-text" sx={{ paddingBottom: 2, fontSize: { sm: "18px", xs: "16px" } }}>
-          "Shine with Tara" is an enchanting Islamic cartoon series designed especially for Muslim children worldwide.
-          At the heart of our stories is Tara, a delightful, adventurous character, and her imaginary friend Shine, a
-          radiant companion who brings joy, curiosity, and wonder to every journey. Together, Tara and Shine travel
-          through magical realms, bringing Islamic teachings to life in a way that captivates and inspires.
-        </Typography>
-        <Typography className="para-text" sx={{ paddingBottom: 2, fontSize: { sm: "18px", xs: "16px" } }}>
-          Through each adventure, Tara and Shine explore timeless stories from the Qur'an, dive into the beautiful
-          recitation of verses, and share the moral lessons of the Hadith. They weave essential values like kindness,
-          courage, and the importance of family into every episode, making spiritual growth and character building both
-          enjoyable and relatable for young minds.
-        </Typography>
-        <Typography className="para-text" sx={{ paddingBottom: 5, fontSize: { sm: "18px", xs: "16px" } }}>
-          Join us as Tara and Shine illuminate the wonders of Islamic teachings, taking young viewers on a path filled
-          with thrilling discoveries, heartfelt moments, and lessons that will stay with them for life. Perfect for
-          nurturing your child’s faith, values, and character! 🌙
-        </Typography>
-      </Box>
-    </Grid>
-  </Grid>
-</Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-        <Typography
-          variant='h3'
+          container
           sx={{
-            fontSize: { md: "48px", xs: "40px" },
-            fontWeight: 900,
-            textAlign: 'center',
-            mt: 15
+            backgroundColor: "#CA6680",
+            minHeight: "80vh", // Ensures full height of the section
+            padding: 0,
+            margin: 0,
+            position: "relative", // Needed for absolute positioning of child elements
           }}
         >
-          What <span style={{ color: Colors.darkblue }}>Shine And Tara Have For You</span>
-        </Typography>
-        <Grid container mt={5} mb={10} spacing={2}>
-          {/* {navigation.map((item, index) => {
+          {/* Background Image Box */}
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              right: 0, // Ensures the image touches the right edge
+              margin: 0,
+              padding: 0,
+              width: "450px", // Set a fixed width (e.g., 500px)
+              height: "500px", // Set a fixed height (e.g., 500px)
+              backgroundImage: `url(${introImage})`,
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center bottom", // Ensures the image aligns to the bottom
+              display: { md: "block", sm: "none", xs: "none" }, // Show image only on md and larger screens
+            }}
+          />
+
+
+          {/* Flex container for image and heading */}
+          <Grid
+            container
+            sx={{
+              backgroundColor: "#CA6680",
+              minHeight: "80vh",
+              position: "relative",
+              display: "flex",
+              justifyContent: "center", // Centers content horizontally
+              alignItems: "center", // Centers content vertically
+              padding: { xs: 2, sm: 3, md: 4 }, // Adjusts padding for smaller screens
+            }}
+          >
+            {/* Container for Image and Heading */}
+            <Box
+              sx={{
+                position: "relative", // Allows absolute positioning for the image
+                textAlign: "center", // Centers the heading text
+                width: "100%", // Ensures proper alignment
+              }}
+            >
+              {/* Tara Image */}
+              <Box
+                sx={{
+                  position: "absolute", // Positioned relative to the container
+                  top: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts vertical positioning
+                  left: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts horizontal positioning
+                  transform: {
+                    xl: "translate(-450%, -90%)",
+                    lg: "translate(-450%, -90%)",
+                    md: "translate(-400%, -70%)",
+                    sm: "translate(-290%, -50%)",
+                    xs: "translate(-220%, -40%)",
+                  }, // Dynamically adjusts based on screen size
+                  width: { xl: "143.56px", lg: "130px", md: "110px", sm: "90px", xs: "70px" },
+                  height: { xl: "139px", lg: "120px", md: "100px", sm: "80px", xs: "60px" },
+                  backgroundImage: `url(${taraImage})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
+
+              {/* Heading */}
+              <Typography
+                variant="h1"
+                className="heading-font"
+                sx={{
+                  fontSize: {
+                    xl: "100px",
+                    lg: "90px",
+                    md: "70px",
+                    sm: "45px",
+                    xs: "35px",
+                  }, // Adjusts font size for different screens
+                  fontWeight: 600,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  textTransform: "uppercase",
+                  paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+                  position: "relative", // Ensures alignment with image
+                  zIndex: 1, // Keeps heading above the image
+                }}
+                style={{
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
+                }}
+              >
+                <span>Introducing</span>
+                <span
+                  style={{
+                    display: "block",
+                    WebkitTextStroke: "1px white",
+                    WebkitTextFillColor: "#4FAAFB",
+                  }}
+                >
+                  Tara and Shine
+                </span>
+              </Typography>
+            </Box>
+          </Grid>
+
+
+          {/* Paragraph and Image Section */}
+          <Grid
+            container
+            className="para-text"
+            sx={{
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+              gap: "20px",
+              width: "100%",
+            }}
+          >
+            {/* Left Side: Paragraph */}
+            <Grid
+              item
+              md={5}
+              xs={12}
+              sx={{
+                textAlign: "left",
+                paddingLeft: { lg: 6, md: 4, sm: 2, xs: 2 }, // Adjust padding based on screen size
+              }}
+            >
+              <Box
+                className="para-text"
+                sx={{
+                  textAlign: "left",
+                  padding: { lg: 6, md: 4, sm: 3, xs: 2 }, // Adjust padding
+                  width: "100%"
+                }}
+              >
+                <Typography className="para-text" sx={{ paddingBottom: 3, fontSize: { sm: "18px", xs: "16px" } }}>
+                  Welcome to "Shine with Tara"! ✨
+                </Typography>
+                <Typography className="para-text" sx={{ paddingBottom: 2, fontSize: { sm: "18px", xs: "16px" } }}>
+                  "Shine with Tara" is an enchanting Islamic cartoon series designed especially for Muslim children worldwide.
+                  At the heart of our stories is Tara, a delightful, adventurous character, and her imaginary friend Shine, a
+                  radiant companion who brings joy, curiosity, and wonder to every journey. Together, Tara and Shine travel
+                  through magical realms, bringing Islamic teachings to life in a way that captivates and inspires.
+                </Typography>
+                <Typography className="para-text" sx={{ paddingBottom: 2, fontSize: { sm: "18px", xs: "16px" } }}>
+                  Through each adventure, Tara and Shine explore timeless stories from the Qur'an, dive into the beautiful
+                  recitation of verses, and share the moral lessons of the Hadith. They weave essential values like kindness,
+                  courage, and the importance of family into every episode, making spiritual growth and character building both
+                  enjoyable and relatable for young minds.
+                </Typography>
+                <Typography className="para-text" sx={{ paddingBottom: 5, fontSize: { sm: "18px", xs: "16px" } }}>
+                  Join us as Tara and Shine illuminate the wonders of Islamic teachings, taking young viewers on a path filled
+                  with thrilling discoveries, heartfelt moments, and lessons that will stay with them for life. Perfect for
+                  nurturing your child’s faith, values, and character! 🌙
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        </Grid>
+
+
+
+
+        <Grid
+          container
+          sx={{
+            backgroundColor: "#5B73AD",
+            minHeight: "40vh", // Full height for the section
+            padding: "5rem 0 0 0",
+            margin: 0,
+            display: "flex",
+            alignItems: "center", // Vertically centers the content
+            justifyContent: "center", // Horizontally centers the content
+          }}
+        >
+          <Grid
+            item
+            xs={12}
+            md={8}
+            sx={{
+              padding: { xs: 2, sm: 3, md: 4 }, // Responsive padding
+              position: "relative",
+            }}
+          >
+            {/* Centered Heading with Images */}
+            <Box
+              sx={{
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center", // Center heading with images
+                gap: 2, // Space between images and heading
+                marginBottom: 0, // Space below heading
+              }}
+            >
+              {/* Left Image */}
+              <Box
+                component="img"
+                src={starImg} // Replace with actual left image URL
+                alt="Left Decorative Image"
+                sx={{
+                  width: { xs: "40px", sm: "60px", md: "80px" },
+                  height: "auto",
+                  paddingRight: 3
+                }}
+              />
+              {/* Heading */}
+              <Typography
+                variant="h1"
+                className="heading-font"
+                sx={{
+                  fontSize: {
+                    xl: "80px",
+                    lg: "70px",
+                    md: "60px",
+                    sm: "35px",
+                    xs: "28px",
+                  }, // Responsive font size
+                  fontWeight: 600,
+                  color: "#F9BF29",
+                  textTransform: "uppercase",
+                }}
+                style={{
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
+                }}
+              >
+                About{" "}
+                <span
+                  style={{
+                    WebkitTextStroke: "1px white",
+                    WebkitTextFillColor: "#4FAAFB",
+                  }}
+                >
+                  Ceo
+                </span>
+              </Typography>
+              {/* Right Image */}
+              <Box
+                component="img"
+                src={rainbowImg} // Replace with actual right image URL
+                alt="Right Decorative Image"
+                sx={{
+                  width: { xs: "40px", sm: "60px", md: "80px" },
+                  height: "auto",
+                  paddingLeft: 2
+
+                }}
+              />
+            </Box>
+          </Grid>
+
+
+          {/* Left-Aligned Text */}
+          <Box
+            sx={{
+              textAlign: "left",
+              margin: 0,
+              padding: "0 5rem ",
+              width: "100%"
+            }}
+          >
+            <Typography
+              className="para-text"
+              sx={{
+                fontSize: { sm: "18px", xs: "16px" },
+                color: "white",
+                lineHeight: 1.6,
+                marginBottom: 3,
+
+              }}
+            >
+              🌟 Assalam u Alaikum! I’m Sana Kazmi, and I’m excited to introduce “Shine
+              with Tara,” a YouTube channel crafted for young Muslim children! 🌟
+            </Typography>
+            <Typography
+              className="para-text"
+              sx={{
+                fontSize: { sm: "18px", xs: "16px" },
+                color: "white",
+                lineHeight: 1.6,
+                marginBottom: 3,
+              }}
+            >
+              As a mother of four, I wanted to create something meaningful, educational,
+              and fun for our little ones. "Shine with Tara" follows Tara and her playful
+              friend, Shine, as they embark on magical adventures exploring Qur’anic
+              stories, prophet tales, and essential values like kindness and gratitude.
+            </Typography>
+            <Typography
+              className="para-text"
+              sx={{
+                fontSize: { sm: "18px", xs: "16px" },
+                color: "white",
+                lineHeight: 1.6,
+                marginBottom: 5,
+              }}
+            >
+              This channel is all about bringing Islamic teachings to life in a joyful
+              and memorable way. I can’t wait for you and your children to join us on
+              this journey of faith, values, and heartwarming adventures! 🌙
+            </Typography>
+          </Box>
+
+        </Grid>
+
+
+
+
+
+
+
+        <Grid
+          container
+          sx={{
+            backgroundColor: "#CA6680",
+            minHeight: "80vh",
+            position: "relative",
+            display: "flex",
+            justifyContent: "center", // Centers content horizontally
+            alignItems: "center", // Centers content vertically
+            padding: "5rem 0"
+          }}>
+
+          <Grid
+          >
+            {/* Container for Image and Heading */}
+            <Box
+              sx={{
+                position: "relative", // Allows absolute positioning for the image
+                textAlign: "center", // Centers the heading text
+                width: "100%", // Ensures proper alignment
+              }}
+            >
+              {/* Tara Image */}
+              <Box
+                sx={{
+                  position: "absolute", // Positioned relative to the container
+                  top: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts vertical positioning
+                  left: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts horizontal positioning
+                  transform: {
+                    xl: "translate(-450%, -110%)",
+                    lg: "translate(-450%, -110%)",
+                    md: "translate(-400%, -110%)",
+                    sm: "translate(-290%, -90%)",
+                    xs: "translate(-220%, -70%)",
+                  }, // Dynamically adjusts based on screen size
+                  width: { xl: "143.56px", lg: "130px", md: "110px", sm: "90px", xs: "70px" },
+                  height: { xl: "139px", lg: "120px", md: "100px", sm: "80px", xs: "60px" },
+                  backgroundImage: `url(${haveforyou})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
+
+              {/* Heading */}
+              <Typography
+                variant="h1"
+                className="heading-font"
+                sx={{
+                  fontSize: {
+                    xl: "100px",
+                    lg: "90px",
+                    md: "70px",
+                    sm: "45px",
+                    xs: "35px",
+                  }, // Adjusts font size for different screens
+                  fontWeight: 600,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  textTransform: "uppercase",
+                  paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+                  position: "relative", // Ensures alignment with image
+                  zIndex: 1, // Keeps heading above the image
+                }}
+                style={{
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
+                }}
+              >
+                <span> Tara and Shine </span>
+                <span
+                  style={{
+                    display: "block",
+                    WebkitTextStroke: "1px white",
+                    WebkitTextFillColor: "#4FAAFB",
+                  }}
+                >
+                  hAVE For you
+                </span>
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid container mt={5} mb={10} spacing={2}>
+            {/* {navigation.map((item, index) => {
                 return (
                   <Grid item lg={4} md={6} xs={12} display={'flex'} justifyContent={'center'} mt={5}>
                     <Button
@@ -875,42 +1098,224 @@ function Home() {
                   </Grid>
                 )
               })} */}
-          {routingData.map((item, i) => (
-            <Grid key={i} component={'div'} sx={{ cursor: 'pointer', mt: 4 }} onClick={() => navigate(item?.path)} item md={4} sm={4} xs={12}>
-              <Grid
-                container
-                sx={{
-                  // border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
-                  borderRadius: "20px"
-                }}
-              >
-
-                <Grid data-aos="flip-left" item md={12} sm={12} xs={12}
-                // sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}
+            {routingData.map((item, i) => (
+              <Grid key={i} component={'div'} sx={{ cursor: 'pointer', mt: 4 }} onClick={() => navigate(item?.path)} item md={4} sm={4} xs={12}>
+                <Grid
+                  container
+                  sx={{
+                    // border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
+                    borderRadius: "20px"
+                  }}
                 >
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: "100%"
-                    }}
 
+                  <Grid data-aos="flip-left" item md={12} sm={12} xs={12}
+                  // sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}
                   >
-                    <CardMedia
-                      component={"img"}
-                      src={item.image}
+                    <Box
                       sx={{
                         width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        borderRadius: '12px',
+                        height: "100%"
                       }}
-                    />
-                  </Box>
+
+                    >
+                      <CardMedia
+                        component={"img"}
+                        src={item.image}
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          borderRadius: '12px',
+                        }}
+                      />
+                    </Box>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          ))}
+            ))}
+          </Grid>
         </Grid>
+
+
+
+        <Grid
+          container
+          sx={{
+            backgroundColor: "#5B73AD",
+            maxHeight: "500vh", // Adjusted height
+            padding: "20rem 0",
+            margin: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+            gap: 0, // Prevent gaps between children
+          }}
+        >
+          <Grid
+            item
+            xs={12}
+            md={8}
+            sx={{
+              padding: "5rem 0",
+              position: "relative",
+              marginTop: "-22rem"
+            }}
+          >
+            {/* Centered Heading with Images */}
+            <Box
+              sx={{
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 2,
+              }}
+            >
+              {/* Left Image */}
+              <Box
+                component="img"
+                src={cloudImg}
+                alt="Left Decorative Image"
+                sx={{
+                  width: { xs: "40px", sm: "60px", md: "80px" },
+                  height: "auto",
+                  padding: 0,
+                }}
+              />
+              {/* Heading */}
+              <Typography
+                variant="h1"
+                className="heading-font"
+                sx={{
+                  fontSize: {
+                    xl: "80px",
+                    lg: "70px",
+                    md: "60px",
+                    sm: "35px",
+                    xs: "28px",
+                  },
+                  fontWeight: 600,
+                  color: "#F9BF29",
+                  textTransform: "uppercase",
+                  margin: 0, // Ensure no top or bottom margin
+                }}
+                style={{
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
+                }}
+              >
+                Reviews
+              </Typography>
+            </Box>
+          </Grid>
+
+          <Box sx={{ width: "95%", margin: "0 auto", marginBottom: { md: "25rem", xl: "60rem", lg: "40rem", sm: "20rem" } }}>
+            <Grid container spacing={4} justifyContent="center">
+              {reviewBoxes?.map((item, ind) => (
+                <Grid item key={ind} md={4} sm={6} xs={12}>
+                  <Box
+                    sx={{
+                      p: 4,
+                      borderRadius: "15px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "15px",
+                      backgroundColor: "#021b51",
+                      minHeight: "220px",
+                      width: { md: "300px", sm: "280px", xs: "100%" },
+                      margin: "0 auto",
+                    }}
+                  >
+                    <Box sx={{ display: "flex", justifyContent: "left", marginBottom: 0 }}>
+                      <Rating name="read-only" value={item?.rating} readOnly />
+                    </Box>
+
+                    <Typography
+                      variant="body2"
+                      className='para-text'
+                      sx={{
+                        color: "white",
+                        fontSize: "1rem",
+                        lineHeight: 1.6,
+                        textAlign: "left",
+                        margin: 0, // Ensure no top or bottom margin
+                      }}
+                    >
+                      {item.comment}
+                    </Typography>
+
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "12px",
+                        justifyContent: "left",
+                      }}
+                    >
+                      <Avatar
+                        sx={{
+                          width: 64,
+                          height: 64,
+                        }}
+                        src={item.profile}
+                        alt={item.name}
+                      />
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          margin: 0, // Ensure no spacing
+                        }}
+                      >
+                        <Typography
+                          className='para-text'
+
+                          sx={{
+                            fontWeight: 600,
+                            color: "white",
+                            fontSize: "1rem",
+                            margin: 0,
+                          }}
+                        >
+                          {item.name}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          className='para-text'
+
+                          sx={{
+                            fontWeight: 400,
+                            color: "#b0bec5",
+                            margin: 0,
+                          }}
+                        >
+                          {item.designation}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: { md: "600px", xl: "1000px", lg: "800px", sm: "420px", xs: "200px" },
+              backgroundImage: `url(${reviewSection})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+        </Grid>
+
+
 
 
         {/* <Box
@@ -1520,11 +1925,7 @@ function Home() {
           </>
         )} */}
         <Box
-          component={"section"}
-          sx={{
-            background: Colors.lightPurple,
-            py: "80px"
-          }}
+
         >
           {/* <Container>
             <Grid container justifyContent={"center"} alignItems={"center"}>
@@ -1612,96 +2013,139 @@ function Home() {
           </Container> */}
         </Box>
         <Box
-          component={"section"}
+  component={"section"}
+  sx={{
+    position: "relative",
+    backgroundColor: "#FF9D04",
+    width: "100%",
+    height: { xs: "auto", sm: "40vh", md: "50vh", lg: "40vh" },
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+    padding: { xs: "4rem 0", sm: "10rem 0", md: "18rem 0", lg: "10rem 0" },
+  }}
+>
+  {/* Left Background Image */}
+  <Box
+    sx={{
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      zIndex: 0,
+      display: { xs: "none", sm: "none", md: "block" }, // Hide on xs and sm
+    }}
+  >
+    <CardMedia
+      component={"img"}
+      src={Character1}
+      sx={{
+        width: { md: "500px", lg: "700px" },
+        height: "500px",
+        objectFit: "cover",
+      }}
+    />
+  </Box>
+
+  {/* Right Background Image */}
+  <Box
+    sx={{
+      position: "absolute",
+      bottom: 0,
+      right: 0,
+      zIndex: 0,
+      display: { xs: "none", sm: "none", md: "block" }, // Hide on xs and sm
+    }}
+  >
+    <CardMedia
+      component={"img"}
+      src={Character2}
+      sx={{
+        width: { md: "550px", lg: "750px" },
+        height: "500px",
+        objectFit: "cover",
+      }}
+    />
+  </Box>
+
+  {/* Center Content */}
+  <Box
+    sx={{
+      position: "relative",
+      textAlign: "center",
+      zIndex: 1,
+      width: { xs: "90%", sm: "80%", md: "30%", lg: "25%" },
+    }}
+  >
+    <Typography
+      variant="h5"
+      className="para-text"
+      sx={{
+        fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" }, // Increase font size
+        fontWeight: 600,
+        textAlign: "center",
+        mb: 2,
+      }}
+    >
+      Subscribe to get information, latest news, and other interesting offers
+      about{" "}
+      <span
+        style={{
+          fontWeight: "bold",
+          WebkitTextStroke: "0.5px white ",
+          WebkitTextFillColor: "#3D5A98",
+        }}
+      >
+        Shine With Tara
+      </span>
+    </Typography>
+    <TextField
+      className="para-text"
+      placeholder={"Your email"}
+      sx={{
+        background: Colors.white,
+        borderRadius: "4px",
+        width: "100%", // Full width for xs and sm
+        "& fieldset": {
+          border: "none",
+        },
+        "& .MuiOutlinedInput-root": {
+          paddingRight: 0.5,
+        },
+        "& .MuiOutlinedInput-input": {
+          color: `${Colors.primary} !important`,
+          fontSize: { xs: "14px", sm: "16px", md: "18px" }, // Responsive input text size
+        },
+      }}
+      InputProps={{
+        endAdornment: (
+          <Button
+          className="para-text"
           sx={{
-            background: Colors.whiteblue,
-            p: { md: "64px", sm: "40px", xs: "20px" }
+            color: `${Colors.white} !important`,
+            backgroundColor: `#5B73AD`,
+            px: { xs: 2, sm: 4 }, // Adjust padding for smaller screens
+            py: 1.5,
+            textTransform: "uppercase",
+            fontSize: { xs: "12px", sm: "14px", md: "16px" }, // Button text size
+            "&:hover": {
+              backgroundColor: `#5B73AD`, // Prevent color change on hover
+              color: `${Colors.white}`,   // Maintain text color on hover
+            },
           }}
         >
-          <Grid
-            container
-            sx={{
-              background: Colors.secondaryGradient,
-              borderRadius: "25px",
-              height: { md: "320px", sm: "100%", xs: "100%" },
-              justifyContent: "space-between",
-              alignItems: "center",
-              p: 2
-            }}
-          >
-            <Grid item md={2} display={{ md: "block", sm: "none", xs: "none" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.girl1}
-                sx={{
-                  width: "170px",
-                  height: "250px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
-            <Grid item md={8}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: { md: "50px", xs: "25px" }
-                }}
-              >
-                <Typography
-                  variant='h5'
-                  sx={{
-                    fontSize: { md: "24px", xs: "16px" },
-                    fontWeight: 600,
-                    textAlign: "center"
-                  }}
-                >
-                  Subscribe to get information, latest news and other
-                  interesting offers about Shine With Tara
-                </Typography>
-                <TextField
-                  placeholder={"Your email"}
-                  sx={{
-                    background: Colors.white,
-                    borderRadius: "4px",
-                    width: { md: "60%", xs: "100%" },
-                    "& fieldset": {
-                      border: "none",
-                    },
-                    "& .MuiOutlinedInput-input": {
-                      color: `${Colors.primary} !important`
-                    }
-                  }}
-                  InputProps={{
-                    endAdornment:
-                      <Button
-                        sx={{
-                          color: `${Colors.white} !important`,
-                          background: `${Colors.primary} !important`,
-                          px: 4,
-                          textTransform: "capitalize"
-                        }}
-                      >
-                        Subscribe
-                      </Button>
-                  }}
-                />
-              </Box>
-            </Grid>
-            <Grid item md={2} display={{ md: "block", sm: "none", xs: "none" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.finalPose}
-                sx={{
-                  width: "200px",
-                  height: "280px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
-          </Grid>
-        </Box>
+          Subscribe
+        </Button>
+        
+        ),
+      }}
+    />
+  </Box>
+</Box>
+
+
+
+
         {/* <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
           <Grid container justifyContent={"center"} alignItems={"center"} mb={5}>
             <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
