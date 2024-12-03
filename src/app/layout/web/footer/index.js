@@ -4,27 +4,25 @@ import Images, { CreditCard, Facebook, Instagram, PayPal, Tiktok, Youtube } from
 import Colors from '../../../styles/colors'
 import navigation from '../../../../Navigation'
 import { useNavigate, useLocation } from 'react-router-dom'
-import footerImg from "../../../assets/images/footer-img.png"
-import Fonts from '../../../styles/fonts'
-import getFontSizes from 'antd/es/theme/themes/shared/genFontSizes'
 
 function Footer() {
   const navigate = useNavigate();
-  const currentYear = new Date().getFullYear(); // Get the current year
-
   const handleEmailClick = (emailAddress) => {
     window.location.href = `mailto:${emailAddress}`;
   };
   const location = useLocation();
-
   return (
     <Box
-      component={'div'}
-      className='footer-img'
+    component={'div'}
+    className='footer-img'
       sx={{
-        backgroundColor: "#6791DE", // Updated background color
+        
+        backgroundImage: { md: `url(${Images.footerBg})`, sm: "none", xs: "none" },
+        backgroundColor: { md: "none", sm: Colors.darkblue, xs: Colors.darkblue },
         height: "100%",
-        p: 4,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        p: 4
       }}
     >
       <Grid
@@ -56,29 +54,43 @@ function Footer() {
                 gap: "10px"
               }}
             >
-              <IconButton sx={{ p: 0 }}>
+              <IconButton
+                sx={{
+                  p: 0
+                }}
+              >
                 <Facebook href='https://www.facebook.com/profile.php?id=61554711500749' />
               </IconButton>
-              <IconButton sx={{ p: 0 }}>
-                <Instagram href='https://www.instagram.com/shineswithtara/' />
+              <IconButton
+                sx={{
+                  p: 0
+                }}
+              >
+                <Instagram href='https://www.instagram.com/shineswithtara/ ' />
               </IconButton>
-              <IconButton sx={{ p: 0 }}>
+              <IconButton
+                sx={{
+                  p: 0
+                }}
+              >
                 <Tiktok href='https://www.tiktok.com/@shinewithtara' />
               </IconButton>
-              <IconButton sx={{ p: 0 }}>
+              <IconButton
+                sx={{
+                  p: 0
+                }}
+              >
                 <Youtube href='https://www.youtube.com/@Shinewithtara' />
               </IconButton>
             </Box>
-            <Box component={'div'} sx={{ cursor: 'pointer', color: 'blue' }} onClick={() => handleEmailClick('shineswithtara@gmail.com')}>
-              <Typography
-                className='para-text'
-                sx={{
-                  color: Colors.white,
-                  FontSizes: "32px !important"
-                }}
-              >
-                shineswithtara@gmail.com
-              </Typography>
+            <Box component={'div'} sx={{cursor:'pointer',color:'blue'}} onClick={()=> handleEmailClick('shineswithtara@gmail.com')} >
+            <Typography
+              sx={{
+                color: Colors.white
+              }}
+            >
+              shineswithtara@gmail.com
+            </Typography>
             </Box>
             <Box>
               <CreditCard />
@@ -86,7 +98,7 @@ function Footer() {
             </Box>
           </Box>
         </Grid>
-        <Grid item md={8} sx={{ position: "relative" }}>
+        <Grid item md={8}>
           <Box
             sx={{
               height: "100%",
@@ -110,33 +122,18 @@ function Footer() {
                   key={i}
                   sx={{
                     backgroundColor: "transparent",
-                    color: location.pathname === item.path ? "#FF9D04" : Colors.white, // Active link color
+                    color: location.pathname == item.path ? Colors.purple : Colors.white,
                     width: "180px",
-                    justifyContent: { md: "flex-start", sm: "center", xs: "center" },
+                    justifyContent: { md: "flex-start", sm: "center", xs: "center" }
                   }}
                   onClick={() => navigate(item.path)}
-                  className="para-text" // Apply para-text class to all links
                 >
                   {item.name}
                 </Button>
               ))}
             </Box>
           </Box>
-          {/* Footer Image on the Right */}
-          <Box
-            component="img"
-            src={footerImg}
-            alt="Footer Image"
-            sx={{
-              position: "absolute",
-              right: 0,
-              bottom: 0,
-              maxWidth: { md: "180px", sm: "150px" },
-              display: { xs: "none", md: "block" }, // Visible only on medium screens and above
-            }}
-          />
         </Grid>
-
       </Grid>
       <Divider sx={{ borderColor: Colors.white, width: "80%", margin: "0 auto" }} />
       <Container sx={{ display: { md: "block", xs: "none" } }}>
@@ -148,18 +145,12 @@ function Footer() {
           }}
         >
           <Typography
-            className='para-text'
             sx={{
               textAlign: "center",
               px: { md: "35px", xs: 0 }
             }}
           >
-            Content, including images, displayed on this website is protected by copyright laws.
-            Downloading, republication, retransmission or reproduction of content on this website is strictly prohibited..
-            <span className='heading-font' style={{ fontSize: "1rem", textDecoration: "underline" }}>Terms of Use </span>
-             <span style={{ fontSize: "1.5rem",}}>|</span> <span className='heading-font' style={{ fontSize: "1rem", textDecoration: "underline" }}>Privacy Policy</span>  
-            <span className='heading-font' style={{ fontSize: "1.2rem" }}> .shine with tara @{currentYear} </span>
-
+            Content, including images, displayed on this website is protected by copyright laws. Downloading, republication, retransmission or reproduction of content on this website is strictly prohibited. Terms of Use | Privacy Policy
           </Typography>
         </Box>
       </Container>
@@ -181,10 +172,7 @@ function Footer() {
         </Typography>
       </Box>
     </Box>
-  );
+  )
 }
-
-
-
 
 export default Footer
