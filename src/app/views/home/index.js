@@ -211,7 +211,7 @@ function Home() {
     {
       name: "Ahmed",
       detail: "Ahmed is Tara’s younger brother; he is 8 years old. Ahmed is very kind and helpful boy. He loves to play video games.",
-      image: Images.about,
+      image: Images.portfolio,
       logo: Images.logoAhmed,
       path: '/about'
     },
@@ -246,7 +246,7 @@ function Home() {
     {
       name: "Laila",
       detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
-      image: Images.colorfull,
+      image: Images.blog,
       logo: Images.logoLaila,
       path: '/colorfull-club'
     },
@@ -681,29 +681,13 @@ function Home() {
           container
           sx={{
             backgroundColor: "#CA6680",
-            minHeight: "80vh", // Ensures full height of the section
+
             padding: 0,
             margin: 0,
             position: "relative", // Needed for absolute positioning of child elements
           }}
         >
-          {/* Background Image Box */}
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: 0,
-              right: 0, // Ensures the image touches the right edge
-              margin: 0,
-              padding: 0,
-              width: "450px", // Set a fixed width (e.g., 500px)
-              height: "500px", // Set a fixed height (e.g., 500px)
-              backgroundImage: `url(${introImage})`,
-              backgroundSize: "contain",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center bottom", // Ensures the image aligns to the bottom
-              display: { md: "block", sm: "none", xs: "none" }, // Show image only on md and larger screens
-            }}
-          />
+
 
 
           {/* Flex container for image and heading */}
@@ -711,7 +695,7 @@ function Home() {
             container
             sx={{
               backgroundColor: "#CA6680",
-              minHeight: "80vh",
+
               position: "relative",
               display: "flex",
               justifyContent: "center", // Centers content horizontally
@@ -722,6 +706,7 @@ function Home() {
             {/* Container for Image and Heading */}
             <Box
               sx={{
+                mt:4,
                 position: "relative", // Allows absolute positioning for the image
                 textAlign: "center", // Centers the heading text
                 width: "100%", // Ensures proper alignment
@@ -841,6 +826,20 @@ function Home() {
                 </Typography>
               </Box>
             </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+              sx={{
+                textAlign: "left",
+                backgroundImage: `url(${introImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                width: "100%",
+                height: { xs: "800px", sm: "900px", md: "100%",lg:'100%' }, // Adjust for small screens
+              }}
+            />
+
           </Grid>
         </Grid>
 
@@ -1062,7 +1061,8 @@ function Home() {
                 }}
                 style={{
                   WebkitTextStroke: "1px white",
-                  WebkitTextFillColor: "#F9BF29",
+                    WebkitTextFillColor: "#4FAAFB",
+                 
                 }}
               >
                 <span> Tara and Shine </span>
@@ -1070,7 +1070,7 @@ function Home() {
                   style={{
                     display: "block",
                     WebkitTextStroke: "1px white",
-                    WebkitTextFillColor: "#4FAAFB",
+                    WebkitTextFillColor: "#F9BF29",
                   }}
                 >
                   hAVE For you
@@ -1078,7 +1078,7 @@ function Home() {
               </Typography>
             </Box>
           </Grid>
-          <Grid container mt={5} mb={10} spacing={2}>
+          <Grid container mt={5} mb={10} spacing={2} xs={11}>
             {/* {navigation.map((item, index) => {
                 return (
                   <Grid item lg={4} md={6} xs={12} display={'flex'} justifyContent={'center'} mt={5}>
@@ -1098,17 +1098,20 @@ function Home() {
                   </Grid>
                 )
               })} */}
-            {routingData.map((item, i) => (
+            {routingData?.map((item, i) => (
               <Grid key={i} component={'div'} sx={{ cursor: 'pointer', mt: 4 }} onClick={() => navigate(item?.path)} item md={4} sm={4} xs={12}>
                 <Grid
                   container
+                  
                   sx={{
+                    
                     // border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
-                    borderRadius: "20px"
+                    borderRadius: "20px",
+                    justifyContent:'center'
                   }}
                 >
 
-                  <Grid data-aos="flip-left" item md={12} sm={12} xs={12}
+                  <Grid  item md={12} sm={12} xs={12}
                   // sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}
                   >
                     <Box
@@ -1210,94 +1213,106 @@ function Home() {
             </Box>
           </Grid>
 
-          <Box sx={{ width: "95%", margin: "0 auto", marginBottom: { md: "25rem", xl: "60rem", lg: "40rem", sm: "20rem" } }}>
-            <Grid container spacing={4} justifyContent="center">
-              {reviewBoxes?.map((item, ind) => (
-                <Grid item key={ind} md={4} sm={6} xs={12}>
-                  <Box
-                    sx={{
-                      p: 4,
-                      borderRadius: "15px",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "15px",
-                      backgroundColor: "#021b51",
-                      minHeight: "220px",
-                      width: { md: "300px", sm: "280px", xs: "100%" },
-                      margin: "0 auto",
-                    }}
-                  >
-                    <Box sx={{ display: "flex", justifyContent: "left", marginBottom: 0 }}>
-                      <Rating name="read-only" value={item?.rating} readOnly />
-                    </Box>
-
-                    <Typography
-                      variant="body2"
-                      className='para-text'
-                      sx={{
-                        color: "white",
-                        fontSize: "1rem",
-                        lineHeight: 1.6,
-                        textAlign: "left",
-                        margin: 0, // Ensure no top or bottom margin
-                      }}
-                    >
-                      {item.comment}
-                    </Typography>
-
+          <Box sx={{ width: '95%', margin: '0 auto' }}>
+            <Grid item md={11} sm={11} xs={11}>
+              <Swiper
+                loop={true}
+                spaceBetween={10}
+                slidesPerView={3}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                modules={[Autoplay, Pagination, Navigation]}
+                breakpoints={{
+                  320: {
+                    slidesPerView: 1
+                  },
+                  786: {
+                    slidesPerView: 2
+                  },
+                  1080: {
+                    slidesPerView: 3
+                  }
+                }}
+                onSlideChange={() => console.log('slide change')}
+                onSwiper={(swiper) => console.log(swiper)}
+              >
+                {reviewBoxes?.map((item, ind) => (
+                  <SwiperSlide key={ind}>
                     <Box
                       sx={{
+                        p: 4,
+                        borderRadius: "15px",
                         display: "flex",
-                        alignItems: "center",
-                        gap: "12px",
-                        justifyContent: "left",
+                        flexDirection: "column",
+                        gap: "10px",
+                        backgroundColor: '#021b51',
+                        height: '180px'
                       }}
                     >
-                      <Avatar
-                        sx={{
-                          width: 64,
-                          height: 64,
-                        }}
-                        src={item.profile}
-                        alt={item.name}
-                      />
                       <Box
                         sx={{
                           display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          margin: 0, // Ensure no spacing
+                          alignItems: "flex-start",
+                          gap: "12px"
                         }}
                       >
-                        <Typography
-                          className='para-text'
-
+                        <Avatar
                           sx={{
-                            fontWeight: 600,
-                            color: "white",
-                            fontSize: "1rem",
-                            margin: 0,
+                            width: 64,
+                            height: 64
+                          }}
+                          src={item.profile}
+                          alt={item.name}
+                        />
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column"
                           }}
                         >
-                          {item.name}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          className='para-text'
+                          <Typography
+                            sx={{
 
-                          sx={{
-                            fontWeight: 400,
-                            color: "#b0bec5",
-                            margin: 0,
-                          }}
-                        >
-                          {item.designation}
-                        </Typography>
+                              display: 'flex',
+                              alignItems: "center",
+                              gap: "8px",
+                              fontWeight: 600,
+                              color: 'white'
+                            }}
+                          >
+                            {item?.name}
+                            <Typography
+                              variant='body2'
+                              sx={{ fontWeight: 400 }}
+                            >
+                              {item.designation}
+                            </Typography>
+                          </Typography>
+                          <Box
+                            sx={{
+                              display: "flex",
+                            }}
+                          >
+
+                          </Box>
+                          <Rating name="read-only" value={item?.rating} sx={{ borderColor: 'white' }} readOnly />
+                        </Box>
                       </Box>
+                      <Typography
+                        variant={"body2"}
+                        sx={{
+
+                          color: 'white'
+                        }}
+                      >
+                        {item.comment}
+                      </Typography>
                     </Box>
-                  </Box>
-                </Grid>
-              ))}
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </Grid>
           </Box>
 
@@ -1318,830 +1333,138 @@ function Home() {
 
 
 
-        {/* <Box
+        
+      
+        <Box
           component={"section"}
           sx={{
-            background: Colors.lightPurple,
-            backgroundImage: { md: selected == "merchandise" ? `url(${Images.merchBg})` : "none", sm: "none", xs: "none" },
-            py: "80px",
-            height: { md: selected == "merchandise" ? "770px" : "100%", sm: "100%", xs: "100%" },
-            backgroundSize: "cover",
+            position: "relative",
+            backgroundColor: "#FF9D04",
+            width: "100%",
+            height: { xs: "auto", sm: "40vh", md: "50vh", lg: "40vh" },
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+            padding: { xs: "4rem 0", sm: "10rem 0", md: "18rem 0", lg: "10rem 0" },
           }}
         >
-          <Container>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "40px"
-              }}
-            >
-              <Box
-                sx={{
-                  textAlign: "center"
-                }}
-              >
-                <Typography
-                  variant='h3'
-                  sx={{
-                    fontSize: { md: "44px", xs: "32px" },
-                    fontWeight: 900
-                  }}
-                >
-                  What <span style={{ color: Colors.purple }}>Shine And Tara</span> Have For You
-                </Typography>
-                <Typography
-                  variant='h3'
-                  sx={{
-                    mt: '20px',
-                    fontSize: { md: "44px", xs: "32px" },
-                    fontWeight: 900
-                  }}
-                >
-                  <span style={{ color: Colors.purple }}>Shop</span>
-                </Typography>
-              </Box>
-              <Grid container columnSpacing={2} justifyContent={"center"} alignItems={"center"}>
-                <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center"
-                    }}
-                  >
-                    <CardMedia
-                      component={"img"}
-                      src={Images.shineStar}
-                      sx={{
-
-                        width: "80px",
-                        heigth: "80px",
-                        objectFit: "contain"
-                      }}
-                    />
-                  </Box>
-                </Grid>
-                <Grid item md={6} sm={12} xs={12}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <ButtonGroup sx={{ width: "100%" }}>
-                      {buttons}
-                    </ButtonGroup>
-                  </Box>
-                </Grid>
-                <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center"
-                    }}
-                  >
-                    <CardMedia
-                      component={"img"}
-                      src={Images.shineStar}
-                      sx={{
-                        width: "80px",
-                        heigth: "80px",
-                        objectFit: "contain"
-                      }}
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "20px"
-                }}
-              >
-                {selected == "episode" ? (
-                  <Fragment>
-                    <Typography>
-                      Come along with Tara and Shine as they explore enchanting locations and go about their daily activities, discovering important lessons about Islam, being good people, and the importance of family.In their exciting adventures, Tara and Shine visit magical places and experience everyday situations that teach them valuable things. They learn about Islamic teachings, how to be kind and do the right things, and why family is so special.
-                    </Typography>
-                    <Typography>
-                      This amazing series is made to be fun and educational for kids. Tara and Shine's journeys will help children understand Islamic values, learn good morals, and appreciate the love within their familie.Get ready to join Tara and Shine on their wonderful journey, where they learn, grow, and have lots of fun!
-                    </Typography>
-                  </Fragment>
-                ) : (
-                  <Grid container>
-                    <Grid item md={7}>
-                      <Typography>
-                        Each episode will provide day-to-day life coloring sheets.
-                        Worksheets - will have all different types of activities, coloring,
-                      </Typography>
-                      <Typography>
-                        Copyright 2024 © All rights Reserved By Shine With Tara Design by Sana Kazmi
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                )}
-              </Box>
-            </Box>
-          </Container>
-        </Box>
-        {selected == "episode" ? (
+          {/* Left Background Image */}
           <Box
-            component={"section"}
             sx={{
-              background: "#3D5A98",
-              height: "100%",
-              width: "100%",
-              py: "72px"
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              zIndex: 0,
+              display: { xs: "none", sm: "none", md: "block" }, // Hide on xs and sm
             }}
           >
-            <Slider
-              dots={false}
-              infinite={true}
-              speed={500}
-              slidesToShow={3}
-              slidesToScroll={1}
-              adaptiveHeight={true}
-              variableWidth={false}
-              centerMode={true}
-              responsive={[
-                {
-                  breakpoint: 1024,
-                  settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    dots: false,
-                    adaptiveHeight: true,
-                    variableWidth: false,
-                    centerMode: true,
-                  }
-                },
-                {
-                  breakpoint: 768,
-                  settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    dots: false,
-                    centerMode: true,
-                    variableWidth: false,
-                    adaptiveHeight: true
-                  }
-                },
-                {
-                  breakpoint: 480,
-                  settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    dots: false,
-                    centerMode: true,
-                    variableWidth: false,
-                    adaptiveHeight: true
-                  }
-                }
-              ]}
+            <CardMedia
+              component={"img"}
+              src={Character1}
+              sx={{
+                width: { md: "500px", lg: "700px" },
+                height: "500px",
+                objectFit: "cover",
+              }}
+            />
+          </Box>
+
+          {/* Right Background Image */}
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              right: 0,
+              zIndex: 0,
+              display: { xs: "none", sm: "none", md: "block" }, // Hide on xs and sm
+            }}
+          >
+            <CardMedia
+              component={"img"}
+              src={Character2}
+              sx={{
+                width: { md: "550px", lg: "750px" },
+                height: "500px",
+                objectFit: "cover",
+              }}
+            />
+          </Box>
+
+          {/* Center Content */}
+          <Box
+            sx={{
+              position: "relative",
+              textAlign: "center",
+              zIndex: 1,
+              width: { xs: "90%", sm: "80%", md: "30%", lg: "25%" },
+            }}
+          >
+            <Typography
+              variant="h5"
+              className="para-text"
+              sx={{
+                fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" }, // Increase font size
+                fontWeight: 600,
+                textAlign: "center",
+                mb: 2,
+              }}
             >
-              {sliderData.map((item, i) => (
-                <Box
-                  key={i}
-                  sx={{ p: 3, borderRadius: '20px', cursor: 'pointer' }}
-                  component={'div'}
-                  onClick={() => window.open(item?.url, '_blank')}
-                >
-                  <CardMedia
-                    component={"img"}
-                    src={item.image}
+              Subscribe to get information, latest news, and other interesting offers
+              about{" "}
+              <span
+                style={{
+                  fontWeight: "bold",
+                  WebkitTextStroke: "0.5px white ",
+                  WebkitTextFillColor: "#3D5A98",
+                }}
+              >
+                Shine With Tara
+              </span>
+            </Typography>
+            <TextField
+              className="para-text"
+              placeholder={"Your email"}
+              sx={{
+                background: Colors.white,
+                borderRadius: "4px",
+                width: "100%", // Full width for xs and sm
+                "& fieldset": {
+                  border: "none",
+                },
+                "& .MuiOutlinedInput-root": {
+                  paddingRight: 0.5,
+                },
+                "& .MuiOutlinedInput-input": {
+                  color: `${Colors.primary} !important`,
+                  fontSize: { xs: "14px", sm: "16px", md: "18px" }, // Responsive input text size
+                },
+              }}
+              InputProps={{
+                endAdornment: (
+                  <Button
+                    className="para-text"
                     sx={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "contain",
-                      borderTopLeftRadius: '20px',
-                      borderTopRightRadius: '20px'
-                    }}
-                  />
-                  <Box
-                    sx={{
-                      background: Colors.yellow,
-                      textAlign: "center",
-                      borderBottomLeftRadius: '20px',
-                      borderBottomRightRadius: '20px',
-                      p: 3,
-                      // mx: item.title == "Dealing With Sibling"
-                      //   ? "32px" : item.title == "5 Pillars With The Neighbors"
-                      //     ? "30px" : "31px"
+                      color: `${Colors.white} !important`,
+                      backgroundColor: `#5B73AD`,
+                      px: { xs: 2, sm: 4 }, // Adjust padding for smaller screens
+                      py: 1.5,
+                      textTransform: "uppercase",
+                      fontSize: { xs: "12px", sm: "14px", md: "16px" }, // Button text size
+                      "&:hover": {
+                        backgroundColor: `#5B73AD`, // Prevent color change on hover
+                        color: `${Colors.white}`,   // Maintain text color on hover
+                      },
                     }}
                   >
-                    <Typography>
-                      {item.title}
-                    </Typography>
-                  </Box>
-                </Box>
-              ))}
-            </Slider>
+                    Subscribe
+                  </Button>
+
+                ),
+              }}
+            />
           </Box>
-        ) : (
-          <>
-            <Box
-              component={"section"}
-              sx={{
-                background: Colors.whiteblue,
-                height: "100%",
-                width: "100%",
-                py: "72px"
-              }}
-            >
-              <Box
-                component={'div'}
-                className='product-heading-img'
-                sx={{
-                  backgroundImage: `url(${Images.books})`,
-                  width: "100%",
-                  height: '200px',
-                  backgroundSize: "cover",
-                  backgroundPosition: "center center",
-                  borderRadius: "20px",
-                  mb: "100px"
-                }}
-              >
-              </Box>
-              <Container>
-                <Grid container spacing={2} justifyContent={"center"}>
-                  {Array.isArray(products) && products?.map((card, i) => (
-                    <React.Fragment key={i}>
-
-                      <Grid className='product-card' md={5} sm={8} xs={12} item >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            borderRadius: "20px",
-                            position: 'relative'
-                          }}
-                        >
-                         
-
-                          <CardMedia
-                            className='product-image'
-                            component={"img"}
-                            src={card?.imgUrl}
-                            sx={{
-                              width: "100%",
-                              height: card?.price != 0 ? "400px" : '455px',
-                              borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px",
-                              objectFit: 'cover'
-                            }}
-                          />
-                          {card?.price != 0 && <Box
-                            sx={{
-                              backgroundColor: "#C77805",
-                              p: 2,
-                              display: "flex",
-                              justifyContent: "space-between",
-                              borderRadius: "0px 0px 20px 20px"
-                            }}
-                          >
-                            <Typography>
-                              {card?.name}
-                            </Typography>
-                            <Typography>
-                              $ {card?.price}
-                            </Typography>
-                          </Box>}
-                        </Box>
-                        {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }} onClick={() => {
-
-                          if (cartItems.find(item => item.id === card.id)) {
-                            setOpen(true)
-                          }
-                          else {
-                            cartItems.push({ ...card, quantity: 1 })
-                            const totalPrice = cartItems.reduce((total, item) => {
-                              return total + (parseFloat(item.price) * item.quantity);
-                            }, 0);
-                            setCount(cartItems.length)
-                            localStorage.setItem('cartData', JSON.stringify(cartItems))
-                            setTotalAmount(totalPrice)
-                            console.log(totalPrice);
-                            setOpen(true)
-                          }
-
-                        }}>
-                          Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
-                        </div>}
-                      </Grid>
-                    </React.Fragment>
-                  ))}
-                </Grid>
-               
-              </Container>
-            </Box>
-            <Box
-              component={"section"}
-              id='activity-section'
-              sx={{
-                background: Colors.whiteblue,
-                height: "100%",
-                width: "100%",
-                py: "72px"
-              }}
-            >
-              <Box
-                component={'div'}
-                className='product-heading-img'
-                sx={{
-                  backgroundImage: `url(${Images.activity})`,
-                  width: "100%",
-                  height: '200px',
-                  backgroundSize: "cover",
-                  backgroundPosition: "center center",
-                  borderRadius: "20px",
-                  mb: "100px"
-                }}
-              >
-              </Box>
-              <Container>
-                <Grid container spacing={2} justifyContent={"center"}>
-                  {Array.isArray(activitySheets) && activitySheets?.map((card, i) => (
-                    <React.Fragment key={i}>
-
-                      <Grid className='product-card' md={5} item >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            borderRadius: "20px",
-                            position: 'relative'
-                          }}
-                        >
-                          
-                          <CardMedia
-                            className='product-image'
-                            component={"img"}
-                            src={card?.imgUrl}
-                            sx={{
-                              height: card?.price != 0 ? "400px" : '455px',
-                              borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px",
-                              objectFit: 'cover'
-                            }}
-                          />
-                          {card?.price != 0 && <Box
-                            sx={{
-                              backgroundColor: "#C77805",
-                              p: 2,
-                              display: "flex",
-                              justifyContent: "space-between",
-                              borderRadius: "0px 0px 20px 20px"
-                            }}
-                          >
-                            <Typography>
-                              {card?.name}
-                            </Typography>
-                            <Typography>
-                              $ {card?.price}
-                            </Typography>
-                          </Box>}
-                        </Box>
-                        {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }}
-                          onClick={() => {
-
-                            if (cartItems.find(item => item.id === card.id)) {
-                              setOpen(true)
-                            }
-                            else {
-                              cartItems.push({ ...card, quantity: 1 })
-
-
-                              const totalPrice = cartItems.reduce((total, item) => {
-                                return total + (parseFloat(item.price) * item.quantity);
-                              }, 0);
-                              setCount(cartItems.length)
-                              localStorage.setItem('cartData', JSON.stringify(cartItems))
-                              setTotalAmount(totalPrice)
-                              console.log(totalPrice);
-                              setOpen(true)
-
-                            }
-
-                          }} >
-                          Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
-                        </div>}
-                      </Grid>
-                    </React.Fragment>
-                  ))}
-                </Grid>
-             
-              </Container>
-            </Box>
-            <Box
-              component={"section"}
-              id='coloring-section'
-              sx={{
-                background: Colors.whiteblue,
-                height: "100%",
-                width: "100%",
-                py: "72px"
-              }}
-            >
-              <Box
-                component={'div'}
-                className='product-heading-img'
-                sx={{
-                  backgroundImage: `url(${Images.coloring})`,
-                  width: "100%",
-                  height: '200px',
-                  backgroundSize: "cover",
-                  backgroundPosition: "center center",
-                  borderRadius: "20px",
-                  mb: "100px"
-                }}
-              >
-              </Box>
-              <Container  >
-                <Grid container spacing={2} justifyContent={"center"}>
-                  {Array.isArray(coloringSheets) && coloringSheets?.map((card, i) => (
-                    <React.Fragment key={i}>
-
-                      <Grid className='product-card' md={5} item >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            borderRadius: "20px",
-                            position: 'relative'
-                          }}
-                        >
-                      
-                          <CardMedia
-                            className='product-image'
-                            component={"img"}
-                            src={card?.imgUrl}
-                            sx={{
-                              height: card?.price != 0 ? "400px" : '455px',
-                              borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px"
-                            }}
-                          />
-                          {card?.price != 0 && <Box
-                            sx={{
-                              backgroundColor: "#C77805",
-                              p: 2,
-                              display: "flex",
-                              justifyContent: "space-between",
-                              borderRadius: "0px 0px 20px 20px"
-                            }}
-                          >
-                            <Typography>
-                              {card?.name}
-                            </Typography>
-                            <Typography>
-                              $ {card?.price}
-                            </Typography>
-                          </Box>}
-                        </Box>
-                        {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }}
-                          onClick={() => {
-
-                            if (cartItems.find(item => item.id === card.id)) {
-                              setOpen(true)
-                            }
-                            else {
-                              cartItems.push({ ...card, quantity: 1 })
-
-                              const totalPrice = cartItems.reduce((total, item) => {
-                                return total + (parseFloat(item.price) * item.quantity);
-                              }, 0);
-                              setCount(cartItems.length)
-                              localStorage.setItem('cartData', JSON.stringify(cartItems))
-                              setTotalAmount(totalPrice)
-                              console.log(totalPrice);
-
-                              setOpen(true)
-                            }
-
-                          }}>
-                          Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
-                        </div>}
-                      </Grid>
-                    </React.Fragment>
-                  ))}
-                </Grid>
-             
-              </Container>
-            </Box>
-            <Box
-              component={"section"}
-
-              sx={{
-                background: Colors.whiteblue,
-                height: "100%",
-                width: "100%",
-                py: "72px"
-              }}
-            >
-              <Box
-                component={'div'}
-                className='product-heading-img'
-                sx={{
-                  backgroundImage: `url(${Images.extra})`,
-                  width: "100%",
-                  height: '200px',
-                  backgroundSize: "cover",
-                  backgroundPosition: "center center",
-                  borderRadius: "20px",
-                  mb: "100px"
-                }}
-              >
-              </Box>
-              <Container>
-                <Grid container spacing={2} justifyContent={"center"}>
-                  {Array.isArray(extraSheets) && extraSheets?.map((card, i) => (
-                    <React.Fragment key={i}>
-
-                      <Grid className='product-card' md={5} item >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            borderRadius: "20px",
-                            position: 'relative'
-                          }}
-                        >
-                          
-                          <CardMedia
-                            className='product-image'
-                            component={"img"}
-                            src={card?.imgUrl}
-                            sx={{
-                              height: card?.price != 0 ? "400px" : '455px',
-                              borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px"
-                            }}
-                          />
-                          {card?.price != 0 && <Box
-                            sx={{
-                              backgroundColor: "#C77805",
-                              p: 2,
-                              display: "flex",
-                              justifyContent: "space-between",
-                              borderRadius: "0px 0px 20px 20px"
-                            }}
-                          >
-                            <Typography>
-                              {card?.name}
-                            </Typography>
-                            <Typography>
-                              $ {card?.price}
-                            </Typography>
-                          </Box>}
-                        </Box>
-                        {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }}
-                          onClick={() => {
-
-                            if (cartItems.find(item => item.id == card.id)) {
-                              setOpen(true)
-                            }
-                            else {
-                              cartItems.push({ ...card, quantity: 1 })
-                              const totalPrice = cartItems.reduce((total, item) => {
-                                return total + (parseFloat(item.price) * item.quantity);
-                              }, 0);
-                              setCount(cartItems.length)
-                              localStorage.setItem('cartData', JSON.stringify(cartItems))
-                              setTotalAmount(totalPrice)
-                              console.log(totalPrice);
-                              setOpen(true)
-                            }
-
-                          }}>
-                          Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
-                        </div>}
-                      </Grid>
-                    </React.Fragment>
-                  ))}
-                </Grid>
-             
-              </Container>
-            </Box>
-          </>
-        )} */}
-        <Box
-
-        >
-          {/* <Container>
-            <Grid container justifyContent={"center"} alignItems={"center"}>
-              <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-                <CardMedia
-                  component={"img"}
-                  src={Images.shineStar}
-                  sx={{
-                    width: "70px",
-                    heigth: "70px",
-                    objectFit: "contain"
-                  }}
-                />
-              </Grid>
-              <Grid item md={5.5}>
-                <Typography
-                  variant='h3'
-                  sx={{
-                    fontSize: { md: "48px", sm: "40px", xs: "32px" },
-                    fontWeight: 600,
-                    textAlign: "center"
-                  }}
-                >
-                  Collaborating With
-                </Typography>
-              </Grid>
-              <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-                <CardMedia
-                  component={"img"}
-                  src={Images.shineStar}
-                  sx={{
-                    width: "70px",
-                    heigth: "70px",
-                    objectFit: "contain"
-                  }}
-                />
-              </Grid>
-              <Grid item md={12}>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    textAlign: "center",
-                    fontSize: { md: "58px", xs: "40px" },
-                    fontWeight: 900,
-                    color: Colors.primary
-                  }}
-                >
-                  Islamic Relief Canada
-                </Typography>
-              </Grid>
-            </Grid>
-            <Box>
-            </Box>
-            <Box>
-              <CardMedia
-                component={"img"}
-                src={Images.islamicRelief}
-                sx={{
-                  width: "100%",
-                  height: { md: "350px", xs: "150px" },
-                  objectFit: "contain"
-                }}
-              />
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Grid container justifyContent={"center"} lg={6} md={6} sm={12}>
-                <Button
-                  fullWidth
-                  variant='contained'
-                  sx={{
-                    mt: 2,
-                    py: 2,
-                    px: 1,
-                    textTransform: "capitalize",
-                    fontSize: "18px",
-                    textAlign: 'center'
-                  }}
-                  target='blank'
-                  href='https://www.youtube.com/playlist?list=PLDQNq7EHiGH9lHkx1jYLhwwv4AtCXesaK'
-                >
-                  See More
-                </Button>
-              </Grid>
-            </Box>
-          </Container> */}
         </Box>
-        <Box
-  component={"section"}
-  sx={{
-    position: "relative",
-    backgroundColor: "#FF9D04",
-    width: "100%",
-    height: { xs: "auto", sm: "40vh", md: "50vh", lg: "40vh" },
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
-    padding: { xs: "4rem 0", sm: "10rem 0", md: "18rem 0", lg: "10rem 0" },
-  }}
->
-  {/* Left Background Image */}
-  <Box
-    sx={{
-      position: "absolute",
-      bottom: 0,
-      left: 0,
-      zIndex: 0,
-      display: { xs: "none", sm: "none", md: "block" }, // Hide on xs and sm
-    }}
-  >
-    <CardMedia
-      component={"img"}
-      src={Character1}
-      sx={{
-        width: { md: "500px", lg: "700px" },
-        height: "500px",
-        objectFit: "cover",
-      }}
-    />
-  </Box>
-
-  {/* Right Background Image */}
-  <Box
-    sx={{
-      position: "absolute",
-      bottom: 0,
-      right: 0,
-      zIndex: 0,
-      display: { xs: "none", sm: "none", md: "block" }, // Hide on xs and sm
-    }}
-  >
-    <CardMedia
-      component={"img"}
-      src={Character2}
-      sx={{
-        width: { md: "550px", lg: "750px" },
-        height: "500px",
-        objectFit: "cover",
-      }}
-    />
-  </Box>
-
-  {/* Center Content */}
-  <Box
-    sx={{
-      position: "relative",
-      textAlign: "center",
-      zIndex: 1,
-      width: { xs: "90%", sm: "80%", md: "30%", lg: "25%" },
-    }}
-  >
-    <Typography
-      variant="h5"
-      className="para-text"
-      sx={{
-        fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" }, // Increase font size
-        fontWeight: 600,
-        textAlign: "center",
-        mb: 2,
-      }}
-    >
-      Subscribe to get information, latest news, and other interesting offers
-      about{" "}
-      <span
-        style={{
-          fontWeight: "bold",
-          WebkitTextStroke: "0.5px white ",
-          WebkitTextFillColor: "#3D5A98",
-        }}
-      >
-        Shine With Tara
-      </span>
-    </Typography>
-    <TextField
-      className="para-text"
-      placeholder={"Your email"}
-      sx={{
-        background: Colors.white,
-        borderRadius: "4px",
-        width: "100%", // Full width for xs and sm
-        "& fieldset": {
-          border: "none",
-        },
-        "& .MuiOutlinedInput-root": {
-          paddingRight: 0.5,
-        },
-        "& .MuiOutlinedInput-input": {
-          color: `${Colors.primary} !important`,
-          fontSize: { xs: "14px", sm: "16px", md: "18px" }, // Responsive input text size
-        },
-      }}
-      InputProps={{
-        endAdornment: (
-          <Button
-          className="para-text"
-          sx={{
-            color: `${Colors.white} !important`,
-            backgroundColor: `#5B73AD`,
-            px: { xs: 2, sm: 4 }, // Adjust padding for smaller screens
-            py: 1.5,
-            textTransform: "uppercase",
-            fontSize: { xs: "12px", sm: "14px", md: "16px" }, // Button text size
-            "&:hover": {
-              backgroundColor: `#5B73AD`, // Prevent color change on hover
-              color: `${Colors.white}`,   // Maintain text color on hover
-            },
-          }}
-        >
-          Subscribe
-        </Button>
-        
-        ),
-      }}
-    />
-  </Box>
-</Box>
 
 
 
