@@ -15,7 +15,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Avatar, Divider } from 'antd';
 import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Star } from '@mui/icons-material';
+import { ArrowBack, Star } from '@mui/icons-material';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import 'swiper/css';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
@@ -23,6 +23,10 @@ import { CartContext } from '../../Context/CartContext';
 import { CartCounter } from '../../Context/CartCounter';
 import taraImage from "../../assets/images/tara-pic.png"
 import shopImg1 from "../../assets/images/shop-intro.png"
+import shopBackground from "../../assets/images/shop-background.png"
+import forwardArrow from "../../assets/images/forward-arrow.png"
+import backwardArrow from "../../assets/images/backward-arrow.png"
+import PageNavigator from "../../components/pagination/index"
 
 // import "slick-carousel/slick/slick-theme.css";
 
@@ -65,6 +69,96 @@ function Shop() {
   const [faqData, setFaqData] = useState([])
   const [totalAmount, setTotalAmount] = useState(0)
   const [reviewBoxes, setReviewBoxes] = useState([])
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [activityCurrentPage, setActivityCurrentPage] = useState(1);
+  const [coloringCurrentPage, setColoringCurrentPage] = useState(1);
+
+  
+  
+  const itemsPerPage = 4; // Max items per page
+  
+  const coloringTotalPages = Math.ceil(coloringSheets.length / itemsPerPage);
+
+  // Calculate the cards to display based on the current page
+  const displayedColoringSheets = coloringSheets.slice(
+    (coloringCurrentPage - 1) * itemsPerPage,
+    coloringCurrentPage * itemsPerPage
+  );
+
+  const handleColoringPrevPage = () => {
+    if (coloringCurrentPage > 1) {
+      setColoringCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handleColoringNextPage = () => {
+    if (coloringCurrentPage < coloringTotalPages) {
+      setColoringCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handleColoringPageClick = (page) => {
+    setColoringCurrentPage(page);
+  };
+
+
+  
+  
+  // activity pagination
+  const activityProductsPerPage = 4; // Show 4 cards per page
+  const activityTotalPages = Math.ceil(activitySheets.length / activityProductsPerPage);
+  const activityCurrentProducts = activitySheets.slice(
+    (activityCurrentPage - 1) * activityProductsPerPage,
+    activityCurrentPage * activityProductsPerPage
+  );
+  const handleActivityPrevPage = () => {
+    if (activityCurrentPage > 1) {
+      setActivityCurrentPage(activityCurrentPage - 1);
+    }
+  };
+
+  const handleActivityNextPage = () => {
+    if (activityCurrentPage < activityTotalPages) {
+      setActivityCurrentPage(activityCurrentPage + 1);
+    }
+  };
+
+  const handleActivityPageClick = (pageNumber) => {
+    setActivityCurrentPage(pageNumber);
+  };
+
+
+  // Shop pagination
+  const cardsPerPage = 4; // Number of cards to show per page
+  // Calculate total pages dynamically
+  const totalItems = products.length; // Total number of items from the products array
+  const totalPages = Math.ceil(totalItems / cardsPerPage); // Calculate total pages
+
+  // Calculate the indexes for the current page's items
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentCards = products.slice(indexOfFirstCard, indexOfLastCard);
+
+  // Handle previous page
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  // Handle next page
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  // Handle page number click
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
+  };
+
 
   const handleIncrement = (id) => {
     const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item)
@@ -863,168 +957,125 @@ function Shop() {
             <Box
               component={"section"}
               sx={{
-                backgroundColor:"#CA6680",
+                backgroundImage: `url(${shopBackground})`,
+                backgroundSize: "cover", // Ensures the image covers the entire area
+
+
                 height: "100%",
                 width: "100%",
                 py: "72px"
               }}
             >
 
-              <Box
+
+              {/* Heading */}
+              <Typography
+                variant="h1"
+                className="heading-font"
                 sx={{
-                  position: "relative", // Allows absolute positioning for the image
-                  textAlign: "center", // Centers the heading text
-                  width: "100%", // Ensures proper alignment
+                  fontSize: {
+                    xl: "100px",
+                    lg: "90px",
+                    md: "70px",
+                    sm: "45px",
+                    xs: "35px",
+                  }, // Adjusts font size for different screens
+                  fontWeight: 600,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  textTransform: "uppercase",
+                  paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+                  position: "relative", // Ensures alignment with image
+                  zIndex: 1, // Keeps heading above the image
+                  margin: "0 auto",
+                  display: "flex",
+                  justifyContent: "center"
+                }}
+                style={{
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
                 }}
               >
-                {/* Tara Image */}
+                shop
+
+              </Typography>
+
+
+              <Box
+                sx={{
+                  display: "flex", // Use flexbox to center the content
+                  justifyContent: "center", // Horizontally center the container
+                  alignItems: "center", // Vertically center the container
+                  height: "0", // Take full viewport height to center content
+                  margin: "10rem 0",
+                }}
+              >
                 <Box
                   sx={{
-                    position: "absolute", // Positioned relative to the container
-                    top: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts vertical positioning
-                    left: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts horizontal positioning
-                    transform: {
-                      xl: "translate(-450%, -90%)",
-                      lg: "translate(-450%, -90%)",
-                      md: "translate(-400%, -70%)",
-                      sm: "translate(-290%, -50%)",
-                      xs: "translate(-220%, -40%)",
-                    }, // Dynamically adjusts based on screen size
-                    width: { xl: "143.56px", lg: "130px", md: "110px", sm: "90px", xs: "70px" },
-                    height: { xl: "139px", lg: "120px", md: "100px", sm: "80px", xs: "60px" },
-                    backgroundImage: `url(${taraImage})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                />
-
-                {/* Heading */}
-                <Typography
-                  variant="h1"
-                  className="heading-font"
-                  sx={{
-                    fontSize: {
-                      xl: "100px",
-                      lg: "90px",
-                      md: "70px",
-                      sm: "45px",
-                      xs: "35px",
-                    }, // Adjusts font size for different screens
-                    fontWeight: 600,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    textTransform: "uppercase",
-                    paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
-                    position: "relative", // Ensures alignment with image
-                    zIndex: 1, // Keeps heading above the image
-                  }}
-                  style={{
-                    WebkitTextStroke: "1px white",
-                    WebkitTextFillColor: "#F9BF29",
+                    width: "800px", // Fixed width
+                    height: "350px", // Fixed height
+                    display: "grid", // Use grid layout
+                    gridTemplateColumns: "repeat(3, 1fr)", // 3 buttons per row
+                    gap: "32px", // 32px gap between buttons
+                    overflow: "hidden", // Hide overflow content
                   }}
                 >
-                  shop
-
-                </Typography>
-
-              </Box>
-              <Box
-      sx={{
-        display: "flex", // Use flexbox to center the content
-        justifyContent: "center", // Horizontally center the container
-        alignItems: "center", // Vertically center the container
-        height: "70vh", // Take full viewport height to center content
-        marginBottom: "10rem",
-      }}
-    >
-      <Box
-        sx={{
-          width: "800px", // Fixed width
-          height: "350px", // Fixed height
-          display: "grid", // Use grid layout
-          gridTemplateColumns: "repeat(3, 1fr)", // 3 boxes per row
-          gap: "32px", // 32px gap between boxes
-          overflow: "hidden", // Hide overflow content
-        }}
-      >
-        {/* Create 8 boxes */}
-        {Array.from({ length: 8 }).map((_, index) => (
-          <Box
-            key={index}
-            sx={{
-              backgroundColor: index === 7 ? "#F9BF29" : "#5B73AD", // Last box gets the yellow background
-              borderRadius: "8px", // Optional: Round corners for the boxes
-              height: "100%", // Fill the height of the container
-              display: "flex",
-              justifyContent: "center", // Center the content horizontally
-              alignItems: "center", // Center the content vertically
-            }}
-          >
-            {/* Text inside each box */}
-            {index !== 7 ? (
-              <Typography
-                variant="h6"
-                className='heading-font'
-                sx={{
-                  color: "white", // Text color for the boxes
-                  textAlign: "center", // Center the text
-                  fontWeight: "bold",
-                }}
-              >
-                {["Books", "Activity Sheets", "Coloring Sheets", "Calendars", "Stickers", "Bookmarks", "Puzzles"][index]}
-              </Typography>
-            ) : (
-              <Typography
-              className='heading-font'
-                variant="h6"
-                sx={{
-                  color: "white", // Text color for the last box
-                  textAlign: "center", // Center the text
-                  fontWeight: "bold",
-                }}
-              >
-                Show All Products
-              </Typography>
-            )}
-          </Box>
-        ))}
-      </Box>
-    </Box>
-              <Container>
-                <Grid container spacing={2} justifyContent={"center"}>
-                  {Array.isArray(products) && products?.map((card, i) => (
-                    <React.Fragment key={i}>
-
-                      <Grid className='product-card' md={5} sm={8} xs={12} item >
-                        <Box
+                  {/* Create 8 buttons */}
+                  {Array.from({ length: 8 }).map((_, index) => (
+                    <Button
+                      key={index}
+                      sx={{
+                        backgroundColor: index === 7 ? "#F9BF29" : "#5B73AD", // Last button gets the yellow background
+                        borderRadius: "8px", // Optional: Round corners for the buttons
+                        height: "100%", // Fill the height of the container
+                        display: "flex",
+                        justifyContent: "center", // Center the content horizontally
+                        alignItems: "center", // Center the content vertically
+                        padding: 0, // Remove padding to make it feel like a box
+                        textTransform: "none", // Prevent text from being uppercase
+                        '&:hover': {
+                          backgroundColor: index === 7 ? "#F9BF29" : "#5B73AD", // Retain the original background color on hover
+                        },
+                      }}
+                    >
+                      {/* Text inside each button */}
+                      {index !== 7 ? (
+                        <Typography
+                          variant="h6"
+                          className='heading-font'
                           sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            borderRadius: "20px",
-                            position: 'relative'
+                            color: "white", // Text color for the buttons
+                            textAlign: "center", // Center the text
+                            fontWeight: "bold",
                           }}
                         >
-                          {/* {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }}
-                            onClick={() => {
+                          {["Books", "Activity Sheets", "Coloring Sheets", "Calendars", "Stickers", "Bookmarks", "Puzzles"][index]}
+                        </Typography>
+                      ) : (
+                        <Typography
+                          className='heading-font'
+                          variant="h6"
+                          sx={{
+                            color: "white", // Text color for the last button
+                            textAlign: "center", // Center the text
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Show All Products
+                        </Typography>
+                      )}
+                    </Button>
+                  ))}
+                </Box>
 
-                              if (cartItems.find(item => item.id === card.id)) {
-                                setOpen(true)
-                              }
-                              else {
-                                cartItems.push({ ...card, quantity: 1 })
-                                const totalPrice = cartItems.reduce((total, item) => {
-                                  return total + (parseFloat(item.price) * item.quantity);
-                                }, 0);
-                                setCount(cartItems.length)
-                                localStorage.setItem('cartData', JSON.stringify(cartItems))
-                                setTotalAmount(totalPrice)
-                                console.log(totalPrice);
-                                setOpen(true)
-                              }
-
-                            }} />} */}
-
+              </Box>
+              <Container>
+                <Grid container spacing={2} justifyContent={"center"}>
+                  {Array.isArray(currentCards) && currentCards.map((card, i) => (
+                    <React.Fragment key={i}>
+                      <Grid className='product-card' md={5} sm={8} xs={12} item>
+                        <Box sx={{ display: "flex", flexDirection: "column", borderRadius: "20px", position: 'relative' }}>
                           <CardMedia
                             className='product-image'
                             component={"img"}
@@ -1036,40 +1087,13 @@ function Shop() {
                               objectFit: 'cover'
                             }}
                           />
-                          {card?.price != 0 && <Box
-                            sx={{
-                              backgroundColor: "#C77805",
-                              p: 2,
-                              display: "flex",
-                              justifyContent: "space-between",
-                              borderRadius: "0px 0px 20px 20px"
-                            }}
-                          >
-                            <Typography>
-                              {card?.name}
-                            </Typography>
-                            <Typography>
-                              $ {card?.price}
-                            </Typography>
+                          {card?.price != 0 && <Box sx={{ backgroundColor: "#C77805", p: 2, display: "flex", justifyContent: "space-between", borderRadius: "0px 0px 20px 20px" }}>
+                            <Typography>{card?.name}</Typography>
+                            <Typography>$ {card?.price}</Typography>
                           </Box>}
                         </Box>
                         {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }} onClick={() => {
-
-                          if (cartItems.find(item => item.id === card.id)) {
-                            setOpen(true)
-                          }
-                          else {
-                            cartItems.push({ ...card, quantity: 1 })
-                            const totalPrice = cartItems.reduce((total, item) => {
-                              return total + (parseFloat(item.price) * item.quantity);
-                            }, 0);
-                            setCount(cartItems.length)
-                            localStorage.setItem('cartData', JSON.stringify(cartItems))
-                            setTotalAmount(totalPrice)
-                            console.log(totalPrice);
-                            setOpen(true)
-                          }
-
+                          // Your add to cart logic
                         }}>
                           Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
                         </div>}
@@ -1077,340 +1101,275 @@ function Shop() {
                     </React.Fragment>
                   ))}
                 </Grid>
-                {/* <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} /> */}
+
+
+                {/* Pagination Controls */}
+                <PageNavigator
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPrevPage={handlePrevPage}
+                  onNextPage={handleNextPage}
+                  onPageClick={handlePageClick}
+                  backwardArrow={backwardArrow}
+                  forwardArrow={forwardArrow}
+                />
+
+
               </Container>
 
-   
+
 
             </Box>
-            
+
             <Box
               component={"section"}
-              id='activity-section'
+              id="activity-section"
               sx={{
-                background: Colors.whiteblue,
                 height: "100%",
+                backgroundColor: "#5B73AD",
                 width: "100%",
-                py: "72px"
+                py: "72px",
               }}
             >
-              <Box
-                component={'div'}
-                className='product-heading-img'
+              {/* Heading */}
+              <Typography
+                variant="h1"
+                className="heading-font"
                 sx={{
-                  backgroundImage: `url(${Images.activity})`,
-                  width: "100%",
-                  height: '200px',
-                  backgroundSize: "cover",
-                  backgroundPosition: "center center",
-                  borderRadius: "20px",
-                  mb: "100px"
+                  fontSize: {
+                    xl: "100px",
+                    lg: "90px",
+                    md: "70px",
+                    sm: "45px",
+                    xs: "35px",
+                  },
+                  fontWeight: 600,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  textTransform: "uppercase",
+                  paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+                  position: "relative",
+                  zIndex: 1,
+                  margin: "0 auto",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                style={{
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
                 }}
               >
-              </Box>
+                Activity Sheets
+              </Typography>
+
               <Container>
+                {/* Grid for activity cards */}
                 <Grid container spacing={2} justifyContent={"center"}>
-                  {Array.isArray(activitySheets) && activitySheets?.map((card, i) => (
-                    <React.Fragment key={i}>
-
-                      <Grid className='product-card' md={5} item >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            borderRadius: "20px",
-                            position: 'relative'
-                          }}
-                        >
-                          {/* {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }}
-                            onClick={() => {
-
-                              if (cartItems.find(item => item.id === card.id)) {
-                                setOpen(true)
-                              }
-                              else {
-                                cartItems.push({ ...card, quantity: 1 })
-                                setCount(cartItems.length)
-                                setOpen(true)
-                              }
-
-                            }} />} */}
-                          <CardMedia
-                            className='product-image'
-                            component={"img"}
-                            src={card?.imgUrl}
+                  {Array.isArray(activityCurrentProducts) &&
+                    activityCurrentProducts.map((card, i) => (
+                      <React.Fragment key={i}>
+                        <Grid className="product-card" md={5} item>
+                          <Box
                             sx={{
-                              height: card?.price != 0 ? "400px" : '455px',
-                              borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px",
-                              objectFit: 'cover'
-                            }}
-                          />
-                          {card?.price != 0 && <Box
-                            sx={{
-                              backgroundColor: "#C77805",
-                              p: 2,
                               display: "flex",
-                              justifyContent: "space-between",
-                              borderRadius: "0px 0px 20px 20px"
+                              flexDirection: "column",
+                              borderRadius: "20px",
+                              position: "relative",
                             }}
                           >
-                            <Typography>
-                              {card?.name}
-                            </Typography>
-                            <Typography>
-                              $ {card?.price}
-                            </Typography>
-                          </Box>}
-                        </Box>
-                        {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }}
-                          onClick={() => {
-
-                            if (cartItems.find(item => item.id === card.id)) {
-                              setOpen(true)
-                            }
-                            else {
-                              cartItems.push({ ...card, quantity: 1 })
-
-
-                              const totalPrice = cartItems.reduce((total, item) => {
-                                return total + (parseFloat(item.price) * item.quantity);
-                              }, 0);
-                              setCount(cartItems.length)
-                              localStorage.setItem('cartData', JSON.stringify(cartItems))
-                              setTotalAmount(totalPrice)
-                              console.log(totalPrice);
-                              setOpen(true)
-
-                            }
-
-                          }} >
-                          Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
-                        </div>}
-                      </Grid>
-                    </React.Fragment>
-                  ))}
+                            <CardMedia
+                              className="product-image"
+                              component={"img"}
+                              src={card?.imgUrl}
+                              sx={{
+                                height: card?.price !== 0 ? "400px" : "455px",
+                                borderRadius:
+                                  card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
+                                objectFit: "cover",
+                              }}
+                            />
+                            {card?.price !== 0 && (
+                              <Box
+                                sx={{
+                                  backgroundColor: "#C77805",
+                                  p: 2,
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  borderRadius: "0px 0px 20px 20px",
+                                }}
+                              >
+                                <Typography>{card?.name}</Typography>
+                                <Typography>$ {card?.price}</Typography>
+                              </Box>
+                            )}
+                          </Box>
+                          {card?.price !== 0 && (
+                            <div
+                              className="add-to-cart"
+                              style={{ display: "flex", alignItems: "center" }}
+                              onClick={() => {
+                                if (cartItems.find((item) => item.id === card.id)) {
+                                  setOpen(true);
+                                } else {
+                                  cartItems.push({ ...card, quantity: 1 });
+                                  const totalPrice = cartItems.reduce(
+                                    (total, item) =>
+                                      total + parseFloat(item.price) * item.quantity,
+                                    0
+                                  );
+                                  setCount(cartItems.length);
+                                  localStorage.setItem(
+                                    "cartData",
+                                    JSON.stringify(cartItems)
+                                  );
+                                  setTotalAmount(totalPrice);
+                                  setOpen(true);
+                                }
+                              }}
+                            >
+                              Add To Cart &nbsp;{" "}
+                              <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                            </div>
+                          )}
+                        </Grid>
+                      </React.Fragment>
+                    ))}
                 </Grid>
-                {/* <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} /> */}
+
+                {/* Pagination */}
+                <PageNavigator
+                  currentPage={activityCurrentPage}
+                  totalPages={activityTotalPages}
+                  onPrevPage={handleActivityPrevPage}
+                  onNextPage={handleActivityNextPage}
+                  onPageClick={handleActivityPageClick}
+                  backwardArrow={backwardArrow}
+                  forwardArrow={forwardArrow}
+                />
               </Container>
-            </Box>
+            </Box>;
+
+
+
             <Box
-              component={"section"}
-              id='coloring-section'
-              sx={{
-                background: Colors.whiteblue,
-                height: "100%",
-                width: "100%",
-                py: "72px"
-              }}
-            >
-              <Box
-                component={'div'}
-                className='product-heading-img'
-                sx={{
-                  backgroundImage: `url(${Images.coloring})`,
-                  width: "100%",
-                  height: '200px',
-                  backgroundSize: "cover",
-                  backgroundPosition: "center center",
-                  borderRadius: "20px",
-                  mb: "100px"
-                }}
-              >
-              </Box>
-              <Container  >
-                <Grid container spacing={2} justifyContent={"center"}>
-                  {Array.isArray(coloringSheets) && coloringSheets?.map((card, i) => (
-                    <React.Fragment key={i}>
+      component={"section"}
+      id="coloring-section"
+      sx={{
+        backgroundColor: "#CA6680",
+        height: "100%",
+        width: "100%",
+        py: "72px",
+        marginTop: "-30px",
+      }}
+    >
+      {/* Heading */}
+      <Typography
+        variant="h1"
+        className="heading-font"
+        sx={{
+          fontSize: {
+            xl: "100px",
+            lg: "90px",
+            md: "70px",
+            sm: "45px",
+            xs: "35px",
+          },
+          fontWeight: 600,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          textTransform: "uppercase",
+          paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+          position: "relative",
+          zIndex: 1,
+          margin: "0 auto",
+          display: "flex",
+          justifyContent: "center",
+        }}
+        style={{
+          WebkitTextStroke: "1px white",
+          WebkitTextFillColor: "#F9BF29",
+        }}
+      >
+        Coloring Sheets
+      </Typography>
+      <Container>
+        <Grid container spacing={2} justifyContent={"center"}>
+          {Array.isArray(displayedColoringSheets) &&
+            displayedColoringSheets.map((card, i) => (
+              <React.Fragment key={i}>
+                <Grid className="product-card" md={5} item>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      borderRadius: "20px",
+                      position: "relative",
+                    }}
+                  >
+                    <CardMedia
+                      className="product-image"
+                      component={"img"}
+                      src={card?.imgUrl}
+                      sx={{
+                        height: card?.price != 0 ? "400px" : "455px",
+                        borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px",
+                      }}
+                    />
+                    {card?.price != 0 && (
+                      <Box
+                        sx={{
+                          backgroundColor: "#C77805",
+                          p: 2,
+                          display: "flex",
+                          justifyContent: "space-between",
+                          borderRadius: "0px 0px 20px 20px",
+                        }}
+                      >
+                        <Typography>{card?.name}</Typography>
+                        <Typography>${card?.price}</Typography>
+                      </Box>
+                    )}
+                  </Box>
+                  {card?.price != 0 && (
+                    <div
+                      className="add-to-cart"
+                      style={{ display: "flex", alignItems: "center" }}
+                      onClick={() => {
+                        if (cartItems.find((item) => item.id === card.id)) {
+                          setOpen(true);
+                        } else {
+                          cartItems.push({ ...card, quantity: 1 });
 
-                      <Grid className='product-card' md={5} item >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            borderRadius: "20px",
-                            position: 'relative'
-                          }}
-                        >
-                          {/* {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }}
-                            onClick={() => {
-
-                              if (cartItems.find(item => item.id === card.id)) {
-                                setOpen(true)
-                              }
-                              else {
-                                cartItems.push({ ...card, quantity: 1 })
-                                setCount(cartItems.length)
-                                setOpen(true)
-                              }
-
-                            }} />} */}
-                          <CardMedia
-                            className='product-image'
-                            component={"img"}
-                            src={card?.imgUrl}
-                            sx={{
-                              height: card?.price != 0 ? "400px" : '455px',
-                              borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px"
-                            }}
-                          />
-                          {card?.price != 0 && <Box
-                            sx={{
-                              backgroundColor: "#C77805",
-                              p: 2,
-                              display: "flex",
-                              justifyContent: "space-between",
-                              borderRadius: "0px 0px 20px 20px"
-                            }}
-                          >
-                            <Typography>
-                              {card?.name}
-                            </Typography>
-                            <Typography>
-                              $ {card?.price}
-                            </Typography>
-                          </Box>}
-                        </Box>
-                        {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }}
-                          onClick={() => {
-
-                            if (cartItems.find(item => item.id === card.id)) {
-                              setOpen(true)
-                            }
-                            else {
-                              cartItems.push({ ...card, quantity: 1 })
-
-                              const totalPrice = cartItems.reduce((total, item) => {
-                                return total + (parseFloat(item.price) * item.quantity);
-                              }, 0);
-                              setCount(cartItems.length)
-                              localStorage.setItem('cartData', JSON.stringify(cartItems))
-                              setTotalAmount(totalPrice)
-                              console.log(totalPrice);
-
-                              setOpen(true)
-                            }
-
-                          }}>
-                          Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
-                        </div>}
-                      </Grid>
-                    </React.Fragment>
-                  ))}
+                          const totalPrice = cartItems.reduce((total, item) => {
+                            return total + parseFloat(item.price) * item.quantity;
+                          }, 0);
+                          setCount(cartItems.length);
+                          localStorage.setItem("cartData", JSON.stringify(cartItems));
+                          setTotalAmount(totalPrice);
+                          setOpen(true);
+                        }
+                      }}
+                    >
+                      Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                    </div>
+                  )}
                 </Grid>
-                {/* <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} /> */}
-              </Container>
-            </Box>
-            <Box
-              component={"section"}
-
-              sx={{
-                background: Colors.whiteblue,
-                height: "100%",
-                width: "100%",
-                py: "72px"
-              }}
-            >
-              <Box
-                component={'div'}
-                className='product-heading-img'
-                sx={{
-                  backgroundImage: `url(${Images.extra})`,
-                  width: "100%",
-                  height: '200px',
-                  backgroundSize: "cover",
-                  backgroundPosition: "center center",
-                  borderRadius: "20px",
-                  mb: "100px"
-                }}
-              >
-              </Box>
-              <Container>
-                <Grid container spacing={2} justifyContent={"center"}>
-                  {Array.isArray(extraSheets) && extraSheets?.map((card, i) => (
-                    <React.Fragment key={i}>
-
-                      <Grid className='product-card' md={5} item >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            borderRadius: "20px",
-                            position: 'relative'
-                          }}
-                        >
-                          {/* {card?.price != 0 && <ShoppingCartIcon sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer', color: Colors.darkblue }}
-                            onClick={() => {
-
-                              if (cartItems.find(item => item.id == card.id)) {
-                                setOpen(true)
-                              }
-                              else {
-                                cartItems.push({ ...card, quantity: 1 })
-                                const totalPrice = cartItems.reduce((total, item) => {
-                                  return total + (parseFloat(item.price) * item.quantity);
-                                }, 0);
-                                setCount(cartItems.length)
-                                localStorage.setItem('cartData', JSON.stringify(cartItems))
-                                setTotalAmount(totalPrice)
-                                console.log(totalPrice);
-                                setOpen(true)
-                              }
-
-                            }} />} */}
-                          <CardMedia
-                            className='product-image'
-                            component={"img"}
-                            src={card?.imgUrl}
-                            sx={{
-                              height: card?.price != 0 ? "400px" : '455px',
-                              borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px"
-                            }}
-                          />
-                          {card?.price != 0 && <Box
-                            sx={{
-                              backgroundColor: "#C77805",
-                              p: 2,
-                              display: "flex",
-                              justifyContent: "space-between",
-                              borderRadius: "0px 0px 20px 20px"
-                            }}
-                          >
-                            <Typography>
-                              {card?.name}
-                            </Typography>
-                            <Typography>
-                              $ {card?.price}
-                            </Typography>
-                          </Box>}
-                        </Box>
-                        {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }}
-                          onClick={() => {
-
-                            if (cartItems.find(item => item.id == card.id)) {
-                              setOpen(true)
-                            }
-                            else {
-                              cartItems.push({ ...card, quantity: 1 })
-                              const totalPrice = cartItems.reduce((total, item) => {
-                                return total + (parseFloat(item.price) * item.quantity);
-                              }, 0);
-                              setCount(cartItems.length)
-                              localStorage.setItem('cartData', JSON.stringify(cartItems))
-                              setTotalAmount(totalPrice)
-                              console.log(totalPrice);
-                              setOpen(true)
-                            }
-
-                          }}>
-                          Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
-                        </div>}
-                      </Grid>
-                    </React.Fragment>
-                  ))}
-                </Grid>
-                {/* <ProductModal pData={cardProduct} isModalOpens={isModalOpen} UpdateCount={setCount} valueCount={count} handleOks={handleOk} handleCancels={handleCancel} /> */}
-              </Container>
-            </Box>
+              </React.Fragment>
+            ))}
+        </Grid>
+        <PageNavigator
+          currentPage={coloringCurrentPage}
+          totalPages={coloringTotalPages}
+          onPrevPage={handleColoringPrevPage}
+          onNextPage={handleColoringNextPage}
+          onPageClick={handleColoringPageClick}
+          backwardArrow={backwardArrow}
+          forwardArrow={forwardArrow}
+        />
+      </Container>
+    </Box>
           </>
         )}
         {/* <Box
