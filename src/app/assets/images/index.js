@@ -11,7 +11,7 @@ const Images = {
   pic9: require("./WhatsApp Image 2024-07-24 at 1.13.35 AM.jpeg"),
   pic10: require("./WhatsApp Image 2024-07-24 at 1.13.36 AM.jpeg"),
   contactCharacter: require("./characterContact.png"),
-  
+  mainCharacter:require("./main-character.png"),
   footerBg: require("./footer.png"),
   bannerBg: require("./bannerBg.png"),
   aboutImage: require("./about-us.png"),

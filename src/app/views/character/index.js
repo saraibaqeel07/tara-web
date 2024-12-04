@@ -6,6 +6,8 @@ import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounde
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom'
 import { CartContext } from '../../Context/CartContext'
+
+
 import { CartCounter } from '../../Context/CartCounter'
 function Character() {
   const navigate = useNavigate()
@@ -17,7 +19,7 @@ function Character() {
   const [open, setOpen] = useState(false);
 
   console.log(cartVisible, 'cartVisible');
-  
+
 
   const handleIncrement = (id) => {
     const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item)
@@ -139,7 +141,7 @@ function Character() {
       image: Images.Faiz,
       logo: Images.logoLaila
     },
-  
+
   ];
 
   const teamData = [
@@ -169,9 +171,9 @@ function Character() {
     },
   ]
   useEffect(() => {
-    
+
     let cart = localStorage.getItem('cartData')
-    if(cart){
+    if (cart) {
       cart = JSON.parse(cart)
       if (cart?.length > 0) {
         setCartItems(cart)
@@ -185,23 +187,23 @@ function Character() {
     }
     const intervalId = setInterval(() => {
       // Generate a random color
-     
+
       let element = document.getElementById('main-text')
       let element2 = document.getElementById('character-text')
-    
-      if(element){
+
+      if (element) {
         console.log(element.style.color)
-        if(element.style.color =='rgb(2, 27, 81)'){
-          element.style.color='white'
-          element2.style.color=Colors.pink
+        if (element.style.color == 'rgb(2, 27, 81)') {
+          element.style.color = 'white'
+          element2.style.color = Colors.pink
 
         }
-        
-        
-        else{
-          element.style.color=Colors.darkblue
-          element2.style.color='white'
-      
+
+
+        else {
+          element.style.color = Colors.darkblue
+          element2.style.color = 'white'
+
         }
       }
     }, 1000); // Change color every 1000ms (1 second)
@@ -247,11 +249,11 @@ function Character() {
                     setCount(updatedData?.length)
                     localStorage.setItem('cartData', JSON.stringify(updatedData))
                   }}
-                  sx={{ color: 'black', cursor: 'pointer',width:'100%' }}
+                  sx={{ color: 'black', cursor: 'pointer', width: '100%' }}
                 >
                   <CloseIcon />
                 </Box>
-             
+
                 <Box
                   sx={{
                     height: 100,
@@ -309,370 +311,92 @@ function Character() {
         sx={{
           background: Colors.primaryGradient,
           width: "100%",
-          py: "80px"
+
         }}
       >
-        
-          {/* <Box
-            sx={{
-              backgroundImage: { md: `url(${Images.characterBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
-              width: "95%",
-              height: { md: "624px", xs: "490px" },
-              backgroundSize: "cover",
-              backgroundPosition: "center center",
-              borderRadius: "20px",
-              margin:"0 auto"
-            }}
-          >
-            <Grid container>
-              <Grid item md={11} sm={12} xs={12}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    gap: "20px",
-                    pt: "50px",
-                    pl: { md: `60px !important`, sm: "12px", xs: "12px" },
-                    pr: { md: 0, sm: "12px", xs: "12px" }
-                  }}
-                >
-                  <Typography
-                    variant='h1'
-                    sx={{
-                      fontFamily: Fonts.righteous,
-                      fontSize: { md: "70px", sm: "50px", xs: "40px" },
-                      fontWeight: 700,
-                    }}
-                  >
-                    Unveil The Stories Behind <br/> <span style={{ color: Colors.orange }}> Our</span> <span id='main-text' style={{ color: Colors.darkblue }}>Main </span> <span id='character-text'>Characters</span>
-                  </Typography>
-                  <Typography
-                    variant='h3'
-                    sx={{
-                      fontSize: { md: "40px", sm: "36px", xs: "32px" }
-                    }}
-                  >
-                    Click To See Latest Adventures!
-                  </Typography>
-                  <Grid container spacing={2} alignItems={"center"}>
-                    <Grid item md={4} sm={5} xs={12}>
-                      <Button
-                        fullWidth
-                        variant='contained'
-                        sx={{
-                          py: 1,
-                          px: 4,
-                          textTransform: "capitalize",
-                          fontSize: "18px"
-                        }}
-                        href='https://www.youtube.com/@Shinewithtara'
-                      >
-                        Start Adventure
-                      </Button>
-                    </Grid>
-                    <Grid item md={8} sm={7} xs={12}>
-                      <Grid container spacing={2} sx={{ justifyContent: { md: "flex-start", sm: "flex-start", xs: "center" } }} gap={"10px"}>
-                        <Grid item md={1}>
-                          <Button href='https://www.facebook.com/profile.php?id=61554711500749'>
-                            <FacebookRounded />
-                          </Button>
-                        </Grid>
-                        <Grid item md={1}>
-                          <Button href='https://www.instagram.com/shineswithtara/ '>
-                            <InstagramRounded />
-                          </Button>
-                        </Grid>
-                        <Grid item md={1}>
-                          <Button       href='https://www.youtube.com/@Shinewithtara'>
-                            <YoutubeRounded />
-                          </Button>
-                        </Grid>
-                        <Grid item md={1}>
-                          <Button href='https://www.tiktok.com/@shinewithtara'>
-                            <TiktokRounded />
-                          </Button>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box> */}
+        <Box
+          sx={{
+            backgroundImage: `url(${Images.bannerBg})`,
+
+            backgroundSize: "cover",
+            backgroundPosition: "bottom center",
+            width: "100%",
+            height: { md: "578px", xs: "490px" },
+            position: "relative", // Ensure child content is positioned relative to this container
+            overflow: "hidden", // Prevent content from going outside
+          }}
+        >
+          {/* Right-side Image */}
           <Box
-            component={"section"}
             sx={{
-              background: Colors.primaryGradient,
-              width: "100%",
-              py: "80px"
+
+              margin: '0 auto',
+              width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
+              height: "100%", // Full height of the parent container
+              backgroundImage: `url(${Images.mainCharacter})`,
+              backgroundSize: { md: "cover", xl: "contain", lg: "contain", },
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center", // Ensures the image is aligned at the bottom
+              display: { md: "block", xl: "block", lg: "block", sm: "none", xs: "none" }, // Show image only for medium and larger screens
+
             }}
-          >
+          />
 
-            <Box
-              sx={{
-                backgroundImage: { md: `url(${Images.mainBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
-                width: "95%",
-                height: { md: "624px", xs: "490px" },
-                backgroundSize: "cover",
-                backgroundPosition: "center center",
-                borderRadius: "20px",
-                margin: '0 auto'
-              }}
-            >
-              <Grid container>
-                <Grid item md={6} sm={12} xs={12}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      gap: "40px",
-                      pt: "60px",
-                      pl: { md: `48px !important`, sm: "12px", xs: "12px" },
-                      pr: { md: 0, sm: "12px", xs: "12px" }
-                    }}
-                  >
-                    <Typography
-                      variant='h1'
-                      sx={{
-                        fontFamily: Fonts.righteous,
-                        fontSize: { md: "70px", sm: "50px", xs: "40px" },
-                        fontWeight: 700,
-                        color: Colors.white,
-                      }}
-                    >
-                       Unveil The Stories Behind <br/> <span style={{ color: Colors.orange }}> Our</span> <span id='main-text' style={{ color: Colors.darkblue }}>Main </span> <span id='character-text'>Characters</span>
-                    </Typography>
-                    <Typography
-                      variant='h3'
-                      sx={{
-                        fontSize: { md: "38px", sm: "28px", xs: "20px" }
-                      }}
-                    >
-                      Click To See Latest Adventures!
-                    </Typography>
-                    <Grid container spacing={2} alignItems={"center"}>
-                      <Grid item md={5} sm={5} xs={12}>
-                        <Button
-                          fullWidth
-                          variant='contained'
-                          sx={{
-                            py: 1,
-                            px: 4,
-                            textTransform: "capitalize",
-                            fontSize: "18px"
-                          }}
-                          href='https://www.youtube.com/@Shinewithtara'
-                        >
-                          Start Adventure
-                        </Button>
-                      </Grid>
-                      <Grid item md={7} sm={7} xs={12}>
-                        <Grid container spacing={2} sx={{ justifyContent: { md: "flex-start", sm: "flex-start", xs: "center" } }}>
-                          <Grid item md={2}>
-                            <Button href='https://www.facebook.com/profile.php?id=61554711500749'>
-                              <FacebookRounded />
-                            </Button>
-                          </Grid>
-                          <Grid item md={2}>
-                            <Button href='https://www.instagram.com/shineswithtara/ '>
-                              <InstagramRounded />
-                            </Button>
-                          </Grid>
-                          <Grid item md={2}>
-                            <Button href='https://www.youtube.com/@Shinewithtara'>
-                              <YoutubeRounded />
-                            </Button>
-                          </Grid>
-                          <Grid item md={2}>
-                            <Button href='https://www.tiktok.com/@shinewithtara'>
-                              <TiktokRounded />
-                            </Button>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
-                <Grid item sx={{
-                  display: {
-                    lg: 'flex',  // Show block on large screens and up
-                    md: 'none',   // Hide on medium screens
-                    xs: 'none'    // Hide on extra-small screens as well
-                  },
-                  alignItems:'flex-end'
-                }} md={6} sm={12} xs={12}>
-                  <Grid container justifyContent={'center'}>
-                    <Grid component={'div'} sx={{ cursor: 'pointer', mt: 4 }} item md={12} sm={12} xs={12}>
 
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: "100%"
-                        }}
+        </Box>
 
-                      >
-                        <CardMedia
-                          component={"img"}
-                          src={Images.Family}
-                          sx={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            borderRadius: '12px',
-                          }}
-                        />
-                      </Box>
 
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Box>
 
-          </Box>
+
+
+
       </Box>
+
       <Box
-        component={"section"}
-        sx={{
-          background: Colors.whiteblue,
-          width: "100%",
-          p: "40px 20px"
-        }}
+        sx={{ backgroundColor: "#CA6680" ,
+        py:"30px"   ,
+      }}
       >
-        <Grid container gap={"40px"}>
-          <Grid item md={12} sm={12} xs={12}>
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: { md: "38px", sm: "30px", xs: "22px" },
-                textAlign: "center"
-              }}
-            >
-              Let's Learn More About The Enchanted World Of Shine With Tara
-            </Typography>
-          </Grid>
-          <Grid item md={12} sm={12} xs={12}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                gap: "10px",
-                alignItems: "center"
-              }}
-            >
-              <CardMedia
-                component={"img"}
-                src={Images.flower}
-                sx={{
-                  width: { md: "70px", sm: "65px", xs: "60px" },
-                  height: { md: "70px", sm: "65px", xs: "60px" },
-                  objectFit: "contain"
-                }}
-              />
-              <Typography
-                variant='h3'
-                sx={{
-                  fontSize: { md: "48px", sm: "42px", xs: "28px" },
-                  fontWeight: 600,
-                  color: Colors.darkblue
-                }}
-              >
-                Main Characters
-              </Typography>
-              <CardMedia
-                component={"img"}
-                src={Images.flower}
-                sx={{
-                  width: { md: "70px", sm: "65px", xs: "60px" },
-                  height: { md: "70px", sm: "65px", xs: "60px" },
-                  objectFit: "contain"
-                }}
-              />
-            </Box>
-          </Grid>
-          <Grid item md={12} sm={12} xs={12}>
-            <Grid container rowSpacing={4} gap={2} justifyContent={"center"}>
-              {characterData.map((item, i) => (
-                <Grid key={i} item md={4} sm={4} xs={12}>
-                  <Grid
-                    container
-                    sx={{
-                      border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
-                      borderRadius: "20px"
-                    }}
-                  >
-                    {/* <Grid item md={8} sm={12} xs={12}>
-                      <Box
-                        sx={{
-                          backgroundColor: item.name == "Tara"
-                            ? "#75B2C7" : item.name == "Shine"
-                              ? "#E58998" : item.name == "Ahmed"
-                                ? "#E8B542" : "#8F52A1",
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "20px",
-                          height: "100%",
-                          p: 4,
-                          borderRadius: { md: "12px 0px 0px 12px", sm: "12px 12px 0px 0px", xs: "12px 12px 0px 0px" }
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "20px",
-                          }}
-                        >
-                          <CardMedia
-                            component={"img"}
-                            src={item.logo}
-                            sx={{
-                              width: "60px",
-                              height: "60px",
-                              objectFit: "contain"
-                            }}
-                          />
-                          <Typography
-                            variant="h5"
-                          >
-                            {item.name}
-                          </Typography>
-                        </Box>
-                        <Box>
-                          <Typography sx={{ fontSize: "20px" }}>
-                            {item.detail}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Grid> */}
-                    <Grid item md={12} sm={12} xs={12} sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}>
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: "100%"
-                        }}
-                      >
-                        <CardMedia
-                          component={"img"}
-                          src={item.image}
-                          sx={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            borderRadius: { md: "0px 12px 12px 0px", sm: "0px 0px 12px 12px", xs: "0px 0px 12px 12px" },
-                          }}
-                        />
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Grid>
+        <Typography
+          variant="h1"
+          className="heading-font"
+          sx={{
+            fontSize: {
+              xl: "100px",
+              lg: "90px",
+              md: "70px",
+              sm: "45px",
+              xs: "35px",
+            }, // Adjusts font size for different screens
+            fontWeight: 600,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textTransform: "uppercase",
+            paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+            position: "relative", // Ensures alignment with image
+            zIndex: 1, // Keeps heading above the image
+            margin: "0 auto",
+            display: "flex",
+            justifyContent: "center",gap:"20px"
+          }}
+          
+        >
+          <span style={{
+            WebkitTextStroke: "1px white",
+            WebkitTextFillColor: "#F9BF29",
+          }}>main </span>
+          <span  style={{
+                    display: "block",
+                    WebkitTextStroke: "1px white",
+                    WebkitTextFillColor: "#4FAAFB",
+                  }}> charcter's</span>
+
+        </Typography>
+
+    
       </Box>
+
+
       <Box
         component={"section"}
         sx={{
@@ -760,14 +484,14 @@ function Character() {
                       >
                         {item.profession}
                       </Typography>
-                      <Box component={'div'} sx={{cursor:'pointer',textDecoration:'underline',color:'blue'}} onClick={()=> handleEmailClick(item.email)} >
-                      <Typography
-                      
-                        variant='caption'
-                        
-                      >
-                        {item.email}
-                      </Typography>
+                      <Box component={'div'} sx={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }} onClick={() => handleEmailClick(item.email)} >
+                        <Typography
+
+                          variant='caption'
+
+                        >
+                          {item.email}
+                        </Typography>
                       </Box>
                     </Box>
                   </Box>
