@@ -2,11 +2,13 @@ import React from 'react'
 import { TextField } from '@mui/material'
 import Colors from '../styles/colors'
 
-function InputField({ register, helperText, error, multiline, rows }) {
+function InputField({ register, helperText, error, multiline, rows,sx,size }) {
   return (
     <TextField
+    size={size}
       fullWidth
       sx={{
+        ...sx,
         background: Colors.white,
         borderRadius: "8px",
         border: "none",
