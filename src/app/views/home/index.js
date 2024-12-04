@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState ,useRef} from 'react';
+import React, { Fragment, useContext, useEffect, useState, useRef } from 'react';
 import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup, TextField, Drawer, Accordion, AccordionSummary, AccordionDetails, Rating } from '@mui/material';
 import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images';
 import Colors from '../../styles/colors';
@@ -1151,202 +1151,211 @@ function Home() {
 
 
         <Grid
-  container
-  sx={{
-    backgroundColor: "#5B73AD",
-    maxHeight: "1500vh", // Adjusted height
-    paddingTop: "20rem",
-    margin: 0,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
-    gap: 0, // Prevent gaps between children
-    paddingBottom: "40rem",
-  }}
->
-  <Grid item xs={12} md={8} sx={{ padding: "5rem 0", position: "relative", marginTop: "-22rem" }}>
-    {/* Centered Heading with Images */}
-    <Box
-      sx={{
-        position: "relative",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 2,
-      }}
-    >
-      {/* Left Image */}
-      <Box
-        component="img"
-        src={cloudImg}
-        alt="Left Decorative Image"
-        sx={{
-          width: { xs: "40px", sm: "60px", md: "80px" },
-          height: "auto",
-          padding: 0,
-        }}
-      />
-      {/* Heading */}
-      <Typography
-        variant="h1"
-        className="heading-font"
-        sx={{
-          fontSize: {
-            xl: "80px",
-            lg: "70px",
-            md: "60px",
-            sm: "35px",
-            xs: "28px",
-          },
-          fontWeight: 600,
-          color: "#F9BF29",
-          textTransform: "uppercase",
-          margin: 0, // Ensure no top or bottom margin
-        }}
-        style={{
-          WebkitTextStroke: "1px white",
-          WebkitTextFillColor: "#F9BF29",
-        }}
-      >
-        Reviews
-      </Typography>
-    </Box>
-  </Grid>
-  <Box sx={{ width: '95%', margin: '0 auto', marginTop: "-40px", display: "flex", justifyContent: "center", position: "relative" }}>
-  <Grid item md={11} sm={11} xs={11}>
-    <Swiper
-      ref={swiperRef}
-      loop={true} // Enable looping for the swiper
-      spaceBetween={10}
-      slidesPerView={3}
-      autoplay={{
-        delay: 2500,
-        disableOnInteraction: false,
-      }}
-      modules={[Autoplay, Pagination, Navigation]}
-      breakpoints={{
-        320: { slidesPerView: 1 },
-        786: { slidesPerView: 2 },
-        1080: { slidesPerView: 3 },
-      }}
-      pagination={{
-        clickable: true,
-        el: '.swiper-pagination',
-        bulletClass: 'swiper-pagination-bullet',
-        bulletActiveClass: 'swiper-pagination-bullet-active',
-      }}
-      onSlideChange={(swiper) => {
-        setActiveCard(swiper.activeIndex); // Update active card on slide change
-      }}
-      speed={1000} // For smoother transition
-    >
-      {reviewBoxes?.map((item, ind) => (
-        <SwiperSlide key={ind}>
-          <Box
-            sx={{
-              p: 4,
-              borderRadius: "15px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-              backgroundColor: activeCard === ind ? '#FF9D04' : '#CA6680',
-              height: '120px',
-              paddingBottom: 8,
-              cursor: 'pointer',
-            }}
-            onClick={() => handleCardClick(ind)} // Set active card on click
-          >
-            {/* Rating */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <Rating name="read-only" value={item?.rating} sx={{ borderColor: 'white' }} readOnly />
+          container
+          sx={{
+            backgroundColor: "#5B73AD",
+            maxHeight: "1500vh", // Adjusted height
+            paddingTop: "20rem",
+            margin: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+            gap: 0, // Prevent gaps between children
+
+          }}
+        >
+          <Grid item xs={12} md={8} sx={{ padding: "5rem 0", position: "relative", marginTop: "-22rem" }}>
+            {/* Centered Heading with Images */}
+            <Box
+              sx={{
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 2,
+              }}
+            >
+              {/* Left Image */}
+              <Box
+                component="img"
+                src={cloudImg}
+                alt="Left Decorative Image"
+                sx={{
+                  width: { xs: "40px", sm: "60px", md: "80px" },
+                  height: "auto",
+                  padding: 0,
+                }}
+              />
+              {/* Heading */}
+              <Typography
+                variant="h1"
+                className="heading-font"
+                sx={{
+                  fontSize: {
+                    xl: "80px",
+                    lg: "70px",
+                    md: "60px",
+                    sm: "35px",
+                    xs: "28px",
+                  },
+                  fontWeight: 600,
+                  color: "#F9BF29",
+                  textTransform: "uppercase",
+                  margin: 0, // Ensure no top or bottom margin
+                }}
+                style={{
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
+                }}
+              >
+                Reviews
+              </Typography>
+            </Box>
+          </Grid>
+          <Box sx={{ width: '95%', margin: '0 auto', marginTop: "-40px", display: "flex", justifyContent: "center", position: "relative" }}>
+            <Grid item md={11} sm={11} xs={11}>
+              <Swiper
+                ref={swiperRef}
+                loop={true} // Enable looping for the swiper
+                spaceBetween={10}
+                slidesPerView={3}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                modules={[Autoplay, Pagination, Navigation]}
+                breakpoints={{
+                  320: { slidesPerView: 1 },
+                  786: { slidesPerView: 2 },
+                  1080: { slidesPerView: 3 },
+                }}
+                pagination={{
+                  clickable: true,
+                  el: '.swiper-pagination',
+                  bulletClass: 'swiper-pagination-bullet',
+                  bulletActiveClass: 'swiper-pagination-bullet-active',
+                }}
+                onSlideChange={(swiper) => {
+                  setActiveCard(swiper.activeIndex); // Update active card on slide change
+                }}
+                speed={1000} // For smoother transition
+              >
+                {reviewBoxes?.map((item, ind) => (
+                  <SwiperSlide key={ind}>
+                    <Box
+                      sx={{
+                        p: 4,
+                        borderRadius: "15px",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+                        backgroundColor: activeCard === ind ? '#FF9D04' : '#CA6680',
+                        height: '120px',
+                        paddingBottom: 8,
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => handleCardClick(ind)} // Set active card on click
+                    >
+                      {/* Rating */}
+                      <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <Rating name="read-only" value={item?.rating} sx={{ borderColor: 'white' }} readOnly />
+                      </Box>
+
+                      {/* Comment */}
+                      <Typography variant={"body2"} sx={{ color: 'white' }}>
+                        {item.comment}
+                      </Typography>
+
+                      {/* Name, Designation */}
+                      <Box sx={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+                        <Avatar sx={{ width: 64, height: 64 }} src={item.profile} alt={item.name} />
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                          <Typography sx={{ display: 'flex', alignItems: "center", gap: "8px", fontWeight: 600, color: 'white' }}>
+                            {item?.name}
+                            <Typography variant='body2' sx={{ fontWeight: 400 }}>
+                              {item.designation}
+                            </Typography>
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </Grid>
+
+            {/* Navigation Buttons */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: "35%",
+                left: 0,
+                zIndex: 10,
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                if (swiperRef.current?.swiper) {
+                  const swiperInstance = swiperRef.current.swiper;
+                  swiperInstance.slidePrev();
+                }
+              }}
+            >
+              <Box
+                component="img"
+                src={backwardArrow}
+                alt="Previous Slide"
+                sx={{
+                  width: "80px",
+                  height: "60px",
+                  padding: "6px",
+                }}
+              />
             </Box>
 
-            {/* Comment */}
-            <Typography variant={"body2"} sx={{ color: 'white' }}>
-              {item.comment}
-            </Typography>
-
-            {/* Name, Designation */}
-            <Box sx={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
-              <Avatar sx={{ width: 64, height: 64 }} src={item.profile} alt={item.name} />
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography sx={{ display: 'flex', alignItems: "center", gap: "8px", fontWeight: 600, color: 'white' }}>
-                  {item?.name}
-                  <Typography variant='body2' sx={{ fontWeight: 400 }}>
-                    {item.designation}
-                  </Typography>
-                </Typography>
-              </Box>
+            <Box
+              sx={{
+                position: "absolute",
+                top: "35%",
+                right: 0,
+                zIndex: 10,
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                if (swiperRef.current?.swiper) {
+                  const swiperInstance = swiperRef.current.swiper;
+                  swiperInstance.slideNext();
+                }
+              }}
+            >
+              <Box
+                component="img"
+                src={forwardArrow}
+                alt="Next Slide"
+                sx={{
+                  width: "80px",
+                  height: "60px",
+                  padding: "6px",
+                }}
+              />
             </Box>
+
           </Box>
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  </Grid>
-
-  {/* Navigation Buttons */}
-  <Box
-  sx={{
-    position: "absolute",
-    top: "35%",
-    left: 0,
-    zIndex: 10,
-    cursor: "pointer",
-  }}
-  onClick={() => {
-    if (swiperRef.current?.swiper) {
-      const swiperInstance = swiperRef.current.swiper;
-      swiperInstance.slidePrev();
-    }
-  }}
->
-  <Box
-    component="img"
-    src={backwardArrow}
-    alt="Previous Slide"
-    sx={{
-      width: "80px",
-      height: "60px",        
-      padding: "6px",
-    }}
-  />
-</Box>
-
-<Box
-  sx={{
-    position: "absolute",
-    top: "35%",
-    right: 0,
-    zIndex: 10,
-    cursor: "pointer",
-  }}
-  onClick={() => {
-    if (swiperRef.current?.swiper) {
-      const swiperInstance = swiperRef.current.swiper;
-      swiperInstance.slideNext();
-    }
-  }}
->
-  <Box
-    component="img"
-    src={forwardArrow}
-    alt="Next Slide"
-    sx={{
-      width: "80px",
-      height: "60px",        
-      padding: "6px",
-    }}
-  />
-</Box>
-
-</Box>
 
 
 
+          <Grid container sx={{
+            backgroundImage: `url(${reviewSection})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: {
+              xs: '300px',  // Smallest screens
+              sm: '400px',  // Small screens
+              md: '500px',  // Medium screens
+              lg: '700px',  // Large screens
+            }, mt: '20px'
+          }}>
 
+          </Grid>
 
-  <Box
+          {/* <Box
             component="img"
             src={reviewSection}
             alt="Review Section Image"
@@ -1357,147 +1366,183 @@ function Home() {
               transform: "translateX(-50%)", // Center correctly
               width: { xs: "100%", sm: "100%", md: "100%", lg: "100%", xl: "90%" }, // Adjust width for responsiveness
               height: "auto", // Maintain aspect ratio
-              maxHeight: "600px", 
+              maxHeight: "600px",
             }}
-          />
+          /> */}
 
-</Grid>
-
-
+        </Grid>
 
 
 
 
 
-<Box
-  component={"section"}
-  sx={{
-    position: "relative",
-    backgroundColor: "#FF9D04",
-    width: "100%",
-    height: "auto",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
-    padding: { xs: "4rem 0", sm: "10rem 0", md: "18rem 0" },
-  }}
->
-  {/* Left Background Image */}
-  <Box
-    sx={{
-      position: "absolute",
-      bottom: 0,
-      left: 0,
-      zIndex: 0,
-      display: "block",
-    }}
-  >
-    <CardMedia
-      component={"img"}
-      src={Character1}
-      sx={{
-        width: { xs: "180px", sm: "280px", md: "500px", lg: "700px" }, // Adjust width for smaller screens
-        height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
-        objectFit: "cover",
-      }}
-    />
-  </Box>
 
-  {/* Right Background Image */}
-  <Box
-    sx={{
-      position: "absolute",
-      bottom: 0,
-      right: 0,
-      zIndex: 0,
-      display: "block",
-    }}
-  >
-    <CardMedia
-      component={"img"}
-      src={Character2}
-      sx={{
-        width: { xs: "180px", sm: "280px", md: "550px", lg: "750px" }, // Adjust width for smaller screens
-        height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
-        objectFit: "cover",
-      }}
-    />
-  </Box>
 
-  {/* Center Content */}
-  <Box
-    sx={{
-      position: "relative",
-      textAlign: "center",
-      zIndex: 1,
-      width: { xs: "90%", sm: "80%", md: "30%", lg: "25%" },
-    }}
-  >
-    <Typography
-      variant="h5"
-      className="para-text"
-      sx={{
-        fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" },
-        fontWeight: 600,
-        textAlign: "center",
-        mb: 2,
-      }}
-    >
-      Subscribe to get information, latest news, and other interesting offers
-      about{" "}
-      <span
-        style={{
-          fontWeight: "bold",
-          WebkitTextStroke: "0.5px white ",
-          WebkitTextFillColor: "#3D5A98",
-        }}
-      >
-        Shine With Tara
-      </span>
-    </Typography>
-    <TextField
-      className="para-text"
-      placeholder={"Your email"}
-      sx={{
-        background: Colors.white,
-        borderRadius: "4px",
-        width: "100%",
-        "& fieldset": {
-          border: "none",
-        },
-        "& .MuiOutlinedInput-root": {
-          paddingRight: 0.5,
-        },
-        "& .MuiOutlinedInput-input": {
-          color: `${Colors.primary} !important`,
-          fontSize: { xs: "14px", sm: "16px", md: "18px" },
-        },
-      }}
-      InputProps={{
-        endAdornment: (
-          <Button
-            className="para-text"
+        <Box
+          component={"section"}
+          sx={{
+            position: "relative",
+            backgroundColor: "#FF9D04",
+            width: "100%",
+            height: { xs: "180px", sm: "180px", md: "500px" },
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+            padding: { xs: "10px", sm: "10px", md: "10px" },
+          }}
+        >
+           <Box
             sx={{
-              color: `${Colors.white} !important`,
-              backgroundColor: `#5B73AD`,
-              px: { xs: 2, sm: 4 },
-              py: 1.5,
-              textTransform: "uppercase",
-              fontSize: { xs: "12px", sm: "14px", md: "16px" },
-              "&:hover": {
-                backgroundColor: `#5B73AD`,
-                color: `${Colors.white}`,
-              },
+              position: "absolute",
+              top: 40,
+              left: 20,
+              zIndex: 0,
+              display: "block",
+              width:"60px"
+            }}
+            component={'img'}
+            src={Images.hand}
+          ></Box>
+           <Box
+            sx={{
+              position: "absolute",
+              top: 20,
+              right: 50,
+              zIndex: 0,
+              display: "block",
+              width:"60px"
+            }}
+            component={'img'}
+            src={Images.rainbow}
+          ></Box>
+          <Grid container justifyContent={'center'}>
+            <Grid item xs={4} >
+
+            </Grid>
+            <Grid item lg={4} md={4} sm={10} xs={11}>
+              {/* Center Content */}
+              <Box
+                sx={{
+                  position: "relative",
+                  textAlign: "center",
+                  zIndex: 1,
+
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  className="para-text"
+                  sx={{
+                    fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" },
+                    fontWeight: 600,
+                    textAlign: "center",
+                    mb: 2,
+                  }}
+                >
+                  Subscribe to get information, latest news, and other interesting offers
+                  about{" "}
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                      display:'block',
+                      WebkitTextStroke: "0.5px white ",
+                      WebkitTextFillColor: "#FF9D04",
+                    }}
+                  >
+                    Shine With Tara
+                  </span>
+                </Typography>
+                <TextField
+                  className="para-text"
+                  placeholder={"Your email"}
+                  sx={{
+                    background: Colors.white,
+                    borderRadius: "4px",
+                    width: "100%",
+                    "& fieldset": {
+                      border: "none",
+                    },
+                    "& .MuiOutlinedInput-root": {
+                      paddingRight: 0.5,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      color: `${Colors.primary} !important`,
+                      fontSize: { xs: "14px", sm: "16px", md: "18px" },
+                    },
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <Button
+                        className="para-text"
+                        sx={{
+                          color: `${Colors.white} !important`,
+                          backgroundColor: `#5B73AD`,
+                          px: { xs: 2, sm: 4 },
+                          py: 1.5,
+                          textTransform: "uppercase",
+                          fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                          "&:hover": {
+                            backgroundColor: `#5B73AD`,
+                            color: `${Colors.white}`,
+                          },
+                        }}
+                      >
+                        Subscribe
+                      </Button>
+                    ),
+                  }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+
+            </Grid>
+          </Grid>
+          {/* Left Background Image */}
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              zIndex: 0,
+              display: "block",
             }}
           >
-            Subscribe
-          </Button>
-        ),
-      }}
-    />
-  </Box>
-</Box>
+            <CardMedia
+              component={"img"}
+              src={Character1}
+              sx={{
+                width: '100%', // Adjust width for smaller screens
+                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                objectFit: "cover",
+              }}
+            />
+          </Box>
+
+          {/* Right Background Image */}
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              right: 0,
+              zIndex: 0,
+              display: "block",
+            }}
+          >
+            <CardMedia
+              component={"img"}
+              src={Character2}
+              sx={{
+                width: '100%', // Adjust width for smaller screens
+                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                objectFit: "cover",
+              }}
+            />
+          </Box>
+
+
+        </Box>
 
 
 

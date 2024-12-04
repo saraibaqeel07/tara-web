@@ -91,6 +91,8 @@ const Images = {
   Family:require("./Family.png"),
   cartIcon:require("./cartIcon.png"),
   mainTara:require("./mainTara.png"),
+  rainbow:require("./rainbow.png"),
+  hand:require("./hand.png")
 }
 
 export default Images;
