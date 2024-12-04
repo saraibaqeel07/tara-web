@@ -38,6 +38,7 @@ function Shop() {
   const { state } = useLocation()
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
+  
 
   console.log(cartVisible, 'cartVisible');
 
@@ -1148,7 +1149,6 @@ function Shop() {
                   fontWeight: 600,
                   whiteSpace: "nowrap",
                   overflow: "hidden",
-                  textOverflow: "ellipsis",
                   textTransform: "uppercase",
                   paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
                   position: "relative", // Ensures alignment with image
