@@ -1,51 +1,121 @@
-import { Box, Button, CardMedia, Container, Divider, Drawer, Grid, Typography } from '@mui/material'
-import React, { useContext, useEffect, useState } from 'react'
-import Colors from '../../styles/colors'
-import Fonts from '../../styles/fonts'
-import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images'
-import CloseIcon from '@mui/icons-material/Close';
-import { useNavigate } from 'react-router-dom'
-import { CartContext } from '../../Context/CartContext'
+import {
+  Box,
+  Button,
+  CardMedia,
+  Container,
+  Divider,
+  Drawer,
+  Grid,
+  Typography,
+} from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
+import Colors from "../../styles/colors";
+import Fonts from "../../styles/fonts";
+import Images, {
+  FacebookRounded,
+  InstagramRounded,
+  TiktokRounded,
+  YoutubeRounded,
+} from "../../assets/images";
+import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
+import { CartContext } from "../../Context/CartContext";
+import { SwiperSlide, Swiper } from "swiper/react";
+import "swiper/css";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import {
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+} from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
+import { initializeApp } from "firebase/app";
 
-import { CartCounter } from '../../Context/CartCounter'
+import { CartCounter } from "../../Context/CartCounter";
 function Character() {
-  const navigate = useNavigate()
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
+    authDomain: "shinetara-86ec0.firebaseapp.com",
+    projectId: "shinetara-86ec0",
+    storageBucket: "shinetara-86ec0.appspot.com",
+    messagingSenderId: "182521981077",
+    appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
+    measurementId: "G-BHYZDHJCK9",
+  };
+
+  // Initialize Firebase app
+  const app = initializeApp(firebaseConfig);
+
+  // Firestore reference
+  const db = getFirestore(app);
+
+  const navigate = useNavigate();
   const [selected, setSelected] = useState("mission");
   const [cartItems, setCartItems] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(0)
+  const [totalAmount, setTotalAmount] = useState(0);
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
   const [open, setOpen] = useState(false);
+  const [reviewBoxes, setReviewBoxes] = useState([]);
 
-  console.log(cartVisible, 'cartVisible');
+  console.log(cartVisible, "cartVisible");
 
+  const getReviews = async () => {
+    try {
+      const q = query(collection(db, "reviews"));
+      const querySnapshot = await getDocs(q);
+      const dataArray = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(dataArray);
+      setReviewBoxes(dataArray);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    }
+  };
 
+  useEffect(() => {
+    getReviews();
+  }, []);
   const handleIncrement = (id) => {
-    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item)
+    const updatedData = cartItems.map((item) =>
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+    );
     const totalPrice = updatedData.reduce((total, item) => {
-      return total + (parseFloat(item.price) * item.quantity);
+      return total + parseFloat(item.price) * item.quantity;
     }, 0);
-    setTotalAmount(totalPrice)
+    setTotalAmount(totalPrice);
     setCartItems(updatedData);
-    setCount(updatedData?.length)
-    localStorage.setItem('cartData', JSON.stringify(updatedData))
+    setCount(updatedData?.length);
+    localStorage.setItem("cartData", JSON.stringify(updatedData));
   };
 
   const handleDecrement = (id) => {
-    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 0 } : item)
+    const updatedData = cartItems.map((item) =>
+      item.id === id
+        ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 0 }
+        : item
+    );
     const totalPrice = updatedData.reduce((total, item) => {
-      return total + (parseFloat(item.price) * item.quantity);
+      return total + parseFloat(item.price) * item.quantity;
     }, 0);
-    setTotalAmount(totalPrice)
+    setTotalAmount(totalPrice);
     setCartItems(updatedData);
-    setCount(updatedData?.length)
-    localStorage.setItem('cartData', JSON.stringify(updatedData))
+    setCount(updatedData?.length);
+    localStorage.setItem("cartData", JSON.stringify(updatedData));
   };
   const toggleDrawer = (isOpen) => (event) => {
-    console.log('dasdasas');
+    console.log("dasdasas");
     setOpen(!open);
-    toggleCartVisibility()
+    toggleCartVisibility();
   };
   const handleEmailClick = (emailAddress) => {
     window.location.href = `mailto:${emailAddress}`;
@@ -53,95 +123,109 @@ function Character() {
   const characterData = [
     {
       name: "Tara",
-      detail: "Tara is 9 years old. She is a shy Muslim girl. Her imaginary best friend is Shine. She is very kind, helpful, and loving. Her special skill is drawing. She gets nervous around a lot of people, but Shine overcomes her weakness.",
+      detail:
+        "Tara is 9 years old. She is a shy Muslim girl. Her imaginary best friend is Shine. She is very kind, helpful, and loving. Her special skill is drawing. She gets nervous around a lot of people, but Shine overcomes her weakness.",
       image: Images.Tara,
-      logo: Images.logoTara
+      logo: Images.logoTara,
     },
     {
       name: "Shine",
-      detail: "Tara's best imaginary friend is named Shine. She always lends a hand to Tara. She has a lot of energy. She has a bold personality and inspires confidence",
+      detail:
+        "Tara's best imaginary friend is named Shine. She always lends a hand to Tara. She has a lot of energy. She has a bold personality and inspires confidence",
       image: Images.shine,
-      logo: Images.logoShine
+      logo: Images.logoShine,
     },
     {
       name: "Ahmed",
-      detail: "Ahmed is Tara’s younger brother; he is 8 years old. Ahmed is very kind and helpful boy. He loves to play video games.",
+      detail:
+        "Ahmed is Tara’s younger brother; he is 8 years old. Ahmed is very kind and helpful boy. He loves to play video games.",
       image: Images.ahmed,
-      logo: Images.logoAhmed
+      logo: Images.logoAhmed,
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.laila,
-      logo: Images.logoLaila
+      logo: Images.logoLaila,
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.Sara,
-      logo: Images.logoLaila
+      logo: Images.logoLaila,
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.Fatima,
-      logo: Images.logoLaila
+      logo: Images.logoLaila,
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.Taha,
-      logo: Images.logoLaila
+      logo: Images.logoLaila,
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.ali,
-      logo: Images.logoLaila
+      logo: Images.logoLaila,
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.Maya,
-      logo: Images.logoLaila
+      logo: Images.logoLaila,
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.Mom,
-      logo: Images.logoLaila
+      logo: Images.logoLaila,
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.Dad,
-      logo: Images.logoLaila
+      logo: Images.logoLaila,
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.annie,
-      logo: Images.logoLaila
+      logo: Images.logoLaila,
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.Omar,
-      logo: Images.logoLaila
+      logo: Images.logoLaila,
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.grandma,
-      logo: Images.logoLaila
+      logo: Images.logoLaila,
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.Faiz,
-      logo: Images.logoLaila
+      logo: Images.logoLaila,
     },
-
   ];
 
   const teamData = [
@@ -149,61 +233,54 @@ function Character() {
       name: "Sohaib Ali Khan",
       email: "sohaibalikhann@gmail.com",
       profession: "Social Media Content Writer",
-      image: Images.contentWriter
+      image: Images.contentWriter,
     },
     {
       name: "Onam",
       email: "archiotshimo@gmail.com",
       profession: "Animator, Storyboard, Illustrator, Character",
-      image: Images.storyBoard
+      image: Images.storyBoard,
     },
     {
       name: "Hussnain Shafay",
       email: "hhussnain542@gmail.com",
       profession: "Web Developer And Graphic Design",
-      image: Images.webDeveloper
+      image: Images.webDeveloper,
     },
     {
       name: "Sana Kazmi",
       email: "shineswithtara@gmail.com",
       profession: "Script, Story, Animator, Illustrator",
-      image: Images.illustrator
+      image: Images.illustrator,
     },
-  ]
+  ];
   useEffect(() => {
-
-    let cart = localStorage.getItem('cartData')
+    let cart = localStorage.getItem("cartData");
     if (cart) {
-      cart = JSON.parse(cart)
+      cart = JSON.parse(cart);
       if (cart?.length > 0) {
-        setCartItems(cart)
-        setCount(cart.length)
+        setCartItems(cart);
+        setCount(cart.length);
         const totalPrice = cart.reduce((total, item) => {
-          return total + (parseFloat(item.price) * item.quantity);
+          return total + parseFloat(item.price) * item.quantity;
         }, 0);
-        setTotalAmount(totalPrice)
+        setTotalAmount(totalPrice);
       }
-
     }
     const intervalId = setInterval(() => {
       // Generate a random color
 
-      let element = document.getElementById('main-text')
-      let element2 = document.getElementById('character-text')
+      let element = document.getElementById("main-text");
+      let element2 = document.getElementById("character-text");
 
       if (element) {
-        console.log(element.style.color)
-        if (element.style.color == 'rgb(2, 27, 81)') {
-          element.style.color = 'white'
-          element2.style.color = Colors.pink
-
-        }
-
-
-        else {
-          element.style.color = Colors.darkblue
-          element2.style.color = 'white'
-
+        console.log(element.style.color);
+        if (element.style.color == "rgb(2, 27, 81)") {
+          element.style.color = "white";
+          element2.style.color = Colors.pink;
+        } else {
+          element.style.color = Colors.darkblue;
+          element2.style.color = "white";
         }
       }
     }, 1000); // Change color every 1000ms (1 second)
@@ -211,109 +288,148 @@ function Character() {
     return () => clearInterval(intervalId);
   }, []);
   useEffect(() => {
-
-    setOpen(cartVisible)
-
-
-  }, [cartVisible])
+    setOpen(cartVisible);
+  }, [cartVisible]);
   return (
     <Box
       component={"main"}
       sx={{
-        width: "100%"
+        width: "100%",
       }}
     >
-      <Drawer
-        anchor="right"
-        open={open}
-        onClose={toggleDrawer(false)}
-      >
-        <Box
-          sx={{ width: 400, padding: 2 }}
-          role="presentation"
-
-        >
+      <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+        <Box sx={{ width: 400, padding: 2 }} role="presentation">
           <Box display="flex" flexWrap="wrap">
-
-            {cartItems?.length > 0 ? cartItems?.map((product, index) => (
-              <React.Fragment key={index}>
-                <Box
-                  component={'div'}
-                  onClick={() => {
-                    const updatedData = cartItems.filter(item => product.id != item.id)
-                    const totalPrice = updatedData.reduce((total, item) => {
-                      return total + (parseFloat(item.price) * item.quantity);
-                    }, 0);
-                    setTotalAmount(totalPrice)
-                    setCartItems(updatedData)
-                    setCount(updatedData?.length)
-                    localStorage.setItem('cartData', JSON.stringify(updatedData))
-                  }}
-                  sx={{ color: 'black', cursor: 'pointer', width: '100%' }}
-                >
-                  <CloseIcon />
-                </Box>
-
-                <Box
-                  sx={{
-                    height: 100,
-                    display: 'flex',
-                    padding: 2,
-                    textAlign: 'center',
-                  }}
-                >
-
-                  <img
-                    src={product.imgUrl}
-                    alt={product.name}
-                    style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-                  />
-                  <Typography sx={{ fontSize: '12px', color: 'black', width: '100px' }} variant="h6">
-                    {product.name}
-                  </Typography>
-                  <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1">
-                    ${product.price}
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: '12px', color: 'black', width: '50px', fontWeight: 'bold' }}
-                    variant="body1"
+            {cartItems?.length > 0 ? (
+              cartItems?.map((product, index) => (
+                <React.Fragment key={index}>
+                  <Box
+                    component={"div"}
+                    onClick={() => {
+                      const updatedData = cartItems.filter(
+                        (item) => product.id != item.id
+                      );
+                      const totalPrice = updatedData.reduce((total, item) => {
+                        return total + parseFloat(item.price) * item.quantity;
+                      }, 0);
+                      setTotalAmount(totalPrice);
+                      setCartItems(updatedData);
+                      setCount(updatedData?.length);
+                      localStorage.setItem(
+                        "cartData",
+                        JSON.stringify(updatedData)
+                      );
+                    }}
+                    sx={{ color: "black", cursor: "pointer", width: "100%" }}
                   >
-                    ${product.quantity ? product.quantity * product.price : 1 * product.price}
-                  </Typography>
-                  <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: '10px' }} marginTop={1}>
-                    <Button variant="contained" color="secondary" onClick={() => handleDecrement(product.id)}>
-                      -
-                    </Button>
-                    <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1" marginX={2}>
-                      {product.quantity ? product.quantity : 1}
-                    </Typography>
-                    <Button variant="contained" color="secondary" onClick={() => handleIncrement(product.id)}>
-                      +
-                    </Button>
-
+                    <CloseIcon />
                   </Box>
-                </Box>
-                <Divider />
-              </React.Fragment>
-            )) : <Box sx={{ color: 'black', fontWeight: 'bold', margin: '0 auto' }}>No Items in Cart</Box>}
+
+                  <Box
+                    sx={{
+                      height: 100,
+                      display: "flex",
+                      padding: 2,
+                      textAlign: "center",
+                    }}
+                  >
+                    <img
+                      src={product.imgUrl}
+                      alt={product.name}
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <Typography
+                      sx={{ fontSize: "12px", color: "black", width: "100px" }}
+                      variant="h6"
+                    >
+                      {product.name}
+                    </Typography>
+                    <Typography
+                      sx={{ fontSize: "12px", color: "black" }}
+                      variant="body1"
+                    >
+                      ${product.price}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "12px",
+                        color: "black",
+                        width: "50px",
+                        fontWeight: "bold",
+                      }}
+                      variant="body1"
+                    >
+                      $
+                      {product.quantity
+                        ? product.quantity * product.price
+                        : 1 * product.price}
+                    </Typography>
+                    <Box
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      sx={{ width: "10px" }}
+                      marginTop={1}
+                    >
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => handleDecrement(product.id)}
+                      >
+                        -
+                      </Button>
+                      <Typography
+                        sx={{ fontSize: "12px", color: "black" }}
+                        variant="body1"
+                        marginX={2}
+                      >
+                        {product.quantity ? product.quantity : 1}
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => handleIncrement(product.id)}
+                      >
+                        +
+                      </Button>
+                    </Box>
+                  </Box>
+                  <Divider />
+                </React.Fragment>
+              ))
+            ) : (
+              <Box
+                sx={{ color: "black", fontWeight: "bold", margin: "0 auto" }}
+              >
+                No Items in Cart
+              </Box>
+            )}
           </Box>
-          <Box sx={{ color: 'black', fontSize: '27px', textAlign: 'center', fontFamily: Fonts.righteous, }}>Sub Total :  $ {totalAmount}</Box>
+          <Box
+            sx={{
+              color: "black",
+              fontSize: "27px",
+              textAlign: "center",
+              fontFamily: Fonts.righteous,
+            }}
+          >
+            Sub Total : $ {totalAmount}
+          </Box>
         </Box>
-        <Button sx={{ width: '90%', textAlign: 'center', margin: '0 auto' }} variant="contained" color="secondary" onClick={() => navigate(
-          `/order`,
-          { state: cartItems }
-        )}>
+        <Button
+          sx={{ width: "90%", textAlign: "center", margin: "0 auto" }}
+          variant="contained"
+          color="secondary"
+          onClick={() => navigate(`/order`, { state: cartItems })}
+        >
           CheckOut
         </Button>
       </Drawer>
-      <Box
-        component={"section"}
-        sx={{
-          background: Colors.primaryGradient,
-          width: "100%",
-
-        }}
-      >
+  
         <Box
           sx={{
             backgroundImage: `url(${Images.bannerBg})`,
@@ -329,34 +445,27 @@ function Character() {
           {/* Right-side Image */}
           <Box
             sx={{
-
-              margin: '0 auto',
+              margin: "0 auto",
               width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
               height: "100%", // Full height of the parent container
               backgroundImage: `url(${Images.mainCharacter})`,
-              backgroundSize: { md: "cover", xl: "contain", lg: "contain", },
+              backgroundSize: { md: "contain", xl: "contain", lg: "contain" ,xs:"cover" ,sm:"contain"},
+
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center", // Ensures the image is aligned at the bottom
-              display: { md: "block", xl: "block", lg: "block", sm: "none", xs: "none" }, // Show image only for medium and larger screens
-
+              display: {
+                md: "block",
+                xl: "block",
+                lg: "block",
+                sm: "none",
+                xs: "none",
+              }, // Show image only for medium and larger screens
             }}
           />
-
-
         </Box>
+    
 
-
-
-
-
-
-      </Box>
-
-      <Box
-        sx={{ backgroundColor: "#CA6680" ,
-        py:"30px"   ,
-      }}
-      >
+      <Box sx={{ backgroundColor: "#CA6680", py: "30px" }}>
         <Typography
           variant="h1"
           className="heading-font"
@@ -372,78 +481,211 @@ function Character() {
             whiteSpace: "nowrap",
             overflow: "hidden",
             textTransform: "uppercase",
-            paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+            py:"60px",
             position: "relative", // Ensures alignment with image
             zIndex: 1, // Keeps heading above the image
             margin: "0 auto",
             display: "flex",
-            justifyContent: "center",gap:"20px"
+            justifyContent: "center",
+            gap: "20px",
           }}
-          
         >
-          <span style={{
-            WebkitTextStroke: "1px white",
-            WebkitTextFillColor: "#F9BF29",
-          }}>main </span>
-          <span  style={{
-                    display: "block",
-                    WebkitTextStroke: "1px white",
-                    WebkitTextFillColor: "#4FAAFB",
-                  }}> charcter's</span>
-
+          <span
+            style={{
+              WebkitTextStroke: "1px white",
+              WebkitTextFillColor: "#F9BF29",
+            }}
+          >
+            main{" "}
+          </span>
+          <span
+            style={{
+              display: "block",
+              WebkitTextStroke: "1px white",
+              WebkitTextFillColor: "#4FAAFB",
+            }}
+          >
+            {" "}
+            charcter's
+          </span>
         </Typography>
+        <Box pb={10}>
+  <Box sx={{ width: "70%", margin: "0 auto",}}>
+    <Grid item md={11} sm={11} xs={11} >
+      <Swiper
+        loop={true}
+        spaceBetween={10}
+        slidesPerView={3}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay, Pagination, Navigation]}
+        breakpoints={{
+          320: {
+            slidesPerView: 1,
+          },
+          786: {
+            slidesPerView: 2,
+          },
+          1080: {
+            slidesPerView: 3,
+          },
+        }}
+        onSlideChange={() => console.log("slide change")}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        {reviewBoxes?.map((item, ind) => (
+          <SwiperSlide key={ind}>
+            {/* Outer Box */}
+            <Box
+              sx={{
+                position: "relative", // Ensures the image and borders stack properly
+                padding: "7px", // Gap for the outer border
+                backgroundColor: "orange", // Outer yellow background
+                borderRadius: "0 70px 70px 70px", // Outer border radius
+                border: "4px solid black", // Outer solid border
+                overflow: "visible", // Ensure image is not clipped
+                display: "flex", // Use flexbox to center the content
+                justifyContent: "center", // Center the image horizontally
+                alignItems: "center", // Center the image vertically
+                height: "auto", // Let the height adjust based on content
+              }}
+            >
+              {/* Image Positioned Outside of Box */}
+              <Box
+                component="img"
+                src={Images.character13} // Replace with your image path
+                alt="Corner Decoration"
+                sx={{
+                  position: "absolute", // Absolute positioning for the image
+                  top: "-45px", // Adjusted top to ensure image stays within bounds
+                  left: "-60px", // Adjust as needed
+                  width: "150px", // Adjust image size
+                  height: "170px", // Adjust image size
+                  zIndex: 10, // Ensure it's above all borders
+                  objectFit: "cover", // Ensures the image covers the area and doesn't get clipped
+                }}
+              />
+              {/* Middle Dashed Border */}
+              <Box
+                sx={{
+                  position: "relative",
+                  padding: "7px", // Gap for the middle dashed border
+                  backgroundColor: "orange", // Transparent background
+                  borderRadius: "0 60px 60px 60px", // Middle border radius
+                  border: "4px dashed black", // Middle dashed border
+                }}
+              >
+                {/* Inner Card */}
+                <Box
+                  sx={{
+                    p: 4,
+                    borderRadius: "0 50px 50px 50px", // Inner card border radius
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                    backgroundColor: "#6692DC", // Inner card background
+                    height: "80px", // Fixed height for all cards
+                    border: "2px solid #F9BF29", // Inner solid border
+                  }}
+                >
+                  <Typography
+                    className="heading-font"
+                    sx={{
+                      fontWeight: 600,
+                      mb: 0.5, // Adjust spacing between name and comment
+                      textAlign: "center",
+                      fontSize: "20px", // Adjust text size
+                      color: "transparent", // Make text transparent initially
+                      WebkitTextStroke: "1px white", // Outline color
+                      WebkitTextFillColor: "#F9BF29", // Fill color
+                    }}
+                  >
+                    {item?.name}
+                  </Typography>
+                  <Typography
+                    className="heading-font"
+                    variant={"body2"}
+                    sx={{
+                      color: "white",
+                      fontSize: "12px", // Smaller text size
+                      textAlign: "left", // Align text to the left
+                      width: "100%", // Ensure it takes full width
+                      overflow: "hidden", // Hide overflow text
+                      whiteSpace: "nowrap", // Prevent text wrapping
+                      textWrap: "wrap",
+                    }}
+                  >
+                    {item.comment}
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </Grid>
+  </Box>
+</Box>
 
-    
+
+
+<Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", padding: "10px" , alignItems:"center"}}>
+  <Box sx={{ width: "100%", height: "auto" }}>
+    <img src={Images.character14} alt="Image 1" style={{ width: "100%", height: "auto" }} />
+  </Box>
+  <Box sx={{ width: "100%", height: "auto" }}>
+    <img src={Images.character15} alt="Image 2" style={{ width: "100%", height: "auto" }} />
+  </Box>
+  <Box sx={{ width: "100%", height: "auto" }}>
+    <img src={Images.character16} alt="Image 3" style={{ width: "100%", height: "auto" }} />
+  </Box>
+</Box>
+
+
       </Box>
-
 
       <Box
         component={"section"}
         sx={{
           background: Colors.lightPurple,
           width: "100%",
-          p: "20px"
+          p: "20px",
         }}
       >
-        <Grid container justifyContent={"center"} gap={"40px"}>
-          <Grid item md={12} sm={12} xs={12}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                gap: "10px",
-                alignItems: "center"
-              }}
-            >
-              <CardMedia
-                component={"img"}
-                src={Images.flower}
+          <Typography
+                variant="h1"
+                className="heading-font"
                 sx={{
-                  width: "70px",
-                  height: "70px",
-                  objectFit: "contain"
-                }}
-              />
-              <Typography
-                variant='h3'
-                sx={{
+                  fontSize: {
+                    xl: "100px",
+                    lg: "90px",
+                    md: "70px",
+                    sm: "45px",
+                    xs: "35px",
+                  }, // Adjusts font size for different screens
                   fontWeight: 600,
-                  color: Colors.darkblue
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textTransform: "uppercase",
+                  paddingBottom: { xl: 12, lg: 5, md: 4, sm: 3, xs: 2 },
+                  position: "relative", // Ensures alignment with image
+                  zIndex: 1, // Keeps heading above the image
+                  margin: "0 auto",
+                  display: "flex",
+                  justifyContent: "center", pt:"50px"
+                }}
+                style={{
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
                 }}
               >
                 Team
+
               </Typography>
-              <CardMedia
-                component={"img"}
-                src={Images.flower}
-                sx={{
-                  width: "70px",
-                  height: "70px",
-                  objectFit: "contain"
-                }}
-              />
-            </Box>
-          </Grid>
+        <Grid container justifyContent={"center"} gap={"40px"}>
+          
           <Grid item md={8} sm={12} xs={12}>
             <Grid container spacing={4} justifyContent={"space-between"}>
               {teamData.map((item, i) => (
@@ -470,28 +712,25 @@ function Character() {
                         flexDirection: "column",
                         alignItems: "center",
                         gap: "5px",
-                        backgroundColor: Colors.yellow,
-                        p: 2
+                        backgroundColor: "#CA6680",
+                        p: 2,
+                        borderRadius:"0 0 20px 20px"
                       }}
                     >
-                      <Typography
-                        variant='caption'
-                      >
-                        {item.name}
-                      </Typography>
-                      <Typography
-                        variant='caption'
-                      >
+                      <Typography variant="caption" fontSize="25px" fontWeight="bold">{item.name}</Typography>
+                      <Typography variant="caption" fontSize="16px">
                         {item.profession}
                       </Typography>
-                      <Box component={'div'} sx={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }} onClick={() => handleEmailClick(item.email)} >
-                        <Typography
-
-                          variant='caption'
-
-                        >
-                          {item.email}
-                        </Typography>
+                      <Box
+                        component={"div"}
+                        sx={{
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                          color: "#78C1FF",
+                        }}
+                        onClick={() => handleEmailClick(item.email)}
+                      >
+                        <Typography variant="caption" fontSize="13px" color="#78C1FF">{item.email}</Typography>
                       </Box>
                     </Box>
                   </Box>
@@ -502,7 +741,7 @@ function Character() {
         </Grid>
       </Box>
     </Box>
-  )
+  );
 }
 
-export default Character
+export default Character;
