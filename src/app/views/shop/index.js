@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react';
-import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup, TextField, Drawer, Accordion, AccordionSummary, AccordionDetails, Rating } from '@mui/material';
+import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup, TextField, Drawer, Accordion, AccordionSummary, AccordionDetails, Rating, CircularProgress } from '@mui/material';
 import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images';
 import Colors from '../../styles/colors';
 import Slider from 'react-slick';
@@ -76,6 +76,18 @@ function Shop() {
   const [activityCurrentPage, setActivityCurrentPage] = useState(1);
   const [coloringCurrentPage, setColoringCurrentPage] = useState(1);
   const [activeButton, setActiveButton] = useState(4); // Default 'Show All Products' is active
+  const [loading, setLoading] = useState(true); // Loader state
+  const [delayPassed, setDelayPassed] = useState(false); // Delay state to control the visibility of loader
+
+
+
+
+
+
+
+
+
+
 
   const buttonLabels = [
     "Books",
@@ -86,22 +98,28 @@ function Shop() {
 
   ];
 
+
+
+
   const handleButtonClick = (index) => {
     setActiveButton(index); // Update the active button
   };
 
 
 
-  const [extraCurrentPage, setExtraCurrentPage] = useState(1);
+  const [extraCurrentPage, setExtraCurrentPage] = useState(1); // Current page for pagination
+  const extraProductsPerPage = 4; // Number of products per page
+  const [extraLoading, setExtraLoading] = useState(true); // Loading state
+  const [extraDelayPassed, setExtraDelayPassed] = useState(false); // Delay state
 
-  // Extra sheets pagination
-  const extraProductsPerPage = 4; // Show 4 cards per page
+  // Calculate the total pages and current products for the current page
   const extraTotalPages = Math.ceil(extraSheets.length / extraProductsPerPage);
   const extraCurrentProducts = extraSheets.slice(
     (extraCurrentPage - 1) * extraProductsPerPage,
     extraCurrentPage * extraProductsPerPage
   );
 
+  // Handle page change logic
   const handleExtraPrevPage = () => {
     if (extraCurrentPage > 1) {
       setExtraCurrentPage(extraCurrentPage - 1);
@@ -116,60 +134,132 @@ function Shop() {
 
   const handleExtraPageClick = (pageNumber) => {
     setExtraCurrentPage(pageNumber);
-  }
+  };
+
+  // Effect for handling loading and delay
+  useEffect(() => {
+    setExtraLoading(true);
+    setExtraDelayPassed(false);
+
+    const delayTimer = setTimeout(() => {
+      setExtraDelayPassed(true);
+    }, 800); // 800ms delay before showing content
+
+    const dataTimer = setTimeout(() => {
+      setExtraLoading(false); // Data is loaded after the delay
+    }, 1000); // 1000ms for data load
+
+    return () => {
+      clearTimeout(delayTimer);
+      clearTimeout(dataTimer);
+    };
+  }, [extraCurrentPage, extraSheets]); // Re-run the effect when the page or data changes
+
 
 
   const itemsPerPage = 4; // Max items per page
-
   const coloringTotalPages = Math.ceil(coloringSheets.length / itemsPerPage);
 
-  // Calculate the cards to display based on the current page
   const displayedColoringSheets = coloringSheets.slice(
     (coloringCurrentPage - 1) * itemsPerPage,
     coloringCurrentPage * itemsPerPage
   );
 
+  // State for loading and delay
+  const [coloringLoading, setColoringLoading] = useState(true);
+  const [coloringDelayPassed, setColoringDelayPassed] = useState(false);
+
+  // Handle previous page
   const handleColoringPrevPage = () => {
     if (coloringCurrentPage > 1) {
       setColoringCurrentPage((prev) => prev - 1);
     }
   };
 
+  // Handle next page
   const handleColoringNextPage = () => {
     if (coloringCurrentPage < coloringTotalPages) {
       setColoringCurrentPage((prev) => prev + 1);
     }
   };
 
+  // Handle page number click
   const handleColoringPageClick = (page) => {
     setColoringCurrentPage(page);
   };
 
+  // Effect for loading state
+  useEffect(() => {
+    setColoringLoading(true);
+    setColoringDelayPassed(false);
+
+    const delayTimer = setTimeout(() => {
+      setColoringDelayPassed(true);
+    }, 800); // Delay before loader appears
+
+    const dataTimer = setTimeout(() => {
+      setColoringLoading(false); // Stop loading once data is available
+    }, 1000);
+
+    return () => {
+      clearTimeout(delayTimer);
+      clearTimeout(dataTimer);
+    };
+  }, [coloringCurrentPage, coloringSheets]);
 
 
 
-  // activity pagination
+
+
+  // Activity Pagination
   const activityProductsPerPage = 4; // Show 4 cards per page
   const activityTotalPages = Math.ceil(activitySheets.length / activityProductsPerPage);
   const activityCurrentProducts = activitySheets.slice(
     (activityCurrentPage - 1) * activityProductsPerPage,
     activityCurrentPage * activityProductsPerPage
   );
+
+  // State for loading and delay
+  const [activityLoading, setActivityLoading] = useState(true);
+  const [activityDelayPassed, setActivityDelayPassed] = useState(false);
+
+  // Handle previous page
   const handleActivityPrevPage = () => {
     if (activityCurrentPage > 1) {
       setActivityCurrentPage(activityCurrentPage - 1);
     }
   };
 
+  // Handle next page
   const handleActivityNextPage = () => {
     if (activityCurrentPage < activityTotalPages) {
       setActivityCurrentPage(activityCurrentPage + 1);
     }
   };
 
+  // Handle page number click
   const handleActivityPageClick = (pageNumber) => {
     setActivityCurrentPage(pageNumber);
   };
+
+  // Effect for loading state
+  useEffect(() => {
+    setActivityLoading(true);
+    setActivityDelayPassed(false);
+
+    const delayTimer = setTimeout(() => {
+      setActivityDelayPassed(true);
+    }, 800); // Delay before loader appears
+
+    const dataTimer = setTimeout(() => {
+      setActivityLoading(false); // Stop loading once data is available
+    }, 1000);
+
+    return () => {
+      clearTimeout(delayTimer);
+      clearTimeout(dataTimer);
+    };
+  }, [activityCurrentPage, activitySheets]);
 
 
   // Shop pagination
@@ -202,6 +292,24 @@ function Shop() {
     setCurrentPage(page);
   };
 
+  useEffect(() => {
+    setLoading(true);
+    setDelayPassed(false);
+
+    const delayTimer = setTimeout(() => {
+      setDelayPassed(true);
+    }, 800); // Delay before loader appears
+
+    // Simulate data load delay
+    const dataTimer = setTimeout(() => {
+      setLoading(false); // Stop loading once data is available
+    }, 1000);
+
+    return () => {
+      clearTimeout(delayTimer);
+      clearTimeout(dataTimer);
+    };
+  }, [currentPage, products]);
 
   const handleIncrement = (id) => {
     const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item)
@@ -410,6 +518,20 @@ function Shop() {
     setExtraSheets(sortedData)
 
   }
+
+
+  useEffect(() => {
+    const delayTimer = setTimeout(() => {
+      setDelayPassed(true); // Allow showing of loader after a delay
+    }, 500); // 500ms delay before the loader shows
+
+    // Check if data is available
+    if (currentCards && currentCards.length > 0) {
+      setLoading(false); // Turn off loader once data is available
+    }
+
+    return () => clearTimeout(delayTimer); // Cleanup on unmount
+  }, [currentCards]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -1050,7 +1172,7 @@ function Shop() {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  margin: "10rem 0",
+                  margin: "3rem 0 5rem 0",
                 }}
               >
                 <Box
@@ -1100,8 +1222,29 @@ function Shop() {
 
               {(activeButton === 0 || activeButton === 4) && (
                 <Container>
-                  <Grid container spacing={2} justifyContent={"center"}>
-                    {Array.isArray(currentCards) &&
+                  <Grid
+                    container
+                    spacing={2}
+                    justifyContent={"center"}
+                    sx={{
+                      minHeight: "1000px", // Adjust this value based on your card size and rows
+                      display: "flex",
+                      alignItems:
+                        loading || !delayPassed
+                          ? "center"
+                          : currentCards.length <= 2
+                            ? "center" // Center align when only 1 or 2 items
+                            : "flex-start", // Default alignment
+                    }}
+                  >
+                    {loading || !delayPassed ? (
+                      // Loader view with delay
+                      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "455px" }}>
+                        <CircularProgress size={50} sx={{ color: "#5B73AD" }} /> {/* Updated loader color */}
+                      </Grid>
+                    ) : (
+                      // Cards view once data is loaded
+                      Array.isArray(currentCards) &&
                       currentCards.map((card, i) => (
                         <React.Fragment key={i}>
                           <Grid className="product-card" md={5} sm={8} xs={12} item>
@@ -1134,13 +1277,24 @@ function Shop() {
                                     borderRadius: "0px 0px 20px 20px",
                                   }}
                                 >
-                                  <Typography className='heading-font' sx={{
-                                    textTransform: "uppercase", fontSize: "20px"
-                                  }}>{card?.name}
+                                  <Typography
+                                    className="heading-font"
+                                    sx={{
+                                      textTransform: "uppercase",
+                                      fontSize: "20px",
+                                    }}
+                                  >
+                                    {card?.name}
                                   </Typography>
-                                  <Typography className='heading-font' sx={{
-                                    textTransform: "uppercase", fontSize: "20px"
-                                  }}>$ {card?.price}</Typography>
+                                  <Typography
+                                    className="heading-font"
+                                    sx={{
+                                      textTransform: "uppercase",
+                                      fontSize: "20px",
+                                    }}
+                                  >
+                                    $ {card?.price}
+                                  </Typography>
                                 </Box>
                               )}
                             </Box>
@@ -1149,7 +1303,7 @@ function Shop() {
                                 className="add-to-cart"
                                 style={{ display: "flex", alignItems: "center" }}
                                 onClick={() => {
-                                  // Your add to cart logic
+                                  // Your add-to-cart logic
                                 }}
                               >
                                 Add To Cart &nbsp;{" "}
@@ -1158,7 +1312,8 @@ function Shop() {
                             )}
                           </Grid>
                         </React.Fragment>
-                      ))}
+                      ))
+                    )}
                   </Grid>
 
                   {/* Pagination Controls */}
@@ -1172,6 +1327,10 @@ function Shop() {
                     forwardArrow={forwardArrow}
                   />
                 </Container>
+
+
+
+
               )}
 
 
@@ -1223,109 +1382,146 @@ function Shop() {
                   Activity Sheets
                 </Typography>
               </Box>
-            )};
+            )}
             {(activeButton === 1 || activeButton === 4) && (
-              <Container
+              <Box
                 sx={{
-                  backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
-                  height: "100%", // Full height
-                  padding: "60px 0", // Padding adjustment
-                  width: "100%", // Full width
-
                   "@media (min-width: 1200px)": {
-                    maxWidth: "100%", // Set maxWidth to 0 for screens above 1200px
+                    maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                }}
+                  backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
+                }} >
+                <Container
+                  sx={{
+                    backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
+                    height: "100%", // Full height
+                    padding: "60px 0", // Padding adjustment
+                    width: "100%", // Full width
 
-              >
-                {/* Grid for activity cards */}
-                <Grid container spacing={2} justifyContent={"center"}>
-                  {Array.isArray(activityCurrentProducts) &&
-                    activityCurrentProducts.map((card, i) => (
-                      <React.Fragment key={i}>
-                        <Grid className="product-card" md={5} item>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                              borderRadius: "20px",
-                              position: "relative",
-                            }}
-                          >
-                            <CardMedia
-                              className="product-image"
-                              component={"img"}
-                              src={card?.imgUrl}
+                  }}
+                >
+                  {/* Grid for activity cards */}
+                  <Grid
+                    container
+                    spacing={2}
+                    justifyContent={"center"}
+                    sx={{
+                      minHeight: "1000px", // Adjust this value based on your card size and rows
+                      display: "flex",
+                      alignItems:
+                        loading || !delayPassed || activityLoading || !activityDelayPassed
+                          ? "center" // Center align if loading or delay not passed
+                          : currentCards.length <= 2
+                            ? "center" // Center align when only 1 or 2 items
+                            : "flex-start", // Default alignment
+                    }}
+                  >
+                    {loading || !delayPassed || activityLoading || !activityDelayPassed ? (
+                      // Loader view with delay
+                      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "455px" }}>
+                        <CircularProgress size={50} sx={{ color: "#F9BF29" }} /> {/* Updated loader color */}
+                      </Grid>
+                    ) : (
+                      // Display activity cards
+                      Array.isArray(activityCurrentProducts) &&
+                      activityCurrentProducts.map((card, i) => (
+                        <React.Fragment key={i}>
+                          <Grid className="product-card" md={5} item>
+                            <Box
                               sx={{
-                                height: card?.price !== 0 ? "400px" : "455px",
-                                borderRadius:
-                                  card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
-                                objectFit: "cover",
-                              }}
-                            />
-                            {card?.price !== 0 && (
-                              <Box
-                                sx={{
-                                  backgroundColor: "#FF9D04",
-                                  p: 2,
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  borderRadius: "0px 0px 20px 20px",
-                                }}
-                              >
-                                <Typography className='heading-font' sx={{
-                                    textTransform: "uppercase", fontSize: "20px"
-                                  }} >{card?.name}</Typography>
-                                <Typography className='heading-font' sx={{
-                                    textTransform: "uppercase", fontSize: "20px"
-                                  }}>$ {card?.price}</Typography>
-                              </Box>
-                            )}
-                          </Box>
-                          {card?.price !== 0 && (
-                            <div
-                              className="add-to-cart"
-                              style={{ display: "flex", alignItems: "center" }}
-                              onClick={() => {
-                                if (cartItems.find((item) => item.id === card.id)) {
-                                  setOpen(true);
-                                } else {
-                                  cartItems.push({ ...card, quantity: 1 });
-                                  const totalPrice = cartItems.reduce(
-                                    (total, item) =>
-                                      total + parseFloat(item.price) * item.quantity,
-                                    0
-                                  );
-                                  setCount(cartItems.length);
-                                  localStorage.setItem(
-                                    "cartData",
-                                    JSON.stringify(cartItems)
-                                  );
-                                  setTotalAmount(totalPrice);
-                                  setOpen(true);
-                                }
+                                display: "flex",
+                                flexDirection: "column",
+                                borderRadius: "20px",
+                                position: "relative",
                               }}
                             >
-                              Add To Cart &nbsp;{" "}
-                              <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
-                            </div>
-                          )}
-                        </Grid>
-                      </React.Fragment>
-                    ))}
-                </Grid>
+                              <CardMedia
+                                className="product-image"
+                                component={"img"}
+                                src={card?.imgUrl}
+                                sx={{
+                                  height: card?.price !== 0 ? "400px" : "455px",
+                                  borderRadius:
+                                    card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
+                                  objectFit: "cover",
+                                }}
+                              />
+                              {card?.price !== 0 && (
+                                <Box
+                                  sx={{
+                                    backgroundColor: "#FF9D04",
+                                    p: 2,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    borderRadius: "0px 0px 20px 20px",
+                                  }}
+                                >
+                                  <Typography
+                                    className="heading-font"
+                                    sx={{
+                                      textTransform: "uppercase",
+                                      fontSize: "20px",
+                                    }}
+                                  >
+                                    {card?.name}
+                                  </Typography>
+                                  <Typography
+                                    className="heading-font"
+                                    sx={{
+                                      textTransform: "uppercase",
+                                      fontSize: "20px",
+                                    }}
+                                  >
+                                    $ {card?.price}
+                                  </Typography>
+                                </Box>
+                              )}
+                            </Box>
+                            {card?.price !== 0 && (
+                              <div
+                                className="add-to-cart"
+                                style={{ display: "flex", alignItems: "center" }}
+                                onClick={() => {
+                                  if (cartItems.find((item) => item.id === card.id)) {
+                                    setOpen(true);
+                                  } else {
+                                    cartItems.push({ ...card, quantity: 1 });
+                                    const totalPrice = cartItems.reduce(
+                                      (total, item) =>
+                                        total + parseFloat(item.price) * item.quantity,
+                                      0
+                                    );
+                                    setCount(cartItems.length);
+                                    localStorage.setItem("cartData", JSON.stringify(cartItems));
+                                    setTotalAmount(totalPrice);
+                                    setOpen(true);
+                                  }
+                                }}
+                              >
+                                Add To Cart &nbsp;{" "}
+                                <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                              </div>
+                            )}
+                          </Grid>
+                        </React.Fragment>
+                      ))
+                    )}
+                  </Grid>
 
-                {/* Pagination */}
-                <PageNavigator
-                  currentPage={activityCurrentPage}
-                  totalPages={activityTotalPages}
-                  onPrevPage={handleActivityPrevPage}
-                  onNextPage={handleActivityNextPage}
-                  onPageClick={handleActivityPageClick}
-                  backwardArrow={backwardArrow}
-                  forwardArrow={forwardArrow}
-                />
-              </Container>
+                  {/* Pagination */}
+                  <PageNavigator
+                    currentPage={activityCurrentPage}
+                    totalPages={activityTotalPages}
+                    onPrevPage={handleActivityPrevPage}
+                    onNextPage={handleActivityNextPage}
+                    onPageClick={handleActivityPageClick}
+                    backwardArrow={backwardArrow}
+                    forwardArrow={forwardArrow}
+                  />
+                </Container>
+              </Box>
+
+
             )}
 
 
@@ -1376,18 +1572,46 @@ function Shop() {
               </Box>
             )}
             {(activeButton === 2 || activeButton === 4) && (
-              <Container sx={{
-                backgroundColor: "#CA6680", // Conditional background color
-                height: "100%", // Full height
-                padding: "60px 0", // Padding adjustment
-                width: "100%", // Full width
-
-                "@media (min-width: 1200px)": {
-                  maxWidth: "100%", // Set maxWidth to 0 for screens above 1200px
-                },
-              }}>
-                <Grid container spacing={2} justifyContent={"center"}>
-                  {Array.isArray(displayedColoringSheets) &&
+               <Box
+                sx={{
+                  "@media (min-width: 1200px)": {
+                    maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
+                  },
+                  backgroundColor: "#CA6680", // Conditional background color
+                }} >
+              <Container
+                sx={{
+                  backgroundColor: "#CA6680", // Conditional background color
+                  height: "100%", // Full height
+                  padding: "60px 0", // Padding adjustment
+                  width: "100%", // Full width
+            
+                }}
+              >
+                {/* Grid for activity cards */}
+                <Grid
+                  container
+                  spacing={2}
+                  justifyContent={"center"}
+                  sx={{
+                    minHeight: "1000px", // Adjust this value based on your card size and rows
+                    display: "flex",
+                    alignItems:
+                      coloringLoading || !coloringDelayPassed
+                        ? "center" // Center align if loading or delay not passed
+                        : displayedColoringSheets.length <= 2
+                          ? "center" // Center align when only 1 or 2 items
+                          : "flex-start", // Default alignment
+                  }}
+                >
+                  {coloringLoading || !coloringDelayPassed ? (
+                    // Loader view with delay
+                    <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "455px" }}>
+                      <CircularProgress size={50} sx={{ color: "#5B73AD" }} /> {/* Updated loader color */}
+                    </Grid>
+                  ) : (
+                    // Display coloring cards
+                    Array.isArray(displayedColoringSheets) &&
                     displayedColoringSheets.map((card, i) => (
                       <React.Fragment key={i}>
                         <Grid className="product-card" md={5} item>
@@ -1404,11 +1628,12 @@ function Shop() {
                               component={"img"}
                               src={card?.imgUrl}
                               sx={{
-                                height: card?.price != 0 ? "400px" : "455px",
-                                borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px",
+                                height: card?.price !== 0 ? "400px" : "455px",
+                                borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
+                                objectFit: "cover",
                               }}
                             />
-                            {card?.price != 0 && (
+                            {card?.price !== 0 && (
                               <Box
                                 sx={{
                                   backgroundColor: "#FF9D04",
@@ -1418,16 +1643,16 @@ function Shop() {
                                   borderRadius: "0px 0px 20px 20px",
                                 }}
                               >
-                                <Typography className='heading-font' sx={{
-                                    textTransform: "uppercase", fontSize: "20px"
-                                  }}>{card?.name}</Typography>
-                                <Typography className='heading-font' sx={{
-                                    textTransform: "uppercase", fontSize: "20px"
-                                  }}>${card?.price}</Typography>
+                                <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
+                                  {card?.name}
+                                </Typography>
+                                <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
+                                  $ {card?.price}
+                                </Typography>
                               </Box>
                             )}
                           </Box>
-                          {card?.price != 0 && (
+                          {card?.price !== 0 && (
                             <div
                               className="add-to-cart"
                               style={{ display: "flex", alignItems: "center" }}
@@ -1436,10 +1661,10 @@ function Shop() {
                                   setOpen(true);
                                 } else {
                                   cartItems.push({ ...card, quantity: 1 });
-
-                                  const totalPrice = cartItems.reduce((total, item) => {
-                                    return total + parseFloat(item.price) * item.quantity;
-                                  }, 0);
+                                  const totalPrice = cartItems.reduce(
+                                    (total, item) => total + parseFloat(item.price) * item.quantity,
+                                    0
+                                  );
                                   setCount(cartItems.length);
                                   localStorage.setItem("cartData", JSON.stringify(cartItems));
                                   setTotalAmount(totalPrice);
@@ -1452,8 +1677,11 @@ function Shop() {
                           )}
                         </Grid>
                       </React.Fragment>
-                    ))}
+                    ))
+                  )}
                 </Grid>
+
+                {/* Pagination */}
                 <PageNavigator
                   currentPage={coloringCurrentPage}
                   totalPages={coloringTotalPages}
@@ -1464,7 +1692,7 @@ function Shop() {
                   forwardArrow={forwardArrow}
                 />
               </Container>
-
+</Box>
             )}
 
 
@@ -1515,19 +1743,46 @@ function Shop() {
             )}
 
             {(activeButton === 3 || activeButton === 4) && (
-              <Container sx={{
-                backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
-                height: "100%", // Full height
-                padding: "60px 0", // Padding adjustment
-                width: "100%", // Full width
-
-                "@media (min-width: 1200px)": {
-                  maxWidth: "100%", // Set maxWidth to 0 for screens above 1200px
-                },
-              }}>
+               <Box
+                sx={{
+                  "@media (min-width: 1200px)": {
+                    maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
+                  },
+                  backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
+                }} >
+              <Container
+                sx={{
+                  backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
+                  height: "100%", // Full height
+                  padding: "60px 0", // Padding adjustment
+                  width: "100%", // Full width
+  
+                }}
+              >
                 {/* Grid for extra sheets */}
-                <Grid container spacing={2} justifyContent={"center"}>
-                  {Array.isArray(extraCurrentProducts) &&
+                <Grid
+                  container
+                  spacing={2}
+                  justifyContent={"center"}
+                  sx={{
+                    minHeight: "1000px", // Adjust this value based on your card size and rows
+                    display: "flex",
+                    alignItems:
+                      extraLoading || !extraDelayPassed
+                        ? "center" // Center align if loading or delay not passed
+                        : extraCurrentProducts.length <= 2
+                          ? "center" // Center align when only 1 or 2 items
+                          : "flex-start", // Default alignment
+                  }}
+                >
+                  {extraLoading || !extraDelayPassed ? (
+                    // Loader view with delay
+                    <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "455px" }}>
+                      <CircularProgress size={50} sx={{ color: "#F9BF29" }} /> {/* Updated loader color */}
+                    </Grid>
+                  ) : (
+                    // Display extra sheets cards
+                    Array.isArray(extraCurrentProducts) &&
                     extraCurrentProducts.map((card, i) => (
                       <React.Fragment key={i}>
                         <Grid className="product-card" md={5} item>
@@ -1545,7 +1800,8 @@ function Shop() {
                               src={card?.imgUrl}
                               sx={{
                                 height: card?.price !== 0 ? "400px" : "455px",
-                                borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
+                                borderRadius:
+                                  card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
                                 objectFit: "cover",
                               }}
                             />
@@ -1559,12 +1815,24 @@ function Shop() {
                                   borderRadius: "0px 0px 20px 20px",
                                 }}
                               >
-                                <Typography className='heading-font' sx={{
-                                    textTransform: "uppercase", fontSize: "20px"
-                                  }}>{card?.name}</Typography>
-                                <Typography className='heading-font' sx={{
-                                    textTransform: "uppercase", fontSize: "20px"
-                                  }}>$ {card?.price}</Typography>
+                                <Typography
+                                  className="heading-font"
+                                  sx={{
+                                    textTransform: "uppercase",
+                                    fontSize: "20px",
+                                  }}
+                                >
+                                  {card?.name}
+                                </Typography>
+                                <Typography
+                                  className="heading-font"
+                                  sx={{
+                                    textTransform: "uppercase",
+                                    fontSize: "20px",
+                                  }}
+                                >
+                                  $ {card?.price}
+                                </Typography>
                               </Box>
                             )}
                           </Box>
@@ -1589,16 +1857,17 @@ function Shop() {
                                 }
                               }}
                             >
-                              Add To Cart &nbsp;
+                              Add To Cart &nbsp;{" "}
                               <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
                             </div>
                           )}
                         </Grid>
                       </React.Fragment>
-                    ))}
+                    ))
+                  )}
                 </Grid>
 
-
+                {/* Pagination */}
                 <PageNavigator
                   currentPage={extraCurrentPage}
                   totalPages={extraTotalPages}
@@ -1608,8 +1877,8 @@ function Shop() {
                   backwardArrow={backwardArrow}
                   forwardArrow={forwardArrow}
                 />
-
               </Container>
+              </Box>
             )}
 
 
