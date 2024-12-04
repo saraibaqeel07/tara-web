@@ -27,6 +27,8 @@ import shopBackground from "../../assets/images/shop-background.png"
 import forwardArrow from "../../assets/images/forward-arrow.png"
 import backwardArrow from "../../assets/images/backward-arrow.png"
 import PageNavigator from "../../components/pagination/index"
+import Character1 from "../../assets/images/Character1.png"
+import Character2 from "../../assets/images/Character2.png"
 
 // import "slick-carousel/slick/slick-theme.css";
 
@@ -73,11 +75,52 @@ function Shop() {
   const [currentPage, setCurrentPage] = useState(1);
   const [activityCurrentPage, setActivityCurrentPage] = useState(1);
   const [coloringCurrentPage, setColoringCurrentPage] = useState(1);
+  const [activeButton, setActiveButton] = useState(4); // Default 'Show All Products' is active
 
-  
-  
+  const buttonLabels = [
+    "Books",
+    "Activity Sheets",
+    "Coloring Sheets",
+    "Extra Sheets",
+    "Show All Products",
+
+  ];
+
+  const handleButtonClick = (index) => {
+    setActiveButton(index); // Update the active button
+  };
+
+
+
+  const [extraCurrentPage, setExtraCurrentPage] = useState(1);
+
+  // Extra sheets pagination
+  const extraProductsPerPage = 4; // Show 4 cards per page
+  const extraTotalPages = Math.ceil(extraSheets.length / extraProductsPerPage);
+  const extraCurrentProducts = extraSheets.slice(
+    (extraCurrentPage - 1) * extraProductsPerPage,
+    extraCurrentPage * extraProductsPerPage
+  );
+
+  const handleExtraPrevPage = () => {
+    if (extraCurrentPage > 1) {
+      setExtraCurrentPage(extraCurrentPage - 1);
+    }
+  };
+
+  const handleExtraNextPage = () => {
+    if (extraCurrentPage < extraTotalPages) {
+      setExtraCurrentPage(extraCurrentPage + 1);
+    }
+  };
+
+  const handleExtraPageClick = (pageNumber) => {
+    setExtraCurrentPage(pageNumber);
+  }
+
+
   const itemsPerPage = 4; // Max items per page
-  
+
   const coloringTotalPages = Math.ceil(coloringSheets.length / itemsPerPage);
 
   // Calculate the cards to display based on the current page
@@ -103,8 +146,8 @@ function Shop() {
   };
 
 
-  
-  
+
+
   // activity pagination
   const activityProductsPerPage = 4; // Show 4 cards per page
   const activityTotalPages = Math.ceil(activitySheets.length / activityProductsPerPage);
@@ -1004,166 +1047,197 @@ function Shop() {
 
               <Box
                 sx={{
-                  display: "flex", // Use flexbox to center the content
-                  justifyContent: "center", // Horizontally center the container
-                  alignItems: "center", // Vertically center the container
-                  height: "0", // Take full viewport height to center content
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                   margin: "10rem 0",
                 }}
               >
                 <Box
                   sx={{
-                    width: "800px", // Fixed width
-                    height: "350px", // Fixed height
-                    display: "grid", // Use grid layout
-                    gridTemplateColumns: "repeat(3, 1fr)", // 3 buttons per row
-                    gap: "32px", // 32px gap between buttons
-                    overflow: "hidden", // Hide overflow content
+                    width: "800px",
+                    height: { sm: "200px", xs: "320px" },
+                    display: "grid",
+                    gridTemplateColumns: { sm: "repeat(3, 1fr)", xs: "repeat(1, 1fr)" },
+                    gap: "16px",
+                    overflow: "hidden",
                   }}
                 >
-                  {/* Create 8 buttons */}
-                  {Array.from({ length: 8 }).map((_, index) => (
+                  {buttonLabels.map((label, index) => (
                     <Button
                       key={index}
+                      onClick={() => handleButtonClick(index)} // Set the clicked button as active
                       sx={{
-                        backgroundColor: index === 7 ? "#F9BF29" : "#5B73AD", // Last button gets the yellow background
-                        borderRadius: "8px", // Optional: Round corners for the buttons
-                        height: "100%", // Fill the height of the container
+                        backgroundColor: activeButton === index ? "#F9BF29" : "#5B73AD", // Highlight the active button
+                        borderRadius: "8px",
+                        height: "100%",
                         display: "flex",
-                        justifyContent: "center", // Center the content horizontally
-                        alignItems: "center", // Center the content vertically
-                        padding: 0, // Remove padding to make it feel like a box
-                        textTransform: "none", // Prevent text from being uppercase
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: 0,
+                        textTransform: "none",
                         '&:hover': {
-                          backgroundColor: index === 7 ? "#F9BF29" : "#5B73AD", // Retain the original background color on hover
+                          backgroundColor: activeButton === index ? "#F9BF29" : "#5B73AD", // Keep the hover effect consistent
                         },
                       }}
                     >
-                      {/* Text inside each button */}
-                      {index !== 7 ? (
-                        <Typography
-                          variant="h6"
-                          className='heading-font'
-                          sx={{
-                            color: "white", // Text color for the buttons
-                            textAlign: "center", // Center the text
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {["Books", "Activity Sheets", "Coloring Sheets", "Calendars", "Stickers", "Bookmarks", "Puzzles"][index]}
-                        </Typography>
-                      ) : (
-                        <Typography
-                          className='heading-font'
-                          variant="h6"
-                          sx={{
-                            color: "white", // Text color for the last button
-                            textAlign: "center", // Center the text
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Show All Products
-                        </Typography>
-                      )}
+                      <Typography
+                        variant="h6"
+                        className="heading-font"
+                        sx={{
+                          color: "white",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {label}
+                      </Typography>
                     </Button>
                   ))}
                 </Box>
 
               </Box>
-              <Container>
-                <Grid container spacing={2} justifyContent={"center"}>
-                  {Array.isArray(currentCards) && currentCards.map((card, i) => (
-                    <React.Fragment key={i}>
-                      <Grid className='product-card' md={5} sm={8} xs={12} item>
-                        <Box sx={{ display: "flex", flexDirection: "column", borderRadius: "20px", position: 'relative' }}>
-                          <CardMedia
-                            className='product-image'
-                            component={"img"}
-                            src={card?.imgUrl}
-                            sx={{
-                              width: "100%",
-                              height: card?.price != 0 ? "400px" : '455px',
-                              borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px",
-                              objectFit: 'cover'
-                            }}
-                          />
-                          {card?.price != 0 && <Box sx={{ backgroundColor: "#C77805", p: 2, display: "flex", justifyContent: "space-between", borderRadius: "0px 0px 20px 20px" }}>
-                            <Typography>{card?.name}</Typography>
-                            <Typography>$ {card?.price}</Typography>
-                          </Box>}
-                        </Box>
-                        {card?.price != 0 && <div className="add-to-cart" style={{ display: 'flex', alignItems: 'center' }} onClick={() => {
-                          // Your add to cart logic
-                        }}>
-                          Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: 'pointer', color: 'white' }} />
-                        </div>}
-                      </Grid>
-                    </React.Fragment>
-                  ))}
-                </Grid>
+
+              {(activeButton === 0 || activeButton === 4) && (
+                <Container>
+                  <Grid container spacing={2} justifyContent={"center"}>
+                    {Array.isArray(currentCards) &&
+                      currentCards.map((card, i) => (
+                        <React.Fragment key={i}>
+                          <Grid className="product-card" md={5} sm={8} xs={12} item>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                borderRadius: "20px",
+                                position: "relative",
+                              }}
+                            >
+                              <CardMedia
+                                className="product-image"
+                                component={"img"}
+                                src={card?.imgUrl}
+                                sx={{
+                                  width: "100%",
+                                  height: card?.price !== 0 ? "400px" : "455px",
+                                  borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
+                                  objectFit: "cover",
+                                }}
+                              />
+                              {card?.price !== 0 && (
+                                <Box
+                                  sx={{
+                                    backgroundColor: "#FF9D04",
+                                    p: 2,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    borderRadius: "0px 0px 20px 20px",
+                                  }}
+                                >
+                                  <Typography className='heading-font' sx={{
+                                    textTransform: "uppercase", fontSize: "20px"
+                                  }}>{card?.name}
+                                  </Typography>
+                                  <Typography className='heading-font' sx={{
+                                    textTransform: "uppercase", fontSize: "20px"
+                                  }}>$ {card?.price}</Typography>
+                                </Box>
+                              )}
+                            </Box>
+                            {card?.price !== 0 && (
+                              <div
+                                className="add-to-cart"
+                                style={{ display: "flex", alignItems: "center" }}
+                                onClick={() => {
+                                  // Your add to cart logic
+                                }}
+                              >
+                                Add To Cart &nbsp;{" "}
+                                <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                              </div>
+                            )}
+                          </Grid>
+                        </React.Fragment>
+                      ))}
+                  </Grid>
+
+                  {/* Pagination Controls */}
+                  <PageNavigator
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPrevPage={handlePrevPage}
+                    onNextPage={handleNextPage}
+                    onPageClick={handlePageClick}
+                    backwardArrow={backwardArrow}
+                    forwardArrow={forwardArrow}
+                  />
+                </Container>
+              )}
 
 
-                {/* Pagination Controls */}
-                <PageNavigator
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPrevPage={handlePrevPage}
-                  onNextPage={handleNextPage}
-                  onPageClick={handlePageClick}
-                  backwardArrow={backwardArrow}
-                  forwardArrow={forwardArrow}
-                />
-
-
-              </Container>
 
 
 
             </Box>
-
-            <Box
-              component={"section"}
-              id="activity-section"
-              sx={{
-                height: "100%",
-                backgroundColor: "#5B73AD",
-                width: "100%",
-                py: "72px",
-              }}
-            >
-              {/* Heading */}
-              <Typography
-                variant="h1"
-                className="heading-font"
+            {activeButton === 4 && (
+              <Box
+                component={"section"}
+                id="activity-section"
                 sx={{
-                  fontSize: {
-                    xl: "100px",
-                    lg: "90px",
-                    md: "70px",
-                    sm: "45px",
-                    xs: "35px",
-                  },
-                  fontWeight: 600,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  textTransform: "uppercase",
-                  paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
-                  position: "relative",
-                  zIndex: 1,
-                  margin: "0 auto",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-                style={{
-                  WebkitTextStroke: "1px white",
-                  WebkitTextFillColor: "#F9BF29",
+                  height: "100%",
+                  backgroundColor: "#5B73AD",
+                  width: "100%",
+                  pt: "40px"
                 }}
               >
-                Activity Sheets
-              </Typography>
+                {/* Heading */}
+                <Typography
+                  variant="h1"
+                  className="heading-font"
+                  sx={{
+                    fontSize: {
+                      xl: "100px",
+                      lg: "90px",
+                      md: "70px",
+                      sm: "45px",
+                      xs: "35px",
+                    },
+                    fontWeight: 600,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    textTransform: "uppercase",
+                    paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+                    position: "relative",
+                    zIndex: 1,
+                    margin: "0 auto",
+                    display: "flex",
+                    justifyContent: "center",
 
-              <Container>
+                  }}
+                  style={{
+                    WebkitTextStroke: "1px white",
+                    WebkitTextFillColor: "#F9BF29",
+                  }}
+                >
+                  Activity Sheets
+                </Typography>
+              </Box>
+            )};
+            {(activeButton === 1 || activeButton === 4) && (
+              <Container
+                sx={{
+                  backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
+                  height: "100%", // Full height
+                  padding: "60px 0", // Padding adjustment
+                  width: "100%", // Full width
+
+                  "@media (min-width: 1200px)": {
+                    maxWidth: "100%", // Set maxWidth to 0 for screens above 1200px
+                  },
+                }}
+
+              >
                 {/* Grid for activity cards */}
                 <Grid container spacing={2} justifyContent={"center"}>
                   {Array.isArray(activityCurrentProducts) &&
@@ -1192,15 +1266,19 @@ function Shop() {
                             {card?.price !== 0 && (
                               <Box
                                 sx={{
-                                  backgroundColor: "#C77805",
+                                  backgroundColor: "#FF9D04",
                                   p: 2,
                                   display: "flex",
                                   justifyContent: "space-between",
                                   borderRadius: "0px 0px 20px 20px",
                                 }}
                               >
-                                <Typography>{card?.name}</Typography>
-                                <Typography>$ {card?.price}</Typography>
+                                <Typography className='heading-font' sx={{
+                                    textTransform: "uppercase", fontSize: "20px"
+                                  }} >{card?.name}</Typography>
+                                <Typography className='heading-font' sx={{
+                                    textTransform: "uppercase", fontSize: "20px"
+                                  }}>$ {card?.price}</Typography>
                               </Box>
                             )}
                           </Box>
@@ -1248,130 +1326,427 @@ function Shop() {
                   forwardArrow={forwardArrow}
                 />
               </Container>
-            </Box>;
+            )}
+
+
+
+            {activeButton === 4 && (
+              <Box
+                component={"section"}
+                id="coloring-section"
+                sx={{
+                  backgroundColor: "#CA6680",
+                  height: "100%",
+                  width: "100%",
+                  pt: "40px"
+
+                }}
+              >
+                {/* Heading */}
+                <Typography
+                  variant="h1"
+                  className="heading-font"
+                  sx={{
+                    fontSize: {
+                      xl: "100px",
+                      lg: "90px",
+                      md: "70px",
+                      sm: "45px",
+                      xs: "35px",
+                    },
+                    fontWeight: 600,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    textTransform: "uppercase",
+                    paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+                    position: "relative",
+                    zIndex: 1,
+                    margin: "0 auto",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  style={{
+                    WebkitTextStroke: "1px white",
+                    WebkitTextFillColor: "#F9BF29",
+                  }}
+                >
+                  Coloring Sheets
+                </Typography>
+              </Box>
+            )}
+            {(activeButton === 2 || activeButton === 4) && (
+              <Container sx={{
+                backgroundColor: "#CA6680", // Conditional background color
+                height: "100%", // Full height
+                padding: "60px 0", // Padding adjustment
+                width: "100%", // Full width
+
+                "@media (min-width: 1200px)": {
+                  maxWidth: "100%", // Set maxWidth to 0 for screens above 1200px
+                },
+              }}>
+                <Grid container spacing={2} justifyContent={"center"}>
+                  {Array.isArray(displayedColoringSheets) &&
+                    displayedColoringSheets.map((card, i) => (
+                      <React.Fragment key={i}>
+                        <Grid className="product-card" md={5} item>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              borderRadius: "20px",
+                              position: "relative",
+                            }}
+                          >
+                            <CardMedia
+                              className="product-image"
+                              component={"img"}
+                              src={card?.imgUrl}
+                              sx={{
+                                height: card?.price != 0 ? "400px" : "455px",
+                                borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px",
+                              }}
+                            />
+                            {card?.price != 0 && (
+                              <Box
+                                sx={{
+                                  backgroundColor: "#FF9D04",
+                                  p: 2,
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  borderRadius: "0px 0px 20px 20px",
+                                }}
+                              >
+                                <Typography className='heading-font' sx={{
+                                    textTransform: "uppercase", fontSize: "20px"
+                                  }}>{card?.name}</Typography>
+                                <Typography className='heading-font' sx={{
+                                    textTransform: "uppercase", fontSize: "20px"
+                                  }}>${card?.price}</Typography>
+                              </Box>
+                            )}
+                          </Box>
+                          {card?.price != 0 && (
+                            <div
+                              className="add-to-cart"
+                              style={{ display: "flex", alignItems: "center" }}
+                              onClick={() => {
+                                if (cartItems.find((item) => item.id === card.id)) {
+                                  setOpen(true);
+                                } else {
+                                  cartItems.push({ ...card, quantity: 1 });
+
+                                  const totalPrice = cartItems.reduce((total, item) => {
+                                    return total + parseFloat(item.price) * item.quantity;
+                                  }, 0);
+                                  setCount(cartItems.length);
+                                  localStorage.setItem("cartData", JSON.stringify(cartItems));
+                                  setTotalAmount(totalPrice);
+                                  setOpen(true);
+                                }
+                              }}
+                            >
+                              Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                            </div>
+                          )}
+                        </Grid>
+                      </React.Fragment>
+                    ))}
+                </Grid>
+                <PageNavigator
+                  currentPage={coloringCurrentPage}
+                  totalPages={coloringTotalPages}
+                  onPrevPage={handleColoringPrevPage}
+                  onNextPage={handleColoringNextPage}
+                  onPageClick={handleColoringPageClick}
+                  backwardArrow={backwardArrow}
+                  forwardArrow={forwardArrow}
+                />
+              </Container>
+
+            )}
+
+
+            {activeButton === 4 && (
+              <Box
+                component={"section"}
+                id="extra-section"
+                sx={{
+                  height: "100%",
+                  backgroundColor: "#5B73AD", // Customize the background color
+                  width: "100%",
+                  pt: "40px"
+
+                }}
+              >
+                {/* Heading */}
+                <Typography
+                  variant="h1"
+                  className="heading-font"
+                  sx={{
+                    fontSize: {
+                      xl: "100px",
+                      lg: "90px",
+                      md: "70px",
+                      sm: "45px",
+                      xs: "35px",
+                    },
+                    fontWeight: 600,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    textTransform: "uppercase",
+                    paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+                    position: "relative",
+                    zIndex: 1,
+                    margin: "0 auto",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  style={{
+                    WebkitTextStroke: "1px white",
+                    WebkitTextFillColor: "#F9BF29",
+                  }}
+                >
+                  Extra Sheets
+                </Typography>
+              </Box>
+            )}
+
+            {(activeButton === 3 || activeButton === 4) && (
+              <Container sx={{
+                backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
+                height: "100%", // Full height
+                padding: "60px 0", // Padding adjustment
+                width: "100%", // Full width
+
+                "@media (min-width: 1200px)": {
+                  maxWidth: "100%", // Set maxWidth to 0 for screens above 1200px
+                },
+              }}>
+                {/* Grid for extra sheets */}
+                <Grid container spacing={2} justifyContent={"center"}>
+                  {Array.isArray(extraCurrentProducts) &&
+                    extraCurrentProducts.map((card, i) => (
+                      <React.Fragment key={i}>
+                        <Grid className="product-card" md={5} item>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              borderRadius: "20px",
+                              position: "relative",
+                            }}
+                          >
+                            <CardMedia
+                              className="product-image"
+                              component={"img"}
+                              src={card?.imgUrl}
+                              sx={{
+                                height: card?.price !== 0 ? "400px" : "455px",
+                                borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
+                                objectFit: "cover",
+                              }}
+                            />
+                            {card?.price !== 0 && (
+                              <Box
+                                sx={{
+                                  backgroundColor: "#FF9D04",
+                                  p: 2,
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  borderRadius: "0px 0px 20px 20px",
+                                }}
+                              >
+                                <Typography className='heading-font' sx={{
+                                    textTransform: "uppercase", fontSize: "20px"
+                                  }}>{card?.name}</Typography>
+                                <Typography className='heading-font' sx={{
+                                    textTransform: "uppercase", fontSize: "20px"
+                                  }}>$ {card?.price}</Typography>
+                              </Box>
+                            )}
+                          </Box>
+                          {card?.price !== 0 && (
+                            <div
+                              className="add-to-cart"
+                              style={{ display: "flex", alignItems: "center" }}
+                              onClick={() => {
+                                if (cartItems.find((item) => item.id === card.id)) {
+                                  setOpen(true);
+                                } else {
+                                  cartItems.push({ ...card, quantity: 1 });
+                                  const totalPrice = cartItems.reduce(
+                                    (total, item) =>
+                                      total + parseFloat(item.price) * item.quantity,
+                                    0
+                                  );
+                                  setCount(cartItems.length);
+                                  localStorage.setItem("cartData", JSON.stringify(cartItems));
+                                  setTotalAmount(totalPrice);
+                                  setOpen(true);
+                                }
+                              }}
+                            >
+                              Add To Cart &nbsp;
+                              <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                            </div>
+                          )}
+                        </Grid>
+                      </React.Fragment>
+                    ))}
+                </Grid>
+
+
+                <PageNavigator
+                  currentPage={extraCurrentPage}
+                  totalPages={extraTotalPages}
+                  onPrevPage={handleExtraPrevPage}
+                  onNextPage={handleExtraNextPage}
+                  onPageClick={handleExtraPageClick}
+                  backwardArrow={backwardArrow}
+                  forwardArrow={forwardArrow}
+                />
+
+              </Container>
+            )}
 
 
 
             <Box
-      component={"section"}
-      id="coloring-section"
-      sx={{
-        backgroundColor: "#CA6680",
-        height: "100%",
-        width: "100%",
-        py: "72px",
-        marginTop: "-30px",
-      }}
-    >
-      {/* Heading */}
-      <Typography
-        variant="h1"
-        className="heading-font"
-        sx={{
-          fontSize: {
-            xl: "100px",
-            lg: "90px",
-            md: "70px",
-            sm: "45px",
-            xs: "35px",
-          },
-          fontWeight: 600,
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          textTransform: "uppercase",
-          paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
-          position: "relative",
-          zIndex: 1,
-          margin: "0 auto",
-          display: "flex",
-          justifyContent: "center",
-        }}
-        style={{
-          WebkitTextStroke: "1px white",
-          WebkitTextFillColor: "#F9BF29",
-        }}
-      >
-        Coloring Sheets
-      </Typography>
-      <Container>
-        <Grid container spacing={2} justifyContent={"center"}>
-          {Array.isArray(displayedColoringSheets) &&
-            displayedColoringSheets.map((card, i) => (
-              <React.Fragment key={i}>
-                <Grid className="product-card" md={5} item>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      borderRadius: "20px",
-                      position: "relative",
+              component={"section"}
+              sx={{
+                position: "relative",
+                backgroundColor: activeButton === 4 ? "#FF9D04" : "#5B73AD",
+                width: "100%",
+                height: "auto",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+                padding: { xs: "4rem 0", sm: "10rem 0", md: "18rem 0" },
+              }}
+            >
+              {/* Left Background Image */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  zIndex: 0,
+                  display: "block",
+                }}
+              >
+                <CardMedia
+                  component={"img"}
+                  src={Character1}
+                  sx={{
+                    width: { xs: "180px", sm: "280px", md: "500px", lg: "700px" }, // Adjust width for smaller screens
+                    height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                    objectFit: "cover",
+                  }}
+                />
+              </Box>
+
+              {/* Right Background Image */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                  zIndex: 0,
+                  display: "block",
+                }}
+              >
+                <CardMedia
+                  component={"img"}
+                  src={Character2}
+                  sx={{
+                    width: { xs: "180px", sm: "280px", md: "550px", lg: "750px" }, // Adjust width for smaller screens
+                    height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                    objectFit: "cover",
+                  }}
+                />
+              </Box>
+
+              {/* Center Content */}
+              <Box
+                sx={{
+                  position: "relative",
+                  textAlign: "center",
+                  zIndex: 1,
+                  width: { xs: "90%", sm: "80%", md: "30%", lg: "25%" },
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  className="para-text"
+                  sx={{
+                    fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" },
+                    fontWeight: 600,
+                    textAlign: "center",
+                    mb: 2,
+                  }}
+                >
+                  Subscribe to get information, latest news, and other interesting offers
+                  about{" "}
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                      WebkitTextStroke: "0.5px white ",
+                      WebkitTextFillColor: activeButton === 4 ? "#3D5A98" : "#FF9D04",
                     }}
                   >
-                    <CardMedia
-                      className="product-image"
-                      component={"img"}
-                      src={card?.imgUrl}
-                      sx={{
-                        height: card?.price != 0 ? "400px" : "455px",
-                        borderRadius: card?.price != 0 ? "20px 20px 0px 0px" : "20px",
-                      }}
-                    />
-                    {card?.price != 0 && (
-                      <Box
+                    Shine With Tara
+                  </span>
+                </Typography>
+                <TextField
+                  className="para-text"
+                  placeholder={"Your email"}
+                  sx={{
+                    background: Colors.white,
+                    borderRadius: "4px",
+                    width: "100%",
+                    "& fieldset": {
+                      border: "none",
+                    },
+                    "& .MuiOutlinedInput-root": {
+                      paddingRight: 0.5,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      color: `${Colors.primary} !important`,
+                      fontSize: { xs: "14px", sm: "16px", md: "18px" },
+                    },
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <Button
+                        className="para-text"
                         sx={{
-                          backgroundColor: "#C77805",
-                          p: 2,
-                          display: "flex",
-                          justifyContent: "space-between",
-                          borderRadius: "0px 0px 20px 20px",
+                          color: `${Colors.white} !important`,
+                          backgroundColor: `#5B73AD`,
+                          px: { xs: 2, sm: 4 },
+                          py: 1.5,
+                          textTransform: "uppercase",
+                          fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                          "&:hover": {
+                            backgroundColor: `#5B73AD`,
+                            color: `${Colors.white}`,
+                          },
                         }}
                       >
-                        <Typography>{card?.name}</Typography>
-                        <Typography>${card?.price}</Typography>
-                      </Box>
-                    )}
-                  </Box>
-                  {card?.price != 0 && (
-                    <div
-                      className="add-to-cart"
-                      style={{ display: "flex", alignItems: "center" }}
-                      onClick={() => {
-                        if (cartItems.find((item) => item.id === card.id)) {
-                          setOpen(true);
-                        } else {
-                          cartItems.push({ ...card, quantity: 1 });
+                        Subscribe
+                      </Button>
+                    ),
+                  }}
+                />
+              </Box>
 
-                          const totalPrice = cartItems.reduce((total, item) => {
-                            return total + parseFloat(item.price) * item.quantity;
-                          }, 0);
-                          setCount(cartItems.length);
-                          localStorage.setItem("cartData", JSON.stringify(cartItems));
-                          setTotalAmount(totalPrice);
-                          setOpen(true);
-                        }
-                      }}
-                    >
-                      Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
-                    </div>
-                  )}
-                </Grid>
-              </React.Fragment>
-            ))}
-        </Grid>
-        <PageNavigator
-          currentPage={coloringCurrentPage}
-          totalPages={coloringTotalPages}
-          onPrevPage={handleColoringPrevPage}
-          onNextPage={handleColoringNextPage}
-          onPageClick={handleColoringPageClick}
-          backwardArrow={backwardArrow}
-          forwardArrow={forwardArrow}
-        />
-      </Container>
-    </Box>
+            </Box>
           </>
         )}
+
         {/* <Box
           component={"section"}
           sx={{
