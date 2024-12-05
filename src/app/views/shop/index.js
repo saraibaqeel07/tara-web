@@ -1883,69 +1883,56 @@ function Shop() {
 
 
 
-            <Box
-              component={"section"}
-              sx={{
-                position: "relative",
-                backgroundColor: activeButton === 4 ? "#FF9D04" : "#5B73AD",
-                width: "100%",
-                height: "auto",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                overflow: "hidden",
-                padding: { xs: "4rem 0", sm: "10rem 0", md: "18rem 0" },
-              }}
-            >
-              {/* Left Background Image */}
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  zIndex: 0,
-                  display: "block",
-                }}
-              >
-                <CardMedia
-                  component={"img"}
-                  src={Character1}
-                  sx={{
-                    width: { xs: "180px", sm: "280px", md: "500px", lg: "700px" }, // Adjust width for smaller screens
-                    height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
-                    objectFit: "cover",
-                  }}
-                />
-              </Box>
+<Box
+          component={"section"}
+          sx={{
+            position: "relative",
+            backgroundColor: "#FF9D04",
+            width: "100%",
+            height: { xs: "180px", sm: "180px", md: "500px" },
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+            padding: { xs: "10px", sm: "10px", md: "10px" },
+          }}
+        >
+           <Box
+            sx={{
+              position: "absolute",
+              top: 40,
+              left: 20,
+              zIndex: 0,
+              display: "block",
+              width:"60px"
+            }}
+            component={'img'}
+            src={Images.hand}
+          ></Box>
+           <Box
+            sx={{
+              position: "absolute",
+              top: 20,
+              right: 50,
+              zIndex: 0,
+              display: "block",
+              width:"60px"
+            }}
+            component={'img'}
+            src={Images.rainbow}
+          ></Box>
+          <Grid container justifyContent={'center'}>
+            <Grid item xs={4} >
 
-              {/* Right Background Image */}
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: 0,
-                  right: 0,
-                  zIndex: 0,
-                  display: "block",
-                }}
-              >
-                <CardMedia
-                  component={"img"}
-                  src={Character2}
-                  sx={{
-                    width: { xs: "180px", sm: "280px", md: "550px", lg: "750px" }, // Adjust width for smaller screens
-                    height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
-                    objectFit: "cover",
-                  }}
-                />
-              </Box>
-
+            </Grid>
+            <Grid item lg={4} md={4} sm={10} xs={11}>
               {/* Center Content */}
               <Box
                 sx={{
                   position: "relative",
                   textAlign: "center",
                   zIndex: 1,
-                  width: { xs: "90%", sm: "80%", md: "30%", lg: "25%" },
+
                 }}
               >
                 <Typography
@@ -1963,8 +1950,9 @@ function Shop() {
                   <span
                     style={{
                       fontWeight: "bold",
+                      display:'block',
                       WebkitTextStroke: "0.5px white ",
-                      WebkitTextFillColor: activeButton === 4 ? "#3D5A98" : "#FF9D04",
+                      WebkitTextFillColor: "#FF9D04",
                     }}
                   >
                     Shine With Tara
@@ -2011,8 +1999,55 @@ function Shop() {
                   }}
                 />
               </Box>
+            </Grid>
+            <Grid item xs={4}>
 
-            </Box>
+            </Grid>
+          </Grid>
+          {/* Left Background Image */}
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              zIndex: 0,
+              display: "block",
+            }}
+          >
+            <CardMedia
+              component={"img"}
+              src={Character1}
+              sx={{
+                width: '100%', // Adjust width for smaller screens
+                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                objectFit: "cover",
+              }}
+            />
+          </Box>
+
+          {/* Right Background Image */}
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              right: 0,
+              zIndex: 0,
+              display: "block",
+            }}
+          >
+            <CardMedia
+              component={"img"}
+              src={Character2}
+              sx={{
+                width: '100%', // Adjust width for smaller screens
+                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                objectFit: "cover",
+              }}
+            />
+          </Box>
+
+
+        </Box>
           </>
         )}
 

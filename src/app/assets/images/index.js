@@ -92,7 +92,9 @@ const Images = {
   cartIcon:require("./cartIcon.png"),
   mainTara:require("./mainTara.png"),
   rainbow:require("./rainbow.png"),
-  hand:require("./hand.png")
+  hand:require("./hand.png"),
+  hearts:require("./hearts.png"),
+  contactBrothers:require("./contactBrothers.png")
 }
 
 export default Images;
