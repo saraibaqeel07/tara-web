@@ -23,68 +23,101 @@ import { CartContext } from "../../Context/CartContext";
 import { SwiperSlide, Swiper } from "swiper/react";
 import "swiper/css";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import {
-  collection,
-  addDoc,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-  deleteDoc,
-} from "firebase/firestore";
-import { getFirestore } from "firebase/firestore";
+// import {
+//   collection,
+//   addDoc,
+//   doc,
+//   getDoc,
+//   getDocs,
+//   query,
+//   where,
+//   deleteDoc,
+// } from "firebase/firestore";
+// import { getFirestore } from "firebase/firestore";
 
-import { initializeApp } from "firebase/app";
+// import { initializeApp } from "firebase/app";
 
 import { CartCounter } from "../../Context/CartCounter";
 function Character() {
   // Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
-    authDomain: "shinetara-86ec0.firebaseapp.com",
-    projectId: "shinetara-86ec0",
-    storageBucket: "shinetara-86ec0.appspot.com",
-    messagingSenderId: "182521981077",
-    appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
-    measurementId: "G-BHYZDHJCK9",
-  };
+  // const firebaseConfig = {
+  //   apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
+  //   authDomain: "shinetara-86ec0.firebaseapp.com",
+  //   projectId: "shinetara-86ec0",
+  //   storageBucket: "shinetara-86ec0.appspot.com",
+  //   messagingSenderId: "182521981077",
+  //   appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
+  //   measurementId: "G-BHYZDHJCK9",
+  // };
 
-  // Initialize Firebase app
-  const app = initializeApp(firebaseConfig);
+  // // Initialize Firebase app
+  // const app = initializeApp(firebaseConfig);
 
-  // Firestore reference
-  const db = getFirestore(app);
+  // // Firestore reference
+  // const db = getFirestore(app);
 
   const navigate = useNavigate();
-  const [selected, setSelected] = useState("mission");
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
   const [open, setOpen] = useState(false);
-  const [reviewBoxes, setReviewBoxes] = useState([]);
+  // const [reviewBoxes, setReviewBoxes] = useState([]);
 
   console.log(cartVisible, "cartVisible");
 
-  const getReviews = async () => {
-    try {
-      const q = query(collection(db, "reviews"));
-      const querySnapshot = await getDocs(q);
-      const dataArray = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      console.log(dataArray);
-      setReviewBoxes(dataArray);
-    } catch (error) {
-      console.error("Error fetching reviews:", error);
-    }
-  };
+  // const getReviews = async () => {
+  //   try {
+  //     const q = query(collection(db, "reviews"));
+  //     const querySnapshot = await getDocs(q);
+  //     const dataArray = querySnapshot.docs.map((doc) => ({
+  //       id: doc.id,
+  //       ...doc.data(),
+  //     }));
+  //     console.log(dataArray);
+  //     setReviewBoxes(dataArray);
+  //   } catch (error) {
+  //     console.error("Error fetching reviews:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getReviews();
-  }, []);
+  // useEffect(() => {
+  //   getReviews();
+  // }, []);
+
+
+  const scrollCharacter = [
+    { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
+    { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." },
+
+
+
+  ]
+
+
+
   const handleIncrement = (id) => {
     const updatedData = cartItems.map((item) =>
       item.id === id ? { ...item, quantity: item.quantity + 1 } : item
@@ -248,10 +281,10 @@ function Character() {
       image: Images.webDeveloper,
     },
     {
-      name: "Sana Kazmi",
-      email: "shineswithtara@gmail.com",
-      profession: "Script, Story, Animator, Illustrator",
-      image: Images.illustrator,
+      name: "Amna Farooq",
+      email: "amna.publications@gmail.com",
+      profession: "Illustrator,  2D Animator",
+      image: Images.character17,
     },
   ];
   useEffect(() => {
@@ -429,41 +462,34 @@ function Character() {
           CheckOut
         </Button>
       </Drawer>
-  
+
+      <Box
+        sx={{
+          backgroundImage: `url(${Images.bannerBg})`,
+
+          backgroundSize: "cover",
+          backgroundPosition: "bottom center",
+          width: "100%",
+          height: { md: "610px", xs: "300px",xl:"950px",sm:"590px" },
+          position: "relative", // Ensure child content is positioned relative to this container
+          overflow: "hidden", // Prevent content from going outside
+        }}
+      >
+        {/* Right-side Image */}
         <Box
           sx={{
-            backgroundImage: `url(${Images.bannerBg})`,
-
-            backgroundSize: "cover",
-            backgroundPosition: "bottom center",
-            width: "100%",
-            height: { md: "578px", xs: "490px" },
-            position: "relative", // Ensure child content is positioned relative to this container
-            overflow: "hidden", // Prevent content from going outside
+            margin: "0 auto",
+            width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
+            height: "100%", // Full height of the parent container
+            backgroundImage: `url(${Images.mainCharacter})`,
+            backgroundSize: { md: "contain", xl: "contain", lg: "contain", xs: "contain", sm: "contain" },
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center", // Ensures the image is aligned at the bottom
+           
           }}
-        >
-          {/* Right-side Image */}
-          <Box
-            sx={{
-              margin: "0 auto",
-              width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
-              height: "100%", // Full height of the parent container
-              backgroundImage: `url(${Images.mainCharacter})`,
-              backgroundSize: { md: "contain", xl: "contain", lg: "contain" ,xs:"cover" ,sm:"contain"},
+        />
+      </Box>
 
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center", // Ensures the image is aligned at the bottom
-              display: {
-                md: "block",
-                xl: "block",
-                lg: "block",
-                sm: "none",
-                xs: "none",
-              }, // Show image only for medium and larger screens
-            }}
-          />
-        </Box>
-    
 
       <Box sx={{ backgroundColor: "#CA6680", py: "30px" }}>
         <Typography
@@ -481,7 +507,7 @@ function Character() {
             whiteSpace: "nowrap",
             overflow: "hidden",
             textTransform: "uppercase",
-            py:"60px",
+            py: "60px",
             position: "relative", // Ensures alignment with image
             zIndex: 1, // Keeps heading above the image
             margin: "0 auto",
@@ -510,138 +536,154 @@ function Character() {
           </span>
         </Typography>
         <Box pb={10}>
-  <Box sx={{ width: "70%", margin: "0 auto",}}>
-    <Grid item md={11} sm={11} xs={11} >
-      <Swiper
-        loop={true}
-        spaceBetween={10}
-        slidesPerView={3}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        modules={[Autoplay, Pagination, Navigation]}
-        breakpoints={{
-          320: {
-            slidesPerView: 1,
-          },
-          786: {
-            slidesPerView: 2,
-          },
-          1080: {
-            slidesPerView: 3,
-          },
-        }}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
-      >
-        {reviewBoxes?.map((item, ind) => (
-          <SwiperSlide key={ind}>
-            {/* Outer Box */}
-            <Box
-              sx={{
-                position: "relative", // Ensures the image and borders stack properly
-                padding: "7px", // Gap for the outer border
-                backgroundColor: "orange", // Outer yellow background
-                borderRadius: "60px 70px 70px 70px", // Outer border radius
-                border: "4px solid black", // Outer solid border
-                overflow: "visible", // Ensure image is not clipped
-                display: "flex", // Use flexbox to center the content
-                justifyContent: "center", // Center the image horizontally
-                alignItems: "center", // Center the image vertically
-                height: "auto", // Let the height adjust based on content
-              }}
-            >
-              {/* Image Positioned Outside of Box */}
-              <Box
-                component="img"
-                src={Images.character13} // Replace with your image path
-                alt="Corner Decoration"
-                sx={{
-                  position: "absolute", // Absolute positioning for the image
-                  top: "-30px", // Adjusted top to ensure image stays within bounds
-                  left: "-45px", // Adjust as needed
-                  width: "150px", // Adjust image size
-                  height: "150px", // Adjust image size
-                  zIndex: 10, // Ensure it's above all borders
-                  objectFit: "cover", // Ensures the image covers the area and doesn't get clipped
+          <Box sx={{ width: "100%", margin: "0 auto", overflowX:"visible"}}>
+            <Grid item md={11} sm={11} xs={11} >
+              <Swiper 
+                loop={true}
+                spaceBetween={10}
+                slidesPerView={3}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
                 }}
-              />
-              {/* Middle Dashed Border */}
-              <Box
-                sx={{
-                  position: "relative",
-                  padding: "7px", // Gap for the middle dashed border
-                  backgroundColor: "orange", // Transparent background
-                  borderRadius: "60px 60px 60px 60px", // Middle border radius
-                  border: "4px dashed black", // Middle dashed border
+                modules={[Autoplay, Pagination, Navigation]}
+                breakpoints={{
+              
+                  481: {
+                    slidesPerView: 1, 
+                    alignItems:"center"
+
+                  },
+                  786: {
+                    slidesPerView: 3, // Keep two cards for this range too
+                    
+                  },
+                  1080: {
+                    slidesPerView: 4, // For large screens
+                  },
+                  1700: {
+                    slidesPerView: 6, // For large screens
+                  },
                 }}
+                onSlideChange={() => console.log("slide change")}
+                onSwiper={(swiper) => console.log(swiper)}
               >
-                {/* Inner Card */}
-                <Box
-                  sx={{
-                    p: 4,
-                    borderRadius: "50px 50px 50px 50px", // Inner card border radius
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                    backgroundColor: "#6692DC", // Inner card background
-                    height: "80px", // Fixed height for all cards
-                    border: "2px solid #F9BF29", // Inner solid border
-                  }}
-                >
-                  <Typography
-                    className="heading-font"
-                    sx={{
-                      fontWeight: 600,
-                      mb: 0.5, // Adjust spacing between name and comment
-                      textAlign: "center",
-                      fontSize: "20px", // Adjust text size
-                      color: "transparent", // Make text transparent initially
-                      WebkitTextStroke: "1px white", // Outline color
-                      WebkitTextFillColor: "#F9BF29", // Fill color
-                    }}
-                  >
-                    {item?.name}
-                  </Typography>
-                  <Typography
-                    className="heading-font"
-                    variant={"body2"}
-                    sx={{
-                      color: "white",
-                      fontSize: "12px", // Smaller text size
-                      textAlign: "left", // Align text to the left
-                      width: "100%", // Ensure it takes full width
-                      overflow: "hidden", // Hide overflow text
-                      whiteSpace: "nowrap", // Prevent text wrapping
-                      textWrap: "wrap",
-                    }}
-                  >
-                    {item.comment}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </Grid>
-  </Box>
-</Box>
+                {scrollCharacter?.map((item, ind) => (
+                  <SwiperSlide key={ind}>
+                    {/* Outer Box */}
+                    <Box
+                      sx={{
+                        position: "relative", // Ensures the image and borders stack properly
+                        padding: "7px", // Gap for the outer border
+                        backgroundColor: "orange", // Outer yellow background
+                        borderRadius: "50px 40px 40px 40px", // Outer border radius
+                        border: "4px solid black", // Outer solid border
+                        overflow: "visible", // Ensure image is not clipped
+                        display: "flex", // Use flexbox to center the content
+                        justifyContent: "center", // Center the image horizontally
+                        alignItems: "center", // Center the image vertically
+                        height: "auto", // Let the height adjust based on content
+                        maxWidth: "300px"
+                      }}
+                    >
+                      {/* Image Positioned Outside of Box */}
+                      <Box
+                        component="img"
+                        src={Images.character13} // Replace with your image path
+                        alt="Corner Decoration"
+                        sx={{
+                          position: "absolute", // Absolute positioning for the image
+                          top: "-36px", // Adjusted top to ensure image stays within bounds
+                          left: "-50px", // Adjust as needed
+                          width: "150px", // Adjust image size
+                          height: "160px", // Adjust image size
+                          zIndex: 10, // Ensure it's above all borders
+                          objectFit: "cover", // Ensures the image covers the area and doesn't get clipped
+                        }}
+                      />
+                      {/* Middle Dashed Border */}
+                      <Box
+                        sx={{
+                          position: "relative",
+                          padding: "7px", // Gap for the middle dashed border
+                          backgroundColor: "orange", // Transparent background
+                          borderRadius: "40px 40px 40px 40px", // Middle border radius
+                          border: "4px dashed black", // Middle dashed border
+                        }}
+                      >
+                        {/* Inner Card */}
+                        <Box
+                          sx={{
+                            py: 1,
+                            px: 4,
+                            borderRadius: "30px 30px 30px 30px", // Inner card border radius
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "10px",
+                            backgroundColor: "#6692DC", // Inner card background
+                            height: "80px", // Fixed height for all cards
+                            border: "2px solid #F9BF29", // Inner solid border
+                            maxWidth: "400px",
+                            // maxHeight:"400px"
+
+                          }}
+                        >
+                          <Typography
+                            className="heading-font"
+                            sx={{
+                              fontWeight: 600,
+                              mb: 0.5, // Adjust spacing between name and comment
+                              textAlign: "center",
+                              fontSize: "20px", // Adjust text size
+                              color: "transparent", // Make text transparent initially
+                              WebkitTextStroke: "1px white", // Outline color
+                              WebkitTextFillColor: "#F9BF29", // Fill color
+                            }}
+                          >
+                            {item?.name}
+                          </Typography>
+                          <Typography
+                            className="heading-font"
+                            variant={"body2"}
+                            sx={{
+                              color: "white",
+                              fontSize: "12px", // Smaller text size
+                              textAlign: "center", // Center-align text
+                              width: "100%", // Ensure it takes full width
+                              overflow: "hidden", // Remove text overflow
+                              wordWrap: "break-word", // Break long words to fit within the box
+                              whiteSpace: "normal", // Allow text to wrap onto the next line
+                            }}
+                          >
+                            {item.comment}
+                          </Typography>
+
+                        </Box>
+                      </Box>
+                    </Box>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </Grid>
+          </Box>
+        </Box>
 
 
 
-<Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", padding: "10px" , alignItems:"center"}}>
-  <Box sx={{ width: "100%", height: "auto" }}>
-    <img src={Images.character14} alt="Image 1" style={{ width: "100%", height: "auto" }} />
-  </Box>
-  <Box sx={{ width: "100%", height: "auto" }}>
-    <img src={Images.character15} alt="Image 2" style={{ width: "100%", height: "auto" }} />
-  </Box>
-  <Box sx={{ width: "100%", height: "auto" }}>
-    <img src={Images.character16} alt="Image 3" style={{ width: "100%", height: "auto" }} />
-  </Box>
-</Box>
+
+
+
+        <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", padding: "10px", alignItems: "center" }}>
+          <Box sx={{ width: "100%", height: "auto" }}>
+            <img src={Images.character14} alt="Image 1" style={{ width: "100%", height: "auto" }} />
+          </Box>
+          <Box sx={{ width: "100%", height: "auto" }}>
+            <img src={Images.character15} alt="Image 2" style={{ width: "100%", height: "auto" }} />
+          </Box>
+          <Box sx={{ width: "100%", height: "auto" }}>
+            <img src={Images.character16} alt="Image 3" style={{ width: "100%", height: "auto" }} />
+          </Box>
+        </Box>
 
 
       </Box>
@@ -649,43 +691,43 @@ function Character() {
       <Box
         component={"section"}
         sx={{
-          background: Colors.lightPurple,
+          backgroundColor:"#5B73AD",
           width: "100%",
           p: "20px",
         }}
       >
-          <Typography
-                variant="h1"
-                className="heading-font"
-                sx={{
-                  fontSize: {
-                    xl: "100px",
-                    lg: "90px",
-                    md: "70px",
-                    sm: "45px",
-                    xs: "35px",
-                  }, // Adjusts font size for different screens
-                  fontWeight: 600,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textTransform: "uppercase",
-                  paddingBottom: { xl: 12, lg: 5, md: 4, sm: 3, xs: 2 },
-                  position: "relative", // Ensures alignment with image
-                  zIndex: 1, // Keeps heading above the image
-                  margin: "0 auto",
-                  display: "flex",
-                  justifyContent: "center", pt:"50px"
-                }}
-                style={{
-                  WebkitTextStroke: "1px white",
-                  WebkitTextFillColor: "#F9BF29",
-                }}
-              >
-                Team
+        <Typography
+          variant="h1"
+          className="heading-font"
+          sx={{
+            fontSize: {
+              xl: "100px",
+              lg: "90px",
+              md: "70px",
+              sm: "45px",
+              xs: "35px",
+            }, // Adjusts font size for different screens
+            fontWeight: 600,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textTransform: "uppercase",
+            paddingBottom: { xl: 12, lg: 5, md: 4, sm: 3, xs: 2 },
+            position: "relative", // Ensures alignment with image
+            zIndex: 1, // Keeps heading above the image
+            margin: "0 auto",
+            display: "flex",
+            justifyContent: "center", pt: "50px"
+          }}
+          style={{
+            WebkitTextStroke: "1px white",
+            WebkitTextFillColor: "#F9BF29",
+          }}
+        >
+          Team
 
-              </Typography>
+        </Typography>
         <Grid container justifyContent={"center"} gap={"40px"}>
-          
+
           <Grid item md={8} sm={12} xs={12}>
             <Grid container spacing={4} justifyContent={"space-between"}>
               {teamData.map((item, i) => (
@@ -714,11 +756,32 @@ function Character() {
                         gap: "5px",
                         backgroundColor: "#CA6680",
                         p: 2,
-                        borderRadius:"0 0 20px 20px"
+                        borderRadius: "0 0 20px 20px"
                       }}
                     >
-                      <Typography variant="caption" fontSize="25px" fontWeight="bold">{item.name}</Typography>
-                      <Typography variant="caption" fontSize="16px">
+                      <Typography
+                        variant="caption"
+                        fontWeight="bold"
+                        sx={{
+                          fontSize: {
+                            lg: "25px", // Large screens
+                            md: "18px", // Medium screens
+                            sm: "16px", // Small screens
+                            xs: "16px", // Extra small screens
+                          },
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+                      <Typography variant="caption" sx={{
+                        fontSize: {
+                          lg: "16px", // Large screens
+                          md: "12px", // Medium screens
+                          sm: "10px", // Small screens
+                          xs: "10px", // Extra small screens
+                        },
+                        textAlign: "center"
+                      }}>
                         {item.profession}
                       </Typography>
                       <Box
@@ -730,7 +793,15 @@ function Character() {
                         }}
                         onClick={() => handleEmailClick(item.email)}
                       >
-                        <Typography variant="caption" fontSize="13px" color="#78C1FF">{item.email}</Typography>
+                        <Typography variant="caption" color="#78C1FF"
+                          sx={{
+                            fontSize: {
+                              lg: "13px", // Large screens
+                              md: "10px", // Medium screens
+                              sm: "8px", // Small screens
+                              xs: "8px", // Extra small screens
+                            },
+                          }}> {item.email}</Typography>
                       </Box>
                     </Box>
                   </Box>

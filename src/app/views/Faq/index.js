@@ -328,7 +328,7 @@ function FAQ() {
     }
 
     let cart = localStorage.getItem('cartData')
-    if(cart){
+    if (cart) {
       cart = JSON.parse(cart)
       if (cart?.length > 0) {
         setCartItems(cart)
@@ -597,36 +597,276 @@ function FAQ() {
             </Grid>
           </Container>
         </Box> */}
-         <Box
-          component={"section"}
+        <Box
           sx={{
-            background: Colors.lightPurple,
-            backgroundImage: { md: selected == "merchandise" ? `url(${Images.merchBg})` : "none", sm: "none", xs: "none" },
-            py: "80px",
-            height: { md: selected == "merchandise" ? "770px" : "100%", sm: "100%", xs: "100%" },
+            backgroundImage: `url(${Images.bannerBg})`,
+
             backgroundSize: "cover",
+            backgroundPosition: "bottom center",
+            width: "100%",
+            height: { md: "578px", xs: "490px" },
+            position: "relative", // Ensure child content is positioned relative to this container
+            overflow: "hidden", // Prevent content from going outside
           }}
         >
-          <Container>
-          <Grid container justifyContent={'center'} p={4}>
-          
-        </Grid>
-        <Typography
-                variant="h3"
+          {/* Right-side Image */}
+          <Box
+            sx={{
+              margin: "0 auto",
+              width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
+              height: "100%", // Full height of the parent container
+              backgroundImage: `url(${Images.mainFaq})`,
+              backgroundSize: { md: "contain", xl: "contain", lg: "contain", xs: "cover", sm: "contain" },
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center", // Ensures the image is aligned at the bottom
+
+            }}
+          />
+        </Box>
+
+
+
+        <Grid
+          container
+          sx={{
+            backgroundColor: "#CA6680",
+            minHeight: "40vh",
+            padding: "5rem 0  ",
+            margin: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Grid
+            item
+            xs={12}
+            md={8}
+            sx={{
+              padding: { xs: 2, sm: 3, md: 4 },
+              position: "relative",
+            }}
+          >
+            {/* Centered Heading with Images */}
+            <Box
+              sx={{
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 2,
+                marginBottom: 2, // Add some space below heading
+              }}
+            >
+              {/* Left Image */}
+              <Box
+                component="img"
+                src={Images.character16} // Replace with actual left image URL
+                alt="Left Decorative Image"
                 sx={{
-                  textAlign: "center",
-                  fontSize: { md: "58px", xs: "40px" },
-                  fontWeight: 900,
-                  color: Colors.primary
+                  width: { xs: "50px", sm: "60px", md: "80px" },
+                  height: "auto",
+                  paddingRight: 3,
+                }}
+              />
+              {/* Heading */}
+              <Typography
+                variant="h1"
+                className="heading-font"
+                sx={{
+                  fontSize: {
+                    xl: "100px",
+                    lg: "90px",
+                    md: "80px",
+                    sm: "70px",
+                    xs: "60px",
+                  },
+                  fontWeight: 600,
+                  color: "#F9BF29",
+                  textTransform: "uppercase",
+                }}
+                style={{
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
                 }}
               >
-                FAQ's & Reviews
+                Faq’s
               </Typography>
-          </Container>
-        </Box> 
-        
-        
-              {/* <Box
+              {/* Right Image */}
+              <Box
+                component="img"
+                src={Images.character16} // Replace with actual right image URL
+                alt="Right Decorative Image"
+                sx={{
+                  width: { xs: "50px", sm: "70px", md: "80px" },
+                  height: "auto",
+                  paddingLeft: 2,
+                }}
+              />
+            </Box>
+            {/* FAQ Image Below Heading */}
+            <Box
+              component="img"
+              src={Images.faq1} // Replace with actual image URL
+              alt="FAQ Decorative Image"
+              sx={{
+                width: { xs: "40px", sm: "60px", md: "120px" }, // Smaller size
+                height: "auto",
+                marginTop: 2, // Space between heading and image
+                paddingRight: { xs: 1, sm: 2, md: 10 }, // Left padding for alignment
+                display: "block", // Ensures the image aligns left
+              }}
+            />
+          </Grid>
+
+
+
+          <Grid container justifyContent="center" alignItems="center">
+            <Grid item md={9} sm={12} xs={12}>
+              <Grid
+                container
+                rowGap="40px"
+                justifyContent={{ md: "space-between", sm: "center", xs: "center" }}
+                sx={{
+                  backgroundColor: "#6791DE", // Entire box background color
+                  opacity: 0.8,
+                  borderRadius: "20px",
+                  p: "40px",
+                }}
+              >
+                {/* FAQ Section */}
+                <Box
+                  sx={{
+                    width: "100%",
+                    padding: "50px 30px 20px 30px",
+                    border: "1px solid #FFFFFF",
+                  }}
+                >
+                  <Grid container spacing={2} direction="column">
+                    {faqData.map((faq, index) => (
+                      <Grid
+                        item
+                        xs={12}
+                        key={index}
+                        sx={{
+                          border: "none",
+                        }}
+                      >
+                        <Accordion
+                          sx={{
+                            backgroundColor: "transparent",
+                            border: "none",
+                            boxShadow: "none", // Removes all box shadows
+                            "&:before": {
+                              display: "none", // Removes the default Mui divider
+                            },
+                            "& .MuiAccordionSummary-expandIconWrapper": {
+                              color: "#FFFFFF", // Icon color set to white
+                            },
+                            borderBottom: "1px solid #FFFFFF", // White line at the bottom
+                          }}
+                        >
+                          <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls={`panel${index}-content`}
+                            id={`panel${index}-header`}
+                          >
+                            <Typography
+                              className="para-text"
+                              sx={{
+                                color: "#FFFFFF",
+                                fontSize: "16px",
+                                maxWidth: "400px", // Restrict the width of the text
+                                whiteSpace: "normal", // Allow text to wrap
+                              }}
+                            >
+                              {faq.question}
+                            </Typography>
+                          </AccordionSummary>
+                          <AccordionDetails>
+                            <Typography
+                              className="para-text"
+                              sx={{
+                                color: "#FFFFFF9E",
+                                fontSize: "12px",
+                                maxWidth: "400px", // Restrict the width of the text
+                                whiteSpace: "normal", // Allow text to wrap
+                              }}
+                            >
+                              {faq.answer}
+                            </Typography>
+                          </AccordionDetails>
+                        </Accordion>
+                      </Grid>
+                    ))}
+                  </Grid>
+
+                  {/* Additional Content */}
+                  <Box
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      marginTop: "30px", // Space between FAQ and additional content
+                      gap: "20px", // Space between elements
+                    }}
+                  >
+                    <Typography variant="h2" className='heading-font' sx={{ color: "white", fontSize: "24px" }}>
+                      Still Have Questions?
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      className='para-text'
+                      sx={{ color: "white", fontSize: "16px", maxWidth: "600px" }}
+                    >
+                      Contact our customer services for more assistance.
+                    </Typography>
+                  </Box>
+                  <Button
+                    variant="contained"
+                    className="para-text"
+                    sx={{
+                      backgroundColor: "#FF9D04",
+                      color: "white",
+                      fontWeight: "bold",
+                      padding: "4px 35px",
+                      marginTop: "30px",
+                      border: "none", // Remove any default border
+                      textTransform: "none", // Prevent text from transforming to uppercase (optional)
+                      fontSize: "18px"
+                    }}
+
+                  >
+                    Contact
+                  </Button>
+
+                </Box>
+
+
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Box
+  component="img"
+  src={Images.reading} // Replace with actual image URL
+  alt="FAQ Decorative Image"
+  sx={{
+    width: { xs: "40px", sm: "60px", md: "140px" }, // Smaller size
+    height: "auto",
+    marginTop: 6, // Space between heading and image
+    paddingRight: { xs: 1, sm: 2, md: 10 }, // Right padding for alignment
+    display: "block", // Ensures the image aligns properly
+    marginLeft: "auto", // Pushes the image to the right
+    marginRight: 0, // Ensures no extra space on the right
+  }}
+/>
+
+
+        </Grid>
+
+
+        {/* <Box
           component={"section"}
           sx={{
             background: Colors.whiteblue,
@@ -717,207 +957,7 @@ function FAQ() {
             </Grid>
           </Grid>
         </Box> */}
-       
-        <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
-          <Grid container justifyContent={"center"} alignItems={"center"} mb={5}>
-            <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.shineStar}
-                sx={{
-                  width: "70px",
-                  heigth: "70px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
-            <Grid item md={5.5}>
-              <Typography
-                variant="h3"
-                sx={{
-                  textAlign: "center",
-                  fontSize: { md: "58px", xs: "40px" },
-                  fontWeight: 900,
-                  color: Colors.primary
-                }}
-              >
-                FAQ's
-              </Typography>
-            </Grid>
-            <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.shineStar}
-                sx={{
-                  width: "70px",
-                  heigth: "70px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
 
-          </Grid>
-          <Grid container spacing={2} sx={{ padding: '20px' }}>
-            {faqData.map((faq, index) => (
-              <Grid item xs={12} sm={6} key={index}>
-                <Accordion sx={{ backgroundColor: 'transparent' }}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls={`panel${index}-content`}
-                    id={`panel${index}-header`}
-                  >
-                    <Typography sx={{ color: 'black', fontSize: '12px' }}>{faq.question}</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography sx={{ color: 'black', fontSize: '12px' }}>{faq.answer}</Typography>
-                  </AccordionDetails>
-                </Accordion>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-        <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
-          <Grid container justifyContent={"center"} alignItems={"center"} mb={5}>
-            <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.shineStar}
-                sx={{
-                  width: "70px",
-                  heigth: "70px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
-            <Grid item md={5.5}>
-              <Typography
-                variant="h3"
-                sx={{
-                  textAlign: "center",
-                  fontSize: { md: "58px", xs: "40px" },
-                  fontWeight: 900,
-                  color: Colors.primary
-                }}
-              >
-                What People Are Saying
-              </Typography>
-            </Grid>
-            <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.shineStar}
-                sx={{
-                  width: "70px",
-                  heigth: "70px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
-
-          </Grid>
-          <Box sx={{ width: '95%', margin: '0 auto' }}>
-            <Grid item md={11} sm={11} xs={11}>
-              <Swiper
-                loop={true}
-                spaceBetween={10}
-                slidesPerView={3}
-                autoplay={{
-                  delay: 2500,
-                  disableOnInteraction: false,
-                }}
-                modules={[Autoplay, Pagination, Navigation]}
-                breakpoints={{
-                  320: {
-                    slidesPerView: 1
-                  },
-                  786: {
-                    slidesPerView: 2
-                  },
-                  1080: {
-                    slidesPerView: 3
-                  }
-                }}
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => console.log(swiper)}
-              >
-                {reviewBoxes?.map((item, ind) => (
-                  <SwiperSlide key={ind}>
-                    <Box
-                      sx={{
-                        p: 4,
-                        borderRadius: "15px",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "10px",
-                        backgroundColor: '#021b51',
-                        height: '180px'
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "flex-start",
-                          gap: "12px"
-                        }}
-                      >
-                        <Avatar
-                          sx={{
-                            width: 64,
-                            height: 64
-                          }}
-                          src={item.profile}
-                          alt={item.name}
-                        />
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column"
-                          }}
-                        >
-                          <Typography
-                            sx={{
-
-                              display: 'flex',
-                              alignItems: "center",
-                              gap: "8px",
-                              fontWeight: 600,
-                              color: 'white'
-                            }}
-                          >
-                            {item?.name}
-                            <Typography
-                              variant='body2'
-                              sx={{ fontWeight: 400 }}
-                            >
-                              {item.designation}
-                            </Typography>
-                          </Typography>
-                          <Box
-                            sx={{
-                              display: "flex",
-                            }}
-                          >
-
-                          </Box>
-                          <Rating name="read-only" value={item?.rating} sx={{ borderColor: 'white' }} readOnly />
-                        </Box>
-                      </Box>
-                      <Typography
-                        variant={"body2"}
-                        sx={{
-
-                          color: 'white'
-                        }}
-                      >
-                        {item.comment}
-                      </Typography>
-                    </Box>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </Grid>
-          </Box>
-        </Box>
       </Box>
     </>
   )

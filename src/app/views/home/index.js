@@ -30,8 +30,6 @@ import haveforyou from "../../assets/images/haveforyou.png"
 import shopFrame from "../../assets/images/Shop-Frame.png"
 import cloudImg from "../../assets/images/cloud.png"
 import reviewSection from "../../assets/images/review-section.png"
-import Character1 from "../../assets/images/Character1.png"
-import Character2 from "../../assets/images/Character2.png"
 import forwardArrow from "../../assets/images/forward-arrow.png"
 import backwardArrow from "../../assets/images/backward-arrow.png"
 import Aos from 'aos';

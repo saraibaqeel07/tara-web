@@ -99,6 +99,28 @@ const Images = {
   character15:require("./character15.png"),
   character16:require("./Character16.png"),
   character14:require("./character14.png"),
+  character17:require("./Character17.png"),
+  watch1:require("./watch1.png"),
+  heart:require("./heart.png"),
+  watchBackground:require("./watch-background.png"),
+  watchBackground2:require("./watch-background2.png"),
+  forwardArrow:require("./forward-arrow.png"),
+  backwardArrow:require("./backward-arrow.png"),
+  collab1:require("./collab1.png"),
+  collab2:require("./collab2.png"),
+  hand:require("./hand.png"),
+ Character1:require( "../../assets/images/Character1.png"),
+ Character2:require( "../../assets/images/Character2.png"),
+ Character3:require( "../../assets/images/character3.png"),
+ Character4:require( "../../assets/images/Character4.png"),
+ taraImage:require( "../../assets/images/tara-pic.png"),
+ mainFaq:require( "../../assets/images/main-faq.png"),
+ faq1:require( "../../assets/images/faq-1.png"),
+ reading:require( "../../assets/images/reading.png"),
+ 
+
+
+
 
 }
 
