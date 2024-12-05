@@ -94,7 +94,12 @@ const Images = {
   rainbow:require("./rainbow.png"),
   hand:require("./hand.png"),
   hearts:require("./hearts.png"),
-  contactBrothers:require("./contactBrothers.png")
+  contactBrothers:require("./contactBrothers.png"),
+  character13:require("./Character13.png"),
+  character15:require("./character15.png"),
+  character16:require("./Character16.png"),
+  character14:require("./character14.png"),
+
 }
 
 export default Images;

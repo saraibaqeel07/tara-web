@@ -704,11 +704,12 @@ function Shop() {
       >
 
 
-        <Box
+      <Box
           sx={{
             backgroundImage: `url(${Images.bannerBg})`,
+
             backgroundSize: "cover",
-            backgroundPosition: "center center",
+            backgroundPosition: "bottom center",
             width: "100%",
             height: { md: "578px", xs: "490px" },
             position: "relative", // Ensure child content is positioned relative to this container
@@ -718,19 +719,14 @@ function Shop() {
           {/* Right-side Image */}
           <Box
             sx={{
-              position: "absolute",
-              boxShadow: "none",
-              border: "none",
-              bottom: 0,
-              left: "50%", // Center the image horizontally
-              transform: "translateX(-50%)", // Adjust to ensure exact centering
-              width: { md: "80%", xl: "35%", lg: "40%", sm: "70%", xs: "100%" }, // Full width of the parent container
+              margin: "0 auto",
+              width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
               height: "100%", // Full height of the parent container
               backgroundImage: `url(${shopImg1})`,
-              backgroundSize: "cover", // Ensure image covers the area
+              backgroundSize: { md: "contain", xl: "contain", lg: "contain" ,xs:"cover" ,sm:"contain"},
               backgroundRepeat: "no-repeat",
-              backgroundPosition: "center center", // Ensures the image is centered both horizontally and vertically
-              display: "block", // Ensure the image is always visible
+              backgroundPosition: "center", // Ensures the image is aligned at the bottom
+           
             }}
           />
         </Box>
