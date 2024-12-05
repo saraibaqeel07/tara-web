@@ -30,8 +30,6 @@ import haveforyou from "../../assets/images/haveforyou.png"
 import shopFrame from "../../assets/images/Shop-Frame.png"
 import cloudImg from "../../assets/images/cloud.png"
 import reviewSection from "../../assets/images/review-section.png"
-import Character1 from "../../assets/images/Character1.png"
-import Character2 from "../../assets/images/Character2.png"
 import forwardArrow from "../../assets/images/forward-arrow.png"
 import backwardArrow from "../../assets/images/backward-arrow.png"
 import Aos from 'aos';
@@ -1394,7 +1392,7 @@ function Home() {
   >
     <CardMedia
       component={"img"}
-      src={Character1}
+      src={Images.Character1}
       sx={{
         width: { xs: "180px", sm: "280px", md: "500px", lg: "700px" }, // Adjust width for smaller screens
         height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
@@ -1415,7 +1413,7 @@ function Home() {
   >
     <CardMedia
       component={"img"}
-      src={Character2}
+      src={Images.Character2}
       sx={{
         width: { xs: "180px", sm: "280px", md: "550px", lg: "750px" }, // Adjust width for smaller screens
         height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens

@@ -30,7 +30,12 @@ function Watch() {
   const { state } = useLocation()
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
+  const [activeIndex, setActiveIndex] = useState(0); // Track the active index
 
+  // Function to handle the change in active slide
+  const handleBeforeChange = (current, next) => {
+    setActiveIndex(next); // Update active index when the slide changes
+  };
   console.log(cartVisible, 'cartVisible');
 
   const firebaseConfig = {
@@ -168,7 +173,7 @@ function Watch() {
     },
     {
       image: Images.sliderImage4,
-      title: "Heart Warming Sibling Race",
+      title: "Sibling Race",
       url: 'https://www.youtube.com/watch?v=sG8hhCjMOXo'
     },
     {
@@ -598,346 +603,567 @@ function Watch() {
           </Container>
         </Box> */}
          <Box
-          component={"section"}
           sx={{
-            background: Colors.lightPurple,
-            backgroundImage: { md: selected == "merchandise" ? `url(${Images.merchBg})` : "none", sm: "none", xs: "none" },
-            py: "80px",
-            height: { md: selected == "merchandise" ? "770px" : "100%", sm: "100%", xs: "100%" },
+            backgroundImage: `url(${Images.bannerBg})`,
+
             backgroundSize: "cover",
+            backgroundPosition: "bottom center",
+            width: "100%",
+            height: { md: "520px", xs: "490px" },
+            position: "relative", // Ensure child content is positioned relative to this container
+            overflow: "hidden", // Prevent content from going outside
           }}
         >
-          <Container>
-          
+          {/* Right-side Image */}
+          <Box
+            sx={{
+              margin: "30px auto",
+              
+              width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
+              height: "100%", // Full height of the parent container
+              backgroundImage: `url(${Images.watch1})`,
+              backgroundSize:"contain",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center", // Ensures the image is aligned at the bottom
+           
+            }}
+          />
+        </Box>
+
+        
+<Grid
+  container
+  sx={{
+    backgroundImage: `url(${Images.watchBackground})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    minHeight: "40vh",
+    padding: {md:"5rem 0 0 0",sm:"1rem 0" },
+    margin: 0,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundAttachment: "fixed", // Fix background during scroll
+   
+  }}
+>
+<Grid
+    item
+    xs={12}
+    md={8}
+    sx={{
+      position: "relative",
+    }}
+  >
+    <Box
+      sx={{
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center", // Center the text horizontally
+        gap: 2,
+        marginBottom: 0,
+      }}
+    >
+      {/* Centered Text */}
+      <Typography
+        variant="h1"
+        className="heading-font"
+        sx={{
+          fontSize: { xs: "30px", sm: "60px", md: "80px" }, // Smaller font size on extra small screens
+          fontWeight: 600,
+          color: "#F9BF29",
+          textTransform: "uppercase",
+          textAlign: "center", // Center the text within the box
+          flex: 1, // Allow the text to take up remaining space
+        }}
+        style={{
+          WebkitTextStroke: "1px white",
+          WebkitTextFillColor: "#F9BF29",
+        }}
+      >
+        Youtube
+      </Typography>
+
+      {/* Right Side: Image (Hidden on small screens) */}
+      <Box
+        component="img"
+        src={Images.heart}
+        alt="Right Decorative Image"
+        sx={{
+          width: { xs: "40px", sm: "60px", md: "80px" },
+          height: "auto",
+          paddingLeft: 2,
+          display: { xs: "none", sm: "block" }, // Hide the image on xs screens, display it on sm and larger
+        }}
+      />
+    </Box>
+  </Grid>
+
+
+    {selected === "episode" ? (
+    <Box
+      component={"section"}
+      sx={{
+        height: "100%",
+        width: "100%",
+        py: "72px",
+      }}
+    >
+      <Slider
+        dots={false}
+        arrows={true}
+        prevArrow={
+          <Box
+            sx={{
+              position: "absolute",
+              left: 20,
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer",
+              zIndex: 10,
+            }}
+            onClick={() => {}}
+          >
+            <img
+              src={Images.backwardArrow}
+              alt="Previous"
+              style={{ width: "60px", height: "40px" }}
+            />
+          </Box>
+        }
+        nextArrow={
+          <Box
+            sx={{
+              position: "absolute",
+              right: 20,
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer",
+            }}
+            onClick={() => {}}
+          >
+            <img
+              src={Images.forwardArrow}
+              alt="Next"
+              style={{ width: "60px", height: "40px" }}
+            />
+          </Box>
+        }
+        infinite={true}
+        speed={500}
+        slidesToShow={3}
+        slidesToScroll={1}
+        adaptiveHeight={true}
+        variableWidth={false}
+        centerMode={true}
+        responsive={[
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: false,
+              adaptiveHeight: true,
+              variableWidth: false,
+              centerMode: true,
+              arrows: true,
+            },
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: false,
+              centerMode: true,
+              variableWidth: false,
+              adaptiveHeight: true,
+              arrows: true,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: false,
+              centerMode: true,
+              variableWidth: false,
+              adaptiveHeight: true,
+              arrows: true,
+            },
+          },
+        ]}
+        beforeChange={handleBeforeChange} // Update active index on slide change
+      >
+        {sliderData.map((item, i) => (
+          <Box
+            key={i}
+            sx={{
+              p: 3,
+              borderRadius: "20px",
+              cursor: "pointer",
+              maxHeight: "400px",
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor:  "transparent", // Change background color on active slide
+              transition: "background-color 0.3s ease", // Smooth transition for background color
+             
+            }}
+            component={"div"}
+            onClick={() => window.open(item?.url, "_blank")}
+          >
+            <CardMedia
+              component={"img"}
+              src={item.image}
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: {xl:"none"},
+                borderTopLeftRadius: "20px",
+                borderTopRightRadius: "20px",
+                maxHeight: "250px",
+              }}
+            />
             <Box
               sx={{
+                backgroundColor: activeIndex === i ? "#FF9D04" :"#5B73AD",
+                textAlign: "center",
+                borderBottomLeftRadius: "20px",
+                borderBottomRightRadius: "20px",
+                p: 2,
                 display: "flex",
-                flexDirection: "column",
-                gap: "40px"
+                justifyContent: "center",
+                alignItems: "center",
+                height: "70px",
+                overflow: "hidden",
               }}
             >
-              <Box
-                sx={{
-                  textAlign: "center",
-                  mt:5
-                }}
-              >
-                <Typography
-                  variant='h3'
-                  sx={{
-                    fontSize: { md: "44px", xs: "32px" },
-                    fontWeight: 900
-                  }}
-                >
-                  Watch Islamic Halal Cartoon <span style={{ color: Colors.purple }}>Shine And Tara</span>
-                  <p>With One Click </p> 
-                </Typography>
-                
-              </Box>
-              <Box
-              component={'div'}
-              onClick={() => window.open('https://www.youtube.com/channel/UCDPkatnNvtWdiITSvzneBEw', '_blank')}
-                sx={{
-                  textAlign: "center",
-                  mt:5,
-                  cursor:'pointer'
-                }}
-              >
-                <Typography
-                  variant='h3'
-                  sx={{
-                    fontSize: { md: "44px", xs: "32px" },
-                    fontWeight: 900,
-                    color:'black',
-                    display:'flex',
-                    alignItems:'center',
-                    justifyContent:'center'
-                  }}
-                >
-                <YoutubeRounded  />&nbsp; YouTube
-                </Typography>
-                
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "20px"
-                }}
-              >
-                {/* {selected == "episode" ? (
-                  <Fragment>
-                    <Typography>
-                      Come along with Tara and Shine as they explore enchanting locations and go about their daily activities, discovering important lessons about Islam, being good people, and the importance of family.In their exciting adventures, Tara and Shine visit magical places and experience everyday situations that teach them valuable things. They learn about Islamic teachings, how to be kind and do the right things, and why family is so special.
-                    </Typography>
-                    <Typography>
-                      This amazing series is made to be fun and educational for kids. Tara and Shine's journeys will help children understand Islamic values, learn good morals, and appreciate the love within their familie.Get ready to join Tara and Shine on their wonderful journey, where they learn, grow, and have lots of fun!
-                    </Typography>
-                  </Fragment>
-                ) : (
-                  <Grid container>
-                    <Grid item md={7}>
-                      <Typography>
-                        Each episode will provide day-to-day life coloring sheets.
-                        Worksheets - will have all different types of activities, coloring,
-                      </Typography>
-                      <Typography>
-                        Copyright 2024 © All rights Reserved By Shine With Tara Design by Sana Kazmi
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                )} */}
-              </Box>
+              <Typography className="heading-font" sx={{ color: "#fff" }}>
+                {item.title}
+              </Typography>
             </Box>
-          </Container>
-        </Box> 
-        {selected == "episode" ? (
-          <Box
-            component={"section"}
+          </Box>
+        ))}
+      </Slider>
+    </Box>
+  ) : (
+    <>
+      <Box
+        component={"section"}
+        sx={{
+          height: "100%",
+          width: "100%",
+          py: "72px",
+        }}
+      ></Box>
+      <Box
+        component={"section"}
+        id="coloring-section"
+        sx={{
+          height: "100%",
+          width: "100%",
+          py: "72px",
+        }}
+      ></Box>
+    </>
+  )}
+</Grid>
+
+
+
+<Grid
+  container
+  sx={{
+    backgroundImage: `url(${Images.watchBackground2})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    minHeight: "40vh",
+    padding: {md:"5rem 0 0 0",sm:"1rem 0" },
+    margin: 0,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <Grid
+    item
+    xs={12}
+    md={12}  // Full width on medium screens
+    sx={{
+      position: "relative",
+      width: "100%", // Ensure the background color takes full width
+    }}
+  >
+    <Box
+      sx={{
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center", // Center the content (both image and text)
+        gap: 2,
+        marginBottom: 0,
+        width: "100%", // Full width
+      }}
+    >
+      {/* Left Side: Image */}
+      <Box
+        component="img"
+        src={Images.hand}
+        alt="Left Decorative Image"
+        sx={{
+          width: { xs: "40px", sm: "60px", md: "80px" },
+          height: "auto",
+          paddingRight: 2, // Add padding to right side of image
+        }}
+      />
+
+      {/* Right Side: Text */}
+      <Typography
+        variant="h1"
+        className="heading-font"
+        sx={{
+          fontSize: { xs: "30px", sm: "60px", md: "80px" }, // Adjust size for medium screens
+          fontWeight: 600,
+          color: "#F9BF29",
+          textTransform: "uppercase",
+          textAlign: "center", // Center the text
+          flex: 1, // Allow the text to take up remaining space
+          width: "100%", // Ensure text takes full width in medium and larger screens
+          paddingRight: "25px",
+        }}
+        style={{
+          WebkitTextStroke: "1px white",
+          WebkitTextFillColor: "#F9BF29",
+        }}
+      >
+        COLLABORATION
+      </Typography>
+    </Box>
+  </Grid>
+
+  <Grid
+  container
+  item
+  justifyContent="center"
+  sx={{
+    display: "flex",
+    gap: 2, // Gap between the two images
+    justifyContent: "center", // Center the images
+    py: { md: 15, xs: 0, sm: 0 },
+  }}
+>
+  {/* First Image */}
+  <Grid
+    item
+    xs={8} // Full width in extra-small screens
+    sm={5} // Adjust width for small screens
+    md={5} // Adjust width for medium screens
+    xl={4}
+    sx={{ display: "flex", justifyContent: "center" }}
+  >
+    <Box
+      component="img"
+      src={Images.collab2} // Replace with your first image
+      alt="Image 1"
+      sx={{
+        width: "100%",
+        height: "auto",
+        objectFit: "contain",
+      }}
+    />
+  </Grid>
+
+  {/* Second Image */}
+  <Grid
+    item
+    xs={8} // Full width in extra-small screens
+    sm={5} // Adjust width for small screens
+    md={5} // Adjust width for medium screens
+    xl={4}
+
+    sx={{ display: "flex", justifyContent: "center" }}
+  >
+    <Box
+      component="img"
+      src={Images.collab1} // Replace with your second image
+      alt="Image 2"
+      sx={{
+        width: "100%",
+        height: "auto",
+        objectFit: "contain",
+      }}
+    />
+  </Grid>
+</Grid>
+
+</Grid>
+
+<Box
+  component={"section"}
+  sx={{
+    position: "relative",
+    backgroundColor: "#FF9D04",
+    width: "100%",
+    height: "auto",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+    padding: { xs: "4rem 0", sm: "10rem 0", md: "10rem 0", xl: "15rem 0" },
+  }}
+>
+  {/* Left Background Image */}
+  <Box
+    sx={{
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      zIndex: 0,
+      display: "block",
+    }}
+  >
+    <CardMedia
+      component={"img"}
+      src={Images.Character3}
+      sx={{
+        width: { xs: "180px", sm: "280px", md: "380px", lg: "500px" },
+        height: { xs: "180px", sm: "180px", md: "650px", lg: "650px" },
+        objectFit: "cover",
+      }}
+    />
+  </Box>
+
+  {/* Right Background Image */}
+  <Box
+    sx={{
+      position: "absolute",
+      bottom: 0,
+      right: 0,
+      zIndex: 0,
+      display: "block",
+    }}
+  >
+    <CardMedia
+      component={"img"}
+      src={Images.Character4}
+      sx={{
+        width: { xs: "180px", sm: "280px", md: "500px", lg: "750px" },
+        height: { xs: "180px", sm: "180px", md: "650px", lg: "650px" },
+        objectFit: "cover",
+      }}
+      />
+  </Box>
+
+  {/* Small Centered Image on Right */}
+  <Box
+    sx={{
+      position: "absolute",
+      
+      right: "3%", // Adjust spacing from the right
+     display:"flex", alignItems:"center",
+      zIndex: 1,
+    }}
+  >
+    <CardMedia
+      component={"img"}
+      src={Images.taraImage} // Replace with your small image source
+      alt="Small Image"
+      sx={{
+        display:{sm:"none", xs:"none",md:"block"},
+        width: {  md: "40px", lg: "60px" },
+        height: "auto",
+        objectFit: "contain",
+      }}
+    />
+  </Box>
+
+  {/* Center Content */}
+  <Box
+    sx={{
+      position: "relative",
+      textAlign: "center",
+      zIndex: 1,
+      width: { xs: "90%", sm: "80%", md: "20%", lg: "25%" },
+    }}
+  >
+    <Typography
+      variant="h5"
+      className="para-text"
+      sx={{
+        fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" },
+        fontWeight: 600,
+        textAlign: "center",
+        mb: 2,
+      }}
+    >
+      Subscribe to get information, latest news, and other interesting offers
+      about{" "}
+      <span
+        style={{
+          fontWeight: "bold",
+          WebkitTextStroke: "0.5px white ",
+          WebkitTextFillColor: "#3D5A98",
+        }}
+      >
+        Shine With Tara
+      </span>
+    </Typography>
+    <TextField
+      className="para-text"
+      placeholder={"Your email"}
+      sx={{
+        background: Colors.white,
+        borderRadius: "4px",
+        width: "100%",
+        "& fieldset": {
+          border: "none",
+        },
+        "& .MuiOutlinedInput-root": {
+          paddingRight: 0.5,
+        },
+        "& .MuiOutlinedInput-input": {
+          color: `${Colors.primary} !important`,
+          fontSize: { xs: "14px", sm: "16px", md: "18px" },
+        },
+      }}
+      InputProps={{
+        endAdornment: (
+          <Button
+            className="para-text"
             sx={{
-              background: Colors.lightPurple,
-              height: "100%",
-              width: "100%",
-              py: "72px"
+              color: `${Colors.white} !important`,
+              backgroundColor: `#5B73AD`,
+              px: { xs: 2, sm: 4 },
+              py: 1.5,
+              textTransform: "uppercase",
+              fontSize: { xs: "12px", sm: "14px", md: "16px" },
+              "&:hover": {
+                backgroundColor: `#5B73AD`,
+                color: `${Colors.white}`,
+              },
             }}
           >
-            <Slider
-              dots={false}
-              infinite={true}
-              speed={500}
-              slidesToShow={3}
-              slidesToScroll={1}
-              adaptiveHeight={true}
-              variableWidth={false}
-              centerMode={true}
-              responsive={[
-                {
-                  breakpoint: 1024,
-                  settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    dots: false,
-                    adaptiveHeight: true,
-                    variableWidth: false,
-                    centerMode: true,
-                  }
-                },
-                {
-                  breakpoint: 768,
-                  settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    dots: false,
-                    centerMode: true,
-                    variableWidth: false,
-                    adaptiveHeight: true
-                  }
-                },
-                {
-                  breakpoint: 480,
-                  settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    dots: false,
-                    centerMode: true,
-                    variableWidth: false,
-                    adaptiveHeight: true
-                  }
-                }
-              ]}
-            >
-              {sliderData.map((item, i) => (
-                <Box
-                  key={i}
-                  sx={{ p: 3, borderRadius: '20px', cursor: 'pointer' }}
-                  component={'div'}
-                  onClick={() => window.open(item?.url, '_blank')}
-                >
-                  <CardMedia
-                    component={"img"}
-                    src={item.image}
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "contain",
-                      borderTopLeftRadius: '20px',
-                      borderTopRightRadius: '20px'
-                    }}
-                  />
-                  <Box
-                    sx={{
-                      background: Colors.yellow,
-                      textAlign: "center",
-                      borderBottomLeftRadius: '20px',
-                      borderBottomRightRadius: '20px',
-                      p: 3,
-                      // mx: item.title == "Dealing With Sibling"
-                      //   ? "32px" : item.title == "5 Pillars With The Neighbors"
-                      //     ? "30px" : "31px"
-                    }}
-                  >
-                    <Typography>
-                      {item.title}
-                    </Typography>
-                  </Box>
-                </Box>
-              ))}
-            </Slider>
-          </Box>
-        ) : (
-          <>
-            <Box
-              component={"section"}
-              sx={{
-                background: Colors.whiteblue,
-                height: "100%",
-                width: "100%",
-                py: "72px"
-              }}
-            >
-              
-           
-            </Box>
-           
-            <Box
-              component={"section"}
-              id='coloring-section'
-              sx={{
-                background: Colors.whiteblue,
-                height: "100%",
-                width: "100%",
-                py: "72px"
-              }}
-            >
-           
-             
-            </Box>
-      
-          </>
-        )}
-        <Box
-          component={"section"}
-          sx={{
-            background: Colors.lightPurple,
-            py: "80px"
-          }}
-        >
-          <Container>
-            <Grid container justifyContent={"space-between"} alignItems={"center"} spacing={'10px'}>
-              <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-                <CardMedia
-                  component={"img"}
-                  src={Images.shineStar}
-                  sx={{
-                    width: "70px",
-                    heigth: "70px",
-                    objectFit: "contain"
-                  }}
-                />
-              </Grid>
-              <Grid item md={5.5}>
-                <Typography
-                  variant='h3'
-                  sx={{
-                    fontSize: { md: "48px", sm: "40px", xs: "32px" },
-                    fontWeight: 600,
-                    textAlign: "center"
-                  }}
-                >
-                  Collaborating With
-                </Typography>
-              </Grid>
-              <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-                <CardMedia
-                  component={"img"}
-                  src={Images.shineStar}
-                  sx={{
-                    width: "70px",
-                    heigth: "70px",
-                    objectFit: "contain"
-                  }}
-                />
-              </Grid>
-              <Grid item md={6}>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    textAlign: "center",
-                    fontSize: { md: "45px", xs: "30px" },
-                    fontWeight: 900,
-                    color: Colors.primary
-                  }}
-                >
-                  Islamic Relief Canada
-                </Typography>
-                <Box>
-            </Box>
-            <Box>
-              <CardMedia
-                component={"img"}
-                src={Images.islamicRelief}
-                sx={{
-                  width: "100%",
-                  height: { md: "350px", xs: "150px" },
-                  objectFit: "contain"
-                }}
-              />
-            </Box>
-              </Grid>
-              <Grid item md={6}>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    textAlign: "center",
-                    fontSize: { md: "45px", xs: "30px" },
-                    fontWeight: 900,
-                    color: Colors.primary
-                  }}
-                >
-                  Kalam Kids
-                </Typography>
-                <Box>
-            </Box>
-            <Box>
-              <CardMedia
-                component={"img"}
-                src={Images.islamicRelief}
-                sx={{
-                  width: "100%",
-                  height: { md: "350px", xs: "150px" },
-                  objectFit: "contain"
-                }}
-              />
-              Coming Soon
-            </Box>
-              </Grid>
-            </Grid>
-          
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Grid container justifyContent={"center"} lg={6} md={6} sm={12}>
-                <Button
-                  fullWidth
-                  variant='contained'
-                  sx={{
-                    mt: 2,
-                    py: 2,
-                    px: 1,
-                    textTransform: "capitalize",
-                    fontSize: "18px",
-                    textAlign: 'center'
-                  }}
-                  target='blank'
-                  href='https://www.youtube.com/playlist?list=PLDQNq7EHiGH9lHkx1jYLhwwv4AtCXesaK'
-                >
-                  See More
-                </Button>
-              </Grid>
-            </Box>
-          </Container>
-        </Box> 
+            Subscribe
+          </Button>
+        ),
+      }}
+    />
+  </Box>
+</Box>
+
+
+
+
+
+     
               {/* <Box
           component={"section"}
           sx={{
