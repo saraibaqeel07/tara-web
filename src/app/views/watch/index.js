@@ -639,7 +639,7 @@ function Watch() {
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     minHeight: "40vh",
-    padding: {md:"5rem 0 0 0",sm:"1rem 0" },
+    padding: {md:"5rem 0",sm:"1rem 0" },
     margin: 0,
     display: "flex",
     alignItems: "center",
@@ -651,54 +651,66 @@ function Watch() {
 <Grid
     item
     xs={12}
-    md={8}
+    md={12}
     sx={{
       position: "relative",
     }}
   >
-    <Box
-      sx={{
-        position: "relative",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center", // Center the text horizontally
-        gap: 2,
-        marginBottom: 0,
-      }}
-    >
-      {/* Centered Text */}
-      <Typography
-        variant="h1"
-        className="heading-font"
-        sx={{
-          fontSize: { xs: "30px", sm: "60px", md: "80px" }, // Smaller font size on extra small screens
-          fontWeight: 600,
-          color: "#F9BF29",
-          textTransform: "uppercase",
-          textAlign: "center", // Center the text within the box
-          flex: 1, // Allow the text to take up remaining space
-        }}
-        style={{
-          WebkitTextStroke: "1px white",
-          WebkitTextFillColor: "#F9BF29",
-        }}
-      >
-        Youtube
-      </Typography>
+     <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center", // Center heading with images
+                gap: 2, // Space between images and heading
+                marginBottom: 0, // Space below heading
+              }}
+            >
 
-      {/* Right Side: Image (Hidden on small screens) */}
-      <Box
-        component="img"
-        src={Images.heart}
-        alt="Right Decorative Image"
-        sx={{
-          width: { xs: "40px", sm: "60px", md: "80px" },
-          height: "auto",
-          paddingLeft: 2,
-          display: { xs: "none", sm: "block" }, // Hide the image on xs screens, display it on sm and larger
-        }}
-      />
-    </Box>
+              {/* Heading */}
+              <Typography
+                variant="h1"
+                
+                className="heading-font"
+                sx={{
+                  fontSize: {
+                    xl: "80px",
+                    lg: "70px",
+                    md: "60px",
+                    sm: "50px",
+                    xs: "40px",
+                  }, // Responsive font size
+                  fontWeight: 600,
+                  color: "#F9BF29",
+                  textTransform: "uppercase",
+                position: "relative",
+
+                }}
+                style={{
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
+                }}
+              >
+                Youtube
+              
+              </Typography>
+              {/* Right Image */}
+              <Box
+                component="img"
+                src={Images.heart} // Replace with actual right image URL
+                alt="Right Decorative Image"
+                sx={{
+                  width: { xs: "50px", sm: "60px", md: "80px" },
+                  height: "auto",
+                  position:"absolute",
+                  right: {md:80, xs:0 ,sm:25}, 
+                 
+
+
+                 
+
+                }}
+              />
+            </Box>
   </Grid>
 
 
@@ -886,69 +898,76 @@ function Watch() {
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     minHeight: "40vh",
-    padding: {md:"5rem 0 0 0",sm:"1rem 0" },
+    padding: {md:"5rem 0",sm:"1rem 0" },
     margin: 0,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   }}
 >
-  <Grid
+<Grid
     item
     xs={12}
-    md={12}  // Full width on medium screens
+    md={12}
     sx={{
       position: "relative",
-      width: "100%", // Ensure the background color takes full width
     }}
   >
-    <Box
-      sx={{
-        position: "relative",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center", // Center the content (both image and text)
-        gap: 2,
-        marginBottom: 0,
-        width: "100%", // Full width
-      }}
-    >
-      {/* Left Side: Image */}
-      <Box
-        component="img"
-        src={Images.hand}
-        alt="Left Decorative Image"
-        sx={{
-          width: { xs: "40px", sm: "60px", md: "80px" },
-          height: "auto",
-          paddingRight: 2, // Add padding to right side of image
-        }}
-      />
+     <Box
+     
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center", // Center heading with images
+                gap: 2, // Space between images and heading
+                marginBottom: 0, // Space below heading
+              }}
+            >
+   <Box
+                component="img"
+                src={Images.handImg} // Replace with actual right image URL
+                alt="Right Decorative Image"
+                sx={{
+                  width: { xs: "40px", sm: "50px", md: "80px" },
+                  height: "auto",
+                  position:"absolute",
+                  left: {md:80, xs:0 ,sm:25}, 
 
-      {/* Right Side: Text */}
-      <Typography
-        variant="h1"
-        className="heading-font"
-        sx={{
-          fontSize: { xs: "30px", sm: "60px", md: "80px" }, // Adjust size for medium screens
-          fontWeight: 600,
-          color: "#F9BF29",
-          textTransform: "uppercase",
-          textAlign: "center", // Center the text
-          flex: 1, // Allow the text to take up remaining space
-          width: "100%", // Ensure text takes full width in medium and larger screens
-          paddingRight: "25px",
-        }}
-        style={{
-          WebkitTextStroke: "1px white",
-          WebkitTextFillColor: "#F9BF29",
-        }}
-      >
-        COLLABORATION
-      </Typography>
-    </Box>
+                 
+
+                }}
+              />
+              {/* Heading */}
+              <Typography
+                variant="h1"
+                
+                className="heading-font"
+                sx={{
+                  fontSize: {
+                    xl: "80px",
+                    lg: "70px",
+                    md: "60px",
+                    sm: "50px",
+                    xs: "40px",
+                  }, // Responsive font size
+                  fontWeight: 600,
+                  color: "#F9BF29",
+                  textTransform: "uppercase",
+                position: "relative",
+
+                }}
+                style={{
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
+                }}
+              >
+                Collaboration
+              
+              </Typography>
+              {/* Right Image */}
+           
+            </Box>
   </Grid>
-
   <Grid
   container
   item

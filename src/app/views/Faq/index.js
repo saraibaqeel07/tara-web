@@ -664,9 +664,9 @@ function FAQ() {
                 src={Images.character16} // Replace with actual left image URL
                 alt="Left Decorative Image"
                 sx={{
-                  width: { xs: "50px", sm: "60px", md: "80px" },
+                  width: { xs: "60px", sm: "75px", md: "90px" }, // Adjust image width for different screen sizes
                   height: "auto",
-                  paddingRight: 3,
+                  paddingRight: 2,
                 }}
               />
               {/* Heading */}
@@ -679,7 +679,7 @@ function FAQ() {
                     lg: "90px",
                     md: "80px",
                     sm: "70px",
-                    xs: "60px",
+                    xs: "60px", // Adjust text size for different screen sizes
                   },
                   fontWeight: 600,
                   color: "#F9BF29",
@@ -698,12 +698,13 @@ function FAQ() {
                 src={Images.character16} // Replace with actual right image URL
                 alt="Right Decorative Image"
                 sx={{
-                  width: { xs: "50px", sm: "70px", md: "80px" },
+                  width: { xs: "60px", sm: "75px", md: "90px" }, // Adjust image width for different screen sizes
                   height: "auto",
                   paddingLeft: 2,
                 }}
               />
             </Box>
+
             {/* FAQ Image Below Heading */}
             <Box
               component="img"
@@ -722,7 +723,7 @@ function FAQ() {
 
 
           <Grid container justifyContent="center" alignItems="center">
-            <Grid item md={9} sm={12} xs={12}>
+            <Grid item md={9} sm={11} xs={11}>
               <Grid
                 container
                 rowGap="40px"
@@ -764,6 +765,7 @@ function FAQ() {
                               color: "#FFFFFF", // Icon color set to white
                             },
                             borderBottom: "1px solid #FFFFFF", // White line at the bottom
+                            borderRadius: "0 !important"
                           }}
                         >
                           <AccordionSummary
@@ -848,19 +850,19 @@ function FAQ() {
           </Grid>
 
           <Box
-  component="img"
-  src={Images.reading} // Replace with actual image URL
-  alt="FAQ Decorative Image"
-  sx={{
-    width: { xs: "40px", sm: "60px", md: "140px" }, // Smaller size
-    height: "auto",
-    marginTop: 6, // Space between heading and image
-    paddingRight: { xs: 1, sm: 2, md: 10 }, // Right padding for alignment
-    display: "block", // Ensures the image aligns properly
-    marginLeft: "auto", // Pushes the image to the right
-    marginRight: 0, // Ensures no extra space on the right
-  }}
-/>
+            component="img"
+            src={Images.reading} // Replace with actual image URL
+            alt="FAQ Decorative Image"
+            sx={{
+              width: { xs: "40px", sm: "60px", md: "140px" }, // Smaller size
+              height: "auto",
+              marginTop: 6, // Space between heading and image
+              paddingRight: { xs: 1, sm: 2, md: 10 }, // Right padding for alignment
+              display: "block", // Ensures the image aligns properly
+              marginLeft: "auto", // Pushes the image to the right
+              marginRight: 0, // Ensures no extra space on the right
+            }}
+          />
 
 
         </Grid>
