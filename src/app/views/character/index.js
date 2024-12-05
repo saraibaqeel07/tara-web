@@ -543,7 +543,7 @@ function Character() {
                 position: "relative", // Ensures the image and borders stack properly
                 padding: "7px", // Gap for the outer border
                 backgroundColor: "orange", // Outer yellow background
-                borderRadius: "0 70px 70px 70px", // Outer border radius
+                borderRadius: "60px 70px 70px 70px", // Outer border radius
                 border: "4px solid black", // Outer solid border
                 overflow: "visible", // Ensure image is not clipped
                 display: "flex", // Use flexbox to center the content
@@ -559,10 +559,10 @@ function Character() {
                 alt="Corner Decoration"
                 sx={{
                   position: "absolute", // Absolute positioning for the image
-                  top: "-45px", // Adjusted top to ensure image stays within bounds
-                  left: "-60px", // Adjust as needed
+                  top: "-30px", // Adjusted top to ensure image stays within bounds
+                  left: "-45px", // Adjust as needed
                   width: "150px", // Adjust image size
-                  height: "170px", // Adjust image size
+                  height: "150px", // Adjust image size
                   zIndex: 10, // Ensure it's above all borders
                   objectFit: "cover", // Ensures the image covers the area and doesn't get clipped
                 }}
@@ -573,7 +573,7 @@ function Character() {
                   position: "relative",
                   padding: "7px", // Gap for the middle dashed border
                   backgroundColor: "orange", // Transparent background
-                  borderRadius: "0 60px 60px 60px", // Middle border radius
+                  borderRadius: "60px 60px 60px 60px", // Middle border radius
                   border: "4px dashed black", // Middle dashed border
                 }}
               >
@@ -581,7 +581,7 @@ function Character() {
                 <Box
                   sx={{
                     p: 4,
-                    borderRadius: "0 50px 50px 50px", // Inner card border radius
+                    borderRadius: "50px 50px 50px 50px", // Inner card border radius
                     display: "flex",
                     flexDirection: "column",
                     gap: "10px",
