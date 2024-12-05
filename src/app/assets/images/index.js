@@ -92,7 +92,7 @@ const Images = {
   cartIcon:require("./cartIcon.png"),
   mainTara:require("./mainTara.png"),
   rainbow:require("./rainbow.png"),
-  hand:require("./hand.png"),
+
   hearts:require("./hearts.png"),
   contactBrothers:require("./contactBrothers.png"),
   character13:require("./Character13.png"),
@@ -108,7 +108,7 @@ const Images = {
   backwardArrow:require("./backward-arrow.png"),
   collab1:require("./collab1.png"),
   collab2:require("./collab2.png"),
-  hand:require("./hand.png"),
+
  Character1:require( "../../assets/images/Character1.png"),
  Character2:require( "../../assets/images/Character2.png"),
  Character3:require( "../../assets/images/character3.png"),

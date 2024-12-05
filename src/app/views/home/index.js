@@ -1508,7 +1508,7 @@ function Home() {
           >
             <CardMedia
               component={"img"}
-              src={Character1}
+              src={Images.Character1}
               sx={{
                 width: '100%', // Adjust width for smaller screens
                 height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
@@ -1529,7 +1529,7 @@ function Home() {
           >
             <CardMedia
               component={"img"}
-              src={Character2}
+              src={Images.Character2}
               sx={{
                 width: '100%', // Adjust width for smaller screens
                 height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
