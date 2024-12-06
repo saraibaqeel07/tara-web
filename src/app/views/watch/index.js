@@ -22,6 +22,7 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { CartContext } from '../../Context/CartContext';
 import { CartCounter } from '../../Context/CartCounter';
 
+
 // import "slick-carousel/slick/slick-theme.css";
 
 

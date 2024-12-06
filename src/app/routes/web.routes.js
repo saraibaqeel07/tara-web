@@ -13,7 +13,8 @@ import Shop from "../views/shop";
 import Watch from "../views/watch";
 import EventShow from "../views/event";
 import FAQ from "../views/Faq";
-
+import Cart from "../views/cart";
+import Blog from "../views/blog";
 
 const Webroutes = [
   {
@@ -53,6 +54,10 @@ const Webroutes = [
     component: <FAQ />
   },
   {
+    path: "/cart",
+    component: <Cart />
+  },
+  {
     path: "/order",
     component: <Order />
   },
@@ -67,6 +72,10 @@ const Webroutes = [
   {
     path: "/login",
     component: <Login />
+  },
+  {
+    path: "/blog",
+    component: <Blog />
   },
 ];
 

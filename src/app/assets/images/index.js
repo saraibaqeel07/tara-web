@@ -92,7 +92,7 @@ const Images = {
   cartIcon: require("./cartIcon.png"),
   mainTara: require("./mainTara.png"),
   rainbow: require("./rainbow.png"),
-
+  pencil: require("./pencil.png"),
   hearts: require("./hearts.png"),
   contactBrothers: require("./contactBrothers.png"),
   character13: require("./Character13.png"),
@@ -121,6 +121,17 @@ const Images = {
   cloud: require("../../assets/images/cloud.png"),
   star: require("../../assets/images/star.png"),
 
+ Character1:require( "../../assets/images/Character1.png"),
+ Character2:require( "../../assets/images/Character2.png"),
+ Character3:require( "../../assets/images/character3.png"),
+ Character4:require( "../../assets/images/Character4.png"),
+ taraImage:require( "../../assets/images/tara-pic.png"),
+ mainFaq:require( "../../assets/images/main-faq.png"),
+ faq1:require( "../../assets/images/faq-1.png"),
+ reading:require( "../../assets/images/reading.png"),
+ handImg:require( "../../assets/images/hand-img.png"),
+ mainBGPink:require( "../../assets/images/mainPinkBG.png"),
+ 
 
 
 

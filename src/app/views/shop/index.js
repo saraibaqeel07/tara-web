@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "../../../App.css"
 import Fonts from '../../styles/fonts';
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, increment, updateDoc } from "firebase/firestore";
 import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
 import ProductModal from '../modal/ProductModal';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -29,6 +29,8 @@ import backwardArrow from "../../assets/images/backward-arrow.png"
 import PageNavigator from "../../components/pagination/index"
 import Character1 from "../../assets/images/Character1.png"
 import Character2 from "../../assets/images/Character2.png"
+import { ErrorToaster, SuccessToaster } from '../../components/Toaster';
+import moment from 'moment';
 
 // import "slick-carousel/slick/slick-theme.css";
 
@@ -38,7 +40,7 @@ function Shop() {
   const { state } = useLocation()
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
-  
+
 
   console.log(cartVisible, 'cartVisible');
 
@@ -65,6 +67,9 @@ function Shop() {
   const [coloringSheets, setColoringSheets] = useState([])
   const [activitySheets, setActivitySheets] = useState([])
   const [extraSheets, setExtraSheets] = useState([])
+  let User = localStorage.getItem('user')
+
+  User = JSON.parse(User)
 
   const [open, setOpen] = useState(false);
   const [cartArray, setCartArray] = useState([])
@@ -79,7 +84,7 @@ function Shop() {
   const [activeButton, setActiveButton] = useState(4); // Default 'Show All Products' is active
   const [loading, setLoading] = useState(true); // Loader state
   const [delayPassed, setDelayPassed] = useState(false); // Delay state to control the visibility of loader
-
+  const [cartData, setCartData] = useState(null)
 
 
 
@@ -600,6 +605,57 @@ function Shop() {
     }
   }, []);
 
+  
+  const addToCart = async (data) => {
+    console.log('submit');
+    try {
+      const cartRef = collection(db, "cartData");
+      const querySnapshot = await getDocs(
+        query(cartRef, where("userId", "==", User.uid))
+      );
+  
+      if (!querySnapshot.empty) {
+        // If user has a cart document, check if the item exists in the data array
+        const docRef = querySnapshot.docs[0].ref;
+        const cartDoc = querySnapshot.docs[0].data();
+  
+        // Check if the item exists in the data array
+        const itemIndex = cartDoc.data.findIndex(item => item.id === data.id);
+  
+        if (itemIndex !== -1) {
+          // If item exists, update its qty
+          await updateDoc(docRef, {
+            [`data.${itemIndex}.qty`]: increment(1) // Increase qty by 1
+          });
+  
+          SuccessToaster('Quantity Increased');
+        } else {
+          // If item doesn't exist, append it to the data array
+          await updateDoc(docRef, {
+            data: [...cartDoc.data, { ...data, qty: 1 }] // Append new item with qty = 1
+          });
+  
+          SuccessToaster('Added To Cart');
+        }
+      } else {
+        // If no cart document exists for the user, create a new one
+        const docRef = await addDoc(cartRef, {
+          userId: User.uid,
+          data: [{ ...data, qty: 1 }], // Initialize with the first item
+          created_at: moment().format('MMMM Do YYYY, h:mm a')
+        });
+  
+        console.log("Document written with ID: ", docRef.id);
+        SuccessToaster('Added To Cart');
+      }
+      
+    } catch (error) {
+      console.log(error);
+      ErrorToaster('Something Went Wrong');
+    }
+  };
+  
+
 
   useEffect(() => {
 
@@ -704,7 +760,7 @@ function Shop() {
       >
 
 
-      <Box
+        <Box
           sx={{
             backgroundImage: `url(${Images.bannerBg})`,
 
@@ -723,10 +779,10 @@ function Shop() {
               width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
               height: "100%", // Full height of the parent container
               backgroundImage: `url(${shopImg1})`,
-              backgroundSize: { md: "contain", xl: "contain", lg: "contain" ,xs:"cover" ,sm:"contain"},
+              backgroundSize: { md: "contain", xl: "contain", lg: "contain", xs: "cover", sm: "contain" },
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center", // Ensures the image is aligned at the bottom
-           
+
             }}
           />
         </Box>
@@ -1299,7 +1355,7 @@ function Shop() {
                                 className="add-to-cart"
                                 style={{ display: "flex", alignItems: "center" }}
                                 onClick={() => {
-                                  // Your add-to-cart logic
+                                  addToCart(card)
                                 }}
                               >
                                 Add To Cart &nbsp;{" "}
@@ -1478,20 +1534,7 @@ function Shop() {
                                 className="add-to-cart"
                                 style={{ display: "flex", alignItems: "center" }}
                                 onClick={() => {
-                                  if (cartItems.find((item) => item.id === card.id)) {
-                                    setOpen(true);
-                                  } else {
-                                    cartItems.push({ ...card, quantity: 1 });
-                                    const totalPrice = cartItems.reduce(
-                                      (total, item) =>
-                                        total + parseFloat(item.price) * item.quantity,
-                                      0
-                                    );
-                                    setCount(cartItems.length);
-                                    localStorage.setItem("cartData", JSON.stringify(cartItems));
-                                    setTotalAmount(totalPrice);
-                                    setOpen(true);
-                                  }
+                                  addToCart(card)
                                 }}
                               >
                                 Add To Cart &nbsp;{" "}
@@ -1568,127 +1611,115 @@ function Shop() {
               </Box>
             )}
             {(activeButton === 2 || activeButton === 4) && (
-               <Box
+              <Box
                 sx={{
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
                   backgroundColor: "#CA6680", // Conditional background color
                 }} >
-              <Container
-                sx={{
-                  backgroundColor: "#CA6680", // Conditional background color
-                  height: "100%", // Full height
-                  padding: "60px 0", // Padding adjustment
-                  width: "100%", // Full width
-            
-                }}
-              >
-                {/* Grid for activity cards */}
-                <Grid
-                  container
-                  spacing={2}
-                  justifyContent={"center"}
+                <Container
                   sx={{
-                    minHeight: "1000px", // Adjust this value based on your card size and rows
-                    display: "flex",
-                    alignItems:
-                      coloringLoading || !coloringDelayPassed
-                        ? "center" // Center align if loading or delay not passed
-                        : displayedColoringSheets.length <= 2
-                          ? "center" // Center align when only 1 or 2 items
-                          : "flex-start", // Default alignment
+                    backgroundColor: "#CA6680", // Conditional background color
+                    height: "100%", // Full height
+                    padding: "60px 0", // Padding adjustment
+                    width: "100%", // Full width
+
                   }}
                 >
-                  {coloringLoading || !coloringDelayPassed ? (
-                    // Loader view with delay
-                    <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "455px" }}>
-                      <CircularProgress size={50} sx={{ color: "#5B73AD" }} /> {/* Updated loader color */}
-                    </Grid>
-                  ) : (
-                    // Display coloring cards
-                    Array.isArray(displayedColoringSheets) &&
-                    displayedColoringSheets.map((card, i) => (
-                      <React.Fragment key={i}>
-                        <Grid className="product-card" md={5} item>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                              borderRadius: "20px",
-                              position: "relative",
-                            }}
-                          >
-                            <CardMedia
-                              className="product-image"
-                              component={"img"}
-                              src={card?.imgUrl}
+                  {/* Grid for activity cards */}
+                  <Grid
+                    container
+                    spacing={2}
+                    justifyContent={"center"}
+                    sx={{
+                      minHeight: "1000px", // Adjust this value based on your card size and rows
+                      display: "flex",
+                      alignItems:
+                        coloringLoading || !coloringDelayPassed
+                          ? "center" // Center align if loading or delay not passed
+                          : displayedColoringSheets.length <= 2
+                            ? "center" // Center align when only 1 or 2 items
+                            : "flex-start", // Default alignment
+                    }}
+                  >
+                    {coloringLoading || !coloringDelayPassed ? (
+                      // Loader view with delay
+                      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "455px" }}>
+                        <CircularProgress size={50} sx={{ color: "#5B73AD" }} /> {/* Updated loader color */}
+                      </Grid>
+                    ) : (
+                      // Display coloring cards
+                      Array.isArray(displayedColoringSheets) &&
+                      displayedColoringSheets.map((card, i) => (
+                        <React.Fragment key={i}>
+                          <Grid className="product-card" md={5} item>
+                            <Box
                               sx={{
-                                height: card?.price !== 0 ? "400px" : "455px",
-                                borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
-                                objectFit: "cover",
-                              }}
-                            />
-                            {card?.price !== 0 && (
-                              <Box
-                                sx={{
-                                  backgroundColor: "#FF9D04",
-                                  p: 2,
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  borderRadius: "0px 0px 20px 20px",
-                                }}
-                              >
-                                <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
-                                  {card?.name}
-                                </Typography>
-                                <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
-                                  $ {card?.price}
-                                </Typography>
-                              </Box>
-                            )}
-                          </Box>
-                          {card?.price !== 0 && (
-                            <div
-                              className="add-to-cart"
-                              style={{ display: "flex", alignItems: "center" }}
-                              onClick={() => {
-                                if (cartItems.find((item) => item.id === card.id)) {
-                                  setOpen(true);
-                                } else {
-                                  cartItems.push({ ...card, quantity: 1 });
-                                  const totalPrice = cartItems.reduce(
-                                    (total, item) => total + parseFloat(item.price) * item.quantity,
-                                    0
-                                  );
-                                  setCount(cartItems.length);
-                                  localStorage.setItem("cartData", JSON.stringify(cartItems));
-                                  setTotalAmount(totalPrice);
-                                  setOpen(true);
-                                }
+                                display: "flex",
+                                flexDirection: "column",
+                                borderRadius: "20px",
+                                position: "relative",
                               }}
                             >
-                              Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
-                            </div>
-                          )}
-                        </Grid>
-                      </React.Fragment>
-                    ))
-                  )}
-                </Grid>
+                              <CardMedia
+                                className="product-image"
+                                component={"img"}
+                                src={card?.imgUrl}
+                                sx={{
+                                  height: card?.price !== 0 ? "400px" : "455px",
+                                  borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
+                                  objectFit: "cover",
+                                }}
+                              />
+                              {card?.price !== 0 && (
+                                <Box
+                                  sx={{
+                                    backgroundColor: "#FF9D04",
+                                    p: 2,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    borderRadius: "0px 0px 20px 20px",
+                                  }}
+                                >
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
+                                    {card?.name}
+                                  </Typography>
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
+                                    $ {card?.price}
+                                  </Typography>
+                                </Box>
+                              )}
+                            </Box>
+                            {card?.price !== 0 && (
+                              <div
+                                className="add-to-cart"
+                                style={{ display: "flex", alignItems: "center" }}
+                                onClick={() => {
+                                  addToCart(card)
+                                }}
+                              >
+                                Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                              </div>
+                            )}
+                          </Grid>
+                        </React.Fragment>
+                      ))
+                    )}
+                  </Grid>
 
-                {/* Pagination */}
-                <PageNavigator
-                  currentPage={coloringCurrentPage}
-                  totalPages={coloringTotalPages}
-                  onPrevPage={handleColoringPrevPage}
-                  onNextPage={handleColoringNextPage}
-                  onPageClick={handleColoringPageClick}
-                  backwardArrow={backwardArrow}
-                  forwardArrow={forwardArrow}
-                />
-              </Container>
-</Box>
+                  {/* Pagination */}
+                  <PageNavigator
+                    currentPage={coloringCurrentPage}
+                    totalPages={coloringTotalPages}
+                    onPrevPage={handleColoringPrevPage}
+                    onNextPage={handleColoringNextPage}
+                    onPageClick={handleColoringPageClick}
+                    backwardArrow={backwardArrow}
+                    forwardArrow={forwardArrow}
+                  />
+                </Container>
+              </Box>
             )}
 
 
@@ -1739,311 +1770,298 @@ function Shop() {
             )}
 
             {(activeButton === 3 || activeButton === 4) && (
-               <Box
+              <Box
                 sx={{
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
                   backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
                 }} >
-              <Container
-                sx={{
-                  backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
-                  height: "100%", // Full height
-                  padding: "60px 0", // Padding adjustment
-                  width: "100%", // Full width
-  
-                }}
-              >
-                {/* Grid for extra sheets */}
-                <Grid
-                  container
-                  spacing={2}
-                  justifyContent={"center"}
+                <Container
                   sx={{
-                    minHeight: "1000px", // Adjust this value based on your card size and rows
-                    display: "flex",
-                    alignItems:
-                      extraLoading || !extraDelayPassed
-                        ? "center" // Center align if loading or delay not passed
-                        : extraCurrentProducts.length <= 2
-                          ? "center" // Center align when only 1 or 2 items
-                          : "flex-start", // Default alignment
+                    backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
+                    height: "100%", // Full height
+                    padding: "60px 0", // Padding adjustment
+                    width: "100%", // Full width
+
                   }}
                 >
-                  {extraLoading || !extraDelayPassed ? (
-                    // Loader view with delay
-                    <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "455px" }}>
-                      <CircularProgress size={50} sx={{ color: "#F9BF29" }} /> {/* Updated loader color */}
-                    </Grid>
-                  ) : (
-                    // Display extra sheets cards
-                    Array.isArray(extraCurrentProducts) &&
-                    extraCurrentProducts.map((card, i) => (
-                      <React.Fragment key={i}>
-                        <Grid className="product-card" md={5} item>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                              borderRadius: "20px",
-                              position: "relative",
-                            }}
-                          >
-                            <CardMedia
-                              className="product-image"
-                              component={"img"}
-                              src={card?.imgUrl}
+                  {/* Grid for extra sheets */}
+                  <Grid
+                    container
+                    spacing={2}
+                    justifyContent={"center"}
+                    sx={{
+                      minHeight: "1000px", // Adjust this value based on your card size and rows
+                      display: "flex",
+                      alignItems:
+                        extraLoading || !extraDelayPassed
+                          ? "center" // Center align if loading or delay not passed
+                          : extraCurrentProducts.length <= 2
+                            ? "center" // Center align when only 1 or 2 items
+                            : "flex-start", // Default alignment
+                    }}
+                  >
+                    {extraLoading || !extraDelayPassed ? (
+                      // Loader view with delay
+                      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "455px" }}>
+                        <CircularProgress size={50} sx={{ color: "#F9BF29" }} /> {/* Updated loader color */}
+                      </Grid>
+                    ) : (
+                      // Display extra sheets cards
+                      Array.isArray(extraCurrentProducts) &&
+                      extraCurrentProducts.map((card, i) => (
+                        <React.Fragment key={i}>
+                          <Grid className="product-card" md={5} item>
+                            <Box
                               sx={{
-                                height: card?.price !== 0 ? "400px" : "455px",
-                                borderRadius:
-                                  card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
-                                objectFit: "cover",
-                              }}
-                            />
-                            {card?.price !== 0 && (
-                              <Box
-                                sx={{
-                                  backgroundColor: "#FF9D04",
-                                  p: 2,
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  borderRadius: "0px 0px 20px 20px",
-                                }}
-                              >
-                                <Typography
-                                  className="heading-font"
-                                  sx={{
-                                    textTransform: "uppercase",
-                                    fontSize: "20px",
-                                  }}
-                                >
-                                  {card?.name}
-                                </Typography>
-                                <Typography
-                                  className="heading-font"
-                                  sx={{
-                                    textTransform: "uppercase",
-                                    fontSize: "20px",
-                                  }}
-                                >
-                                  $ {card?.price}
-                                </Typography>
-                              </Box>
-                            )}
-                          </Box>
-                          {card?.price !== 0 && (
-                            <div
-                              className="add-to-cart"
-                              style={{ display: "flex", alignItems: "center" }}
-                              onClick={() => {
-                                if (cartItems.find((item) => item.id === card.id)) {
-                                  setOpen(true);
-                                } else {
-                                  cartItems.push({ ...card, quantity: 1 });
-                                  const totalPrice = cartItems.reduce(
-                                    (total, item) =>
-                                      total + parseFloat(item.price) * item.quantity,
-                                    0
-                                  );
-                                  setCount(cartItems.length);
-                                  localStorage.setItem("cartData", JSON.stringify(cartItems));
-                                  setTotalAmount(totalPrice);
-                                  setOpen(true);
-                                }
+                                display: "flex",
+                                flexDirection: "column",
+                                borderRadius: "20px",
+                                position: "relative",
                               }}
                             >
-                              Add To Cart &nbsp;{" "}
-                              <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
-                            </div>
-                          )}
-                        </Grid>
-                      </React.Fragment>
-                    ))
-                  )}
-                </Grid>
+                              <CardMedia
+                                className="product-image"
+                                component={"img"}
+                                src={card?.imgUrl}
+                                sx={{
+                                  height: card?.price !== 0 ? "400px" : "455px",
+                                  borderRadius:
+                                    card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
+                                  objectFit: "cover",
+                                }}
+                              />
+                              {card?.price !== 0 && (
+                                <Box
+                                  sx={{
+                                    backgroundColor: "#FF9D04",
+                                    p: 2,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    borderRadius: "0px 0px 20px 20px",
+                                  }}
+                                >
+                                  <Typography
+                                    className="heading-font"
+                                    sx={{
+                                      textTransform: "uppercase",
+                                      fontSize: "20px",
+                                    }}
+                                  >
+                                    {card?.name}
+                                  </Typography>
+                                  <Typography
+                                    className="heading-font"
+                                    sx={{
+                                      textTransform: "uppercase",
+                                      fontSize: "20px",
+                                    }}
+                                  >
+                                    $ {card?.price}
+                                  </Typography>
+                                </Box>
+                              )}
+                            </Box>
+                            {card?.price !== 0 && (
+                              <div
+                                className="add-to-cart"
+                                style={{ display: "flex", alignItems: "center" }}
+                                onClick={() => {
+                                  addToCart(card)
+                                }}
+                              >
+                                Add To Cart &nbsp;{" "}
+                                <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                              </div>
+                            )}
+                          </Grid>
+                        </React.Fragment>
+                      ))
+                    )}
+                  </Grid>
 
-                {/* Pagination */}
-                <PageNavigator
-                  currentPage={extraCurrentPage}
-                  totalPages={extraTotalPages}
-                  onPrevPage={handleExtraPrevPage}
-                  onNextPage={handleExtraNextPage}
-                  onPageClick={handleExtraPageClick}
-                  backwardArrow={backwardArrow}
-                  forwardArrow={forwardArrow}
-                />
-              </Container>
+                  {/* Pagination */}
+                  <PageNavigator
+                    currentPage={extraCurrentPage}
+                    totalPages={extraTotalPages}
+                    onPrevPage={handleExtraPrevPage}
+                    onNextPage={handleExtraNextPage}
+                    onPageClick={handleExtraPageClick}
+                    backwardArrow={backwardArrow}
+                    forwardArrow={forwardArrow}
+                  />
+                </Container>
               </Box>
             )}
 
 
 
-<Box
-          component={"section"}
-          sx={{
-            position: "relative",
-            backgroundColor: "#FF9D04",
-            width: "100%",
-            height: { xs: "180px", sm: "180px", md: "500px" },
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            overflow: "hidden",
-            padding: { xs: "10px", sm: "10px", md: "10px" },
-          }}
-        >
-           <Box
-            sx={{
-              position: "absolute",
-              top: 40,
-              left: 20,
-              zIndex: 0,
-              display: "block",
-              width:"60px"
-            }}
-            component={'img'}
-            src={Images.hand}
-          ></Box>
-           <Box
-            sx={{
-              position: "absolute",
-              top: 20,
-              right: 50,
-              zIndex: 0,
-              display: "block",
-              width:"60px"
-            }}
-            component={'img'}
-            src={Images.rainbow}
-          ></Box>
-          <Grid container justifyContent={'center'}>
-            <Grid item xs={4} >
-
-            </Grid>
-            <Grid item lg={4} md={4} sm={10} xs={11}>
-              {/* Center Content */}
+            <Box
+              component={"section"}
+              sx={{
+                position: "relative",
+                backgroundColor: "#FF9D04",
+                width: "100%",
+                height: { xs: "180px", sm: "180px", md: "500px" },
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+                padding: { xs: "10px", sm: "10px", md: "10px" },
+              }}
+            >
               <Box
                 sx={{
-                  position: "relative",
-                  textAlign: "center",
-                  zIndex: 1,
-
+                  position: "absolute",
+                  top: 40,
+                  left: 20,
+                  zIndex: 0,
+                  display: "block",
+                  width: "60px"
                 }}
-              >
-                <Typography
-                  variant="h5"
-                  className="para-text"
-                  sx={{
-                    fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" },
-                    fontWeight: 600,
-                    textAlign: "center",
-                    mb: 2,
-                  }}
-                >
-                  Subscribe to get information, latest news, and other interesting offers
-                  about{" "}
-                  <span
-                    style={{
-                      fontWeight: "bold",
-                      display:'block',
-                      WebkitTextStroke: "0.5px white ",
-                      WebkitTextFillColor: "#FF9D04",
+                component={'img'}
+                src={Images.hand}
+              ></Box>
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 20,
+                  right: 50,
+                  zIndex: 0,
+                  display: "block",
+                  width: "60px"
+                }}
+                component={'img'}
+                src={Images.rainbow}
+              ></Box>
+              <Grid container justifyContent={'center'}>
+                <Grid item xs={4} >
+
+                </Grid>
+                <Grid item lg={4} md={4} sm={10} xs={11}>
+                  {/* Center Content */}
+                  <Box
+                    sx={{
+                      position: "relative",
+                      textAlign: "center",
+                      zIndex: 1,
+
                     }}
                   >
-                    Shine With Tara
-                  </span>
-                </Typography>
-                <TextField
-                  className="para-text"
-                  placeholder={"Your email"}
-                  sx={{
-                    background: Colors.white,
-                    borderRadius: "4px",
-                    width: "100%",
-                    "& fieldset": {
-                      border: "none",
-                    },
-                    "& .MuiOutlinedInput-root": {
-                      paddingRight: 0.5,
-                    },
-                    "& .MuiOutlinedInput-input": {
-                      color: `${Colors.primary} !important`,
-                      fontSize: { xs: "14px", sm: "16px", md: "18px" },
-                    },
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <Button
-                        className="para-text"
-                        sx={{
-                          color: `${Colors.white} !important`,
-                          backgroundColor: `#5B73AD`,
-                          px: { xs: 2, sm: 4 },
-                          py: 1.5,
-                          textTransform: "uppercase",
-                          fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                          "&:hover": {
-                            backgroundColor: `#5B73AD`,
-                            color: `${Colors.white}`,
-                          },
+                    <Typography
+                      variant="h5"
+                      className="para-text"
+                      sx={{
+                        fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" },
+                        fontWeight: 600,
+                        textAlign: "center",
+                        mb: 2,
+                      }}
+                    >
+                      Subscribe to get information, latest news, and other interesting offers
+                      about{" "}
+                      <span
+                        style={{
+                          fontWeight: "bold",
+                          display: 'block',
+                          WebkitTextStroke: "0.5px white ",
+                          WebkitTextFillColor: "#FF9D04",
                         }}
                       >
-                        Subscribe
-                      </Button>
-                    ),
+                        Shine With Tara
+                      </span>
+                    </Typography>
+                    <TextField
+                      className="para-text"
+                      placeholder={"Your email"}
+                      sx={{
+                        background: Colors.white,
+                        borderRadius: "4px",
+                        width: "100%",
+                        "& fieldset": {
+                          border: "none",
+                        },
+                        "& .MuiOutlinedInput-root": {
+                          paddingRight: 0.5,
+                        },
+                        "& .MuiOutlinedInput-input": {
+                          color: `${Colors.primary} !important`,
+                          fontSize: { xs: "14px", sm: "16px", md: "18px" },
+                        },
+                      }}
+                      InputProps={{
+                        endAdornment: (
+                          <Button
+                            className="para-text"
+                            sx={{
+                              color: `${Colors.white} !important`,
+                              backgroundColor: `#5B73AD`,
+                              px: { xs: 2, sm: 4 },
+                              py: 1.5,
+                              textTransform: "uppercase",
+                              fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                              "&:hover": {
+                                backgroundColor: `#5B73AD`,
+                                color: `${Colors.white}`,
+                              },
+                            }}
+                          >
+                            Subscribe
+                          </Button>
+                        ),
+                      }}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={4}>
+
+                </Grid>
+              </Grid>
+              {/* Left Background Image */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  zIndex: 0,
+                  display: "block",
+                }}
+              >
+                <CardMedia
+                  component={"img"}
+                  src={Character1}
+                  sx={{
+                    width: '100%', // Adjust width for smaller screens
+                    height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                    objectFit: "cover",
                   }}
                 />
               </Box>
-            </Grid>
-            <Grid item xs={4}>
 
-            </Grid>
-          </Grid>
-          {/* Left Background Image */}
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              zIndex: 0,
-              display: "block",
-            }}
-          >
-            <CardMedia
-              component={"img"}
-              src={Character1}
-              sx={{
-                width: '100%', // Adjust width for smaller screens
-                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
-                objectFit: "cover",
-              }}
-            />
-          </Box>
-
-          {/* Right Background Image */}
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: 0,
-              right: 0,
-              zIndex: 0,
-              display: "block",
-            }}
-          >
-            <CardMedia
-              component={"img"}
-              src={Character2}
-              sx={{
-                width: '100%', // Adjust width for smaller screens
-                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
-                objectFit: "cover",
-              }}
-            />
-          </Box>
+              {/* Right Background Image */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                  zIndex: 0,
+                  display: "block",
+                }}
+              >
+                <CardMedia
+                  component={"img"}
+                  src={Character2}
+                  sx={{
+                    width: '100%', // Adjust width for smaller screens
+                    height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                    objectFit: "cover",
+                  }}
+                />
+              </Box>
 
 
-        </Box>
+            </Box>
           </>
         )}
 
