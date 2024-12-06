@@ -4,7 +4,7 @@ import Images from '../../assets/images';
 import reviewSection from "../../assets/images/review-section.png"
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { collection, getDocs, getFirestore, query } from 'firebase/firestore';
+import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 
 const Cart = () => {
@@ -26,22 +26,30 @@ const Cart = () => {
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
-    const getCartData = async () => {
-        const q = query(collection(db, "cartData"));
-    
-        const querySnapshot = await getDocs(q);
-        const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    
-    
-        const sortedData = dataArray.sort((a, b) => {
-          return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
-        });
-        console.log('books', sortedData);
-        // Update state with sorted data
-        
-        setCartItems(sortedData)
-    
-      }
+      const getCartData = async () => {
+        try {
+          // Replace `User.uid` with the actual variable holding the user's ID
+          const userId = User.uid; 
+      
+          // Query Firestore collection with a where clause
+          const q = query(collection(db, "cartData"), where("userId", "==", userId));
+      
+          const querySnapshot = await getDocs(q);
+          const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+          // Sort data based on the condition
+          const sortedData = dataArray.sort((a, b) => {
+            return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
+          });
+      
+          console.log('books', sortedData);
+      
+          // Update state with sorted data
+          setCartItems(sortedData);
+        } catch (error) {
+          console.error("Error fetching cart data:", error);
+        }
+      };
 
       const handleIncrement = (id) => {
     
@@ -217,14 +225,14 @@ useEffect(() => {
                                         </Grid>
                                     </Grid>
                                 </Box>
-                            )) : <Box sx={{ backgroundColor: '#151d2f', p: 2, borderRadius: "15px", mb: 2 }}>
+                            )) : <Box sx={{ backgroundColor: '#CA6680', p: 2, borderRadius: "3px", mb: 2 }}>
                                 <Grid container spacing={2} alignItems="center" justifyContent={'flex-end'}>
 
 
 
 
                                     <Grid item xs={12} textAlign="center">
-                                        <Typography component="span" sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+                                        <Typography component="span" className='para-text' sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
                                             No Items Available
                                         </Typography>
                                     </Grid>
