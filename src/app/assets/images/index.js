@@ -11,7 +11,7 @@ const Images = {
   pic9: require("./WhatsApp Image 2024-07-24 at 1.13.35 AM.jpeg"),
   pic10: require("./WhatsApp Image 2024-07-24 at 1.13.36 AM.jpeg"),
   contactCharacter: require("./characterContact.png"),
-  mainCharacter:require("./main-character.png"),
+  mainCharacter: require("./main-character.png"),
   footerBg: require("./footer.png"),
   bannerBg: require("./bannerBg.png"),
   aboutImage: require("./about-us.png"),
@@ -80,45 +80,47 @@ const Images = {
   annie: require("./annie.jpg"),
   grandma: require("./grandma.jpg"),
   Shop: require("./shop.png"),
-  character:require("./characters.png"),
-  faq:require("./FAQ.png"),
-  test:require("./hometest.jpg"),
-  EventShows:require("./Event.png"),
-  blog:require('./Blog.png'),
-  portfolio:require('./portfolio.png'),
-  mainBg:require("./mianbg.png"),
-  Book:require("./Book.png"),
-  Family:require("./Family.png"),
-  cartIcon:require("./cartIcon.png"),
-  mainTara:require("./mainTara.png"),
-  rainbow:require("./rainbow.png"),
+  character: require("./characters.png"),
+  faq: require("./FAQ.png"),
+  test: require("./hometest.jpg"),
+  EventShows: require("./Event.png"),
+  blog: require('./Blog.png'),
+  portfolio: require('./portfolio.png'),
+  mainBg: require("./mianbg.png"),
+  Book: require("./Book.png"),
+  Family: require("./Family.png"),
+  cartIcon: require("./cartIcon.png"),
+  mainTara: require("./mainTara.png"),
+  rainbow: require("./rainbow.png"),
 
-  hearts:require("./hearts.png"),
-  contactBrothers:require("./contactBrothers.png"),
-  character13:require("./Character13.png"),
-  character15:require("./character15.png"),
-  character16:require("./Character16.png"),
-  character14:require("./character14.png"),
-  character17:require("./Character17.png"),
-  watch1:require("./watch1.png"),
-  heart:require("./heart.png"),
-  watchBackground:require("./watch-background.png"),
-  watchBackground2:require("./watch-background2.png"),
-  forwardArrow:require("./forward-arrow.png"),
-  backwardArrow:require("./backward-arrow.png"),
-  collab1:require("./collab1.png"),
-  collab2:require("./collab2.png"),
+  hearts: require("./hearts.png"),
+  contactBrothers: require("./contactBrothers.png"),
+  character13: require("./Character13.png"),
+  character15: require("./character15.png"),
+  character16: require("./Character16.png"),
+  character14: require("./character14.png"),
+  character17: require("./Character17.png"),
+  watch1: require("./watch1.png"),
+  heart: require("./heart.png"),
+  watchBackground: require("./watch-background.png"),
+  watchBackground2: require("./watch-background2.png"),
+  forwardArrow: require("./forward-arrow.png"),
+  backwardArrow: require("./backward-arrow.png"),
+  collab1: require("./collab1.png"),
+  collab2: require("./collab2.png"),
+  reviewSection: require("./review-section.png"),
+  Character1: require("../../assets/images/Character1.png"),
+  Character2: require("../../assets/images/Character2.png"),
+  Character3: require("../../assets/images/character3.png"),
+  Character4: require("../../assets/images/Character4.png"),
+  taraImage: require("../../assets/images/tara-pic.png"),
+  mainFaq: require("../../assets/images/main-faq.png"),
+  faq1: require("../../assets/images/faq-1.png"),
+  reading: require("../../assets/images/reading.png"),
+  handImg: require("../../assets/images/hand-img.png"),
+  cloud: require("../../assets/images/cloud.png"),
+  star: require("../../assets/images/star.png"),
 
- Character1:require( "../../assets/images/Character1.png"),
- Character2:require( "../../assets/images/Character2.png"),
- Character3:require( "../../assets/images/character3.png"),
- Character4:require( "../../assets/images/Character4.png"),
- taraImage:require( "../../assets/images/tara-pic.png"),
- mainFaq:require( "../../assets/images/main-faq.png"),
- faq1:require( "../../assets/images/faq-1.png"),
- reading:require( "../../assets/images/reading.png"),
- handImg:require( "../../assets/images/hand-img.png"),
- 
 
 
 
@@ -142,12 +144,12 @@ export const Videos = {
   video11: require("./VID-20240719-WA0025.mp4"),
   video12: require("./VID-20240719-WA0026.mp4"),
   video13: require("./VID-20240719-WA0027.mp4"),
- 
- 
- 
+
+
+
 }
 
-  
+
 
 export const PayPal = () => {
   return (

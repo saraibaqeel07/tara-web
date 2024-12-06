@@ -28,10 +28,6 @@ import starImg from "../../assets/images/star.png"
 import rainbowImg from "../../assets/images/rainbow.png"
 import haveforyou from "../../assets/images/haveforyou.png"
 import shopFrame from "../../assets/images/Shop-Frame.png"
-import cloudImg from "../../assets/images/cloud.png"
-import reviewSection from "../../assets/images/review-section.png"
-import forwardArrow from "../../assets/images/forward-arrow.png"
-import backwardArrow from "../../assets/images/backward-arrow.png"
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 
@@ -78,10 +74,15 @@ function Home() {
   const [faqData, setFaqData] = useState([])
   const [totalAmount, setTotalAmount] = useState(0)
   const [reviewBoxes, setReviewBoxes] = useState([])
-  const [activeCard, setActiveCard] = useState(null);  // State to track active card
-
+  const [activeCard, setActiveCard] = useState(0); // Start with the first card
   const swiperRef = useRef(null);
 
+  const updateActiveCard = () => {
+    if (swiperRef.current?.swiper) {
+      const swiperInstance = swiperRef.current.swiper;
+      setActiveCard(swiperInstance.realIndex); // Update active card index based on Swiper's real index
+    }
+  };
   const handleIncrement = (id) => {
     const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item)
     const totalPrice = updatedData.reduce((total, item) => {
@@ -94,9 +95,7 @@ function Home() {
   };
 
 
-  const handleCardClick = (index) => {
-    setActiveCard(index); // Set active card index when clicked
-  };
+
 
   const handleDecrement = (id) => {
     const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 1 } : item)
@@ -1176,7 +1175,7 @@ function Home() {
               {/* Left Image */}
               <Box
                 component="img"
-                src={cloudImg}
+                src={Images.cloud}
                 alt="Left Decorative Image"
                 sx={{
                   width: { xs: "40px", sm: "60px", md: "80px" },
@@ -1210,139 +1209,138 @@ function Home() {
               </Typography>
             </Box>
           </Grid>
-          <Box sx={{ width: '95%', margin: '0 auto', marginTop: "-40px", display: "flex", justifyContent: "center", position: "relative" }}>
-            <Grid item md={11} sm={11} xs={11}>
-              <Swiper
-                ref={swiperRef}
-                loop={true} // Enable looping for the swiper
-                spaceBetween={10}
-                slidesPerView={3}
-                autoplay={{
-                  delay: 2500,
-                  disableOnInteraction: false,
+          <Box sx={{ width: "95%", margin: "0 auto",  display: "flex", justifyContent: "center", position: "relative" }}>
+      <Grid item md={11} sm={11} xs={11}>
+        <Swiper
+          ref={swiperRef}
+          loop={true}
+          spaceBetween={10}
+          slidesPerView={3}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          modules={[Autoplay, Pagination, Navigation]}
+          breakpoints={{
+            320: { slidesPerView: 1 },
+            786: { slidesPerView: 2 },
+            1080: { slidesPerView: 3 },
+          }}
+          pagination={{
+            clickable: true,
+            el: ".swiper-pagination",
+            bulletClass: "swiper-pagination-bullet",
+            bulletActiveClass: "swiper-pagination-bullet-active",
+          }}
+          onSlideChange={updateActiveCard} // Update active card on slide change
+          speed={1000}
+        >
+          {reviewBoxes?.map((item, ind) => (
+            <SwiperSlide key={ind}>
+              <Box
+                sx={{
+                  p: 4,
+                  borderRadius: "15px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                  backgroundColor: activeCard === ind ? "#FF9D04" : "#CA6680",
+                  height: "120px",
+                  paddingBottom: 8,
+                  cursor: "pointer",
                 }}
-                modules={[Autoplay, Pagination, Navigation]}
-                breakpoints={{
-                  320: { slidesPerView: 1 },
-                  786: { slidesPerView: 2 },
-                  1080: { slidesPerView: 3 },
+                onClick={() => {
+                  setActiveCard(ind); // Set active card manually on click
+                  swiperRef.current.swiper.slideToLoop(ind); // Navigate to clicked card
                 }}
-                pagination={{
-                  clickable: true,
-                  el: '.swiper-pagination',
-                  bulletClass: 'swiper-pagination-bullet',
-                  bulletActiveClass: 'swiper-pagination-bullet-active',
-                }}
-                onSlideChange={(swiper) => {
-                  setActiveCard(swiper.activeIndex); // Update active card on slide change
-                }}
-                speed={1000} // For smoother transition
               >
-                {reviewBoxes?.map((item, ind) => (
-                  <SwiperSlide key={ind}>
-                    <Box
-                      sx={{
-                        p: 4,
-                        borderRadius: "15px",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "10px",
-                        backgroundColor: activeCard === ind ? '#FF9D04' : '#CA6680',
-                        height: '120px',
-                        paddingBottom: 8,
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => handleCardClick(ind)} // Set active card on click
-                    >
-                      {/* Rating */}
-                      <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <Rating name="read-only" value={item?.rating} sx={{ borderColor: 'white' }} readOnly />
-                      </Box>
+                {/* Rating */}
+                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Rating name="read-only" value={item?.rating} sx={{ borderColor: "white" }} readOnly />
+                </Box>
 
-                      {/* Comment */}
-                      <Typography variant={"body2"} sx={{ color: 'white' }}>
-                        {item.comment}
+                {/* Comment */}
+                <Typography variant={"body2"} sx={{ color: "white" }}>
+                  {item.comment}
+                </Typography>
+
+                {/* Name, Designation */}
+                <Box sx={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+                  <Avatar sx={{ width: 64, height: 64 }} src={item.profile} alt={item.name} />
+                  <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <Typography sx={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 600, color: "white" }}>
+                      {item?.name}
+                      <Typography variant="body2" sx={{ fontWeight: 400 }}>
+                        {item.designation}
                       </Typography>
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Grid>
 
-                      {/* Name, Designation */}
-                      <Box sx={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
-                        <Avatar sx={{ width: 64, height: 64 }} src={item.profile} alt={item.name} />
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
-                          <Typography sx={{ display: 'flex', alignItems: "center", gap: "8px", fontWeight: 600, color: 'white' }}>
-                            {item?.name}
-                            <Typography variant='body2' sx={{ fontWeight: 400 }}>
-                              {item.designation}
-                            </Typography>
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </Grid>
+      {/* Navigation Buttons */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: "35%",
+          left: 0,
+          zIndex: 10,
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          if (swiperRef.current?.swiper) {
+            swiperRef.current.swiper.slidePrev();
+            updateActiveCard(); // Sync active card with previous slide
+          }
+        }}
+      >
+        <Box
+          component="img"
+          src={Images.backwardArrow}
+          alt="Previous Slide"
+          sx={{
+            width: "80px",
+            height: "60px",
+            padding: "6px",
+          }}
+        />
+      </Box>
 
-            {/* Navigation Buttons */}
-            <Box
-              sx={{
-                position: "absolute",
-                top: "35%",
-                left: 0,
-                zIndex: 10,
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                if (swiperRef.current?.swiper) {
-                  const swiperInstance = swiperRef.current.swiper;
-                  swiperInstance.slidePrev();
-                }
-              }}
-            >
-              <Box
-                component="img"
-                src={backwardArrow}
-                alt="Previous Slide"
-                sx={{
-                  width: "80px",
-                  height: "60px",
-                  padding: "6px",
-                }}
-              />
-            </Box>
-
-            <Box
-              sx={{
-                position: "absolute",
-                top: "35%",
-                right: 0,
-                zIndex: 10,
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                if (swiperRef.current?.swiper) {
-                  const swiperInstance = swiperRef.current.swiper;
-                  swiperInstance.slideNext();
-                }
-              }}
-            >
-              <Box
-                component="img"
-                src={forwardArrow}
-                alt="Next Slide"
-                sx={{
-                  width: "80px",
-                  height: "60px",
-                  padding: "6px",
-                }}
-              />
-            </Box>
-
-          </Box>
-
+      <Box
+        sx={{
+          position: "absolute",
+          top: "35%",
+          right: 0,
+          zIndex: 10,
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          if (swiperRef.current?.swiper) {
+            swiperRef.current.swiper.slideNext();
+            updateActiveCard(); // Sync active card with next slide
+          }
+        }}
+      >
+        <Box
+          component="img"
+          src={Images.forwardArrow}
+          alt="Next Slide"
+          sx={{
+            width: "80px",
+            height: "60px",
+            padding: "6px",
+          }}
+        />
+      </Box>
+    </Box>
 
 
           <Grid container sx={{
-            backgroundImage: `url(${reviewSection})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: {
+            backgroundImage: `url(${Images.reviewSection})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: {
               xs: '300px',  // Smallest screens
               sm: '400px',  // Small screens
               md: '500px',  // Medium screens
