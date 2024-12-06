@@ -629,8 +629,10 @@ function FAQ() {
         <Grid
           container
           sx={{
-            backgroundColor: "#CA6680",
-            minHeight: "40vh",
+            backgroundImage:`url(${Images.mainBGPink})`,
+            backgroundSize:'cover',
+            backgroundRepeat:'no-repeat',
+        
             padding: "5rem 0  ",
             margin: 0,
             display: "flex",

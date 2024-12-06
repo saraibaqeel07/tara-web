@@ -118,6 +118,7 @@ const Images = {
  faq1:require( "../../assets/images/faq-1.png"),
  reading:require( "../../assets/images/reading.png"),
  handImg:require( "../../assets/images/hand-img.png"),
+ mainBGPink:require( "../../assets/images/mainPinkBG.png"),
  
 
 

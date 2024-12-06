@@ -491,7 +491,7 @@ function Character() {
       </Box>
 
 
-      <Box sx={{ backgroundColor: "#CA6680", py: "30px" }}>
+      <Box sx={{ backgroundImage:`url(${Images.mainBGPink})`,backgroundSize:'cover' }}>
         <Typography
           variant="h1"
           className="heading-font"
