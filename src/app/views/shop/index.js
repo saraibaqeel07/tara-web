@@ -607,51 +607,50 @@ function Shop() {
 
   
   const addToCart = async (data) => {
-    console.log('submit');
+    console.log("submit");
+  
     try {
       const cartRef = collection(db, "cartData");
-      const querySnapshot = await getDocs(
-        query(cartRef, where("userId", "==", User.uid))
-      );
+      
+      // Query cart document for the current user
+      const querySnapshot = await getDocs(query(cartRef, where("userId", "==", User.uid)));
   
       if (!querySnapshot.empty) {
-        // If user has a cart document, check if the item exists in the data array
+        // User already has a cart document
         const docRef = querySnapshot.docs[0].ref;
         const cartDoc = querySnapshot.docs[0].data();
   
-        // Check if the item exists in the data array
-        const itemIndex = cartDoc.data.findIndex(item => item.id === data.id);
+        // Check if the item exists in the cart
+        const existingItemIndex = cartDoc.data.findIndex(item => item.id === data.id);
   
-        if (itemIndex !== -1) {
-          // If item exists, update its qty
-          await updateDoc(docRef, {
-            [`data.${itemIndex}.qty`]: increment(1) // Increase qty by 1
-          });
+        if (existingItemIndex !== -1) {
+          // Item exists: Increment its quantity
+          const updatedData = [...cartDoc.data];
+          updatedData[existingItemIndex].qty += 1;
   
-          SuccessToaster('Quantity Increased');
+          await updateDoc(docRef, { data: updatedData });
+          SuccessToaster("Quantity Increased");
         } else {
-          // If item doesn't exist, append it to the data array
-          await updateDoc(docRef, {
-            data: [...cartDoc.data, { ...data, qty: 1 }] // Append new item with qty = 1
-          });
-  
-          SuccessToaster('Added To Cart');
+          // Item doesn't exist: Append new item with qty = 1
+          const newItem = { ...data, qty: 1 };
+          await updateDoc(docRef, { data: [...cartDoc.data, newItem] });
+          SuccessToaster("Added To Cart");
         }
       } else {
-        // If no cart document exists for the user, create a new one
-        const docRef = await addDoc(cartRef, {
+        // No cart document for the user: Create a new cart document
+        const newCart = {
           userId: User.uid,
           data: [{ ...data, qty: 1 }], // Initialize with the first item
-          created_at: moment().format('MMMM Do YYYY, h:mm a')
-        });
+          created_at: moment().format("MMMM Do YYYY, h:mm a")
+        };
   
+        const docRef = await addDoc(cartRef, newCart);
         console.log("Document written with ID: ", docRef.id);
-        SuccessToaster('Added To Cart');
+        SuccessToaster("Added To Cart");
       }
-      
     } catch (error) {
-      console.log(error);
-      ErrorToaster('Something Went Wrong');
+      console.error("Error adding to cart:", error);
+      ErrorToaster("Something Went Wrong");
     }
   };
   
