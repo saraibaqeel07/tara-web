@@ -136,6 +136,7 @@ const Images = {
  blog3:require( "../../assets/images/blog3.png"),
  sun:require( "../../assets/images/sun.png"),
  
+ paymentIcons:require( "../../assets/images/paymentIcons.png"),
 
 
 

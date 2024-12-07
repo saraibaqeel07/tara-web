@@ -612,19 +612,19 @@ function Shop() {
     try {
       const cartRef = collection(db, "cartData");
       
-      // Query cart document for the current user
+      
       const querySnapshot = await getDocs(query(cartRef, where("userId", "==", User.uid)));
   
       if (!querySnapshot.empty) {
-        // User already has a cart document
+        
         const docRef = querySnapshot.docs[0].ref;
         const cartDoc = querySnapshot.docs[0].data();
   
-        // Check if the item exists in the cart
+        
         const existingItemIndex = cartDoc.data.findIndex(item => item.id === data.id);
   
         if (existingItemIndex !== -1) {
-          // Item exists: Increment its quantity
+          
           const updatedData = [...cartDoc.data];
           updatedData[existingItemIndex].qty += 1;
   

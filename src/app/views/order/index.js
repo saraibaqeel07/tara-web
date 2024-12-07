@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Box, Button, CardMedia, Container, Grid, Typography, TextField, Divider, Rating, DialogActions, DialogContent, DialogTitle, Dialog, useMediaQuery } from '@mui/material'
+import { Box, Button, CardMedia, Container, Grid, Typography, TextField, Divider, Rating, DialogActions, DialogContent, DialogTitle, Dialog, useMediaQuery, Paper, FormControlLabel, Radio, FormControl, RadioGroup } from '@mui/material'
 import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images'
 import Colors from '../../styles/colors'
 import Fonts from '../../styles/fonts'
 import InputField from '../../components/InputField'
 import { useForm } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { addDoc, collection, getFirestore } from 'firebase/firestore'
+import { addDoc, collection, getDocs, getFirestore, query, where } from 'firebase/firestore'
 import { initializeApp } from 'firebase/app'
 import { ErrorToaster, SuccessToaster } from '../../components/Toaster'
 import moment from 'moment'
@@ -16,10 +16,15 @@ import { AuthContext } from '../../Context/AuthContext'
 import { useTheme } from '@emotion/react'
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 import { Modal } from 'antd'
+import shopImg1 from "../../assets/images/shop-intro.png"
+import reviewSection from "../../assets/images/review-section.png"
+import VisaIcon from '@mui/icons-material/CreditCard'; // Replace with actual Visa/Mastercard icons
+import MasterCardIcon from '@mui/icons-material/CreditCard'; // Replace with an appropriate icon
+import LocalShippingIcon from '@mui/icons-material/LocalShipping'; // For cash on delivery
 
 
 function Order() {
-    const { register, handleSubmit, formState: { errors }, getValues } = useForm();
+    const { register, handleSubmit, formState: { errors }, getValues, reset } = useForm();
     let { state } = useLocation()
     const navigate = useNavigate()
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
@@ -30,16 +35,22 @@ function Order() {
     let User = localStorage.getItem('user')
     const [open, setOpen] = useState(false)
     const [totalPrice, setTotalPrice] = useState(0)
+    const [selectedOption, setSelectedOption] = useState('bank'); // State for selected payment method
+
+    const handleChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
     User = JSON.parse(User)
     const calculateTotalPrice = (items) => {
-        return items.reduce((total, item) => {
-            return total + (parseFloat(item.price) * item.quantity);
+        return cartItems.reduce((total, item) => {
+            return total + (parseFloat(item.price) * item.qty);
         }, 0);
     };
 
     const [rating, setRating] = useState(0);
     const [modalOpen, setModalOpen] = useState(false)
     const [comment, setComment] = useState('');
+    const [cartItems, setCartItems] = useState([])
     const { user, setUser } = useContext(AuthContext);
     const handleRatingChange = (event, newRating) => {
         setRating(newRating);
@@ -74,14 +85,21 @@ function Order() {
         let User = localStorage.getItem('user')
         User = JSON.parse(User)
 
-        console.log(User,'UserUserUser');
+        console.log(User, 'UserUserUser');
         if (!User) {
             handleGoogleLogin()
 
 
         }
         else {
-            setModalOpen(true)
+            if (selectedOption == 'bank') {
+                setModalOpen(true)
+            }
+            else {
+
+                placeOrder()
+            }
+
         }
 
         console.log("🚀 ~ onSubmit ~ formData:", formData)
@@ -92,34 +110,34 @@ function Order() {
     const handleGoogleLogin = async () => {
 
         try {
-          const result = await signInWithPopup(auth, provider);
-          const user = result.user;
-          console.log("User Info: ", user);
-          if(user){
-             // Add a new document with a generated id.
-             const docRef = await addDoc(collection(db, "users"), {
-              uid: user.uid,
-              displayName: user.displayName,
-              email: user.email,
-              lastLogin: moment().format('DD/MM/YYYY')
-            });
-            console.log("Document written with ID: ", docRef.id);
-          }
-          localStorage.setItem('user', JSON.stringify(user))
-          setUser(user)
-          // Handle user info here (e.g., save to state, context, or redirect)
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            console.log("User Info: ", user);
+            if (user) {
+                // Add a new document with a generated id.
+                const docRef = await addDoc(collection(db, "users"), {
+                    uid: user.uid,
+                    displayName: user.displayName,
+                    email: user.email,
+                    lastLogin: moment().format('DD/MM/YYYY')
+                });
+                console.log("Document written with ID: ", docRef.id);
+            }
+            localStorage.setItem('user', JSON.stringify(user))
+            setUser(user)
+            // Handle user info here (e.g., save to state, context, or redirect)
         } catch (error) {
-          console.error("Error during Google login: ", error);
+            console.error("Error during Google login: ", error);
         }
-      };
+    };
     const placeOrder = async () => {
         console.log('submit');
         try {
 
             // Add a new document with a generated id.
             const docRef = await addDoc(collection(db, "orders"), {
-                fname: getValues('fName'),
-                lname: getValues('lName'),
+                name: getValues('name'),
+
                 email: getValues('email'),
                 phone: getValues('phone'),
                 address: getValues('address'),
@@ -127,6 +145,7 @@ function Order() {
                 amount: totalPrice,
                 status: 'pending',
                 details: state,
+                paymentType:selectedOption,
 
                 created_at: moment().format('MMMM Do YYYY, h:mm a')
 
@@ -138,7 +157,7 @@ function Order() {
 
                 SuccessToaster('Order Placed')
                 setOpen(true)
-
+                reset()
             }
             else {
                 ErrorToaster('Something Went Wrong')
@@ -157,7 +176,7 @@ function Order() {
                 fname: getValues('fName'),
                 lname: getValues('lName'),
                 email: getValues('email'),
-                name:getValues('fname')+getValues('lname'),
+                name: getValues('fname') + getValues('lname'),
                 comment: comment,
                 profile: User.photoURL,
                 rating: rating,
@@ -179,6 +198,7 @@ function Order() {
             }
 
         } catch (error) {
+            setOpen(false)
             console.log(error);
         }
     };
@@ -194,6 +214,27 @@ function Order() {
             ],
         });
     }
+
+    const getCartData = async () => {
+        try {
+
+            const userId = User.uid;
+
+
+            const q = query(collection(db, "cartData"), where("userId", "==", userId));
+
+            const querySnapshot = await getDocs(q);
+            const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            console.log(dataArray[0]?.data, 'dataArray');
+
+
+
+
+            setCartItems(dataArray[0]?.data);
+        } catch (error) {
+            console.error("Error fetching cart data:", error);
+        }
+    };
 
     const onApproveOrder = (data, actions) => {
         return actions.order.capture().then((details) => {
@@ -233,14 +274,18 @@ function Order() {
         return () => clearInterval(intervalId);
     }, []);
     useEffect(() => {
-        if (state) {
+        
 
-            const totalPriceSum = calculateTotalPrice(state);
-
-            setTotalPrice(totalPriceSum)
-        }
-
+            
+     
+        getCartData()
     }, [])
+    useEffect(() => {
+        const totalPriceSum = calculateTotalPrice();
+
+        setTotalPrice(totalPriceSum)
+    }, [cartItems])
+    
 
     return (
         <Box
@@ -300,7 +345,7 @@ function Order() {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose2} color="primary">
+                    <Button onClick={() => setOpen(false)} color="primary">
                         Cancel
                     </Button>
                     <Button onClick={onSubmit2} color="primary">
@@ -308,369 +353,266 @@ function Order() {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Box
-                component={"section"}
-                sx={{
-                    background: Colors.primaryGradient,
-                    width: "100%",
-                    py: "80px"
-                }}
-            >
-                {/* <Container >
-          <Box
-            sx={{
-              backgroundImage: { md: `url(${Images.contactBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
-              width: "100%",
-              height: { md: "624px", xs: "490px" },
-              backgroundSize: "cover",
-              backgroundPosition: "center center",
-              borderRadius: "20px"
-            }}
-          >
-            <Grid container>
-              <Grid item md={7} sm={12} xs={12}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    gap: "20px",
-                    pt: "50px",
-                    pl: { md: `60px !important`, sm: "12px", xs: "12px" },
-                    pr: { md: 0, sm: "12px", xs: "12px" },
-                  }}
-                >
-                  <Typography
-                    variant='h1'
-                    sx={{
-                      fontFamily: Fonts.righteous,
-                      fontSize: { md: "70px", sm: "50px", xs: "40px" },
-                      fontWeight: 500,
-                      textAlign: { md: "left", sm: "center", xs: "center" },
-                      pr: { md: "150px", sm: 0, xs: 0 }
-                    }}
-                  >
-                    To <Typography component={"span"} sx={{ fontFamily: Fonts.righteous, color: Colors.primary, fontSize: { md: "56px", sm: "48px", xs: "40px" } }}>Explore</Typography> More About Tara And Shine. <Typography component={"span"} id='contact-text' sx={{ fontFamily: Fonts.righteous, color: Colors.darkblue, fontSize: { md: "56px !important", sm: "48px !important", xs: "40px !important" } }}>Order </Typography> <span id='Us-text'>Us</span> <span id='mark-text'>!</span>
-                  </Typography>
-                  <Grid container spacing={2} alignItems={"center"}>
-                    <Grid item md={5} sm={5} xs={12}>
-                      <Button
-                        fullWidth
-                        variant='contained'
-                        sx={{
-                          py: 1,
-                          px: 4,
-                          textTransform: "capitalize",
-                          fontSize: "18px",
-                          boxShadow: ` 8px 72px 142px -58px rgba(143,82,161,1)`
-                        }}
-                        href='https://www.youtube.com/@Shinewithtara'
-                      >
-                        Start Adventure
-                      </Button>
-                    </Grid>
-                    <Grid item md={7} sm={7} xs={12}>
-                      <Grid container spacing={2} sx={{ justifyContent: { md: "flex-start", sm: "flex-start", xs: "center" } }} gap={{ md: "20px", sm: 0, xs: 0 }}>
-                        <Grid item md={1.4} sm={3} xs={3}>
-                          <Button href='https://www.facebook.com/profile.php?id=61554711500749'>
-                            <FacebookRounded />
-                          </Button>
-                        </Grid>
-                        <Grid item md={1.4} sm={3} xs={3}>
-                          <Button href='https://www.instagram.com/shineswithtara/ '>
-                            <InstagramRounded />
-                          </Button>
-                        </Grid>
-                        <Grid item md={1.4} sm={3} xs={3}>
-                          <Button href='https://www.youtube.com/@Shinewithtara'>
-                            <YoutubeRounded  />
-                          </Button>
-                        </Grid>
-                        <Grid item md={1.4} sm={3} xs={3}>
-                          <Button href='https://www.tiktok.com/@shinewithtara'>
-                            <TiktokRounded />
-                          </Button>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </Container> */}
+            <Box component={"form"} onSubmit={handleSubmit(onSubmit)} sx={{ width: '100%', backgroundImage: `url(${Images.mainBGPink})`, backgroundSize: 'cover', pt: '80px' }}>
+                <Grid container p={'20px'} mt={5}>
 
-                <Typography sx={{ fontSize: '30px', color: 'black', fontWeight: 'bold', textAlign: 'center', mb: '20px' }} variant="h6">
-                    Order Summary
-                </Typography>
-                <Grid container sx={{ width: '70%', margin: '0 auto' }}>
-                    <Grid item xs={3}>
-                        <Typography
-                            sx={{ fontSize: '12px', color: 'black', fontWeight: 'bold', textAlign: 'left' }}
-                            variant="body1"
-                        >
-                            Product Image
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <Typography
-                            sx={{ fontSize: '12px', color: 'black', fontWeight: 'bold', textAlign: 'left' }}
-                            variant="body1"
-                        >
-                            Product Name & Price
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <Typography
-                            sx={{ fontSize: '12px', color: 'black', fontWeight: 'bold', textAlign: 'left' }}
-                            variant="body1"
-                        >
-                            Quantity
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <Typography
-                            sx={{ fontSize: '12px', color: 'black', fontWeight: 'bold', textAlign: 'left' }}
-                            variant="body1"
-                        >
-                            Total
-                        </Typography>
-                    </Grid>
-                </Grid>
-                {state?.length > 0 ? state?.map((product, index) => (
-                    <React.Fragment key={index}>
-                        <Box sx={{ width: '90%', margin: '0 auto' }}>
-                            <Grid container sx={{ width: '80%', margin: '0 auto' }}>
-                                <Grid item xs={3}>
+                    <Grid container justifyContent={'center'} lg={9} md={9} sm={11} xs={12} sx={{ margin: "0 auto", backgroundColor: '#6791DE', borderRadius: '12px' }} py={3}>
+                        <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <Box sx={{ color: '#00bcd4', p: 4, borderRadius: 2 }}>
+                                <Grid container justifyContent={"center"} alignItems={"flex-start"}>
+                                    <Grid item md={6} sm={12} xs={12}>
+                                        <Grid container rowGap={'20px'} justifyContent={{ md: "space-between", sm: "center", xs: "center" }} sx={{ background: 'transparent', opacity: 0.8, borderRadius: "20px", p: "40px", pt: 0 }}>
+                                            <Grid item md={12} sm={12} xs={12}>
+                                                <Grid container justifyContent={"center"} alignItems={"center"}>
 
-                                    <img
-                                        src={product.imgUrl}
-                                        alt={product.name}
-                                        style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-                                    />
-                                </Grid>
-                                <Grid item xs={3}>
+                                                    <Grid item md={12}>
 
-                                    <Typography sx={{ fontSize: '12px', color: 'black', width: '100px' }} variant="h6">
-                                        {product.name}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1">
-                                        ${product.price}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={3}>
-                                    <Typography
-                                        sx={{ fontSize: '12px', color: 'black', width: '50px', fontWeight: 'bold' }}
-                                        variant="body1"
-                                    >
-                                        {product.quantity}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={3}>
-                                    <Typography
-                                        sx={{ fontSize: '12px', color: 'black', width: '50px', fontWeight: 'bold' }}
-                                        variant="body1"
-                                    >
-                                        ${product.quantity ? product.quantity * product.price : 1 * product.price}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
+                                                        <Typography className='heading-font' sx={{ fontSize: { md: "42px", sm: "34px", xs: "26px" }, color: 'white' }}>
+                                                            BILLING DETAILS
+                                                        </Typography>
 
-                            <Divider />
-                        </Box>
-                    </React.Fragment>
-                )) : <Box sx={{ color: 'black', fontWeight: 'bold', margin: '0 auto' }}>No Items in Cart</Box>}
-            </Box >
-            <Box
-                component={"section"}
-                sx={{
-                    background: Colors.whiteblue,
-                    width: "100%",
-                    height: "100%",
-                    py: "40px"
-                }}
-            >
-                <Container>
-                    <Grid container rowGap={"20px"} justifyContent={"center"}>
-                        <Grid item md={9} sm={12} xs={12}>
-                            {/* <Box sx={{ textAlign: "center" }}>
-                <Typography variant='h4' sx={{ fontWeight: 600, fontSize: { md: "36px", sm: "32px", xs: "28px" } }}>
-                  Order The Team at <span style={{ color: Colors.darkblue }}>Shine With Tara</span> To Keep In Touch With The Latest Updates
-                </Typography>
-              </Box> */}
-                        </Grid>
-                        <Grid item md={12} sm={12} xs={12}>
-                        </Grid>
-                        <Grid container justifyContent={"center"} alignItems={"center"}>
-                            <Grid item md={10} sm={12} xs={12} component={"form"} onSubmit={handleSubmit(onSubmit)}>
-                                <Grid container rowGap={"40px"} justifyContent={{ md: "space-between", sm: "center", xs: "center" }} sx={{ background: Colors.secondaryGradient, opacity: 0.8, borderRadius: "20px", p: "40px" }}>
-                                    <Grid item md={12} sm={12} xs={12}>
-                                        <Grid container justifyContent={"center"} alignItems={"center"}>
-                                            <Grid item md={1} display={{ md: "block", sm: "none", xs: "none" }}>
-                                                <CardMedia
-                                                    component={"img"}
-                                                    src={Images.shineStar}
-                                                    sx={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                        objectFit: "contain"
-                                                    }}
-                                                />
+
+                                                    </Grid>
+                                                    <Grid item md={1.5} display={{ md: "block", sm: "none", xs: "none" }}>
+                                                        <CardMedia
+                                                            component={"img"}
+                                                            src={Images.contactImg}
+                                                            sx={{
+                                                                width: "100%",
+                                                                height: "100%",
+                                                                objectFit: "contain"
+                                                            }}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
                                             </Grid>
-                                            <Grid item md={6}>
-                                                <Box
-                                                    sx={{
-                                                        display: "flex",
-                                                        flexDirection: "column",
-                                                        textAlign: "center"
-                                                    }}
-                                                >
-                                                    <Typography sx={{ fontSize: { md: "42px", sm: "34px", xs: "26px" } }}>
-                                                        Order
+
+                                            <Grid item md={12} sm={12} xs={12}>
+                                                <Box sx={{
+                                                    display: "flex",
+                                                    flexDirection: "column",
+                                                    gap: "10px",
+                                                }}>
+                                                    <Typography sx={{ color: 'white' }}>
+                                                        Name
                                                     </Typography>
-                                                    <Typography sx={{ fontSize: { md: "32px", sm: "28px", xs: "24px" }, color: Colors.yellow }}>
-                                                        Shine With Tara
-                                                    </Typography>
+                                                    <InputField
+                                                        size='small'
+                                                        register={register("name", {
+                                                            required: " Name"
+                                                        })}
+                                                        error={errors?.name && true}
+                                                        helperText={errors?.name?.message}
+                                                    />
                                                 </Box>
                                             </Grid>
-                                            <Grid item md={1.5} display={{ md: "block", sm: "none", xs: "none" }}>
-                                                <CardMedia
-                                                    component={"img"}
-                                                    src={Images.contactImg}
-                                                    sx={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                        objectFit: "contain"
-                                                    }}
-                                                />
+                                            <Grid item md={12} sm={12} xs={12}>
+                                                <Box sx={{
+                                                    display: "flex",
+                                                    flexDirection: "column",
+                                                    gap: "10px",
+                                                }}>
+                                                    <Typography sx={{ color: 'white' }}>
+                                                        Address
+                                                    </Typography>
+                                                    <InputField
+                                                        size='small'
+                                                        register={register("address", {
+                                                            required: "address"
+                                                        })}
+                                                        error={errors?.address && true}
+                                                        helperText={errors?.address?.message}
+                                                    />
+                                                </Box>
                                             </Grid>
+                                            <Grid item md={12} sm={12} xs={12}>
+                                                <Box sx={{
+                                                    display: "flex",
+                                                    flexDirection: "column",
+                                                    gap: "10px",
+                                                }}>
+                                                    <Typography sx={{ color: 'white' }}>
+                                                        Phone Number
+                                                    </Typography>
+                                                    <InputField
+                                                        size='small'
+                                                        register={register("phone", {
+                                                            required: "Phone"
+                                                        })}
+                                                        error={errors?.phone && true}
+                                                        helperText={errors?.phone?.message}
+                                                    />
+                                                </Box>
+                                            </Grid>
+                                            <Grid item md={12} sm={12} xs={12}>
+                                                <Box sx={{
+                                                    display: "flex",
+                                                    flexDirection: "column",
+                                                    gap: "10px",
+                                                }}>
+                                                    <Typography sx={{ color: 'white' }}>
+                                                        Email
+                                                    </Typography>
+                                                    <InputField
+                                                        size='small'
+                                                        register={register("email", {
+                                                            required: "Email"
+                                                        })}
+
+                                                        error={errors?.email && true}
+                                                        helperText={errors?.email?.message}
+                                                    />
+                                                </Box>
+                                            </Grid>
+
+
                                         </Grid>
                                     </Grid>
-                                    {/* <Grid item md={12} sm={12} xs={12}>
-                    <Box
-                      sx={{ display: "flex", flexDirection: "column" }}
-                    >
-                      <Typography>
-                        Email: shineswithtara@gmail.com
-                      </Typography>
-                      <Typography>
-                        Copyright 2024 © All rights Reserved By Shine With Tara Design By Sana Kazmi
-                      </Typography>
-                    </Box>
-                  </Grid> */}
-                                    <Grid item md={5.8} sm={12} xs={12}>
-                                        <Box sx={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            gap: "10px",
-                                        }}>
-                                            <Typography>
-                                                First Name
-                                            </Typography>
-                                            <InputField
-                                                register={register("fName", {
-                                                    required: "First Name"
-                                                })}
-                                                error={errors?.fName && true}
-                                                helperText={errors?.fName?.message}
-                                            />
-                                        </Box>
-                                    </Grid>
-                                    <Grid item md={5.8} sm={12} xs={12}>
-                                        <Box sx={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            gap: "10px",
-                                        }}>
-                                            <Typography>
-                                                Last Name
-                                            </Typography>
-                                            <InputField
-                                                register={register("lName", {
-                                                    required: "Last Name"
-                                                })}
-                                                error={errors?.lName && true}
-                                                helperText={errors?.lName?.message}
-                                            />
-                                        </Box>
-                                    </Grid>
-                                    <Grid item md={5.8} sm={12} xs={12}>
-                                        <Box sx={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            gap: "10px",
-                                        }}>
-                                            <Typography>
-                                                Email
-                                            </Typography>
-                                            <InputField
-                                                register={register("email", {
-                                                    required: "Email"
-                                                })}
-                                                error={errors?.email && true}
-                                                helperText={errors?.email?.message}
-                                            />
-                                        </Box>
-                                    </Grid>
-                                    <Grid item md={5.8} sm={12} xs={12}>
-                                        <Box sx={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            gap: "10px",
-                                        }}>
-                                            <Typography>
-                                                Phone
-                                            </Typography>
-                                            <InputField
-                                                register={register("phone", {
-                                                    required: "Phone"
-                                                })}
-                                                error={errors?.phone && true}
-                                                helperText={errors?.phone?.message}
-                                            />
-                                        </Box>
-                                    </Grid>
-                                    <Grid item md={12} sm={12} xs={12}>
-                                        <Box sx={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            gap: "10px",
-                                        }}>
-                                            <Typography>
-                                                Address
-                                            </Typography>
-                                            <InputField
-                                                register={
-                                                    register("address", {
-                                                        required: "address"
-                                                    })}
-                                                error={errors?.address && true}
-                                                multiline={true}
-                                                rows={3}
-                                                helperText={errors?.address?.message}
-                                            />
-                                        </Box>
-                                    </Grid>
-                                    <Grid item md={12}>
-                                        <Grid container justifyContent={"center"}>
-                                            <Grid item md={4}>
-                                                <Button
-                                                    type='submit'
-                                                    fullWidth
-                                                    variant='contained'
-                                                    sx={{ background: Colors.yellow }}
-                                                >
+                                    <Grid xs={6} >
+                                        <Paper sx={{ padding: 3, backgroundColor: '#b9ccf0', borderRadius: '12px' }}>
+                                            {cartItems?.length > 0 ? cartItems?.map((item, index) => (
+                                                <Box key={index} sx={{ backgroundColor: 'transparent', borderRadius: "3px", position: 'relative', mt: 1, mb: 1 }}>
+                                                    <Box component={'img'} width={'12px'} src={Images.crossIcon} sx={{ position: 'absolute', top: 10, right: 10, fontWeight: 'bold', cursor: 'pointer' }} ></Box>
+                                                    <Grid container alignItems="center">
+                                                        {/* Item Image */}
+                                                        <Grid item lg={6} md={6} sm={12} xs={12} display={'flex'} justifyContent={'flex-start'} alignItems={'center'} gap={2}>
+
+                                                            <Box sx={{ p: '1px', display: 'flex', justifyContent: 'center' }}>
+
+
+                                                                <Box
+                                                                    component="img"
+                                                                    src={item?.imgUrl}
+                                                                    alt="Item"
+                                                                    sx={{
+                                                                        width: '40px',
+                                                                        height: '40px',
+                                                                        borderRadius: 1,
+                                                                    }}
+                                                                />
+                                                            </Box>
+
+
+                                                            <Box>
+                                                                <Typography variant="body2" style={{ color: 'white' }}>{item?.name}</Typography>
+
+                                                            </Box>
+                                                        </Grid>
+
+
+
+
+
+                                                        {/* Total and Remove Button */}
+                                                        <Grid item lg={6} md={6} sm={4} xs={4} textAlign="right">
+                                                            <Typography sx={{ color: 'white' }}> {item?.price * item?.qty}</Typography>
+
+                                                        </Grid>
+                                                    </Grid>
+                                                </Box>
+                                            )) : <Box sx={{ backgroundColor: 'transparent', p: 2, borderRadius: "3px", mb: 2 }}>
+                                                <Grid container spacing={2} alignItems="center" justifyContent={'flex-end'}>
+
+
+
+
+                                                    <Grid item xs={12} textAlign="center">
+                                                        <Typography component="span" className='para-text' sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+                                                            No Items Available
+                                                        </Typography>
+                                                    </Grid>
+
+                                                </Grid>
+                                            </Box>}
+
+                                            <Box display="flex" justifyContent="space-between" mt={4}>
+                                                <Typography className='para-text'>Subtotal:</Typography>
+                                                <Typography className='para-text'>${cartItems.reduce((sum, item) => sum + item.qty * parseFloat(item.price), 0)}</Typography>
+                                            </Box>
+                                            <Divider sx={{ backgroundColor: '#d5e0f6' }} />
+                                            <Box display="flex" justifyContent="space-between" my={1}>
+                                                <Typography className='para-text'>Shipping:</Typography>
+                                                <Typography className='para-text'>Free</Typography>
+                                            </Box>
+                                            <Divider sx={{ backgroundColor: '#d5e0f6' }} />
+                                            <Box display="flex" justifyContent="space-between" my={1}>
+                                                <Typography className='para-text'>Total:</Typography>
+                                                <Typography className='para-text'>${cartItems.reduce((sum, item) => sum + item.qty * parseFloat(item.price), 0)}</Typography>
+                                            </Box>
+
+
+                                            <Box sx={{ borderRadius: 2, maxWidth: 400, display: 'flex', justifyContent: 'space-between', mt: 4 }}>
+                                                <FormControl>
+                                                    <RadioGroup value={selectedOption} onChange={handleChange}>
+                                                        {/* Bank Option */}
+                                                        <FormControlLabel
+                                                            value="bank"
+                                                            control={
+                                                                <Radio
+                                                                    sx={{
+                                                                        color: '#fff',
+                                                                        '&.Mui-checked': {
+                                                                            color: '#fff',
+                                                                        },
+                                                                    }}
+                                                                />
+                                                            }
+                                                            label={
+                                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                                    <Typography sx={{ marginRight: 2, color: '#fff' }}>Bank</Typography>
+                                                                </Box>
+                                                            }
+                                                        />
+                                                        {/* Cash on Delivery Option */}
+                                                        <FormControlLabel
+                                                            value="cashOnDelivery"
+                                                            control={
+                                                                <Radio
+                                                                    sx={{
+                                                                        color: '#fff',
+                                                                        '&.Mui-checked': {
+                                                                            color: '#fff',
+                                                                        },
+                                                                    }}
+                                                                />
+                                                            }
+                                                            label={
+                                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                                    <Typography sx={{ marginRight: 2, color: '#fff' }}>Cash on delivery</Typography>
+                                                                </Box>
+                                                            }
+                                                        />
+                                                    </RadioGroup>
+                                                </FormControl>
+                                                <Box component={'img'} src={Images.paymentIcons} width={'90px'} height={'30px'} />
+                                            </Box>
+                                            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                                <Button variant="contained" className='para-text' type='submit' color="secondary" sx={{ marginTop: 2, backgroundColor: '#CA6680', textTransform: "capitalize", textAlign: 'center', p: "11px 40px" }} onClick={() => navigate('/order')}>
                                                     Confirm Order
                                                 </Button>
-                                            </Grid>
-                                        </Grid>
+                                            </Box>
+                                        </Paper>
                                     </Grid>
                                 </Grid>
-                            </Grid>
+
+                            </Box>
                         </Grid>
                     </Grid>
-                </Container>
+
+                </Grid>
+
+                <Grid container sx={{
+                    backgroundImage: `url(${reviewSection})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: {
+                        xs: '550px',  // Smallest screens
+                        sm: '650px',  // Small screens
+                        md: '750px',  // Medium screens
+                        lg: '950px',  // Large screens
+                    }, mt: '20px'
+                }}>
+
+                </Grid>
             </Box>
+
         </Box >
     )
 }

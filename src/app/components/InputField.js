@@ -9,9 +9,9 @@ function InputField({ register, helperText, error, multiline, rows,sx,size }) {
       fullWidth
       sx={{
         ...sx,
-        background: Colors.white,
-        borderRadius: "8px",
-        border: "none",
+        background: 'transparent',
+        borderRadius: "3px",
+        border: "1px solid white",
         "& fieldset": { border: "none" },
         "& .MuiInputBase-root": { color: Colors.black }
       }}
