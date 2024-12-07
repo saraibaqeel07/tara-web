@@ -605,29 +605,29 @@ function Shop() {
     }
   }, []);
 
-  
+
   const addToCart = async (data) => {
     console.log("submit");
-  
+
     try {
       const cartRef = collection(db, "cartData");
-      
-      
+
+
       const querySnapshot = await getDocs(query(cartRef, where("userId", "==", User.uid)));
-  
+
       if (!querySnapshot.empty) {
-        
+
         const docRef = querySnapshot.docs[0].ref;
         const cartDoc = querySnapshot.docs[0].data();
-  
-        
+
+
         const existingItemIndex = cartDoc.data.findIndex(item => item.id === data.id);
-  
+
         if (existingItemIndex !== -1) {
-          
+
           const updatedData = [...cartDoc.data];
           updatedData[existingItemIndex].qty += 1;
-  
+
           await updateDoc(docRef, { data: updatedData });
           SuccessToaster("Quantity Increased");
         } else {
@@ -643,7 +643,7 @@ function Shop() {
           data: [{ ...data, qty: 1 }], // Initialize with the first item
           created_at: moment().format("MMMM Do YYYY, h:mm a")
         };
-  
+
         const docRef = await addDoc(cartRef, newCart);
         console.log("Document written with ID: ", docRef.id);
         SuccessToaster("Added To Cart");
@@ -653,7 +653,7 @@ function Shop() {
       ErrorToaster("Something Went Wrong");
     }
   };
-  
+
 
 
   useEffect(() => {
@@ -1437,18 +1437,35 @@ function Shop() {
             {(activeButton === 1 || activeButton === 4) && (
               <Box
                 sx={{
+                  position: "relative",
+                  backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
-                }} >
+                }}
+              >
+                <Box
+                  component={'img'}
+                  src={Images.yellowFlower} // Replace with your image source
+                  alt="Decorative"
+                  sx={{
+                    position: "absolute",
+                    top: "1000px", // Adjusted to move the image slightly higher
+                    right: { md: 10, lg: 20 },
+                    width: { lg: "100px", md: "70px" },
+                    zIndex: 2,
+                    display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                  }}
+
+                />
+
+
                 <Container
                   sx={{
                     backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
                     height: "100%", // Full height
                     padding: "60px 0", // Padding adjustment
                     width: "100%", // Full width
-
                   }}
                 >
                   {/* Grid for activity cards */}
@@ -1469,7 +1486,16 @@ function Shop() {
                   >
                     {loading || !delayPassed || activityLoading || !activityDelayPassed ? (
                       // Loader view with delay
-                      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "455px" }}>
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "455px",
+                        }}
+                      >
                         <CircularProgress size={50} sx={{ color: "#F9BF29" }} /> {/* Updated loader color */}
                       </Grid>
                     ) : (
@@ -1533,11 +1559,13 @@ function Shop() {
                                 className="add-to-cart"
                                 style={{ display: "flex", alignItems: "center" }}
                                 onClick={() => {
-                                  addToCart(card)
+                                  addToCart(card);
                                 }}
                               >
                                 Add To Cart &nbsp;{" "}
-                                <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                                <ShoppingCartIcon
+                                  sx={{ cursor: "pointer", color: "white" }}
+                                />
                               </div>
                             )}
                           </Grid>
@@ -1558,6 +1586,7 @@ function Shop() {
                   />
                 </Container>
               </Box>
+
 
 
             )}
@@ -1612,6 +1641,7 @@ function Shop() {
             {(activeButton === 2 || activeButton === 4) && (
               <Box
                 sx={{
+                  position: "relative",
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
@@ -1626,6 +1656,37 @@ function Shop() {
 
                   }}
                 >
+                  {/* Absolute positioned image */}
+                  <Box
+                    component={'img'}
+                    src={Images.cuttingPapers} // Replace with your image source
+                    alt="Decorative"
+                    sx={{
+                      position: "absolute",
+                      top: "400px", // Adjusted to move the image slightly higher
+                      left: "1px",
+                      width: "100px",
+                      zIndex: 2,
+                      display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                    }}
+
+                  />
+                  <Box
+                    component={'img'}
+                    src={Images.pencil} // Replace with your image source
+                    alt="Decorative"
+                    sx={{
+                      position: "absolute",
+                      top: "800px", // Adjusted to move the image slightly higher
+                      right: { md: 10 },
+                      width: { lg: "100px", md: "70px" },
+                      zIndex: 2,
+                      display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                    }}
+
+                  />
+
+
                   {/* Grid for activity cards */}
                   <Grid
                     container
@@ -1771,6 +1832,7 @@ function Shop() {
             {(activeButton === 3 || activeButton === 4) && (
               <Box
                 sx={{
+                  position:"relative",
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
@@ -1785,6 +1847,35 @@ function Shop() {
 
                   }}
                 >
+                      <Box
+                    component={'img'}
+                    src={Images.cloud} // Replace with your image source
+                    alt="Decorative"
+                    sx={{
+                      position: "absolute",
+                      top: "10px", // Adjusted to move the image slightly higher
+                      left: {md:"30px" ,lg:"60px"},
+                      width: {md:"60px" ,lg:"100px"},
+                      zIndex: 2,
+                      display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                    }}
+
+                  />
+                        <Box
+                  component={'img'}
+                  src={Images.pinkArrow} // Replace with your image source
+                  alt="Decorative"
+                  sx={{
+                    position: "absolute",
+                    top: "1000px", // Adjusted to move the image slightly higher
+                    right: { md: 10, lg: 20 },
+                    width: { lg: "100px", md: "70px" },
+                    zIndex: 2,
+                    display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                  }}
+
+                />
+
                   {/* Grid for extra sheets */}
                   <Grid
                     container

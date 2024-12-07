@@ -334,7 +334,7 @@ function Watch() {
     }
 
     let cart = localStorage.getItem('cartData')
-    if(cart){
+    if (cart) {
       cart = JSON.parse(cart)
       if (cart?.length > 0) {
         setCartItems(cart)
@@ -603,7 +603,7 @@ function Watch() {
             </Grid>
           </Container>
         </Box> */}
-         <Box
+        <Box
           sx={{
             backgroundImage: `url(${Images.bannerBg})`,
 
@@ -619,45 +619,45 @@ function Watch() {
           <Box
             sx={{
               margin: "30px auto",
-              
+
               width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
               height: "100%", // Full height of the parent container
               backgroundImage: `url(${Images.watch1})`,
-              backgroundSize:"contain",
+              backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center", // Ensures the image is aligned at the bottom
-           
+
             }}
           />
         </Box>
 
-        
-<Grid
-  container
-  sx={{
-    backgroundImage: `url(${Images.watchBackground})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    minHeight: "40vh",
-    padding: {md:"5rem 0",sm:"1rem 0" },
-    margin: 0,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundAttachment: "fixed", // Fix background during scroll
-   
-  }}
->
-<Grid
-    item
-    xs={12}
-    md={12}
-    sx={{
-      position: "relative",
-    }}
-  >
-     <Box
+
+        <Grid
+          container
+          sx={{
+            backgroundImage: `url(${Images.watchBackground})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            minHeight: "40vh",
+            padding: { md: "5rem 0", sm: "1rem 0" },
+            margin: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundAttachment: "fixed", // Fix background during scroll
+
+          }}
+        >
+          <Grid
+            item
+            xs={12}
+            md={12}
+            sx={{
+              position: "relative",
+            }}
+          >
+            <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -670,7 +670,7 @@ function Watch() {
               {/* Heading */}
               <Typography
                 variant="h1"
-                
+
                 className="heading-font"
                 sx={{
                   fontSize: {
@@ -683,7 +683,7 @@ function Watch() {
                   fontWeight: 600,
                   color: "#F9BF29",
                   textTransform: "uppercase",
-                position: "relative",
+                  position: "relative",
 
                 }}
                 style={{
@@ -692,7 +692,7 @@ function Watch() {
                 }}
               >
                 Youtube
-              
+
               </Typography>
               {/* Right Image */}
               <Box
@@ -702,220 +702,220 @@ function Watch() {
                 sx={{
                   width: { xs: "50px", sm: "60px", md: "80px" },
                   height: "auto",
-                  position:"absolute",
-                  right: {md:80, xs:0 ,sm:25}, 
-                 
+                  position: "absolute",
+                  right: { md: 80, xs: 0, sm: 25 },
 
 
-                 
+
+
 
                 }}
               />
             </Box>
-  </Grid>
+          </Grid>
 
 
-    {selected === "episode" ? (
-    <Box
-      component={"section"}
-      sx={{
-        height: "100%",
-        width: "100%",
-        py: "72px",
-      }}
-    >
-      <Slider
-        dots={false}
-        arrows={true}
-        prevArrow={
-          <Box
-            sx={{
-              position: "absolute",
-              left: 20,
-              top: "50%",
-              transform: "translateY(-50%)",
-              cursor: "pointer",
-              zIndex: 10,
-            }}
-            onClick={() => {}}
-          >
-            <img
-              src={Images.backwardArrow}
-              alt="Previous"
-              style={{ width: "60px", height: "40px" }}
-            />
-          </Box>
-        }
-        nextArrow={
-          <Box
-            sx={{
-              position: "absolute",
-              right: 20,
-              top: "50%",
-              transform: "translateY(-50%)",
-              cursor: "pointer",
-            }}
-            onClick={() => {}}
-          >
-            <img
-              src={Images.forwardArrow}
-              alt="Next"
-              style={{ width: "60px", height: "40px" }}
-            />
-          </Box>
-        }
-        infinite={true}
-        speed={500}
-        slidesToShow={3}
-        slidesToScroll={1}
-        adaptiveHeight={true}
-        variableWidth={false}
-        centerMode={true}
-        responsive={[
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 1,
-              infinite: true,
-              dots: false,
-              adaptiveHeight: true,
-              variableWidth: false,
-              centerMode: true,
-              arrows: true,
-            },
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              infinite: true,
-              dots: false,
-              centerMode: true,
-              variableWidth: false,
-              adaptiveHeight: true,
-              arrows: true,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              infinite: true,
-              dots: false,
-              centerMode: true,
-              variableWidth: false,
-              adaptiveHeight: true,
-              arrows: true,
-            },
-          },
-        ]}
-        beforeChange={handleBeforeChange} // Update active index on slide change
-      >
-        {sliderData.map((item, i) => (
-          <Box
-            key={i}
-            sx={{
-              p: 3,
-              borderRadius: "20px",
-              cursor: "pointer",
-              maxHeight: "400px",
-              overflow: "hidden",
-              display: "flex",
-              flexDirection: "column",
-              backgroundColor:  "transparent", // Change background color on active slide
-              transition: "background-color 0.3s ease", // Smooth transition for background color
-             
-            }}
-            component={"div"}
-            onClick={() => window.open(item?.url, "_blank")}
-          >
-            <CardMedia
-              component={"img"}
-              src={item.image}
-              sx={{
-                width: "100%",
-                height: "100%",
-                objectFit: {xl:"none"},
-                borderTopLeftRadius: "20px",
-                borderTopRightRadius: "20px",
-                maxHeight: "250px",
-              }}
-            />
+          {selected === "episode" ? (
             <Box
+              component={"section"}
               sx={{
-                backgroundColor: activeIndex === i ? "#FF9D04" :"#5B73AD",
-                textAlign: "center",
-                borderBottomLeftRadius: "20px",
-                borderBottomRightRadius: "20px",
-                p: 2,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "70px",
-                overflow: "hidden",
+                height: "100%",
+                width: "100%",
+                py: "72px",
               }}
             >
-              <Typography className="heading-font" sx={{ color: "#fff" }}>
-                {item.title}
-              </Typography>
+              <Slider
+                dots={false}
+                arrows={true}
+                prevArrow={
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      left: 20,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                      zIndex: 10,
+                    }}
+                    onClick={() => { }}
+                  >
+                    <img
+                      src={Images.backwardArrow}
+                      alt="Previous"
+                      style={{ width: "60px", height: "40px" }}
+                    />
+                  </Box>
+                }
+                nextArrow={
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      right: 20,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => { }}
+                  >
+                    <img
+                      src={Images.forwardArrow}
+                      alt="Next"
+                      style={{ width: "60px", height: "40px" }}
+                    />
+                  </Box>
+                }
+                infinite={true}
+                speed={500}
+                slidesToShow={3}
+                slidesToScroll={1}
+                adaptiveHeight={true}
+                variableWidth={false}
+                centerMode={true}
+                responsive={[
+                  {
+                    breakpoint: 1024,
+                    settings: {
+                      slidesToShow: 3,
+                      slidesToScroll: 1,
+                      infinite: true,
+                      dots: false,
+                      adaptiveHeight: true,
+                      variableWidth: false,
+                      centerMode: true,
+                      arrows: true,
+                    },
+                  },
+                  {
+                    breakpoint: 768,
+                    settings: {
+                      slidesToShow: 1,
+                      slidesToScroll: 1,
+                      infinite: true,
+                      dots: false,
+                      centerMode: true,
+                      variableWidth: false,
+                      adaptiveHeight: true,
+                      arrows: true,
+                    },
+                  },
+                  {
+                    breakpoint: 480,
+                    settings: {
+                      slidesToShow: 1,
+                      slidesToScroll: 1,
+                      infinite: true,
+                      dots: false,
+                      centerMode: true,
+                      variableWidth: false,
+                      adaptiveHeight: true,
+                      arrows: true,
+                    },
+                  },
+                ]}
+                beforeChange={handleBeforeChange} // Update active index on slide change
+              >
+                {sliderData.map((item, i) => (
+                  <Box
+                    key={i}
+                    sx={{
+                      p: 3,
+                      borderRadius: "20px",
+                      cursor: "pointer",
+                      maxHeight: "400px",
+                      overflow: "hidden",
+                      display: "flex",
+                      flexDirection: "column",
+                      backgroundColor: "transparent", // Change background color on active slide
+                      transition: "background-color 0.3s ease", // Smooth transition for background color
+
+                    }}
+                    component={"div"}
+                    onClick={() => window.open(item?.url, "_blank")}
+                  >
+                    <CardMedia
+                      component={"img"}
+                      src={item.image}
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: { xl: "none" },
+                        borderTopLeftRadius: "20px",
+                        borderTopRightRadius: "20px",
+                        maxHeight: "250px",
+                      }}
+                    />
+                    <Box
+                      sx={{
+                        backgroundColor: activeIndex === i ? "#FF9D04" : "#5B73AD",
+                        textAlign: "center",
+                        borderBottomLeftRadius: "20px",
+                        borderBottomRightRadius: "20px",
+                        p: 2,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "70px",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <Typography className="heading-font" sx={{ color: "#fff" }}>
+                        {item.title}
+                      </Typography>
+                    </Box>
+                  </Box>
+                ))}
+              </Slider>
             </Box>
-          </Box>
-        ))}
-      </Slider>
-    </Box>
-  ) : (
-    <>
-      <Box
-        component={"section"}
-        sx={{
-          height: "100%",
-          width: "100%",
-          py: "72px",
-        }}
-      ></Box>
-      <Box
-        component={"section"}
-        id="coloring-section"
-        sx={{
-          height: "100%",
-          width: "100%",
-          py: "72px",
-        }}
-      ></Box>
-    </>
-  )}
-</Grid>
+          ) : (
+            <>
+              <Box
+                component={"section"}
+                sx={{
+                  height: "100%",
+                  width: "100%",
+                  py: "72px",
+                }}
+              ></Box>
+              <Box
+                component={"section"}
+                id="coloring-section"
+                sx={{
+                  height: "100%",
+                  width: "100%",
+                  py: "72px",
+                }}
+              ></Box>
+            </>
+          )}
+        </Grid>
 
 
 
-<Grid
-  container
-  sx={{
-    backgroundImage: `url(${Images.watchBackground2})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    minHeight: "40vh",
-    padding: {md:"5rem 0",sm:"1rem 0" },
-    margin: 0,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }}
->
-<Grid
-    item
-    xs={12}
-    md={12}
-    sx={{
-      position: "relative",
-    }}
-  >
-     <Box
-     
+        <Grid
+          container
+          sx={{
+            backgroundImage: `url(${Images.watchBackground2})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            minHeight: "40vh",
+            padding: { md: "5rem 0", sm: "1rem 0" },
+            margin: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Grid
+            item
+            xs={12}
+            md={12}
+            sx={{
+              position: "relative",
+            }}
+          >
+            <Box
+
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -924,24 +924,24 @@ function Watch() {
                 marginBottom: 0, // Space below heading
               }}
             >
-   <Box
+              <Box
                 component="img"
                 src={Images.handImg} // Replace with actual right image URL
                 alt="Right Decorative Image"
                 sx={{
                   width: { xs: "40px", sm: "50px", md: "80px" },
                   height: "auto",
-                  position:"absolute",
-                  left: {md:80, xs:0 ,sm:25}, 
+                  position: "absolute",
+                  left: { md: 80, xs: 0, sm: 25 },
 
-                 
+
 
                 }}
               />
               {/* Heading */}
               <Typography
                 variant="h1"
-                
+
                 className="heading-font"
                 sx={{
                   fontSize: {
@@ -954,7 +954,7 @@ function Watch() {
                   fontWeight: 600,
                   color: "#F9BF29",
                   textTransform: "uppercase",
-                position: "relative",
+                  position: "relative",
 
                 }}
                 style={{
@@ -963,228 +963,250 @@ function Watch() {
                 }}
               >
                 Collaboration
-              
+
               </Typography>
               {/* Right Image */}
-           
+
             </Box>
-  </Grid>
-  <Grid
-  container
-  item
-  justifyContent="center"
-  sx={{
-    display: "flex",
-    gap: 2, // Gap between the two images
-    justifyContent: "center", // Center the images
-    py: { md: 15, xs: 0, sm: 0 },
-  }}
->
-  {/* First Image */}
-  <Grid
-    item
-    xs={8} // Full width in extra-small screens
-    sm={5} // Adjust width for small screens
-    md={5} // Adjust width for medium screens
-    xl={4}
-    sx={{ display: "flex", justifyContent: "center" }}
-  >
-    <Box
-      component="img"
-      src={Images.collab2} // Replace with your first image
-      alt="Image 1"
-      sx={{
-        width: "100%",
-        height: "auto",
-        objectFit: "contain",
-      }}
-    />
-  </Grid>
-
-  {/* Second Image */}
-  <Grid
-    item
-    xs={8} // Full width in extra-small screens
-    sm={5} // Adjust width for small screens
-    md={5} // Adjust width for medium screens
-    xl={4}
-
-    sx={{ display: "flex", justifyContent: "center" }}
-  >
-    <Box
-      component="img"
-      src={Images.collab1} // Replace with your second image
-      alt="Image 2"
-      sx={{
-        width: "100%",
-        height: "auto",
-        objectFit: "contain",
-      }}
-    />
-  </Grid>
-</Grid>
-
-</Grid>
-
-<Box
-  component={"section"}
-  sx={{
-    position: "relative",
-    backgroundColor: "#FF9D04",
-    width: "100%",
-    height: "auto",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
-    padding: { xs: "4rem 0", sm: "10rem 0", md: "10rem 0", xl: "15rem 0" },
-  }}
->
-  {/* Left Background Image */}
-  <Box
-    sx={{
-      position: "absolute",
-      bottom: 0,
-      left: 0,
-      zIndex: 0,
-      display: "block",
-    }}
-  >
-    <CardMedia
-      component={"img"}
-      src={Images.Character3}
-      sx={{
-        width: { xs: "180px", sm: "280px", md: "380px", lg: "500px" },
-        height: { xs: "180px", sm: "180px", md: "650px", lg: "650px" },
-        objectFit: "cover",
-      }}
-    />
-  </Box>
-
-  {/* Right Background Image */}
-  <Box
-    sx={{
-      position: "absolute",
-      bottom: 0,
-      right: 0,
-      zIndex: 0,
-      display: "block",
-    }}
-  >
-    <CardMedia
-      component={"img"}
-      src={Images.Character4}
-      sx={{
-        width: { xs: "180px", sm: "280px", md: "500px", lg: "750px" },
-        height: { xs: "180px", sm: "180px", md: "650px", lg: "650px" },
-        objectFit: "cover",
-      }}
-      />
-  </Box>
-
-  {/* Small Centered Image on Right */}
-  <Box
-    sx={{
-      position: "absolute",
-      
-      right: "3%", // Adjust spacing from the right
-     display:"flex", alignItems:"center",
-      zIndex: 1,
-    }}
-  >
-    <CardMedia
-      component={"img"}
-      src={Images.taraImage} // Replace with your small image source
-      alt="Small Image"
-      sx={{
-        display:{sm:"none", xs:"none",md:"block"},
-        width: {  md: "40px", lg: "60px" },
-        height: "auto",
-        objectFit: "contain",
-      }}
-    />
-  </Box>
-
-  {/* Center Content */}
-  <Box
-    sx={{
-      position: "relative",
-      textAlign: "center",
-      zIndex: 1,
-      width: { xs: "90%", sm: "80%", md: "20%", lg: "25%" },
-    }}
-  >
-    <Typography
-      variant="h5"
-      className="para-text"
-      sx={{
-        fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" },
-        fontWeight: 600,
-        textAlign: "center",
-        mb: 2,
-      }}
-    >
-      Subscribe to get information, latest news, and other interesting offers
-      about{" "}
-      <span
-        style={{
-          fontWeight: "bold",
-          WebkitTextStroke: "0.5px white ",
-          WebkitTextFillColor: "#3D5A98",
-        }}
-      >
-        Shine With Tara
-      </span>
-    </Typography>
-    <TextField
-      className="para-text"
-      placeholder={"Your email"}
-      sx={{
-        background: Colors.white,
-        borderRadius: "4px",
-        width: "100%",
-        "& fieldset": {
-          border: "none",
-        },
-        "& .MuiOutlinedInput-root": {
-          paddingRight: 0.5,
-        },
-        "& .MuiOutlinedInput-input": {
-          color: `${Colors.primary} !important`,
-          fontSize: { xs: "14px", sm: "16px", md: "18px" },
-        },
-      }}
-      InputProps={{
-        endAdornment: (
-          <Button
-            className="para-text"
+          </Grid>
+          <Grid
+            container
+            item
+            justifyContent="center"
             sx={{
-              color: `${Colors.white} !important`,
-              backgroundColor: `#5B73AD`,
-              px: { xs: 2, sm: 4 },
-              py: 1.5,
-              textTransform: "uppercase",
-              fontSize: { xs: "12px", sm: "14px", md: "16px" },
-              "&:hover": {
-                backgroundColor: `#5B73AD`,
-                color: `${Colors.white}`,
-              },
+              display: "flex",
+              gap: 2, // Gap between the two images
+              justifyContent: "center", // Center the images
+              py: { md: 15, xs: 0, sm: 0 },
             }}
           >
-            Subscribe
-          </Button>
-        ),
-      }}
-    />
-  </Box>
-</Box>
+            {/* First Image */}
+            <Grid
+              item
+              xs={8} // Full width in extra-small screens
+              sm={5} // Adjust width for small screens
+              md={5} // Adjust width for medium screens
+              xl={4}
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
+              <Box
+                component="img"
+                src={Images.collab2} // Replace with your first image
+                alt="Image 1"
+                sx={{
+                  width: "100%",
+                  height: "auto",
+                  objectFit: "contain",
+                }}
+              />
+            </Grid>
+
+            {/* Second Image */}
+            <Grid
+              item
+              xs={8} // Full width in extra-small screens
+              sm={5} // Adjust width for small screens
+              md={5} // Adjust width for medium screens
+              xl={4}
+
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
+              <Box
+                component="img"
+                src={Images.collab1} // Replace with your second image
+                alt="Image 2"
+                sx={{
+                  width: "100%",
+                  height: "auto",
+                  objectFit: "contain",
+                }}
+              />
+            </Grid>
+          </Grid>
+
+        </Grid>
+
+        <Box
+          component={"section"}
+          sx={{
+            position: "relative",
+            backgroundColor: "#FF9D04",
+            width: "100%",
+            height: "auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+            padding: { xs: "4rem 0", sm: "10rem 0", md: "10rem 0", xl: "15rem 0" },
+          }}
+        >
+          {/* Left Background Image */}
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              zIndex: 0,
+              display: "block",
+            }}
+          >
+            <CardMedia
+              component={"img"}
+              src={Images.Character3}
+              sx={{
+                width: { xs: "180px", sm: "280px", md: "380px", lg: "500px" },
+                height: { xs: "180px", sm: "180px", md: "650px", lg: "650px" },
+                objectFit: "cover",
+              }}
+            />
+          </Box>
+
+          {/* Right Background Image */}
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              right: 0,
+              zIndex: 0,
+              display: "block",
+            }}
+          >
+            <CardMedia
+              component={"img"}
+              src={Images.Character4}
+              sx={{
+                width: { xs: "180px", sm: "280px", md: "500px", lg: "750px" },
+                height: { xs: "180px", sm: "180px", md: "650px", lg: "650px" },
+                objectFit: "cover",
+              }}
+            />
+          </Box>
+
+          {/* Small Centered Image on Right */}
+          <Box
+            sx={{
+              position: "absolute",
+
+              right: "3%", // Adjust spacing from the right
+              display: "flex", alignItems: "center",
+              zIndex: 1,
+            }}
+          >
+            <CardMedia
+              component={"img"}
+              src={Images.taraImage} // Replace with your small image source
+              alt="Small Image"
+              sx={{
+                display: { sm: "none", xs: "none", md: "block" },
+                width: { md: "40px", lg: "60px" },
+                height: "auto",
+                objectFit: "contain",
+              }}
+            />
+          </Box>
+          <Box
+            sx={{
+              position: "absolute",
+              top: 30,
+              left: "3%", // Adjust spacing from the right
+              display: "flex",
+              zIndex: 1,
+            }}
+          >
+            <CardMedia
+              component={"img"}
+              src={Images.yellowFlower} // Replace with your small image source
+              alt="Small Image"
+              sx={{
+                display: { sm: "none", xs: "none", md: "block" },
+                width: { md: "40px", lg: "60px" },
+
+                height: "auto",
+                objectFit: "contain",
+              }}
+            />
+          </Box>
+
+          {/* Center Content */}
+          <Box
+            sx={{
+              position: "relative",
+              textAlign: "center",
+              zIndex: 1,
+              width: { xs: "90%", sm: "80%", md: "20%", lg: "25%" },
+            }}
+          >
+            <Typography
+              variant="h5"
+              className="para-text"
+              sx={{
+                fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" },
+                fontWeight: 600,
+                textAlign: "center",
+                mb: 2,
+              }}
+            >
+              Subscribe to get information, latest news, and other interesting offers
+              about{" "}
+              <span
+                style={{
+                  fontWeight: "bold",
+                  WebkitTextStroke: "0.5px white ",
+                  WebkitTextFillColor: "#3D5A98",
+                }}
+              >
+                Shine With Tara
+              </span>
+            </Typography>
+            <TextField
+              className="para-text"
+              placeholder={"Your email"}
+              sx={{
+                background: Colors.white,
+                borderRadius: "4px",
+                width: "100%",
+                "& fieldset": {
+                  border: "none",
+                },
+                "& .MuiOutlinedInput-root": {
+                  paddingRight: 0.5,
+                },
+                "& .MuiOutlinedInput-input": {
+                  color: `${Colors.primary} !important`,
+                  fontSize: { xs: "14px", sm: "16px", md: "18px" },
+                },
+              }}
+              InputProps={{
+                endAdornment: (
+                  <Button
+                    className="para-text"
+                    sx={{
+                      color: `${Colors.white} !important`,
+                      backgroundColor: `#5B73AD`,
+                      px: { xs: 2, sm: 4 },
+                      py: 1.5,
+                      textTransform: "uppercase",
+                      fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                      "&:hover": {
+                        backgroundColor: `#5B73AD`,
+                        color: `${Colors.white}`,
+                      },
+                    }}
+                  >
+                    Subscribe
+                  </Button>
+                ),
+              }}
+            />
+          </Box>
+        </Box>
 
 
 
 
 
-     
-              {/* <Box
+
+        {/* <Box
           component={"section"}
           sx={{
             background: Colors.whiteblue,
