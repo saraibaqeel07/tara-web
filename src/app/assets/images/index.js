@@ -119,7 +119,7 @@ const Images = {
  reading:require( "../../assets/images/reading.png"),
  handImg:require( "../../assets/images/hand-img.png"),
  mainBGPink:require( "../../assets/images/mainPinkBG.png"),
- 
+ paymentIcons:require( "../../assets/images/paymentIcons.png"),
 
 
 
