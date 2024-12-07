@@ -131,6 +131,10 @@ const Images = {
  reading:require( "../../assets/images/reading.png"),
  handImg:require( "../../assets/images/hand-img.png"),
  mainBGPink:require( "../../assets/images/mainPinkBG.png"),
+ blog1:require( "../../assets/images/blog1.png"),
+ blog2:require( "../../assets/images/blog2.png"),
+ blog3:require( "../../assets/images/blog3.png"),
+ sun:require( "../../assets/images/sun.png"),
  
 
 

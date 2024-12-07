@@ -15,6 +15,9 @@ import EventShow from "../views/event";
 import FAQ from "../views/Faq";
 import Cart from "../views/cart";
 import Blog from "../views/blog";
+import BlogDescription from "../views/blogDescription";
+
+
 
 const Webroutes = [
   {
@@ -76,6 +79,10 @@ const Webroutes = [
   {
     path: "/blog",
     component: <Blog />
+  },
+  {
+    path: "/blog-detail",
+    component: <BlogDescription />
   },
 ];
 

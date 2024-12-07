@@ -1,120 +1,417 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
 import {
-  Box,
-  Grid,
-  Typography,
-  TextField,
-  InputAdornment,
+    Box,
+    Grid,
+    Typography,
+    TextField,
+    InputAdornment,
+    CircularProgress
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Images from "../../assets/images";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import CardActionArea from '@mui/material/CardActionArea';
+import PageNavigator from "../../components/pagination/index"
 
 const Blog = () => {
-  return (
-    <Grid
-      container
-      sx={{
-        backgroundImage: `url(${Images.watchBackground})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        minHeight: "40vh",
-        padding: { md: "5rem 0", sm: "1rem 0" },
-        margin: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundAttachment: "fixed", // Fix background during scroll
-      }}
-    >
-      <Grid
-        item
-        xs={12}
-        md={12}
-        sx={{
-          position: "relative",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center", // Center heading with images
-            gap: 2, // Space between images and heading
-            marginBottom: 0, // Space below heading
-          }}
-        >
-          {/* Heading */}
-          <Typography
-            variant="h1"
-            className="heading-font"
-            sx={{
-              fontSize: {
-                xl: "80px",
-                lg: "70px",
-                md: "60px",
-                sm: "50px",
-                xs: "40px",
-              }, // Responsive font size
-              fontWeight: 600,
-              color: "#F9BF29",
-              textTransform: "uppercase",
-              position: "relative",
-            }}
-            style={{
-              WebkitTextStroke: "1px white",
-              WebkitTextFillColor: "#F9BF29",
-            }}
-          >
-            blog
-          </Typography>
+    const [searchQuery, setSearchQuery] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]); // All data fetched
+    const cardsPerRow = 4; // Number of cards per row
+    const cardsPerPage = 2 * cardsPerRow; // Two rows of cards per page
 
-          {/* Right Image */}
-          <Box
-            component="img"
-            src={Images.pencil} // Replace with actual right image URL
-            alt="Right Decorative Image"
-            sx={{
-              width: { xs: "50px", sm: "60px", md: "80px" },
-              height: "auto",
-              position: "absolute",
-              right: { md: 80, xs: 0, sm: 25 },
-            }}
-          />
-        </Box>
+    const navigate = useNavigate()
 
-        {/* Search Box */}
-        <Box
-              className="para-text"
-          sx={{
-            position: "absolute",
-            top: "150%", // Adjust to place it below the heading
-            left: "50%",
-            transform: "translateX(-50%)", // Center horizontally
-            width: "35%", // 30% width
-          }}
-        >
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="Search..."
-            InputProps={{
-                style: {
-                backgroundColor: "#ECE6F0", // Black background
-                color: "black", // White text color
-                borderRadius: "8px",
-              },
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon style={{ color: "black" }} />
-                </InputAdornment>
-              ),
+    // Simulate fetching data dynamically
+    useEffect(() => {
+        setLoading(true);
+        // Simulating an API call
+        setTimeout(() => {
+            const fetchedData = [
+                {
+                    date: "2024-12-01",
+                    image: Images.blog1,
+                    title: "title 1",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                },
+                {
+                    date: "2024-12-02",
+                    image: Images.blog1,
+                    title: "10 ESSENTIAL DUAS FOR CHILDREN",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                },
+                {
+                    date: "2024-12-03",
+                    image: Images.blog1,
+                    title: "title 2",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                },
+                {
+                    date: "2024-12-03",
+                    image: Images.blog1,
+                    title: "title 2",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                }, {
+                    date: "2024-12-03",
+                    image: Images.blog1,
+                    title: "title 2",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                }, {
+                    date: "2024-12-03",
+                    image: Images.blog1,
+                    title: "title 2",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                }, {
+                    date: "2024-12-03",
+                    image: Images.blog1,
+                    title: "title 2",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                }, {
+                    date: "2024-12-03",
+                    image: Images.blog1,
+                    title: "title 2",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                }, {
+                    date: "2024-12-03",
+                    image: Images.blog1,
+                    title: "title 2",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                }, {
+                    date: "2024-12-03",
+                    image: Images.blog1,
+                    title: "title 2",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                }, {
+                    date: "2024-12-03",
+                    image: Images.blog1,
+                    title: "title 2",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                }, {
+                    date: "2024-12-03",
+                    image: Images.blog1,
+                    title: "title 2",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                }, {
+                    date: "2024-12-03",
+                    image: Images.blog1,
+                    title: "title 2",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                }, {
+                    date: "2024-12-03",
+                    image: Images.blog1,
+                    title: "title 2",
+                    description: "When our kids start to grow up, we try our best to teach them something new every day. Unfortunately, we mostly focus on worldly things and do not concentrate on religious studies. As Muslim parents, it is our duty to teach our children about our religion as well. Teaching Islamic simple duas to the kids can help us take the first steps towards introducing Islamic studies to our kids.",
+                },
+            ];
+            setData(fetchedData);
+            setLoading(false); // Stop loader
+        }, 1000);
+    }, []);
+
+    // Calculate filtered and paginated data
+    const filteredCards = data.filter((card) =>
+        card.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const totalPages = Math.ceil(filteredCards.length / cardsPerPage);
+    const indexOfLastCard = currentPage * cardsPerPage;
+    const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+    const currentCards = filteredCards.slice(indexOfFirstCard, indexOfLastCard);
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage((prev) => prev - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage((prev) => prev + 1);
+        }
+    };
+
+    const handlePageClick = (page) => {
+        setCurrentPage(page);
+    };
+
+    const getHighlightedText = (text, highlight) => {
+        if (!highlight) return text;
+        const parts = text.split(new RegExp(`(${highlight})`, "gi"));
+        return parts.map((part, index) =>
+            part.toLowerCase() === highlight.toLowerCase() ? (
+                <span
+                    key={index}
+                    style={{
+                        backgroundColor: "#5B73AD",
+                        color: "white",
+                    }}
+                >
+                    {part}
+                </span>
+            ) : (
+                part
+            )
+        );
+    };
+
+    return (
+
+        <Grid
+            container
+            sx={{
+                backgroundImage: `url(${Images.watchBackground})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                minHeight: "40vh",
+                padding: { md: "5rem 0", sm: "1rem 0" },
+                margin: 0,
+                display: "flex",
+                alignItems: "center",
+                backgroundAttachment: "fixed", // Fix background during scroll
             }}
-          />
-        </Box>
-      </Grid>
-    </Grid>
-  );
+        >
+            <Grid
+                item
+                xs={12}
+                md={12}
+                sx={{
+                    position: "relative",
+                }}
+            >
+                {/* Center Heading */}
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 2,
+                    }}
+                >
+                    {/* Heading */}
+                    <Typography
+                        variant="h1"
+                        className="heading-font"
+                        sx={{
+                            fontSize: {
+                                xl: "80px",
+                                lg: "70px",
+                                md: "60px",
+                                sm: "50px",
+                                xs: "40px",
+                            },
+                            fontWeight: 600,
+                            color: "#F9BF29",
+                            textTransform: "uppercase",
+                            position: "relative",
+                        }}
+                        style={{
+                            WebkitTextStroke: "1px white",
+                            WebkitTextFillColor: "#F9BF29",
+                        }}
+                    >
+                        blog
+                    </Typography>
+
+                    {/* Right Image */}
+                    <Box
+                        component="img"
+                        src={Images.pencil} // Replace with actual right image URL
+                        alt="Right Decorative Image"
+                        sx={{
+                            width: { xs: "50px", sm: "60px", md: "80px" },
+                            height: "auto",
+                            position: "absolute",
+                            right: { md: 80, xs: 0, sm: 25 },
+                        }}
+                    />
+                </Box>
+
+                {/* Search Box */}
+                <Box
+                    sx={{
+                        position: "relative", // Keep it inside the normal flow
+                        marginTop: "2rem", // Space below the heading
+                        display: "flex",
+                        justifyContent: "center", // Center horizontally
+                    }}
+                >
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        placeholder="search text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        sx={{
+                            maxWidth: "400px", // Restrict width
+                            backgroundColor: "#ECE6F0", // Light background
+                            borderRadius: "9px",
+                            "& .MuiInputBase-input": {
+                                color: "black", // Set text color to black
+                            },
+                        }}
+
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <SearchIcon style={{ color: "black" }} />
+                                </InputAdornment>
+                            ),
+                            className: "para-text"
+                        }}
+                    />
+
+                </Box>
+
+
+
+
+                {/* Loader */}
+                {loading ? (
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            height: "400px",
+                        }}
+                    >
+                        <CircularProgress style={{ color: "#FF9D04" }} />
+                    </Box>
+                ) : (
+                    <>
+                        {/* Cards Section */}
+                        <Grid
+                            container
+                            spacing={3}
+                            sx={{
+                                padding: "80px 0",
+                                minHeight: "400px", // Ensuring the height stays consistent
+                                height: currentCards.length === 0 ? "400px" : "auto", // Make sure height doesn't collapse
+                            }}
+                        >
+                            {currentCards.length > 0 ? (
+                                currentCards.map((card, index) => (
+                                    <Grid
+                                        item
+                                        key={index}
+                                        xs={12}
+                                        sm={6}
+                                        md={4}
+                                        lg={3}
+                                        sx={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center", // Center content if only one row
+                                        }}
+                                    >
+                                        <Card
+                                            sx={{
+                                                maxWidth: 280,
+                                                borderRadius: "15px",
+                                                cursor: "pointer"  // Add cursor pointer here
+                                            }}
+                                            onClick={() =>
+                                                navigate('/blog-detail', {
+                                                    state: {
+                                                        title: card.title,
+                                                        description: card.description
+                                                    }
+                                                })
+                                            }
+                                        >
+                                            <CardActionArea>
+                                                <CardMedia
+                                                    component="img"
+                                                    height="250"
+                                                    image={card.image}
+                                                    alt={card.title}
+                                                />
+                                                <CardContent sx={{ backgroundColor: "#FF9D04" }}>
+                                                    <Typography sx={{ color: "white", fontSize: "15px" }}>
+                                                        {getHighlightedText(card.title, searchQuery)}
+                                                    </Typography>
+                                                    <Typography sx={{ color: "white" }}>
+                                                        {card.date}
+                                                    </Typography>
+                                                </CardContent>
+                                            </CardActionArea>
+                                        </Card>
+                                    </Grid>
+                                ))
+                            ) : (
+                                // No Data Available
+                                <Grid
+                                    item
+                                    xs={12}
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        height: "200px", // Center the message
+                                    }}
+                                >
+                                    <Typography sx={{ color: "white", fontSize: "20px" }}>No Data Available</Typography>
+                                </Grid>
+                            )}
+                        </Grid>
+
+                        {/* Hide Pagination if loading or no data */}
+                        {currentCards.length > 0 && !loading && (
+                            <PageNavigator
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPrevPage={handlePrevPage}
+                                onNextPage={handleNextPage}
+                                onPageClick={handlePageClick}
+                                backwardArrow={Images.backwardArrow}
+                                forwardArrow={Images.forwardArrow}
+                            />
+                        )}
+                    </>
+                )}
+
+
+
+
+            </Grid>
+
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", paddingTop: "10px", position: "relative", bottom: 0, }}>
+                {/* First image with absolute positioning */}
+                <Box sx={{ position: "absolute", top: "10%", left: 10, width: "20%", height: "auto" }}>
+                    <img src={Images.faq1} alt="Image 1" style={{ width: "20%", height: "auto" }} />
+                </Box>
+
+                {/* Second image */}
+                <Box sx={{ width: "100%", height: "auto" }}>
+                    <img src={Images.blog2} alt="Image 2" style={{ width: "100%", height: "auto" }} />
+                </Box>
+
+                {/* Third image */}
+                <Box sx={{ width: "100%", height: "auto" }}>
+                    <img src={Images.character16} alt="Image 3" style={{ width: "100%", height: "auto" }} />
+                </Box>
+
+                {/* Fourth image */}
+                <Box sx={{ width: "100%", height: "auto" }}>
+                    <img src={Images.character15} alt="Image 4" style={{ width: "100%", height: "auto" }} />
+                </Box>
+
+                {/* Last image with absolute positioning */}
+                <Box sx={{ position: "absolute", top: "10%", right: 10, width: "5%", height: "auto" }}>
+                    <img src={Images.cloud} alt="Image 5" style={{ width: "100%", height: "auto" }} />
+                </Box>
+            </Box>
+
+        </Grid>
+
+
+    );
 };
 
 export default Blog;
