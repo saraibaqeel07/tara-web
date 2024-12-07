@@ -117,7 +117,7 @@ function Header(props) {
           background: '#5B73AD'
         }}
       >
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between',padding:'25px 0px' }}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box
             component={"div"}
             sx={{ width: '20%' }}

@@ -79,7 +79,10 @@ export const navigationNested = [
     },{
       path: "/faq",
       name: "FAQ"
-    },]
+    },{
+      path: "/blog",
+      name: "Blog"
+    }]
   },
   
 ]
