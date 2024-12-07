@@ -1,48 +1,80 @@
-import React, { Fragment, useContext, useEffect, useState, useRef } from 'react';
-import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup, TextField, Drawer, Accordion, AccordionSummary, AccordionDetails, Rating } from '@mui/material';
-import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images';
-import Colors from '../../styles/colors';
-import Slider from 'react-slick';
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
+import {
+  Box,
+  Button,
+  CardMedia,
+  Container,
+  Grid,
+  Typography,
+  ButtonGroup,
+  TextField,
+  Drawer,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Rating,
+} from "@mui/material";
+import Images, {
+  FacebookRounded,
+  InstagramRounded,
+  TiktokRounded,
+  YoutubeRounded,
+} from "../../assets/images";
+import Colors from "../../styles/colors";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
-import "../../../App.css"
-import Fonts from '../../styles/fonts';
+import "../../../App.css";
+import Fonts from "../../styles/fonts";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
-import ProductModal from '../modal/ProductModal';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Avatar, Divider } from 'antd';
-import CloseIcon from '@mui/icons-material/Close';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Directions, Star } from '@mui/icons-material';
-import { SwiperSlide, Swiper } from 'swiper/react';
-import 'swiper/css';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import { CartContext } from '../../Context/CartContext';
-import { CartCounter } from '../../Context/CartCounter';
-import navigation from '../../../Navigation';
-import introImage from "../../assets/images/intro-pic.png"
-import taraImage from "../../assets/images/tara-pic.png"
-import starImg from "../../assets/images/star.png"
-import rainbowImg from "../../assets/images/rainbow.png"
-import haveforyou from "../../assets/images/haveforyou.png"
-import shopFrame from "../../assets/images/Shop-Frame.png"
-import Aos from 'aos';
-import 'aos/dist/aos.css';
+import {
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+} from "firebase/firestore";
+import ProductModal from "../modal/ProductModal";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Avatar, Divider } from "antd";
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Directions, Star } from "@mui/icons-material";
+import { SwiperSlide, Swiper } from "swiper/react";
+import "swiper/css";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { CartContext } from "../../Context/CartContext";
+import { CartCounter } from "../../Context/CartCounter";
+import navigation from "../../../Navigation";
+import introImage from "../../assets/images/intro-pic.png";
+import taraImage from "../../assets/images/tara-pic.png";
+import starImg from "../../assets/images/star.png";
+import rainbowImg from "../../assets/images/rainbow.png";
+import haveforyou from "../../assets/images/haveforyou.png";
+import shopFrame from "../../assets/images/Shop-Frame.png";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 // import "slick-carousel/slick/slick-theme.css";
 
-
-
 function Home() {
-  const { state } = useLocation()
+  const { state } = useLocation();
   Aos.init();
 
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
 
-  console.log(cartVisible, 'cartVisible');
+  console.log(cartVisible, "cartVisible");
 
   const firebaseConfig = {
     apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
@@ -51,29 +83,29 @@ function Home() {
     storageBucket: "shinetara-86ec0.appspot.com",
     messagingSenderId: "182521981077",
     appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
-    measurementId: "G-BHYZDHJCK9"
+    measurementId: "G-BHYZDHJCK9",
   };
-  let productId = ''
+  let productId = "";
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const [selected, setSelected] = useState("episode");
-  const [products, setProducts] = useState([])
-  const [textColor, setTextColor] = useState(Colors.orange)
+  const [products, setProducts] = useState([]);
+  const [textColor, setTextColor] = useState(Colors.orange);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [cardProduct, setCardProduct] = useState({})
-  const [coloringSheets, setColoringSheets] = useState([])
-  const [activitySheets, setActivitySheets] = useState([])
-  const [extraSheets, setExtraSheets] = useState([])
+  const [cardProduct, setCardProduct] = useState({});
+  const [coloringSheets, setColoringSheets] = useState([]);
+  const [activitySheets, setActivitySheets] = useState([]);
+  const [extraSheets, setExtraSheets] = useState([]);
 
   const [open, setOpen] = useState(false);
-  const [cartArray, setCartArray] = useState([])
+  const [cartArray, setCartArray] = useState([]);
   const [cartItems, setCartItems] = useState(products);
-  const [faqData, setFaqData] = useState([])
-  const [totalAmount, setTotalAmount] = useState(0)
-  const [reviewBoxes, setReviewBoxes] = useState([])
+  const [faqData, setFaqData] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [reviewBoxes, setReviewBoxes] = useState([]);
   const [activeCard, setActiveCard] = useState(0); // Start with the first card
   const swiperRef = useRef(null);
 
@@ -84,58 +116,63 @@ function Home() {
     }
   };
   const handleIncrement = (id) => {
-    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item)
+    const updatedData = cartItems.map((item) =>
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+    );
     const totalPrice = updatedData.reduce((total, item) => {
-      return total + (parseFloat(item.price) * item.quantity);
+      return total + parseFloat(item.price) * item.quantity;
     }, 0);
-    setTotalAmount(totalPrice)
+    setTotalAmount(totalPrice);
     setCartItems(updatedData);
-    setCount(updatedData?.length)
-    localStorage.setItem('cartData', JSON.stringify(updatedData))
+    setCount(updatedData?.length);
+    localStorage.setItem("cartData", JSON.stringify(updatedData));
   };
 
-
-
-
   const handleDecrement = (id) => {
-    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 1 } : item)
+    const updatedData = cartItems.map((item) =>
+      item.id === id
+        ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 1 }
+        : item
+    );
     const totalPrice = updatedData.reduce((total, item) => {
-      return total + (parseFloat(item.price) * item.quantity);
+      return total + parseFloat(item.price) * item.quantity;
     }, 0);
-    setTotalAmount(totalPrice)
+    setTotalAmount(totalPrice);
     setCartItems(updatedData);
-    setCount(updatedData?.length)
-    localStorage.setItem('cartData', JSON.stringify(updatedData))
+    setCount(updatedData?.length);
+    localStorage.setItem("cartData", JSON.stringify(updatedData));
   };
 
   const toggleDrawer = (isOpen) => (event) => {
-    console.log('dasdasas');
+    console.log("dasdasas");
     setOpen(!open);
-    toggleCartVisibility()
+    toggleCartVisibility();
   };
   const getFaqs = async () => {
     const q = query(collection(db, "Faq"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    setFaqData(dataArray)
-
-
-  }
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setFaqData(dataArray);
+  };
   const getReviews = async () => {
     const q = query(collection(db, "reviews"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     console.log(dataArray);
-    setReviewBoxes(dataArray)
-
-  }
+    setReviewBoxes(dataArray);
+  };
   const showModal = (item) => {
     setIsModalOpen(true);
     console.log(item);
-    setCardProduct(item)
-
+    setCardProduct(item);
   };
   const handleOk = () => {
     setIsModalOpen(false);
@@ -146,25 +183,25 @@ function Home() {
   const buttons = [
     <Button
       key="episode"
-      variant={selected == 'episode' ? "contained" : "outlined"}
+      variant={selected == "episode" ? "contained" : "outlined"}
       sx={{
         // width: { md: "180px", sm: "150px", xs: "100%" },
         width: "100%",
         px: 4,
-        py: 1.5
+        py: 1.5,
       }}
       onClick={() => setSelected("episode")}
     >
       Episodes
     </Button>,
     <Button
-      variant={selected == 'merchandise' ? "contained" : "outlined"}
+      variant={selected == "merchandise" ? "contained" : "outlined"}
       key="merchandise"
       sx={{
         // width: { md: "180px", sm: "150px", xs: "100%" },
         width: "100%",
         px: 4,
-        py: 1.5
+        py: 1.5,
       }}
       onClick={() => setSelected("merchandise")}
     >
@@ -176,162 +213,170 @@ function Home() {
     {
       image: Images.sliderImage1,
       title: "Jungle Adventure",
-      url: 'https://www.youtube.com/watch?v=JjEc2iIPaYE'
+      url: "https://www.youtube.com/watch?v=JjEc2iIPaYE",
     },
     {
       image: Images.sliderImage2,
       title: "Bugs Adventure",
-      url: 'https://www.youtube.com/watch?v=vbu-5oSw_zU'
+      url: "https://www.youtube.com/watch?v=vbu-5oSw_zU",
     },
     {
       image: Images.sliderImage3,
       title: "Space Adventure",
-      url: 'https://www.youtube.com/watch?v=SCyHeBrBgbI'
+      url: "https://www.youtube.com/watch?v=SCyHeBrBgbI",
     },
     {
       image: Images.sliderImage4,
       title: "Heart Warming Sibling Race",
-      url: 'https://www.youtube.com/watch?v=sG8hhCjMOXo'
+      url: "https://www.youtube.com/watch?v=sG8hhCjMOXo",
     },
     {
       image: Images.sliderImage5,
       title: "Story Of Miraj",
-      url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
+      url: "https://www.youtube.com/watch?v=6a_qlXUkI-Q",
     },
   ];
 
   const routingData = [
     {
       name: "Tara",
-      detail: "Tara is 9 years old. She is a shy Muslim girl. Her imaginary best friend is Shine. She is very kind, helpful, and loving. Her special skill is drawing. She gets nervous around a lot of people, but Shine overcomes her weakness.",
+      detail:
+        "Tara is 9 years old. She is a shy Muslim girl. Her imaginary best friend is Shine. She is very kind, helpful, and loving. Her special skill is drawing. She gets nervous around a lot of people, but Shine overcomes her weakness.",
       image: Images.Shop,
       logo: Images.logoTara,
-      path: '/shop'
+      path: "/shop",
     },
     {
       name: "Shine",
-      detail: "Tara's best imaginary friend is named Shine. She always lends a hand to Tara. She has a lot of energy. She has a bold personality and inspires confidence",
+      detail:
+        "Tara's best imaginary friend is named Shine. She always lends a hand to Tara. She has a lot of energy. She has a bold personality and inspires confidence",
       image: Images.watch,
       logo: Images.logoShine,
-      path: '/watch'
+      path: "/watch",
     },
     {
       name: "Ahmed",
-      detail: "Ahmed is Tara’s younger brother; he is 8 years old. Ahmed is very kind and helpful boy. He loves to play video games.",
+      detail:
+        "Ahmed is Tara’s younger brother; he is 8 years old. Ahmed is very kind and helpful boy. He loves to play video games.",
       image: Images.portfolio,
       logo: Images.logoAhmed,
-      path: '/about'
+      path: "/about",
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.character,
       logo: Images.logoLaila,
-      path: '/main-character'
+      path: "/main-character",
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.faq,
       logo: Images.logoLaila,
-      path: '/faq'
+      path: "/faq",
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.ContactUs,
       logo: Images.logoLaila,
-      path: '/contact-us'
+      path: "/contact-us",
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.EventShow,
       logo: Images.logoLaila,
-      path: '/event-show'
+      path: "/event-show",
     },
     {
       name: "Laila",
-      detail: "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.blog,
       logo: Images.logoLaila,
-      path: '/colorfull-club'
+      path: "/colorfull-club",
     },
-
-
   ];
 
   const cardData = [
     {
       image: Images.cardImg1,
       title: "Dua Book",
-      price: "$13"
+      price: "$13",
     },
     {
       image: Images.cardImg2,
       title: "Calender",
-      price: "$15"
+      price: "$15",
     },
     {
       image: Images.cardImg3,
       title: "Bookmarks",
-      price: "$9"
+      price: "$9",
     },
     {
       image: Images.cardImg4,
       title: "Worksheet",
-      price: "$30"
+      price: "$30",
     },
     {
       image: Images.cardImg5,
       title: "Puzzle",
-      price: "$1/card"
+      price: "$1/card",
     },
     {
       image: Images.cardImg6,
       title: "Good Deeds",
-      price: "$13"
+      price: "$13",
     },
-  ]
-
-
+  ];
 
   const getProducts = async () => {
     const q = query(collection(db, "products"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
-    console.log('books', sortedData);
+    console.log("books", sortedData);
     // Update state with sorted data
     setProducts(sortedData);
-
-
-  }
+  };
 
   const getActivitySheets = async () => {
     const q = query(collection(db, "activitysheets"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
 
-    setActivitySheets(sortedData)
-
-
-  }
+    setActivitySheets(sortedData);
+  };
 
   const getColoringSheets = async () => {
     const q = query(collection(db, "coloringsheets"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
@@ -339,53 +384,49 @@ function Home() {
 
     // Update state with sorted data
     setColoringSheets(sortedData);
-
-  }
+  };
 
   const getExtrasheets = async () => {
     const q = query(collection(db, "extra"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
 
-    setExtraSheets(sortedData)
-
-  }
+    setExtraSheets(sortedData);
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       // Generate a random color
 
-      let element = document.getElementById('follow-text')
-      let element2 = document.getElementById('learn-text')
-      let element3 = document.getElementById('explore-text')
+      let element = document.getElementById("follow-text");
+      let element2 = document.getElementById("learn-text");
+      let element3 = document.getElementById("explore-text");
       if (element) {
-
-        if (element.style.color == 'rgb(254, 157, 4)') {
-          element.style.color = 'white'
-          element2.style.color = Colors.darkblue
-          element3.style.color = 'white'
-        }
-
-        else if (element3.style.color == 'white') {
-          element.style.color = 'white'
-          element2.style.color = 'white'
-          element3.style.color = Colors.pink
-        }
-        else {
-          element.style.color = 'rgb(254, 157, 4)'
-          element2.style.color = 'white'
-          element3.style.color = 'white'
+        if (element.style.color == "rgb(254, 157, 4)") {
+          element.style.color = "white";
+          element2.style.color = Colors.darkblue;
+          element3.style.color = "white";
+        } else if (element3.style.color == "white") {
+          element.style.color = "white";
+          element2.style.color = "white";
+          element3.style.color = Colors.pink;
+        } else {
+          element.style.color = "rgb(254, 157, 4)";
+          element2.style.color = "white";
+          element3.style.color = "white";
         }
       }
     }, 1000); // Change color every 1000ms (1 second)
 
     return () => clearInterval(intervalId);
   }, []);
-
 
   useEffect(() => {
     getProducts();
@@ -396,139 +437,185 @@ function Home() {
     getFaqs();
 
     if (state?.colorful) {
-      setSelected('merchandise');
+      setSelected("merchandise");
 
       // Delay execution by 2 seconds
       setTimeout(() => {
-
         let element = document.getElementById(state?.section);
-        console.log(element, 'element');
+        console.log(element, "element");
         if (element) {
-          console.log(element, 'eeee');
-          element.scrollIntoView({ behavior: 'smooth' });
+          console.log(element, "eeee");
+          element.scrollIntoView({ behavior: "smooth" });
         }
       }, 2000);
     }
 
-    let cart = localStorage.getItem('cartData')
+    let cart = localStorage.getItem("cartData");
     if (cart) {
-
-      cart = JSON.parse(cart)
+      cart = JSON.parse(cart);
       if (cart?.length > 0) {
-        setCartItems(cart)
-        setCount(cart.length)
+        setCartItems(cart);
+        setCount(cart.length);
       }
     }
   }, []);
   useEffect(() => {
     Aos.init({
       duration: 1000, // Animation duration
-      easing: 'ease-in-out', // Easing option
+      easing: "ease-in-out", // Easing option
       once: false, // Whether animation should happen only once
       mirror: false, // Whether elements should animate out while scrolling past them
     });
   }, []);
 
-
   useEffect(() => {
-
-    setOpen(cartVisible)
-
-
-  }, [cartVisible])
-
+    setOpen(cartVisible);
+  }, [cartVisible]);
 
   return (
-    <>  <div>
-
-      <Drawer
-        anchor="right"
-        open={open}
-        onClose={toggleDrawer(false)}
-      >
-        <Box
-          sx={{ width: 400, padding: 2 }}
-          role="presentation"
-
-        >
-          {console.log(cartItems)}
-          <Box display="flex" flexWrap="wrap">
-
-            {cartItems?.length > 0 ? cartItems?.map((product, index) => (
-              <React.Fragment key={index}>
+    <>
+      {" "}
+      <div>
+        <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+          <Box sx={{ width: 400, padding: 2 }} role="presentation">
+            {console.log(cartItems)}
+            <Box display="flex" flexWrap="wrap">
+              {cartItems?.length > 0 ? (
+                cartItems?.map((product, index) => (
+                  <React.Fragment key={index}>
+                    <Box
+                      onClick={() => {
+                        const updatedData = cartItems.filter(
+                          (item) => product.id != item.id
+                        );
+                        const totalPrice = updatedData.reduce((total, item) => {
+                          return total + parseFloat(item.price) * item.quantity;
+                        }, 0);
+                        setTotalAmount(totalPrice);
+                        setCartItems(updatedData);
+                        setCount(updatedData?.length);
+                        localStorage.setItem(
+                          "cartData",
+                          JSON.stringify(updatedData)
+                        );
+                      }}
+                      sx={{ color: "black", cursor: "pointer" }}
+                    >
+                      <CloseIcon />
+                    </Box>
+                    <Box
+                      sx={{
+                        height: 100,
+                        display: "flex",
+                        padding: 2,
+                        textAlign: "center",
+                      }}
+                    >
+                      <img
+                        src={product.imgUrl}
+                        alt={product.name}
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          objectFit: "cover",
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: "12px",
+                          color: "black",
+                          width: "100px",
+                        }}
+                        variant="h6"
+                      >
+                        {product.name}
+                      </Typography>
+                      <Typography
+                        sx={{ fontSize: "12px", color: "black" }}
+                        variant="body1"
+                      >
+                        ${product.price}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: "12px",
+                          color: "black",
+                          width: "50px",
+                          fontWeight: "bold",
+                        }}
+                        variant="body1"
+                      >
+                        $
+                        {product.quantity
+                          ? product.quantity * product.price
+                          : 1 * product.price}
+                      </Typography>
+                      <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        sx={{ width: "10px" }}
+                        marginTop={1}
+                      >
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => handleDecrement(product.id)}
+                        >
+                          -
+                        </Button>
+                        <Typography
+                          sx={{ fontSize: "12px", color: "black" }}
+                          variant="body1"
+                          marginX={2}
+                        >
+                          {product.quantity ? product.quantity : 1}
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => handleIncrement(product.id)}
+                        >
+                          +
+                        </Button>
+                      </Box>
+                    </Box>
+                    <Divider />
+                  </React.Fragment>
+                ))
+              ) : (
                 <Box
-
-                  onClick={() => {
-                    const updatedData = cartItems.filter(item => product.id != item.id)
-                    const totalPrice = updatedData.reduce((total, item) => {
-                      return total + (parseFloat(item.price) * item.quantity);
-                    }, 0);
-                    setTotalAmount(totalPrice)
-                    setCartItems(updatedData)
-                    setCount(updatedData?.length)
-                    localStorage.setItem('cartData', JSON.stringify(updatedData))
-                  }}
-                  sx={{ color: 'black', cursor: 'pointer' }}
+                  sx={{ color: "black", fontWeight: "bold", margin: "0 auto" }}
                 >
-                  <CloseIcon />
+                  No Items in Cart
                 </Box>
-                <Box
-                  sx={{
-                    height: 100,
-                    display: 'flex',
-                    padding: 2,
-                    textAlign: 'center',
-                  }}
-                >
-
-                  <img
-                    src={product.imgUrl}
-                    alt={product.name}
-                    style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-                  />
-                  <Typography sx={{ fontSize: '12px', color: 'black', width: '100px' }} variant="h6">
-                    {product.name}
-                  </Typography>
-                  <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1">
-                    ${product.price}
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: '12px', color: 'black', width: '50px', fontWeight: 'bold' }}
-                    variant="body1"
-                  >
-                    ${product.quantity ? product.quantity * product.price : 1 * product.price}
-                  </Typography>
-                  <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: '10px' }} marginTop={1}>
-                    <Button variant="contained" color="secondary" onClick={() => handleDecrement(product.id)}>
-                      -
-                    </Button>
-                    <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1" marginX={2}>
-                      {product.quantity ? product.quantity : 1}
-                    </Typography>
-                    <Button variant="contained" color="secondary" onClick={() => handleIncrement(product.id)}>
-                      +
-                    </Button>
-
-                  </Box>
-                </Box>
-                <Divider />
-              </React.Fragment>
-            )) : <Box sx={{ color: 'black', fontWeight: 'bold', margin: '0 auto' }}>No Items in Cart</Box>}
+              )}
+            </Box>
+            <Box
+              sx={{
+                color: "black",
+                fontSize: "27px",
+                textAlign: "center",
+                fontFamily: Fonts.righteous,
+              }}
+            >
+              Sub Total : $ {totalAmount}
+            </Box>
           </Box>
-          <Box sx={{ color: 'black', fontSize: '27px', textAlign: 'center', fontFamily: Fonts.righteous, }}>Sub Total :  $ {totalAmount}</Box>
-        </Box>
-        <Button sx={{ width: '90%', textAlign: 'center', margin: '0 auto' }} variant="contained" color="secondary" onClick={() => navigate(
-          `/order`,
-          { state: cartItems }
-        )}>
-          CheckOut
-        </Button>
-      </Drawer>
-    </div>
+          <Button
+            sx={{ width: "90%", textAlign: "center", margin: "0 auto" }}
+            variant="contained"
+            color="secondary"
+            onClick={() => navigate(`/order`, { state: cartItems })}
+          >
+            CheckOut
+          </Button>
+        </Drawer>
+      </div>
       <Box
         component={"main"}
         sx={{
-          width: "100%"
+          width: "100%",
         }}
       >
         <Box
@@ -536,7 +623,6 @@ function Home() {
           sx={{
             background: Colors.primaryGradient,
             width: "100%",
-
           }}
         >
           <Box
@@ -560,10 +646,16 @@ function Home() {
                 width: { md: "50%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
                 height: "100%", // Full height of the parent container
                 backgroundImage: `url(${Images.mainTara})`,
-                backgroundSize: { md: "cover", xl: "contain", lg: "contain", },
+                backgroundSize: { md: "cover", xl: "contain", lg: "contain" },
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center bottom", // Ensures the image is aligned at the bottom
-                display: { md: "block", xl: "block", lg: "block", sm: "none", xs: "none" }, // Show image only for medium and larger screens
+                display: {
+                  md: "block",
+                  xl: "block",
+                  lg: "block",
+                  sm: "none",
+                  xs: "none",
+                }, // Show image only for medium and larger screens
               }}
             />
 
@@ -616,11 +708,10 @@ function Home() {
                     </span>
                   </Typography>
 
-
                   {/* Subtitle */}
                   <Typography
                     variant="h3"
-                    className='para-text'
+                    className="para-text"
                     sx={{
                       fontSize: { md: "38px", sm: "28px", xs: "20px" },
                     }}
@@ -631,8 +722,7 @@ function Home() {
                   {/* Button */}
                   <Button
                     variant="contained"
-                    className='para-text'
-
+                    className="para-text"
                     sx={{
                       py: 1.2,
                       px: 2,
@@ -675,14 +765,7 @@ function Home() {
               </Grid>
             </Grid>
           </Box>
-
-
-
-
-
-
         </Box>
-
 
         <Grid
           container
@@ -694,9 +777,6 @@ function Home() {
             position: "relative", // Needed for absolute positioning of child elements
           }}
         >
-
-
-
           {/* Flex container for image and heading */}
           <Grid
             container
@@ -723,8 +803,20 @@ function Home() {
               <Box
                 sx={{
                   position: "absolute", // Positioned relative to the container
-                  top: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts vertical positioning
-                  left: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts horizontal positioning
+                  top: {
+                    xl: "50%",
+                    lg: "50%",
+                    md: "50%",
+                    sm: "40%",
+                    xs: "30%",
+                  }, // Adjusts vertical positioning
+                  left: {
+                    xl: "50%",
+                    lg: "50%",
+                    md: "50%",
+                    sm: "40%",
+                    xs: "30%",
+                  }, // Adjusts horizontal positioning
                   transform: {
                     xl: "translate(-450%, -90%)",
                     lg: "translate(-450%, -90%)",
@@ -732,8 +824,20 @@ function Home() {
                     sm: "translate(-290%, -50%)",
                     xs: "translate(-220%, -40%)",
                   }, // Dynamically adjusts based on screen size
-                  width: { xl: "143.56px", lg: "130px", md: "110px", sm: "90px", xs: "70px" },
-                  height: { xl: "139px", lg: "120px", md: "100px", sm: "80px", xs: "60px" },
+                  width: {
+                    xl: "143.56px",
+                    lg: "130px",
+                    md: "110px",
+                    sm: "90px",
+                    xs: "70px",
+                  },
+                  height: {
+                    xl: "139px",
+                    lg: "120px",
+                    md: "100px",
+                    sm: "80px",
+                    xs: "60px",
+                  },
                   backgroundImage: `url(${taraImage})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
@@ -779,7 +883,6 @@ function Home() {
             </Box>
           </Grid>
 
-
           {/* Paragraph and Image Section */}
           <Grid
             container
@@ -807,28 +910,61 @@ function Home() {
                 sx={{
                   textAlign: "left",
                   padding: { lg: 6, md: 4, sm: 3, xs: 2 }, // Adjust padding
-                  width: "100%"
+                  width: "100%",
                 }}
               >
-                <Typography className="para-text" sx={{ paddingBottom: 3, fontSize: { sm: "18px", xs: "16px" } }}>
+                <Typography
+                  className="para-text"
+                  sx={{
+                    paddingBottom: 3,
+                    fontSize: { sm: "18px", xs: "16px" },
+                  }}
+                >
                   Welcome to "Shine with Tara"! ✨
                 </Typography>
-                <Typography className="para-text" sx={{ paddingBottom: 2, fontSize: { sm: "18px", xs: "16px" } }}>
-                  "Shine with Tara" is an enchanting Islamic cartoon series designed especially for Muslim children worldwide.
-                  At the heart of our stories is Tara, a delightful, adventurous character, and her imaginary friend Shine, a
-                  radiant companion who brings joy, curiosity, and wonder to every journey. Together, Tara and Shine travel
-                  through magical realms, bringing Islamic teachings to life in a way that captivates and inspires.
+                <Typography
+                  className="para-text"
+                  sx={{
+                    paddingBottom: 2,
+                    fontSize: { sm: "18px", xs: "16px" },
+                  }}
+                >
+                  "Shine with Tara" is an enchanting Islamic cartoon series
+                  designed especially for Muslim children worldwide. At the
+                  heart of our stories is Tara, a delightful, adventurous
+                  character, and her imaginary friend Shine, a radiant companion
+                  who brings joy, curiosity, and wonder to every journey.
+                  Together, Tara and Shine travel through magical realms,
+                  bringing Islamic teachings to life in a way that captivates
+                  and inspires.
                 </Typography>
-                <Typography className="para-text" sx={{ paddingBottom: 2, fontSize: { sm: "18px", xs: "16px" } }}>
-                  Through each adventure, Tara and Shine explore timeless stories from the Qur'an, dive into the beautiful
-                  recitation of verses, and share the moral lessons of the Hadith. They weave essential values like kindness,
-                  courage, and the importance of family into every episode, making spiritual growth and character building both
-                  enjoyable and relatable for young minds.
+                <Typography
+                  className="para-text"
+                  sx={{
+                    paddingBottom: 2,
+                    fontSize: { sm: "18px", xs: "16px" },
+                  }}
+                >
+                  Through each adventure, Tara and Shine explore timeless
+                  stories from the Qur'an, dive into the beautiful recitation of
+                  verses, and share the moral lessons of the Hadith. They weave
+                  essential values like kindness, courage, and the importance of
+                  family into every episode, making spiritual growth and
+                  character building both enjoyable and relatable for young
+                  minds.
                 </Typography>
-                <Typography className="para-text" sx={{ paddingBottom: 5, fontSize: { sm: "18px", xs: "16px" } }}>
-                  Join us as Tara and Shine illuminate the wonders of Islamic teachings, taking young viewers on a path filled
-                  with thrilling discoveries, heartfelt moments, and lessons that will stay with them for life. Perfect for
-                  nurturing your child’s faith, values, and character! 🌙
+                <Typography
+                  className="para-text"
+                  sx={{
+                    paddingBottom: 5,
+                    fontSize: { sm: "18px", xs: "16px" },
+                  }}
+                >
+                  Join us as Tara and Shine illuminate the wonders of Islamic
+                  teachings, taking young viewers on a path filled with
+                  thrilling discoveries, heartfelt moments, and lessons that
+                  will stay with them for life. Perfect for nurturing your
+                  child’s faith, values, and character! 🌙
                 </Typography>
               </Box>
             </Grid>
@@ -842,15 +978,11 @@ function Home() {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 width: "100%",
-                height: { xs: "800px", sm: "900px", md: "100%", lg: '100%' }, // Adjust for small screens
+                height: { xs: "800px", sm: "900px", md: "100%", lg: "100%" }, // Adjust for small screens
               }}
             />
-
           </Grid>
         </Grid>
-
-
-
 
         <Grid
           container
@@ -892,7 +1024,7 @@ function Home() {
                 sx={{
                   width: { xs: "40px", sm: "60px", md: "80px" },
                   height: "auto",
-                  paddingRight: 3
+                  paddingRight: 3,
                 }}
               />
               {/* Heading */}
@@ -934,13 +1066,11 @@ function Home() {
                 sx={{
                   width: { xs: "40px", sm: "60px", md: "80px" },
                   height: "auto",
-                  paddingLeft: 2
-
+                  paddingLeft: 2,
                 }}
               />
             </Box>
           </Grid>
-
 
           {/* Left-Aligned Text */}
           <Box
@@ -948,7 +1078,7 @@ function Home() {
               textAlign: "left",
               margin: 0,
               padding: "0 5rem ",
-              width: "100%"
+              width: "100%",
             }}
           >
             <Typography
@@ -958,11 +1088,11 @@ function Home() {
                 color: "white",
                 lineHeight: 1.6,
                 marginBottom: 3,
-
               }}
             >
-              🌟 Assalam u Alaikum! I’m Sana Kazmi, and I’m excited to introduce “Shine
-              with Tara,” a YouTube channel crafted for young Muslim children! 🌟
+              🌟 Assalam u Alaikum! I’m Sana Kazmi, and I’m excited to introduce
+              “Shine with Tara,” a YouTube channel crafted for young Muslim
+              children! 🌟
             </Typography>
             <Typography
               className="para-text"
@@ -973,10 +1103,11 @@ function Home() {
                 marginBottom: 3,
               }}
             >
-              As a mother of four, I wanted to create something meaningful, educational,
-              and fun for our little ones. "Shine with Tara" follows Tara and her playful
-              friend, Shine, as they embark on magical adventures exploring Qur’anic
-              stories, prophet tales, and essential values like kindness and gratitude.
+              As a mother of four, I wanted to create something meaningful,
+              educational, and fun for our little ones. "Shine with Tara"
+              follows Tara and her playful friend, Shine, as they embark on
+              magical adventures exploring Qur’anic stories, prophet tales, and
+              essential values like kindness and gratitude.
             </Typography>
             <Typography
               className="para-text"
@@ -987,19 +1118,13 @@ function Home() {
                 marginBottom: 5,
               }}
             >
-              This channel is all about bringing Islamic teachings to life in a joyful
-              and memorable way. I can’t wait for you and your children to join us on
-              this journey of faith, values, and heartwarming adventures! 🌙
+              This channel is all about bringing Islamic teachings to life in a
+              joyful and memorable way. I can’t wait for you and your children
+              to join us on this journey of faith, values, and heartwarming
+              adventures! 🌙
             </Typography>
           </Box>
-
         </Grid>
-
-
-
-
-
-
 
         <Grid
           container
@@ -1010,11 +1135,10 @@ function Home() {
             display: "flex",
             justifyContent: "center", // Centers content horizontally
             alignItems: "center", // Centers content vertically
-            padding: "5rem 0"
-          }}>
-
-          <Grid
-          >
+            padding: "5rem 0",
+          }}
+        >
+          <Grid>
             {/* Container for Image and Heading */}
             <Box
               sx={{
@@ -1027,8 +1151,20 @@ function Home() {
               <Box
                 sx={{
                   position: "absolute", // Positioned relative to the container
-                  top: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts vertical positioning
-                  left: { xl: "50%", lg: "50%", md: "50%", sm: "40%", xs: "30%" }, // Adjusts horizontal positioning
+                  top: {
+                    xl: "50%",
+                    lg: "50%",
+                    md: "50%",
+                    sm: "40%",
+                    xs: "30%",
+                  }, // Adjusts vertical positioning
+                  left: {
+                    xl: "50%",
+                    lg: "50%",
+                    md: "50%",
+                    sm: "40%",
+                    xs: "30%",
+                  }, // Adjusts horizontal positioning
                   transform: {
                     xl: "translate(-450%, -110%)",
                     lg: "translate(-450%, -110%)",
@@ -1036,8 +1172,20 @@ function Home() {
                     sm: "translate(-290%, -90%)",
                     xs: "translate(-220%, -70%)",
                   }, // Dynamically adjusts based on screen size
-                  width: { xl: "143.56px", lg: "130px", md: "110px", sm: "90px", xs: "70px" },
-                  height: { xl: "139px", lg: "120px", md: "100px", sm: "80px", xs: "60px" },
+                  width: {
+                    xl: "143.56px",
+                    lg: "130px",
+                    md: "110px",
+                    sm: "90px",
+                    xs: "70px",
+                  },
+                  height: {
+                    xl: "139px",
+                    lg: "120px",
+                    md: "100px",
+                    sm: "80px",
+                    xs: "60px",
+                  },
                   backgroundImage: `url(${haveforyou})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
@@ -1068,7 +1216,6 @@ function Home() {
                 style={{
                   WebkitTextStroke: "1px white",
                   WebkitTextFillColor: "#4FAAFB",
-
                 }}
               >
                 <span> Tara and Shine </span>
@@ -1105,27 +1252,36 @@ function Home() {
                 )
               })} */}
             {routingData?.map((item, i) => (
-              <Grid key={i} component={'div'} sx={{ cursor: 'pointer', mt: 4 }} onClick={() => navigate(item?.path)} item md={4} sm={4} xs={12}>
+              <Grid
+                key={i}
+                component={"div"}
+                sx={{ cursor: "pointer", mt: 4 }}
+                onClick={() => navigate(item?.path)}
+                item
+                md={4}
+                sm={4}
+                xs={12}
+              >
                 <Grid
                   container
-
                   sx={{
-
                     // border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
                     borderRadius: "20px",
-                    justifyContent: 'center'
+                    justifyContent: "center",
                   }}
                 >
-
-                  <Grid item md={12} sm={12} xs={12}
-                  // sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}
+                  <Grid
+                    item
+                    md={12}
+                    sm={12}
+                    xs={12}
+                    // sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}
                   >
                     <Box
                       sx={{
                         width: "100%",
-                        height: "100%"
+                        height: "100%",
                       }}
-
                     >
                       <CardMedia
                         component={"img"}
@@ -1134,7 +1290,7 @@ function Home() {
                           width: "100%",
                           height: "100%",
                           objectFit: "cover",
-                          borderRadius: '12px',
+                          borderRadius: "12px",
                         }}
                       />
                     </Box>
@@ -1144,7 +1300,6 @@ function Home() {
             ))}
           </Grid>
         </Grid>
-
 
         <Grid
           container
@@ -1158,10 +1313,18 @@ function Home() {
             justifyContent: "center",
             position: "relative",
             gap: 0, // Prevent gaps between children
-
           }}
         >
-          <Grid item xs={12} md={8} sx={{ padding: "5rem 0", position: "relative", marginTop: "-22rem" }}>
+          <Grid
+            item
+            xs={12}
+            md={8}
+            sx={{
+              padding: "5rem 0",
+              position: "relative",
+              marginTop: "-22rem",
+            }}
+          >
             {/* Centered Heading with Images */}
             <Box
               sx={{
@@ -1209,146 +1372,192 @@ function Home() {
               </Typography>
             </Box>
           </Grid>
-          <Box sx={{ width: "95%", margin: "0 auto",  display: "flex", justifyContent: "center", position: "relative" }}>
-      <Grid item md={11} sm={11} xs={11}>
-        <Swiper
-          ref={swiperRef}
-          loop={true}
-          spaceBetween={10}
-          slidesPerView={3}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          modules={[Autoplay, Pagination, Navigation]}
-          breakpoints={{
-            320: { slidesPerView: 1 },
-            786: { slidesPerView: 2 },
-            1080: { slidesPerView: 3 },
-          }}
-          pagination={{
-            clickable: true,
-            el: ".swiper-pagination",
-            bulletClass: "swiper-pagination-bullet",
-            bulletActiveClass: "swiper-pagination-bullet-active",
-          }}
-          onSlideChange={updateActiveCard} // Update active card on slide change
-          speed={1000}
-        >
-          {reviewBoxes?.map((item, ind) => (
-            <SwiperSlide key={ind}>
-              <Box
-                sx={{
-                  p: 4,
-                  borderRadius: "15px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                  backgroundColor: activeCard === ind ? "#FF9D04" : "#CA6680",
-                  height: "120px",
-                  paddingBottom: 8,
-                  cursor: "pointer",
+          <Box
+            sx={{
+              width: "95%",
+              margin: "0 auto",
+              display: "flex",
+              justifyContent: "center",
+              position: "relative",
+            }}
+          >
+            <Grid item md={11} sm={11} xs={11}>
+              <Swiper
+                ref={swiperRef}
+                loop={true}
+                spaceBetween={10}
+                slidesPerView={3}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
                 }}
-                onClick={() => {
-                  setActiveCard(ind); // Set active card manually on click
-                  swiperRef.current.swiper.slideToLoop(ind); // Navigate to clicked card
+                modules={[Autoplay, Pagination, Navigation]}
+                breakpoints={{
+                  320: { slidesPerView: 1 },
+                  786: { slidesPerView: 2 },
+                  1080: { slidesPerView: 3 },
                 }}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination",
+                  bulletClass: "swiper-pagination-bullet",
+                  bulletActiveClass: "swiper-pagination-bullet-active",
+                }}
+                onSlideChange={updateActiveCard} // Update active card on slide change
+                speed={1000}
               >
-                {/* Rating */}
-                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <Rating name="read-only" value={item?.rating} sx={{ borderColor: "white" }} readOnly />
-                </Box>
+                {reviewBoxes?.map((item, ind) => (
+                  <SwiperSlide key={ind}>
+                    <Box
+                      sx={{
+                        p: 4,
+                        borderRadius: "15px",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+                        backgroundColor:
+                          activeCard === ind ? "#FF9D04" : "#CA6680",
+                        height: "120px",
+                        paddingBottom: 8,
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        setActiveCard(ind); // Set active card manually on click
+                        swiperRef.current.swiper.slideToLoop(ind); // Navigate to clicked card
+                      }}
+                    >
+                      {/* Rating */}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        <Rating
+                          name="read-only"
+                          value={item?.rating}
+                          sx={{ borderColor: "white" }}
+                          readOnly
+                        />
+                      </Box>
 
-                {/* Comment */}
-                <Typography variant={"body2"} sx={{ color: "white" }}>
-                  {item.comment}
-                </Typography>
-
-                {/* Name, Designation */}
-                <Box sx={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
-                  <Avatar sx={{ width: 64, height: 64 }} src={item.profile} alt={item.name} />
-                  <Box sx={{ display: "flex", flexDirection: "column" }}>
-                    <Typography sx={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 600, color: "white" }}>
-                      {item?.name}
-                      <Typography variant="body2" sx={{ fontWeight: 400 }}>
-                        {item.designation}
+                      {/* Comment */}
+                      <Typography variant={"body2"} sx={{ color: "white" }}>
+                        {item.comment}
                       </Typography>
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Grid>
 
-      {/* Navigation Buttons */}
-      <Box
-        sx={{
-          position: "absolute",
-          top: "35%",
-          left: 0,
-          zIndex: 10,
-          cursor: "pointer",
-        }}
-        onClick={() => {
-          if (swiperRef.current?.swiper) {
-            swiperRef.current.swiper.slidePrev();
-            updateActiveCard(); // Sync active card with previous slide
-          }
-        }}
-      >
-        <Box
-          component="img"
-          src={Images.backwardArrow}
-          alt="Previous Slide"
-          sx={{
-            width: "80px",
-            height: "60px",
-            padding: "6px",
-          }}
-        />
-      </Box>
+                      {/* Name, Designation */}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: "12px",
+                        }}
+                      >
+                        <Avatar
+                          sx={{ width: 64, height: 64 }}
+                          src={item.profile}
+                          alt={item.name}
+                        />
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                          <Typography
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "8px",
+                              fontWeight: 600,
+                              color: "white",
+                            }}
+                          >
+                            {item?.name}
+                            <Typography
+                              variant="body2"
+                              sx={{ fontWeight: 400 }}
+                            >
+                              {item.designation}
+                            </Typography>
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </Grid>
 
-      <Box
-        sx={{
-          position: "absolute",
-          top: "35%",
-          right: 0,
-          zIndex: 10,
-          cursor: "pointer",
-        }}
-        onClick={() => {
-          if (swiperRef.current?.swiper) {
-            swiperRef.current.swiper.slideNext();
-            updateActiveCard(); // Sync active card with next slide
-          }
-        }}
-      >
-        <Box
-          component="img"
-          src={Images.forwardArrow}
-          alt="Next Slide"
-          sx={{
-            width: "80px",
-            height: "60px",
-            padding: "6px",
-          }}
-        />
-      </Box>
-    </Box>
+            {/* Navigation Buttons */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: "35%",
+                left: 0,
+                zIndex: 10,
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                if (swiperRef.current?.swiper) {
+                  swiperRef.current.swiper.slidePrev();
+                  updateActiveCard(); // Sync active card with previous slide
+                }
+              }}
+            >
+              <Box
+                component="img"
+                src={Images.backwardArrow}
+                alt="Previous Slide"
+                sx={{
+                  width: "80px",
+                  height: "60px",
+                  padding: "6px",
+                }}
+              />
+            </Box>
 
+            <Box
+              sx={{
+                position: "absolute",
+                top: "35%",
+                right: 0,
+                zIndex: 10,
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                if (swiperRef.current?.swiper) {
+                  swiperRef.current.swiper.slideNext();
+                  updateActiveCard(); // Sync active card with next slide
+                }
+              }}
+            >
+              <Box
+                component="img"
+                src={Images.forwardArrow}
+                alt="Next Slide"
+                sx={{
+                  width: "80px",
+                  height: "60px",
+                  padding: "6px",
+                }}
+              />
+            </Box>
+          </Box>
 
-          <Grid container sx={{
-            backgroundImage: `url(${Images.reviewSection})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: {
-              xs: '300px',  // Smallest screens
-              sm: '400px',  // Small screens
-              md: '500px',  // Medium screens
-              lg: '700px',  // Large screens
-            }, mt: '20px'
-          }}>
-
-          </Grid>
+          <Grid
+            container
+            sx={{
+              backgroundImage: `url(${Images.reviewSection})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              height: {
+                xs: "300px", // Smallest screens
+                sm: "400px", // Small screens
+                md: "500px", // Medium screens
+                lg: "700px", // Large screens
+              },
+              mt: "20px",
+            }}
+          ></Grid>
 
           {/* <Box
             component="img"
@@ -1364,14 +1573,7 @@ function Home() {
               maxHeight: "600px",
             }}
           /> */}
-
         </Grid>
-
-
-
-
-
-
 
         <Box
           component={"section"}
@@ -1387,19 +1589,19 @@ function Home() {
             padding: { xs: "10px", sm: "10px", md: "10px" },
           }}
         >
-           <Box
+          <Box
             sx={{
               position: "absolute",
               top: 40,
               left: 20,
               zIndex: 0,
               display: "block",
-              width:"60px"
+              width: "60px",
             }}
-            component={'img'}
+            component={"img"}
             src={Images.hand}
           ></Box>
-           <Box
+          {/* <Box
             sx={{
               position: "absolute",
               top: 20,
@@ -1410,11 +1612,22 @@ function Home() {
             }}
             component={'img'}
             src={Images.rainbow}
-          ></Box>
-          <Grid container justifyContent={'center'}>
-            <Grid item xs={4} >
+          ></Box> */}
 
-            </Grid>
+          <CardMedia
+            component={"img"}
+            src={Images.cloud} // Replace with your small image source
+            alt="Small Image"
+            sx={{
+              display: { sm: "none", xs: "none", md: "block" },
+              width: { md: "40px", lg: "60px" },
+              top:"50px !important",
+              height: "auto",
+              objectFit: "contain",
+            }}
+          />
+          <Grid container justifyContent={"center"}>
+            <Grid item xs={4}></Grid>
             <Grid item lg={4} md={4} sm={10} xs={11}>
               {/* Center Content */}
               <Box
@@ -1422,25 +1635,29 @@ function Home() {
                   position: "relative",
                   textAlign: "center",
                   zIndex: 1,
-
                 }}
               >
                 <Typography
                   variant="h5"
                   className="para-text"
                   sx={{
-                    fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" },
+                    fontSize: {
+                      xs: "20px",
+                      sm: "24px",
+                      md: "32px",
+                      lg: "42px",
+                    },
                     fontWeight: 600,
                     textAlign: "center",
                     mb: 2,
                   }}
                 >
-                  Subscribe to get information, latest news, and other interesting offers
-                  about{" "}
+                  Subscribe to get information, latest news, and other
+                  interesting offers about{" "}
                   <span
                     style={{
                       fontWeight: "bold",
-                      display:'block',
+                      display: "block",
                       WebkitTextStroke: "0.5px white ",
                       WebkitTextFillColor: "#FF9D04",
                     }}
@@ -1490,9 +1707,7 @@ function Home() {
                 />
               </Box>
             </Grid>
-            <Grid item xs={4}>
-
-            </Grid>
+            <Grid item xs={4}></Grid>
           </Grid>
           {/* Left Background Image */}
           <Box
@@ -1508,7 +1723,7 @@ function Home() {
               component={"img"}
               src={Images.Character1}
               sx={{
-                width: '100%', // Adjust width for smaller screens
+                width: "100%", // Adjust width for smaller screens
                 height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
                 objectFit: "cover",
               }}
@@ -1529,19 +1744,13 @@ function Home() {
               component={"img"}
               src={Images.Character2}
               sx={{
-                width: '100%', // Adjust width for smaller screens
+                width: "100%", // Adjust width for smaller screens
                 height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
                 objectFit: "cover",
               }}
             />
           </Box>
-
-
         </Box>
-
-
-
-
 
         {/* <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
           <Grid container justifyContent={"center"} alignItems={"center"} mb={5}>
@@ -1743,10 +1952,9 @@ function Home() {
             ))}
           </Grid>
         </Box> */}
-
-      </Box >
+      </Box>
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;

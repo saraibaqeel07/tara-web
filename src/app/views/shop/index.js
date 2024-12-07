@@ -1,48 +1,74 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
-import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup, TextField, Drawer, Accordion, AccordionSummary, AccordionDetails, Rating, CircularProgress } from '@mui/material';
-import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images';
-import Colors from '../../styles/colors';
-import Slider from 'react-slick';
+import React, { Fragment, useContext, useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  CardMedia,
+  Container,
+  Grid,
+  Typography,
+  ButtonGroup,
+  TextField,
+  Drawer,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Rating,
+  CircularProgress,
+} from "@mui/material";
+import Images, {
+  FacebookRounded,
+  InstagramRounded,
+  TiktokRounded,
+  YoutubeRounded,
+} from "../../assets/images";
+import Colors from "../../styles/colors";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
-import "../../../App.css"
-import Fonts from '../../styles/fonts';
+import "../../../App.css";
+import Fonts from "../../styles/fonts";
 import { initializeApp } from "firebase/app";
 import { getFirestore, increment, updateDoc } from "firebase/firestore";
-import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
-import ProductModal from '../modal/ProductModal';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Avatar, Divider } from 'antd';
-import CloseIcon from '@mui/icons-material/Close';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { ArrowBack, Star } from '@mui/icons-material';
-import { SwiperSlide, Swiper } from 'swiper/react';
-import 'swiper/css';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import { CartContext } from '../../Context/CartContext';
-import { CartCounter } from '../../Context/CartCounter';
-import taraImage from "../../assets/images/tara-pic.png"
-import shopImg1 from "../../assets/images/shop-intro.png"
-import shopBackground from "../../assets/images/shop-background.png"
-import forwardArrow from "../../assets/images/forward-arrow.png"
-import backwardArrow from "../../assets/images/backward-arrow.png"
-import PageNavigator from "../../components/pagination/index"
-import Character1 from "../../assets/images/Character1.png"
-import Character2 from "../../assets/images/Character2.png"
-import { ErrorToaster, SuccessToaster } from '../../components/Toaster';
-import moment from 'moment';
+import {
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+} from "firebase/firestore";
+import ProductModal from "../modal/ProductModal";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Avatar, Divider } from "antd";
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { ArrowBack, Star } from "@mui/icons-material";
+import { SwiperSlide, Swiper } from "swiper/react";
+import "swiper/css";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { CartContext } from "../../Context/CartContext";
+import { CartCounter } from "../../Context/CartCounter";
+import taraImage from "../../assets/images/tara-pic.png";
+import shopImg1 from "../../assets/images/shop-intro.png";
+import shopBackground from "../../assets/images/shop-background.png";
+import forwardArrow from "../../assets/images/forward-arrow.png";
+import backwardArrow from "../../assets/images/backward-arrow.png";
+import PageNavigator from "../../components/pagination/index";
+import Character1 from "../../assets/images/Character1.png";
+import Character2 from "../../assets/images/Character2.png";
+import { ErrorToaster, SuccessToaster } from "../../components/Toaster";
+import moment from "moment";
 
 // import "slick-carousel/slick/slick-theme.css";
 
-
-
 function Shop() {
-  const { state } = useLocation()
+  const { state } = useLocation();
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
 
-
-  console.log(cartVisible, 'cartVisible');
+  console.log(cartVisible, "cartVisible");
 
   const firebaseConfig = {
     apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
@@ -51,32 +77,32 @@ function Shop() {
     storageBucket: "shinetara-86ec0.appspot.com",
     messagingSenderId: "182521981077",
     appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
-    measurementId: "G-BHYZDHJCK9"
+    measurementId: "G-BHYZDHJCK9",
   };
-  let productId = ''
+  let productId = "";
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const [selected, setSelected] = useState("merchandise");
-  const [products, setProducts] = useState([])
-  const [textColor, setTextColor] = useState(Colors.orange)
+  const [products, setProducts] = useState([]);
+  const [textColor, setTextColor] = useState(Colors.orange);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [cardProduct, setCardProduct] = useState({})
-  const [coloringSheets, setColoringSheets] = useState([])
-  const [activitySheets, setActivitySheets] = useState([])
-  const [extraSheets, setExtraSheets] = useState([])
-  let User = localStorage.getItem('user')
+  const [cardProduct, setCardProduct] = useState({});
+  const [coloringSheets, setColoringSheets] = useState([]);
+  const [activitySheets, setActivitySheets] = useState([]);
+  const [extraSheets, setExtraSheets] = useState([]);
+  let User = localStorage.getItem("user");
 
-  User = JSON.parse(User)
+  User = JSON.parse(User);
 
   const [open, setOpen] = useState(false);
-  const [cartArray, setCartArray] = useState([])
+  const [cartArray, setCartArray] = useState([]);
   const [cartItems, setCartItems] = useState(products);
-  const [faqData, setFaqData] = useState([])
-  const [totalAmount, setTotalAmount] = useState(0)
-  const [reviewBoxes, setReviewBoxes] = useState([])
+  const [faqData, setFaqData] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [reviewBoxes, setReviewBoxes] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [activityCurrentPage, setActivityCurrentPage] = useState(1);
@@ -84,16 +110,7 @@ function Shop() {
   const [activeButton, setActiveButton] = useState(4); // Default 'Show All Products' is active
   const [loading, setLoading] = useState(true); // Loader state
   const [delayPassed, setDelayPassed] = useState(false); // Delay state to control the visibility of loader
-  const [cartData, setCartData] = useState(null)
-
-
-
-
-
-
-
-
-
+  const [cartData, setCartData] = useState(null);
 
   const buttonLabels = [
     "Books",
@@ -101,17 +118,11 @@ function Shop() {
     "Coloring Sheets",
     "Extra Sheets",
     "Show All Products",
-
   ];
-
-
-
 
   const handleButtonClick = (index) => {
     setActiveButton(index); // Update the active button
   };
-
-
 
   const [extraCurrentPage, setExtraCurrentPage] = useState(1); // Current page for pagination
   const extraProductsPerPage = 4; // Number of products per page
@@ -160,8 +171,6 @@ function Shop() {
       clearTimeout(dataTimer);
     };
   }, [extraCurrentPage, extraSheets]); // Re-run the effect when the page or data changes
-
-
 
   const itemsPerPage = 4; // Max items per page
   const coloringTotalPages = Math.ceil(coloringSheets.length / itemsPerPage);
@@ -213,13 +222,11 @@ function Shop() {
     };
   }, [coloringCurrentPage, coloringSheets]);
 
-
-
-
-
   // Activity Pagination
   const activityProductsPerPage = 4; // Show 4 cards per page
-  const activityTotalPages = Math.ceil(activitySheets.length / activityProductsPerPage);
+  const activityTotalPages = Math.ceil(
+    activitySheets.length / activityProductsPerPage
+  );
   const activityCurrentProducts = activitySheets.slice(
     (activityCurrentPage - 1) * activityProductsPerPage,
     activityCurrentPage * activityProductsPerPage
@@ -266,7 +273,6 @@ function Shop() {
       clearTimeout(dataTimer);
     };
   }, [activityCurrentPage, activitySheets]);
-
 
   // Shop pagination
   const cardsPerPage = 4; // Number of cards to show per page
@@ -318,55 +324,63 @@ function Shop() {
   }, [currentPage, products]);
 
   const handleIncrement = (id) => {
-    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item)
+    const updatedData = cartItems.map((item) =>
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+    );
     const totalPrice = updatedData.reduce((total, item) => {
-      return total + (parseFloat(item.price) * item.quantity);
+      return total + parseFloat(item.price) * item.quantity;
     }, 0);
-    setTotalAmount(totalPrice)
+    setTotalAmount(totalPrice);
     setCartItems(updatedData);
-    setCount(updatedData?.length)
-    localStorage.setItem('cartData', JSON.stringify(updatedData))
+    setCount(updatedData?.length);
+    localStorage.setItem("cartData", JSON.stringify(updatedData));
   };
 
   const handleDecrement = (id) => {
-    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 1 } : item)
+    const updatedData = cartItems.map((item) =>
+      item.id === id
+        ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 1 }
+        : item
+    );
     const totalPrice = updatedData.reduce((total, item) => {
-      return total + (parseFloat(item.price) * item.quantity);
+      return total + parseFloat(item.price) * item.quantity;
     }, 0);
-    setTotalAmount(totalPrice)
+    setTotalAmount(totalPrice);
     setCartItems(updatedData);
-    setCount(updatedData?.length)
-    localStorage.setItem('cartData', JSON.stringify(updatedData))
+    setCount(updatedData?.length);
+    localStorage.setItem("cartData", JSON.stringify(updatedData));
   };
 
   const toggleDrawer = (isOpen) => (event) => {
-    console.log('dasdasas');
+    console.log("dasdasas");
     setOpen(!open);
-    toggleCartVisibility()
+    toggleCartVisibility();
   };
   const getFaqs = async () => {
     const q = query(collection(db, "Faq"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    setFaqData(dataArray)
-
-
-  }
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setFaqData(dataArray);
+  };
   const getReviews = async () => {
     const q = query(collection(db, "reviews"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     console.log(dataArray);
-    setReviewBoxes(dataArray)
-
-  }
+    setReviewBoxes(dataArray);
+  };
   const showModal = (item) => {
     setIsModalOpen(true);
     console.log(item);
-    setCardProduct(item)
-
+    setCardProduct(item);
   };
   const handleOk = () => {
     setIsModalOpen(false);
@@ -377,25 +391,25 @@ function Shop() {
   const buttons = [
     <Button
       key="episode"
-      variant={selected == 'episode' ? "contained" : "outlined"}
+      variant={selected == "episode" ? "contained" : "outlined"}
       sx={{
         // width: { md: "180px", sm: "150px", xs: "100%" },
         width: "100%",
         px: 4,
-        py: 1.5
+        py: 1.5,
       }}
       onClick={() => setSelected("episode")}
     >
       Episodes
     </Button>,
     <Button
-      variant={selected == 'merchandise' ? "contained" : "outlined"}
+      variant={selected == "merchandise" ? "contained" : "outlined"}
       key="merchandise"
       sx={{
         // width: { md: "180px", sm: "150px", xs: "100%" },
         width: "100%",
         px: 4,
-        py: 1.5
+        py: 1.5,
       }}
       onClick={() => setSelected("merchandise")}
     >
@@ -407,27 +421,27 @@ function Shop() {
     {
       image: Images.sliderImage1,
       title: "Jungle Adventure",
-      url: 'https://www.youtube.com/watch?v=JjEc2iIPaYE'
+      url: "https://www.youtube.com/watch?v=JjEc2iIPaYE",
     },
     {
       image: Images.sliderImage2,
       title: "Bugs Adventure",
-      url: 'https://www.youtube.com/watch?v=vbu-5oSw_zU'
+      url: "https://www.youtube.com/watch?v=vbu-5oSw_zU",
     },
     {
       image: Images.sliderImage3,
       title: "Space Adventure",
-      url: 'https://www.youtube.com/watch?v=SCyHeBrBgbI'
+      url: "https://www.youtube.com/watch?v=SCyHeBrBgbI",
     },
     {
       image: Images.sliderImage4,
       title: "Heart Warming Sibling Race",
-      url: 'https://www.youtube.com/watch?v=sG8hhCjMOXo'
+      url: "https://www.youtube.com/watch?v=sG8hhCjMOXo",
     },
     {
       image: Images.sliderImage5,
       title: "Story Of Miraj",
-      url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
+      url: "https://www.youtube.com/watch?v=6a_qlXUkI-Q",
     },
   ];
 
@@ -435,73 +449,75 @@ function Shop() {
     {
       image: Images.cardImg1,
       title: "Dua Book",
-      price: "$13"
+      price: "$13",
     },
     {
       image: Images.cardImg2,
       title: "Calender",
-      price: "$15"
+      price: "$15",
     },
     {
       image: Images.cardImg3,
       title: "Bookmarks",
-      price: "$9"
+      price: "$9",
     },
     {
       image: Images.cardImg4,
       title: "Worksheet",
-      price: "$30"
+      price: "$30",
     },
     {
       image: Images.cardImg5,
       title: "Puzzle",
-      price: "$1/card"
+      price: "$1/card",
     },
     {
       image: Images.cardImg6,
       title: "Good Deeds",
-      price: "$13"
+      price: "$13",
     },
-  ]
-
-
+  ];
 
   const getProducts = async () => {
     const q = query(collection(db, "products"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
-    console.log('books', sortedData);
+    console.log("books", sortedData);
     // Update state with sorted data
     setProducts(sortedData);
-
-
-  }
+  };
 
   const getActivitySheets = async () => {
     const q = query(collection(db, "activitysheets"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
 
-    setActivitySheets(sortedData)
-
-
-  }
+    setActivitySheets(sortedData);
+  };
 
   const getColoringSheets = async () => {
     const q = query(collection(db, "coloringsheets"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
@@ -509,22 +525,22 @@ function Shop() {
 
     // Update state with sorted data
     setColoringSheets(sortedData);
-
-  }
+  };
 
   const getExtrasheets = async () => {
     const q = query(collection(db, "extra"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
 
-    setExtraSheets(sortedData)
-
-  }
-
+    setExtraSheets(sortedData);
+  };
 
   useEffect(() => {
     const delayTimer = setTimeout(() => {
@@ -543,33 +559,28 @@ function Shop() {
     const intervalId = setInterval(() => {
       // Generate a random color
 
-      let element = document.getElementById('follow-text')
-      let element2 = document.getElementById('learn-text')
-      let element3 = document.getElementById('explore-text')
+      let element = document.getElementById("follow-text");
+      let element2 = document.getElementById("learn-text");
+      let element3 = document.getElementById("explore-text");
       if (element) {
-
-        if (element.style.color == 'rgb(254, 157, 4)') {
-          element.style.color = 'white'
-          element2.style.color = Colors.darkblue
-          element3.style.color = 'white'
-        }
-
-        else if (element3.style.color == 'white') {
-          element.style.color = 'white'
-          element2.style.color = 'white'
-          element3.style.color = Colors.pink
-        }
-        else {
-          element.style.color = 'rgb(254, 157, 4)'
-          element2.style.color = 'white'
-          element3.style.color = 'white'
+        if (element.style.color == "rgb(254, 157, 4)") {
+          element.style.color = "white";
+          element2.style.color = Colors.darkblue;
+          element3.style.color = "white";
+        } else if (element3.style.color == "white") {
+          element.style.color = "white";
+          element2.style.color = "white";
+          element3.style.color = Colors.pink;
+        } else {
+          element.style.color = "rgb(254, 157, 4)";
+          element2.style.color = "white";
+          element3.style.color = "white";
         }
       }
     }, 1000); // Change color every 1000ms (1 second)
 
     return () => clearInterval(intervalId);
   }, []);
-
 
   useEffect(() => {
     getProducts();
@@ -580,31 +591,28 @@ function Shop() {
     getFaqs();
 
     if (state?.colorful) {
-      setSelected('merchandise');
+      setSelected("merchandise");
 
       // Delay execution by 2 seconds
       setTimeout(() => {
-
         let element = document.getElementById(state?.section);
-        console.log(element, 'element');
+        console.log(element, "element");
         if (element) {
-          console.log(element, 'eeee');
-          element.scrollIntoView({ behavior: 'smooth' });
+          console.log(element, "eeee");
+          element.scrollIntoView({ behavior: "smooth" });
         }
       }, 2000);
     }
 
-    let cart = localStorage.getItem('cartData')
+    let cart = localStorage.getItem("cartData");
     if (cart) {
-
-      cart = JSON.parse(cart)
+      cart = JSON.parse(cart);
       if (cart?.length > 0) {
-        setCartItems(cart)
-        setCount(cart.length)
+        setCartItems(cart);
+        setCount(cart.length);
       }
     }
   }, []);
-
 
   const addToCart = async (data) => {
     console.log("submit");
@@ -612,19 +620,19 @@ function Shop() {
     try {
       const cartRef = collection(db, "cartData");
 
-
-      const querySnapshot = await getDocs(query(cartRef, where("userId", "==", User.uid)));
+      const querySnapshot = await getDocs(
+        query(cartRef, where("userId", "==", User.uid))
+      );
 
       if (!querySnapshot.empty) {
-
         const docRef = querySnapshot.docs[0].ref;
         const cartDoc = querySnapshot.docs[0].data();
 
-
-        const existingItemIndex = cartDoc.data.findIndex(item => item.id === data.id);
+        const existingItemIndex = cartDoc.data.findIndex(
+          (item) => item.id === data.id
+        );
 
         if (existingItemIndex !== -1) {
-
           const updatedData = [...cartDoc.data];
           updatedData[existingItemIndex].qty += 1;
 
@@ -641,7 +649,7 @@ function Shop() {
         const newCart = {
           userId: User.uid,
           data: [{ ...data, qty: 1 }], // Initialize with the first item
-          created_at: moment().format("MMMM Do YYYY, h:mm a")
+          created_at: moment().format("MMMM Do YYYY, h:mm a"),
         };
 
         const docRef = await addDoc(cartRef, newCart);
@@ -654,111 +662,156 @@ function Shop() {
     }
   };
 
-
-
   useEffect(() => {
-
-    setOpen(cartVisible)
-
-
-  }, [cartVisible])
-
+    setOpen(cartVisible);
+  }, [cartVisible]);
 
   return (
-    <>  <div>
-
-      <Drawer
-        anchor="right"
-        open={open}
-        onClose={toggleDrawer(false)}
-      >
-        <Box
-          sx={{ width: 400, padding: 2 }}
-          role="presentation"
-
-        >
-          {console.log(cartItems)}
-          <Box display="flex" flexWrap="wrap">
-
-            {cartItems?.length > 0 ? cartItems?.map((product, index) => (
-              <React.Fragment key={index}>
+    <>
+      {" "}
+      <div>
+        <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+          <Box sx={{ width: 400, padding: 2 }} role="presentation">
+            {console.log(cartItems)}
+            <Box display="flex" flexWrap="wrap">
+              {cartItems?.length > 0 ? (
+                cartItems?.map((product, index) => (
+                  <React.Fragment key={index}>
+                    <Box
+                      onClick={() => {
+                        const updatedData = cartItems.filter(
+                          (item) => product.id != item.id
+                        );
+                        const totalPrice = updatedData.reduce((total, item) => {
+                          return total + parseFloat(item.price) * item.quantity;
+                        }, 0);
+                        setTotalAmount(totalPrice);
+                        setCartItems(updatedData);
+                        setCount(updatedData?.length);
+                        localStorage.setItem(
+                          "cartData",
+                          JSON.stringify(updatedData)
+                        );
+                      }}
+                      sx={{ color: "black", cursor: "pointer" }}
+                    >
+                      <CloseIcon />
+                    </Box>
+                    <Box
+                      sx={{
+                        height: 100,
+                        display: "flex",
+                        padding: 2,
+                        textAlign: "center",
+                      }}
+                    >
+                      <img
+                        src={product.imgUrl}
+                        alt={product.name}
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          objectFit: "cover",
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: "12px",
+                          color: "black",
+                          width: "100px",
+                        }}
+                        variant="h6"
+                      >
+                        {product.name}
+                      </Typography>
+                      <Typography
+                        sx={{ fontSize: "12px", color: "black" }}
+                        variant="body1"
+                      >
+                        ${product.price}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: "12px",
+                          color: "black",
+                          width: "50px",
+                          fontWeight: "bold",
+                        }}
+                        variant="body1"
+                      >
+                        $
+                        {product.quantity
+                          ? product.quantity * product.price
+                          : 1 * product.price}
+                      </Typography>
+                      <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        sx={{ width: "10px" }}
+                        marginTop={1}
+                      >
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => handleDecrement(product.id)}
+                        >
+                          -
+                        </Button>
+                        <Typography
+                          sx={{ fontSize: "12px", color: "black" }}
+                          variant="body1"
+                          marginX={2}
+                        >
+                          {product.quantity ? product.quantity : 1}
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => handleIncrement(product.id)}
+                        >
+                          +
+                        </Button>
+                      </Box>
+                    </Box>
+                    <Divider />
+                  </React.Fragment>
+                ))
+              ) : (
                 <Box
-
-                  onClick={() => {
-                    const updatedData = cartItems.filter(item => product.id != item.id)
-                    const totalPrice = updatedData.reduce((total, item) => {
-                      return total + (parseFloat(item.price) * item.quantity);
-                    }, 0);
-                    setTotalAmount(totalPrice)
-                    setCartItems(updatedData)
-                    setCount(updatedData?.length)
-                    localStorage.setItem('cartData', JSON.stringify(updatedData))
-                  }}
-                  sx={{ color: 'black', cursor: 'pointer' }}
+                  sx={{ color: "black", fontWeight: "bold", margin: "0 auto" }}
                 >
-                  <CloseIcon />
+                  No Items in Cart
                 </Box>
-                <Box
-                  sx={{
-                    height: 100,
-                    display: 'flex',
-                    padding: 2,
-                    textAlign: 'center',
-                  }}
-                >
-
-                  <img
-                    src={product.imgUrl}
-                    alt={product.name}
-                    style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-                  />
-                  <Typography sx={{ fontSize: '12px', color: 'black', width: '100px' }} variant="h6">
-                    {product.name}
-                  </Typography>
-                  <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1">
-                    ${product.price}
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: '12px', color: 'black', width: '50px', fontWeight: 'bold' }}
-                    variant="body1"
-                  >
-                    ${product.quantity ? product.quantity * product.price : 1 * product.price}
-                  </Typography>
-                  <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: '10px' }} marginTop={1}>
-                    <Button variant="contained" color="secondary" onClick={() => handleDecrement(product.id)}>
-                      -
-                    </Button>
-                    <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1" marginX={2}>
-                      {product.quantity ? product.quantity : 1}
-                    </Typography>
-                    <Button variant="contained" color="secondary" onClick={() => handleIncrement(product.id)}>
-                      +
-                    </Button>
-
-                  </Box>
-                </Box>
-                <Divider />
-              </React.Fragment>
-            )) : <Box sx={{ color: 'black', fontWeight: 'bold', margin: '0 auto' }}>No Items in Cart</Box>}
+              )}
+            </Box>
+            <Box
+              sx={{
+                color: "black",
+                fontSize: "27px",
+                textAlign: "center",
+                fontFamily: Fonts.righteous,
+              }}
+            >
+              Sub Total : $ {totalAmount}
+            </Box>
           </Box>
-          <Box sx={{ color: 'black', fontSize: '27px', textAlign: 'center', fontFamily: Fonts.righteous, }}>Sub Total :  $ {totalAmount}</Box>
-        </Box>
-        <Button sx={{ width: '90%', textAlign: 'center', margin: '0 auto' }} variant="contained" color="secondary" onClick={() => navigate(
-          `/order`,
-          { state: cartItems }
-        )}>
-          CheckOut
-        </Button>
-      </Drawer>
-    </div>
+          <Button
+            sx={{ width: "90%", textAlign: "center", margin: "0 auto" }}
+            variant="contained"
+            color="secondary"
+            onClick={() => navigate(`/order`, { state: cartItems })}
+          >
+            CheckOut
+          </Button>
+        </Drawer>
+      </div>
       <Box
         component={"main"}
         sx={{
-          width: "100%"
+          width: "100%",
         }}
       >
-
-
         <Box
           sx={{
             backgroundImage: `url(${Images.bannerBg})`,
@@ -778,16 +831,18 @@ function Shop() {
               width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
               height: "100%", // Full height of the parent container
               backgroundImage: `url(${shopImg1})`,
-              backgroundSize: { md: "contain", xl: "contain", lg: "contain", xs: "cover", sm: "contain" },
+              backgroundSize: {
+                md: "contain",
+                xl: "contain",
+                lg: "contain",
+                xs: "cover",
+                sm: "contain",
+              },
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center", // Ensures the image is aligned at the bottom
-
             }}
           />
         </Box>
-
-
-
 
         {/* <Box
           component={"section"}
@@ -1080,7 +1135,7 @@ function Shop() {
               background: "#3D5A98",
               height: "100%",
               width: "100%",
-              py: "72px"
+              py: "72px",
             }}
           >
             <Slider
@@ -1103,7 +1158,7 @@ function Shop() {
                     adaptiveHeight: true,
                     variableWidth: false,
                     centerMode: true,
-                  }
+                  },
                 },
                 {
                   breakpoint: 768,
@@ -1114,8 +1169,8 @@ function Shop() {
                     dots: false,
                     centerMode: true,
                     variableWidth: false,
-                    adaptiveHeight: true
-                  }
+                    adaptiveHeight: true,
+                  },
                 },
                 {
                   breakpoint: 480,
@@ -1126,17 +1181,17 @@ function Shop() {
                     dots: false,
                     centerMode: true,
                     variableWidth: false,
-                    adaptiveHeight: true
-                  }
-                }
+                    adaptiveHeight: true,
+                  },
+                },
               ]}
             >
               {sliderData.map((item, i) => (
                 <Box
                   key={i}
-                  sx={{ p: 3, borderRadius: '20px', cursor: 'pointer' }}
-                  component={'div'}
-                  onClick={() => window.open(item?.url, '_blank')}
+                  sx={{ p: 3, borderRadius: "20px", cursor: "pointer" }}
+                  component={"div"}
+                  onClick={() => window.open(item?.url, "_blank")}
                 >
                   <CardMedia
                     component={"img"}
@@ -1145,25 +1200,23 @@ function Shop() {
                       width: "100%",
                       height: "100%",
                       objectFit: "contain",
-                      borderTopLeftRadius: '20px',
-                      borderTopRightRadius: '20px'
+                      borderTopLeftRadius: "20px",
+                      borderTopRightRadius: "20px",
                     }}
                   />
                   <Box
                     sx={{
                       background: Colors.yellow,
                       textAlign: "center",
-                      borderBottomLeftRadius: '20px',
-                      borderBottomRightRadius: '20px',
+                      borderBottomLeftRadius: "20px",
+                      borderBottomRightRadius: "20px",
                       p: 3,
                       // mx: item.title == "Dealing With Sibling"
                       //   ? "32px" : item.title == "5 Pillars With The Neighbors"
                       //     ? "30px" : "31px"
                     }}
                   >
-                    <Typography>
-                      {item.title}
-                    </Typography>
+                    <Typography>{item.title}</Typography>
                   </Box>
                 </Box>
               ))}
@@ -1174,17 +1227,14 @@ function Shop() {
             <Box
               component={"section"}
               sx={{
-                backgroundImage: `url(${shopBackground})`,
-                backgroundSize: "cover", // Ensures the image covers the entire area
+                backgroundColor:"#CA6680", // Ensures the image covers the entire area
 
-
+                position: "relative",
                 height: "100%",
                 width: "100%",
-                py: "72px"
+                py: "72px",
               }}
             >
-
-
               {/* Heading */}
               <Typography
                 variant="h1"
@@ -1206,7 +1256,7 @@ function Shop() {
                   zIndex: 1, // Keeps heading above the image
                   margin: "0 auto",
                   display: "flex",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
                 style={{
                   WebkitTextStroke: "1px white",
@@ -1214,9 +1264,7 @@ function Shop() {
                 }}
               >
                 shop
-
               </Typography>
-
 
               <Box
                 sx={{
@@ -1231,9 +1279,15 @@ function Shop() {
                     width: "800px",
                     height: { sm: "200px", xs: "320px" },
                     display: "grid",
-                    gridTemplateColumns: { sm: "repeat(3, 1fr)", xs: "repeat(1, 1fr)" },
+                    gridTemplateColumns: {
+                      md: "repeat(3, 1fr)",
+                      sm:"repeat(2, 1fr)",
+                      xs: "repeat(1, 1fr)",
+                    },
                     gap: "16px",
                     overflow: "hidden",
+                    padding: "0 16px", // Adds spacing on left and right sides for xs
+
                   }}
                 >
                   {buttonLabels.map((label, index) => (
@@ -1241,7 +1295,8 @@ function Shop() {
                       key={index}
                       onClick={() => handleButtonClick(index)} // Set the clicked button as active
                       sx={{
-                        backgroundColor: activeButton === index ? "#F9BF29" : "#5B73AD", // Highlight the active button
+                        backgroundColor:
+                          activeButton === index ? "#F9BF29" : "#5B73AD", // Highlight the active button
                         borderRadius: "8px",
                         height: "100%",
                         display: "flex",
@@ -1249,8 +1304,9 @@ function Shop() {
                         alignItems: "center",
                         padding: 0,
                         textTransform: "none",
-                        '&:hover': {
-                          backgroundColor: activeButton === index ? "#F9BF29" : "#5B73AD", // Keep the hover effect consistent
+                        "&:hover": {
+                          backgroundColor:
+                            activeButton === index ? "#F9BF29" : "#5B73AD", // Keep the hover effect consistent
                         },
                       }}
                     >
@@ -1268,7 +1324,6 @@ function Shop() {
                     </Button>
                   ))}
                 </Box>
-
               </Box>
 
               {(activeButton === 0 || activeButton === 4) && (
@@ -1284,21 +1339,78 @@ function Shop() {
                         loading || !delayPassed
                           ? "center"
                           : currentCards.length <= 2
-                            ? "center" // Center align when only 1 or 2 items
-                            : "flex-start", // Default alignment
+                          ? "center" // Center align when only 1 or 2 items
+                          : "flex-start", // Default alignment
                     }}
                   >
+                        <Box
+                      component={"img"}
+                      src={Images.pencil} // Replace with your image source
+                      alt="Decorative"
+                      sx={{
+                        position: "absolute",
+                        top: "450px", // Adjusted to move the image slightly higher
+                        right: { md: 10, lg: 200 },
+                        width: { lg: "80px", md: "70px" },
+                        zIndex: 2,
+                        display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                      }}
+                    />
+                    <Box
+                      component={"img"}
+                      src={Images.cuttingPapers} // Replace with your image source
+                      alt="Decorative"
+                      sx={{
+                        position: "absolute",
+                        bottom: "400px", // Adjusted to move the image slightly higher
+                        right: { md: 10, lg: 20 },
+                        width: { lg: "100px", md: "70px" },
+                        zIndex: 2,
+                        display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                      }}
+                    />
+                          <Box
+                      component={"img"}
+                      src={Images.reading} // Replace with your image source
+                      alt="Decorative"
+                      sx={{
+                        position: "absolute",
+                        top: "100px", // Adjusted to move the image slightly higher
+                        left: { md: 10, lg: 200 },
+                        width: { lg: "100px", md: "70px" },
+                        zIndex: 2,
+                        display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                        transform: "rotate(-25deg)"/* Rotates the image -45 degrees */
+
+                      }}
+                    />
                     {loading || !delayPassed ? (
                       // Loader view with delay
-                      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "455px" }}>
-                        <CircularProgress size={50} sx={{ color: "#5B73AD" }} /> {/* Updated loader color */}
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "455px",
+                        }}
+                      >
+                        <CircularProgress size={50} sx={{ color: "#5B73AD" }} />{" "}
+                        {/* Updated loader color */}
                       </Grid>
                     ) : (
                       // Cards view once data is loaded
                       Array.isArray(currentCards) &&
                       currentCards.map((card, i) => (
                         <React.Fragment key={i}>
-                          <Grid className="product-card" md={5} sm={8} xs={12} item>
+                          <Grid
+                            className="product-card"
+                            md={5}
+                            sm={8}
+                            xs={12}
+                            item
+                          >
                             <Box
                               sx={{
                                 display: "flex",
@@ -1314,7 +1426,10 @@ function Shop() {
                                 sx={{
                                   width: "100%",
                                   height: card?.price !== 0 ? "400px" : "455px",
-                                  borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
+                                  borderRadius:
+                                    card?.price !== 0
+                                      ? "20px 20px 0px 0px"
+                                      : "20px",
                                   objectFit: "cover",
                                 }}
                               />
@@ -1352,13 +1467,18 @@ function Shop() {
                             {card?.price !== 0 && (
                               <div
                                 className="add-to-cart"
-                                style={{ display: "flex", alignItems: "center" }}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
                                 onClick={() => {
-                                  addToCart(card)
+                                  addToCart(card);
                                 }}
                               >
                                 Add To Cart &nbsp;{" "}
-                                <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                                <ShoppingCartIcon
+                                  sx={{ cursor: "pointer", color: "white" }}
+                                />
                               </div>
                             )}
                           </Grid>
@@ -1378,16 +1498,7 @@ function Shop() {
                     forwardArrow={forwardArrow}
                   />
                 </Container>
-
-
-
-
               )}
-
-
-
-
-
             </Box>
             {activeButton === 4 && (
               <Box
@@ -1397,7 +1508,7 @@ function Shop() {
                   height: "100%",
                   backgroundColor: "#5B73AD",
                   width: "100%",
-                  pt: "40px"
+                  pt: "40px",
                 }}
               >
                 {/* Heading */}
@@ -1423,7 +1534,6 @@ function Shop() {
                     margin: "0 auto",
                     display: "flex",
                     justifyContent: "center",
-
                   }}
                   style={{
                     WebkitTextStroke: "1px white",
@@ -1445,7 +1555,7 @@ function Shop() {
                 }}
               >
                 <Box
-                  component={'img'}
+                  component={"img"}
                   src={Images.yellowFlower} // Replace with your image source
                   alt="Decorative"
                   sx={{
@@ -1456,9 +1566,7 @@ function Shop() {
                     zIndex: 2,
                     display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
                   }}
-
                 />
-
 
                 <Container
                   sx={{
@@ -1477,14 +1585,20 @@ function Shop() {
                       minHeight: "1000px", // Adjust this value based on your card size and rows
                       display: "flex",
                       alignItems:
-                        loading || !delayPassed || activityLoading || !activityDelayPassed
+                        loading ||
+                        !delayPassed ||
+                        activityLoading ||
+                        !activityDelayPassed
                           ? "center" // Center align if loading or delay not passed
                           : currentCards.length <= 2
-                            ? "center" // Center align when only 1 or 2 items
-                            : "flex-start", // Default alignment
+                          ? "center" // Center align when only 1 or 2 items
+                          : "flex-start", // Default alignment
                     }}
                   >
-                    {loading || !delayPassed || activityLoading || !activityDelayPassed ? (
+                    {loading ||
+                    !delayPassed ||
+                    activityLoading ||
+                    !activityDelayPassed ? (
                       // Loader view with delay
                       <Grid
                         item
@@ -1496,7 +1610,8 @@ function Shop() {
                           height: "455px",
                         }}
                       >
-                        <CircularProgress size={50} sx={{ color: "#F9BF29" }} /> {/* Updated loader color */}
+                        <CircularProgress size={50} sx={{ color: "#F9BF29" }} />{" "}
+                        {/* Updated loader color */}
                       </Grid>
                     ) : (
                       // Display activity cards
@@ -1519,7 +1634,9 @@ function Shop() {
                                 sx={{
                                   height: card?.price !== 0 ? "400px" : "455px",
                                   borderRadius:
-                                    card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
+                                    card?.price !== 0
+                                      ? "20px 20px 0px 0px"
+                                      : "20px",
                                   objectFit: "cover",
                                 }}
                               />
@@ -1557,7 +1674,10 @@ function Shop() {
                             {card?.price !== 0 && (
                               <div
                                 className="add-to-cart"
-                                style={{ display: "flex", alignItems: "center" }}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
                                 onClick={() => {
                                   addToCart(card);
                                 }}
@@ -1586,12 +1706,7 @@ function Shop() {
                   />
                 </Container>
               </Box>
-
-
-
             )}
-
-
 
             {activeButton === 4 && (
               <Box
@@ -1601,8 +1716,7 @@ function Shop() {
                   backgroundColor: "#CA6680",
                   height: "100%",
                   width: "100%",
-                  pt: "40px"
-
+                  pt: "40px",
                 }}
               >
                 {/* Heading */}
@@ -1646,19 +1760,19 @@ function Shop() {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
                   backgroundColor: "#CA6680", // Conditional background color
-                }} >
+                }}
+              >
                 <Container
                   sx={{
                     backgroundColor: "#CA6680", // Conditional background color
                     height: "100%", // Full height
                     padding: "60px 0", // Padding adjustment
                     width: "100%", // Full width
-
                   }}
                 >
                   {/* Absolute positioned image */}
                   <Box
-                    component={'img'}
+                    component={"img"}
                     src={Images.cuttingPapers} // Replace with your image source
                     alt="Decorative"
                     sx={{
@@ -1669,10 +1783,9 @@ function Shop() {
                       zIndex: 2,
                       display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
                     }}
-
                   />
                   <Box
-                    component={'img'}
+                    component={"img"}
                     src={Images.pencil} // Replace with your image source
                     alt="Decorative"
                     sx={{
@@ -1683,9 +1796,7 @@ function Shop() {
                       zIndex: 2,
                       display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
                     }}
-
                   />
-
 
                   {/* Grid for activity cards */}
                   <Grid
@@ -1699,14 +1810,24 @@ function Shop() {
                         coloringLoading || !coloringDelayPassed
                           ? "center" // Center align if loading or delay not passed
                           : displayedColoringSheets.length <= 2
-                            ? "center" // Center align when only 1 or 2 items
-                            : "flex-start", // Default alignment
+                          ? "center" // Center align when only 1 or 2 items
+                          : "flex-start", // Default alignment
                     }}
                   >
                     {coloringLoading || !coloringDelayPassed ? (
                       // Loader view with delay
-                      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "455px" }}>
-                        <CircularProgress size={50} sx={{ color: "#5B73AD" }} /> {/* Updated loader color */}
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "455px",
+                        }}
+                      >
+                        <CircularProgress size={50} sx={{ color: "#5B73AD" }} />{" "}
+                        {/* Updated loader color */}
                       </Grid>
                     ) : (
                       // Display coloring cards
@@ -1728,7 +1849,10 @@ function Shop() {
                                 src={card?.imgUrl}
                                 sx={{
                                   height: card?.price !== 0 ? "400px" : "455px",
-                                  borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
+                                  borderRadius:
+                                    card?.price !== 0
+                                      ? "20px 20px 0px 0px"
+                                      : "20px",
                                   objectFit: "cover",
                                 }}
                               />
@@ -1742,10 +1866,22 @@ function Shop() {
                                     borderRadius: "0px 0px 20px 20px",
                                   }}
                                 >
-                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
+                                  <Typography
+                                    className="heading-font"
+                                    sx={{
+                                      textTransform: "uppercase",
+                                      fontSize: "20px",
+                                    }}
+                                  >
                                     {card?.name}
                                   </Typography>
-                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
+                                  <Typography
+                                    className="heading-font"
+                                    sx={{
+                                      textTransform: "uppercase",
+                                      fontSize: "20px",
+                                    }}
+                                  >
                                     $ {card?.price}
                                   </Typography>
                                 </Box>
@@ -1754,12 +1890,18 @@ function Shop() {
                             {card?.price !== 0 && (
                               <div
                                 className="add-to-cart"
-                                style={{ display: "flex", alignItems: "center" }}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
                                 onClick={() => {
-                                  addToCart(card)
+                                  addToCart(card);
                                 }}
                               >
-                                Add To Cart &nbsp; <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                                Add To Cart &nbsp;{" "}
+                                <ShoppingCartIcon
+                                  sx={{ cursor: "pointer", color: "white" }}
+                                />
                               </div>
                             )}
                           </Grid>
@@ -1782,7 +1924,6 @@ function Shop() {
               </Box>
             )}
 
-
             {activeButton === 4 && (
               <Box
                 component={"section"}
@@ -1791,8 +1932,7 @@ function Shop() {
                   height: "100%",
                   backgroundColor: "#5B73AD", // Customize the background color
                   width: "100%",
-                  pt: "40px"
-
+                  pt: "40px",
                 }}
               >
                 {/* Heading */}
@@ -1832,49 +1972,47 @@ function Shop() {
             {(activeButton === 3 || activeButton === 4) && (
               <Box
                 sx={{
-                  position:"relative",
+                  position: "relative",
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
                   backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
-                }} >
+                }}
+              >
                 <Container
                   sx={{
                     backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
                     height: "100%", // Full height
                     padding: "60px 0", // Padding adjustment
                     width: "100%", // Full width
-
                   }}
                 >
-                      <Box
-                    component={'img'}
+                  <Box
+                    component={"img"}
                     src={Images.cloud} // Replace with your image source
                     alt="Decorative"
                     sx={{
                       position: "absolute",
                       top: "10px", // Adjusted to move the image slightly higher
-                      left: {md:"30px" ,lg:"60px"},
-                      width: {md:"60px" ,lg:"100px"},
+                      left: { md: "30px", lg: "60px" },
+                      width: { md: "60px", lg: "100px" },
                       zIndex: 2,
                       display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
                     }}
-
                   />
-                        <Box
-                  component={'img'}
-                  src={Images.pinkArrow} // Replace with your image source
-                  alt="Decorative"
-                  sx={{
-                    position: "absolute",
-                    top: "1000px", // Adjusted to move the image slightly higher
-                    right: { md: 10, lg: 20 },
-                    width: { lg: "100px", md: "70px" },
-                    zIndex: 2,
-                    display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
-                  }}
-
-                />
+                  <Box
+                    component={"img"}
+                    src={Images.pinkArrow} // Replace with your image source
+                    alt="Decorative"
+                    sx={{
+                      position: "absolute",
+                      top: "1000px", // Adjusted to move the image slightly higher
+                      right: { md: 10, lg: 20 },
+                      width: { lg: "100px", md: "70px" },
+                      zIndex: 2,
+                      display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                    }}
+                  />
 
                   {/* Grid for extra sheets */}
                   <Grid
@@ -1888,14 +2026,24 @@ function Shop() {
                         extraLoading || !extraDelayPassed
                           ? "center" // Center align if loading or delay not passed
                           : extraCurrentProducts.length <= 2
-                            ? "center" // Center align when only 1 or 2 items
-                            : "flex-start", // Default alignment
+                          ? "center" // Center align when only 1 or 2 items
+                          : "flex-start", // Default alignment
                     }}
                   >
                     {extraLoading || !extraDelayPassed ? (
                       // Loader view with delay
-                      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "455px" }}>
-                        <CircularProgress size={50} sx={{ color: "#F9BF29" }} /> {/* Updated loader color */}
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "455px",
+                        }}
+                      >
+                        <CircularProgress size={50} sx={{ color: "#F9BF29" }} />{" "}
+                        {/* Updated loader color */}
                       </Grid>
                     ) : (
                       // Display extra sheets cards
@@ -1918,7 +2066,9 @@ function Shop() {
                                 sx={{
                                   height: card?.price !== 0 ? "400px" : "455px",
                                   borderRadius:
-                                    card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
+                                    card?.price !== 0
+                                      ? "20px 20px 0px 0px"
+                                      : "20px",
                                   objectFit: "cover",
                                 }}
                               />
@@ -1956,13 +2106,18 @@ function Shop() {
                             {card?.price !== 0 && (
                               <div
                                 className="add-to-cart"
-                                style={{ display: "flex", alignItems: "center" }}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
                                 onClick={() => {
-                                  addToCart(card)
+                                  addToCart(card);
                                 }}
                               >
                                 Add To Cart &nbsp;{" "}
-                                <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                                <ShoppingCartIcon
+                                  sx={{ cursor: "pointer", color: "white" }}
+                                />
                               </div>
                             )}
                           </Grid>
@@ -1985,8 +2140,6 @@ function Shop() {
               </Box>
             )}
 
-
-
             <Box
               component={"section"}
               sx={{
@@ -2008,9 +2161,9 @@ function Shop() {
                   left: 20,
                   zIndex: 0,
                   display: "block",
-                  width: "60px"
+                  width: "60px",
                 }}
-                component={'img'}
+                component={"img"}
                 src={Images.hand}
               ></Box>
               <Box
@@ -2020,15 +2173,13 @@ function Shop() {
                   right: 50,
                   zIndex: 0,
                   display: "block",
-                  width: "60px"
+                  width: "60px",
                 }}
-                component={'img'}
+                component={"img"}
                 src={Images.rainbow}
               ></Box>
-              <Grid container justifyContent={'center'}>
-                <Grid item xs={4} >
-
-                </Grid>
+              <Grid container justifyContent={"center"}>
+                <Grid item xs={4}></Grid>
                 <Grid item lg={4} md={4} sm={10} xs={11}>
                   {/* Center Content */}
                   <Box
@@ -2036,25 +2187,29 @@ function Shop() {
                       position: "relative",
                       textAlign: "center",
                       zIndex: 1,
-
                     }}
                   >
                     <Typography
                       variant="h5"
                       className="para-text"
                       sx={{
-                        fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" },
+                        fontSize: {
+                          xs: "20px",
+                          sm: "24px",
+                          md: "32px",
+                          lg: "42px",
+                        },
                         fontWeight: 600,
                         textAlign: "center",
                         mb: 2,
                       }}
                     >
-                      Subscribe to get information, latest news, and other interesting offers
-                      about{" "}
+                      Subscribe to get information, latest news, and other
+                      interesting offers about{" "}
                       <span
                         style={{
                           fontWeight: "bold",
-                          display: 'block',
+                          display: "block",
                           WebkitTextStroke: "0.5px white ",
                           WebkitTextFillColor: "#FF9D04",
                         }}
@@ -2104,9 +2259,7 @@ function Shop() {
                     />
                   </Box>
                 </Grid>
-                <Grid item xs={4}>
-
-                </Grid>
+                <Grid item xs={4}></Grid>
               </Grid>
               {/* Left Background Image */}
               <Box
@@ -2122,7 +2275,7 @@ function Shop() {
                   component={"img"}
                   src={Character1}
                   sx={{
-                    width: '100%', // Adjust width for smaller screens
+                    width: "100%", // Adjust width for smaller screens
                     height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
                     objectFit: "cover",
                   }}
@@ -2143,14 +2296,12 @@ function Shop() {
                   component={"img"}
                   src={Character2}
                   sx={{
-                    width: '100%', // Adjust width for smaller screens
+                    width: "100%", // Adjust width for smaller screens
                     height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
                     objectFit: "cover",
                   }}
                 />
               </Box>
-
-
             </Box>
           </>
         )}
@@ -2538,10 +2689,9 @@ function Shop() {
             ))}
           </Grid>
         </Box> */}
-
       </Box>
     </>
-  )
+  );
 }
 
-export default Shop
+export default Shop;

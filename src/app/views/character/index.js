@@ -491,7 +491,19 @@ function Character() {
       </Box>
 
 
-      <Box sx={{ backgroundImage:`url(${Images.mainBGPink})`,backgroundSize:'cover' }}>
+      <Box sx={{ backgroundImage:`url(${Images.mainBGPink})`,backgroundSize:'cover', position:"relative" }}>
+      <Box
+                component="img"
+                src={Images.pencil} // Replace with actual right image URL
+                alt="Right Decorative Image"
+                sx={{
+                  width: { xs: "50px", sm: "60px", md: "80px" },
+                  height: "auto",
+                  position: "absolute",
+                  right: { md: 80, xs: 0, sm: 25 },
+                  top:"100px"
+                }}
+              />
         <Typography
           variant="h1"
           className="heading-font"
@@ -535,6 +547,7 @@ function Character() {
             charcter's
           </span>
         </Typography>
+        
         <Box pb={10}>
           <Box sx={{ width: "100%", margin: "0 auto", overflowX:"visible"}}>
             <Grid item md={11} sm={11} xs={11} >
@@ -693,9 +706,61 @@ function Character() {
         sx={{
           backgroundColor:"#5B73AD",
           width: "100%",
-          p: "20px",
+          p: "60px",
+          position:"relative"
         }}
       >
+           <Box
+                component="img"
+                src={Images.star} // Replace with actual right image URL
+                alt="Right Decorative Image"
+                sx={{
+                  width: { xs: "50px", sm: "60px", md: "80px" },
+                  height: "auto",
+                  position: "absolute",
+                  right: { lg: 80, xs: 0, sm: 0, md:40  },
+                  top:"180px",
+                  // display:{xs:"none", sm:"none",md:"block"}
+                }}
+              />
+              <Box
+                component="img"
+                src={Images.pinkArrow} // Replace with actual right image URL
+                alt="Right Decorative Image"
+                sx={{
+                  width: { xs: "50px", sm: "60px", md: "80px" },
+                  height: "auto",
+                  position: "absolute",
+                  right: { lg: 80, xs: 0, sm: 0, md:40  },
+                  bottom:"100px",
+                  // display:{xs:"none", sm:"none",md:"block"}
+                }}
+              />
+                 <Box
+                component="img"
+                src={Images.cloud} // Replace with actual right image URL
+                alt="Right Decorative Image"
+                sx={{
+                  width: { xs: "50px", sm: "60px", md: "80px" },
+                  height: "auto",
+                  position: "absolute",
+                  left: { md: 80, xs: 0, sm: 25 },
+                  top:"50px"
+                }}
+              />
+               <Box
+                component="img"
+                src={Images.sun} // Replace with actual right image URL
+                alt="Right Decorative Image"
+                sx={{
+                  width: { xs: "50px", sm: "60px", md: "80px" },
+                  height: "auto",
+                  position: "absolute",
+                  left: { md: 80, xs: 0, sm: 0 },
+                  bottom:"500px",
+
+                }}
+              />
         <Typography
           variant="h1"
           className="heading-font"

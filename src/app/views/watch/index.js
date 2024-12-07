@@ -1113,7 +1113,7 @@ function Watch() {
               zIndex: 1,
             }}
           >
-            <CardMedia
+            {/* <CardMedia
               component={"img"}
               src={Images.yellowFlower} // Replace with your small image source
               alt="Small Image"
@@ -1124,7 +1124,7 @@ function Watch() {
                 height: "auto",
                 objectFit: "contain",
               }}
-            />
+            /> */}
           </Box>
 
           {/* Center Content */}
