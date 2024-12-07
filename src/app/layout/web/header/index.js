@@ -117,7 +117,7 @@ function Header(props) {
           background: '#5B73AD'
         }}
       >
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between',padding:'25px 0px' }}>
           <Box
             component={"div"}
             sx={{ width: '20%' }}
@@ -139,7 +139,7 @@ function Header(props) {
                   key={i}
                   sx={{
                     color: '#fff',
-                    backgroundColor: currentPath == item.path ? `${Colors.primary} !important` : "transparent",
+                    backgroundColor: currentPath == item.path ? `#FF9D04 !important` : "transparent",
                     px: 4
                   }}
                   onClick={() => {
@@ -188,7 +188,7 @@ function Header(props) {
             ))}
           </Box>
           <Box sx={{ width: '20%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-            {true && <Box component={'img'} src={Images.cartIcon} width={'30px'} onClick={()=> toggleCartVisibility()}></Box>} &nbsp;&nbsp;
+            {true && <Box component={'img'} src={Images.cartIcon} width={'30px'} onClick={()=> navigate('/cart')}></Box>} &nbsp;&nbsp;
             {!user && !loginUser ?
               <>
 

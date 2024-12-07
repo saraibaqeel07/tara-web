@@ -20,6 +20,10 @@ const authNavigation = [
     name: " Manage Extra Sheets"
   },
   {
+    path: "/admin/blogs",
+    name: " Blogs"
+  },
+  {
     path: "/admin/orders",
     name: " Orders"
   },
@@ -27,6 +31,7 @@ const authNavigation = [
     path: "/admin/faqs",
     name: " Faqs"
   },
+
   {
     path: "/admin/reviews",
     name: "Reviews"
