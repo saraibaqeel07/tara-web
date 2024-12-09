@@ -182,6 +182,26 @@ function Watch() {
       title: "Story Of Miraj",
       url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
     },
+    {
+      image: Images.sliderImage5,
+      title: "Story Of Miraj",
+      url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
+    },
+    {
+      image: Images.sliderImage5,
+      title: "Story Of Miraj",
+      url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
+    },
+    {
+      image: Images.sliderImage5,
+      title: "Story Of Miraj",
+      url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
+    },
+      {
+      image: Images.sliderImage5,
+      title: "Story Of Miraj",
+      url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
+    },
   ];
 
   const cardData = [
@@ -773,6 +793,59 @@ function Watch() {
                 centerMode={true}
                 responsive={[
                   {
+                    breakpoint: 4000, 
+                    settings: {
+                      slidesToShow: 6,
+                      slidesToScroll: 1,
+                      infinite: true,
+                      dots: false,
+                      adaptiveHeight: true,
+                      variableWidth: false,
+                      centerMode: true,
+                      arrows: true,
+                    },
+                  },
+                  {
+                    breakpoint: 2550, 
+                    settings: {
+                      slidesToShow: 6,
+                      slidesToScroll: 1,
+                      infinite: true,
+                      dots: false,
+                      adaptiveHeight: true,
+                      variableWidth: false,
+                      centerMode: true,
+                      arrows: true,
+                    },
+                  },
+                  {
+                    breakpoint: 1550, 
+                    settings: {
+                      slidesToShow: 5,
+                      slidesToScroll: 1,
+                      infinite: true,
+                      dots: false,
+                      adaptiveHeight: true,
+                      variableWidth: false,
+                      centerMode: true,
+                      arrows: true,
+                    },
+                  },
+                  {
+                    breakpoint: 1025, 
+                    settings: {
+                      slidesToShow: 3,
+                      slidesToScroll: 1,
+                      infinite: true,
+                      dots: false,
+                      adaptiveHeight: true,
+                      variableWidth: false,
+                      centerMode: true,
+                      arrows: true,
+                    },
+                  },
+            
+                  {
                     breakpoint: 1024,
                     settings: {
                       slidesToShow: 3,
@@ -822,6 +895,7 @@ function Watch() {
                       borderRadius: "20px",
                       cursor: "pointer",
                       maxHeight: "400px",
+                      maxWidth:"400px",
                       overflow: "hidden",
                       display: "flex",
                       flexDirection: "column",
@@ -838,7 +912,7 @@ function Watch() {
                       sx={{
                         width: "100%",
                         height: "100%",
-                        objectFit: { xl: "none" },
+                        objectFit: { xl: "contain" },
                         borderTopLeftRadius: "20px",
                         borderTopRightRadius: "20px",
                         maxHeight: "250px",

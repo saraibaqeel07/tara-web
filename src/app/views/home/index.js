@@ -1396,6 +1396,9 @@ function Home() {
                   320: { slidesPerView: 1 },
                   786: { slidesPerView: 2 },
                   1080: { slidesPerView: 3 },
+                  1550: { slidesPerView: 4 },
+                  2000: { slidesPerView: 5 },
+                  2550: { slidesPerView: 6 },
                 }}
                 pagination={{
                   clickable: true,
@@ -1554,6 +1557,8 @@ function Home() {
                 sm: "400px", // Small screens
                 md: "500px", // Medium screens
                 lg: "700px", // Large screens
+                xl:"1250px"
+
               },
               mt: "20px",
             }}
