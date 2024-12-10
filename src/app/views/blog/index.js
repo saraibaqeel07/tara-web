@@ -16,11 +16,27 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import CardActionArea from '@mui/material/CardActionArea';
 import PageNavigator from "../../components/pagination/index"
+import { collection, getDocs, getFirestore, query } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
 
 const Blog = () => {
+    const firebaseConfig = {
+        apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
+        authDomain: "shinetara-86ec0.firebaseapp.com",
+        projectId: "shinetara-86ec0",
+        storageBucket: "shinetara-86ec0.appspot.com",
+        messagingSenderId: "182521981077",
+        appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
+        measurementId: "G-BHYZDHJCK9"
+    };
+    let productId = ''
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [currentCards, setCurrentCards] = useState([])
     const [loading, setLoading] = useState(true);
+    const [totalPages, setTotalPages] = useState(0)
     const [data, setData] = useState([]); // All data fetched
     const cardsPerRow = 4; // Number of cards per row
     const cardsPerPage = 2 * cardsPerRow; // Two rows of cards per page
@@ -113,15 +129,32 @@ const Blog = () => {
         }, 1000);
     }, []);
 
+
+    const getProducts = async () => {
+        const q = query(collection(db, "blogs"));
+
+        const querySnapshot = await getDocs(q);
+        const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        console.log(dataArray);
+        setCurrentCards(dataArray)
+
+    }
+
+
     // Calculate filtered and paginated data
     const filteredCards = data.filter((card) =>
         card.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
+    useEffect(() => {
+        setTotalPages( Math.ceil(filteredCards.length / cardsPerPage))
+        const indexOfLastCard = currentPage * cardsPerPage;
+        const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+        setCurrentCards(filteredCards.slice(indexOfFirstCard, indexOfLastCard))
+    }, [currentPage])
+    
 
-    const totalPages = Math.ceil(filteredCards.length / cardsPerPage);
-    const indexOfLastCard = currentPage * cardsPerPage;
-    const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-    const currentCards = filteredCards.slice(indexOfFirstCard, indexOfLastCard);
+
 
     const handlePrevPage = () => {
         if (currentPage > 1) {
@@ -158,6 +191,10 @@ const Blog = () => {
             )
         );
     };
+    useEffect(() => {
+        getProducts()
+    }, [])
+    
 
     return (
 
@@ -329,7 +366,7 @@ const Blog = () => {
                                                 <CardMedia
                                                     component="img"
                                                     height="250"
-                                                    image={card.image}
+                                                    image={card.imgUrl}
                                                     alt={card.title}
                                                 />
                                                 <CardContent sx={{ backgroundColor: "#FF9D04" }}>

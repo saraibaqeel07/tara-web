@@ -371,6 +371,7 @@ function Orders() {
 
                             <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }}>Name</TableCell>
                             <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Amount ($)</TableCell>
+                            <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Payment Type</TableCell>
                             <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Status</TableCell>
                             <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Action</TableCell>
                         </TableRow>
@@ -385,8 +386,9 @@ function Orders() {
                                     {index + 1}
                                 </TableCell>
 
-                                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.fname + " " + item?.lname}</TableCell>
+                                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.name}</TableCell>
                                 <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.amount}</TableCell>
+                                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.paymentType == "cashOnDelivery" ? 'COD' : 'Card'}</TableCell>
                                 <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >
 
                                     {item?.status}
