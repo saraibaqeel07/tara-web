@@ -22,10 +22,10 @@ import BlogDescription from "../views/blogDescription";
 const Webroutes = [
   {
     path: "/",
-    component: <Home />
+    component: <About />
   },
   {
-    path: "/shop",
+    path: "/products",
     component: <Shop />
   },
   {
@@ -37,8 +37,8 @@ const Webroutes = [
     component: <EventShow />
   },
   {
-    path: "/about",
-    component: <About />
+    path: "/home",
+    component: <Home />
   },
   {
     path: "/main-character",

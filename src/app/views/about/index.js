@@ -670,17 +670,26 @@ function About() {
               overflow: "hidden",
             }}
           >
-            <Box className="section-content" sx={{ width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto' }}>
+            <Box className="section-content" sx={{
+              width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
+              height: { xl: "500px", lg: "500px", md: '550px', sm: '500px', xs: '400px' }, // Fixed height for the slider
+            }}>
               <div className="slider">
                 <Carousel
                   indicators={false}
                   controls={false}
                   interval={3000}
                   activeStep={currentSlide}
+                // sx={{height:"100%"}}
                 >
 
 
-                  <Grid container sx={{ height: "100%" }}>
+                  <Grid container sx={{ height: "100%", margin: "0 auto", px: 0,
+                  "@media (min-width: 2550px)": {
+                    width:"80%",
+                   },
+                
+                }}>
                     <Grid item xl={7} md={6} sm={12} xs={12} >
                       <Box
                         sx={{
@@ -736,20 +745,33 @@ function About() {
                             sm: "none",
                             xs: "none",
                           },
+                          "@media (min-width: 1536px) and (max-width: 2200px)": {
+                            py:"200px",
+                          
+
+                           },
                         }}
                       />
                     </Grid>
                   </Grid>
 
-                  <Grid container sx={{ height: "100%" }}>
+                  <Grid container sx={{ height: { lg: "500px", md: '550px', sm: '500px', xs: '450px' },
+                   margin: "0 auto",
+                   "@media (min-width: 2550px)": {
+                    width:"70%",
+                   },
+                   "@media (min-width: 1536px) and( max-width: 2549px)": {
+                    width:"120%",
+                   },
+                   }}>
                     <Grid item md={6} sm={12} xs={12}>
                       <Box
                         sx={{
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "flex-start",
-                          gap: "24px",
-                          pt: "120px",
+                          gap: { sm: "24px", xs: "12px" },
+                          pt: { md: "90px", sm: "120px", xs: "97px" },
                           px: { md: "48px", sm: "12px", xs: "12px" },
                           position: "relative",
                         }}
@@ -759,7 +781,7 @@ function About() {
                           className="heading-font"
                           sx={{
                             fontFamily: Fonts.righteous,
-                            fontSize: { md: "100px", sm: "70px", xs: "60px" },
+                            fontSize: { lg:"90px",md: "100px", sm: "70px", xs: "60px" },
                             fontWeight: 700,
                             whiteSpace: "nowrap",
                             overflow: "hidden",
@@ -807,7 +829,7 @@ function About() {
                             flexDirection: "row",
                             position: "relative",
                             zIndex: 1,
-                            pb: "30px"
+                            pb: "60px",
                           }}
                         >
                           <Button href="https://www.facebook.com/profile.php?id=61554711500749">
@@ -846,12 +868,13 @@ function About() {
 
                     </Grid>
                   </Grid>
-                  <Grid container sx={{ height: "100%" }}>
+                  <Grid container sx={{ height: { lg: "500px", md: '550px', sm: '500px', xs: '500px' }, }}>
                     <Grid item xs={12}>
                       <Box
                         sx={{
                           width: { xs: "100%", sm: "100%", md: "100%" },
-                          height: "auto",
+                          height: { lg: "500px", md: '550px', sm: '500px', xs: '550px' },
+                          marginTop: { sm: "30px", xs: 0 },
                           backgroundImage: `url(${Images.mainCharacter})`, // Replace with your image path
                           backgroundSize: "contain",
                           backgroundRepeat: "no-repeat",
@@ -864,13 +887,14 @@ function About() {
                       />
                     </Grid>
                   </Grid>
-            
+
                   <Grid container sx={{ height: "100%" }}>
                     <Grid item xs={12}>
                       <Box
                         sx={{
                           width: { xs: "100%", sm: "100%", md: "100%" },
-                          height: "auto",
+                          height: { lg: "500px", md: '550px', sm: '500px', xs: '490px' },
+
                           backgroundImage: `url(${Images.aboutImg2})`, // Replace with your image path
                           backgroundSize: "contain",
                           backgroundRepeat: "no-repeat",
@@ -1210,7 +1234,7 @@ function About() {
             <Typography
               className="para-text"
               sx={{
-                fontSize: { sm: "18px", xs: "16px" },
+                fontSize: {xl:"30px", sm: "18px", xs: "16px" },
                 color: "white",
                 lineHeight: 1.6,
                 marginBottom: 3,
@@ -1223,7 +1247,7 @@ function About() {
             <Typography
               className="para-text"
               sx={{
-                fontSize: { sm: "18px", xs: "16px" },
+                fontSize: { xl:"30px",sm: "18px", xs: "16px" },
                 color: "white",
                 lineHeight: 1.6,
                 marginBottom: 3,
@@ -1238,7 +1262,7 @@ function About() {
             <Typography
               className="para-text"
               sx={{
-                fontSize: { sm: "18px", xs: "16px" },
+                fontSize: { xl:"30px",sm: "18px", xs: "16px" },
                 color: "white",
                 lineHeight: 1.6,
                 marginBottom: 5,
@@ -1680,12 +1704,18 @@ function About() {
               backgroundRepeat: "no-repeat",
               height: {
                 xs: "300px", // Smallest screens
-                sm: "400px", // Small screens
-                md: "500px", // Medium screens
+                sm: "430px", // Small screens
+                md: "530px", // Medium screens
                 lg: "700px", // Large screens
-                xl:"1250px"
+                xl: "1600px"
               },
-              mt: "20px",
+              mt: "40px",
+              "@media (min-width: 2300px) and (max-width: 2700px)": {
+                height:"1400px"
+              },
+              "@media (min-width: 1536px) and (max-width: 2299px)": {
+                height:"1050px"
+              },
             }}
           ></Grid>
 
@@ -1711,15 +1741,16 @@ function About() {
             position: "relative",
             backgroundColor: "#FF9D04",
             width: "100%",
-            height: { xs: "180px", sm: "180px", md: "500px" },
+            height: { xs: "260px", sm: "250px", md: "500px" },
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             overflow: "hidden",
             padding: { xs: "10px", sm: "10px", md: "10px" },
+
           }}
         >
-          <Box
+          {/* <Box
             sx={{
               position: "absolute",
               top: 40,
@@ -1730,7 +1761,7 @@ function About() {
             }}
             component={"img"}
             src={Images.hand}
-          ></Box>
+          ></Box> */}
           {/* <Box
             sx={{
               position: "absolute",
@@ -1754,17 +1785,23 @@ function About() {
               top: "50px !important",
               height: "auto",
               objectFit: "contain",
+              left: { xl: 230, lg: 0, md: 0 },
+              position: "absolute",
+              "@media (min-width: 1536px) and (max-width: 2200px)": {
+               left:90
+              },
             }}
           />
           <Grid container justifyContent={"center"}>
             <Grid item xs={4}></Grid>
-            <Grid item lg={4} md={4} sm={10} xs={11}>
+            <Grid item lg={4} md={4} sm={4} xs={4}>
               {/* Center Content */}
               <Box
                 sx={{
                   position: "relative",
                   textAlign: "center",
                   zIndex: 1,
+                  padding: { sm: "20px 0" }
                 }}
               >
                 <Typography
@@ -1772,8 +1809,8 @@ function About() {
                   className="para-text"
                   sx={{
                     fontSize: {
-                      xs: "20px",
-                      sm: "24px",
+                      xs: "18px",
+                      sm: "22px",
                       md: "32px",
                       lg: "42px",
                     },
@@ -1801,7 +1838,7 @@ function About() {
                   sx={{
                     background: Colors.white,
                     borderRadius: "4px",
-                    width: "100%",
+                    width: { sm: "100%", xs: "120%" },
                     "& fieldset": {
                       border: "none",
                     },
@@ -1810,7 +1847,7 @@ function About() {
                     },
                     "& .MuiOutlinedInput-input": {
                       color: `${Colors.primary} !important`,
-                      fontSize: { xs: "14px", sm: "16px", md: "18px" },
+                      fontSize: { xs: "8px", sm: "16px", md: "18px" },
                     },
                   }}
                   InputProps={{
@@ -1820,10 +1857,10 @@ function About() {
                         sx={{
                           color: `${Colors.white} !important`,
                           backgroundColor: `#5B73AD`,
-                          px: { xs: 2, sm: 4 },
-                          py: 1.5,
+                          px: { xs: 0.5, sm: 4 },
+                          py: { sm: 1.5, xs: 1 },
                           textTransform: "uppercase",
-                          fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                          fontSize: { xs: "8px", sm: "14px", md: "16px" },
                           "&:hover": {
                             backgroundColor: `#5B73AD`,
                             color: `${Colors.white}`,
@@ -1844,9 +1881,13 @@ function About() {
             sx={{
               position: "absolute",
               bottom: 0,
-              left: 0,
+              left: { xl: 280, lg: 0, md: 0, xs: 0, sm: 0 },
               zIndex: 0,
               display: "block",
+              "@media (min-width: 1536px) and (max-width: 2200px)": {
+               left:90
+              },
+
             }}
           >
             <CardMedia
@@ -1865,9 +1906,12 @@ function About() {
             sx={{
               position: "absolute",
               bottom: 0,
-              right: 0,
+              right: { xs: "0", xl: 260 },
               zIndex: 0,
               display: "block",
+              "@media (min-width: 1536px) and (max-width: 2200px)": {
+                right:60
+               },
             }}
           >
             <CardMedia
@@ -1877,6 +1921,7 @@ function About() {
                 width: "100%", // Adjust width for smaller screens
                 height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
                 objectFit: "cover",
+                
               }}
             />
           </Box>

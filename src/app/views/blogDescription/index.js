@@ -101,8 +101,8 @@ const BlogDetail = () => {
                 </Box>
             </Grid>
 
-            <Grid container justifyContent="flex-start" alignItems="center" py={20} px={5}>
-                <Grid item md={9} sm={8} xs={7}>
+            <Grid container sx={{ justifyContent: { md: "flex-start", xs: "center" }, alignItems: "flex-start", py: 20 }}  >
+                <Grid item md={9} sm={11} xs={11}>
                     <Grid
                         container
                         rowGap="40px"
@@ -190,7 +190,7 @@ const BlogDetail = () => {
                                     fontSize: "16px",
                                     textAlign: "left",
                                     lineHeight: "1.6",
-                                    maxWidth: { md: "450px", sm: "250px",xl:"800px",lg:"600px"  }, // Optional: limit paragraph width
+                                    maxWidth: { md: "450px", sm: "250px", xl: "800px", lg: "600px" }, // Optional: limit paragraph width
                                 }}
                             >
                                 {description}
@@ -211,7 +211,22 @@ const BlogDetail = () => {
                                 }}
                             />
                         </Box>
-                        <Box sx={{ width: "100%", mt: "20px", position: "relative" }}>
+                        <Grid
+                            item
+                            xs={8}
+                            sm={8}
+                            md={8}
+                            lg={8}
+                            xl={8}
+
+                            sx={{
+                                display: "flex",
+                                alignItems: "flex-start", // Center vertically
+                                justifyContent: "space-between", // Space items apart horizontally
+                                position: "relative",
+                            }}
+                        >
+                            {/* Description */}
                             <Typography
                                 variant="body1"
                                 sx={{
@@ -219,28 +234,40 @@ const BlogDetail = () => {
                                     fontSize: "16px",
                                     textAlign: "left",
                                     lineHeight: "1.6",
-                                    maxWidth: { md: "450px", sm: "250px", xl:"800px",lg:"600px" }, // Optional: limit paragraph width
+                                    maxWidth: { md: "450px", sm: "250px", xl: "800px", lg: "600px" }, // Optional: limit paragraph width
                                 }}
                             >
                                 {description}
-
                             </Typography>
 
-                            {/* Positioned Image */}
+                        </Grid>
+                        <Grid
+                            item
+                            xs={3}
+                            sm={3}
+                            md={3}
+                            lg={2}
+                            xl={2}
+                            sx={{
+                                display: "flex",
+                                justifyContent: "space-between", // Space items apart horizontally
+                                position: "relative",
+                                alignItems: "flex-start",
+                            }}
+                        >
+
+                            {/* Image */}
                             <Box
                                 component="img"
-                                src={Images.sun} // Replace with the actual image URL or import
+                                src={Images.blogDetail2} // Replace with the actual image URL or import
                                 alt="Decorative"
                                 sx={{
-                                    position: "absolute",
-                                    top: { sm: -80, xs: -50 }, // Adjust the positioning as needed
-                                    right: "10px", // Position towards the top-right corner
-                                    width: { md: "100px", sm: "80px", xs: "50px",}, // Set appropriate size
+                                    width: { xl: "200px", lg: "150px", md: "150px", sm: "120px", xs: "80px" }, // Set appropriate size
                                     height: "auto",
                                 }}
                             />
-                        </Box>
-    
+
+                        </Grid>
 
                     </Grid>
 
@@ -250,15 +277,15 @@ const BlogDetail = () => {
                 <Grid
                     item
                     md={3} // Adjust the width on larger screens
-                    sm={4} // For smaller screens, make it take up most of the space
-                    xs={5} // For extra small screens, also take most of the space
+                    sm={11} // For smaller screens, make it take up most of the space
+                    xs={11} // For extra small screens, also take most of the space
                     sx={{
                         display: "flex",
-                        justifyContent: "flex-end", // Align to the right
+                        justifyContent: { md: "flex-end", sm: "center" }, // Align to the right
                         alignItems: "center",
                         padding: "20px",
                         flexDirection: "column", // Arrange items in a column
-                        gap: "200px", // Add vertical space between elements
+                        gap: "600px", // Add vertical space between elements
 
 
                     }}
@@ -333,24 +360,60 @@ const BlogDetail = () => {
                     </Box>
 
                     <Box
-        sx={{
-            width: "100%", // Adjust image width
-            textAlign: "center", // Center image horizontally
-        }}
-    >
-        <img
-            src={Images.reading} // Replace with the actual image URL
-            alt="Descriptive Alt Text"
-            style={{
-                width: "100%", // Make the image responsive
-                maxWidth: "100px", // Set a max width
-                height: "auto", // Maintain aspect ratio
-                margin: "10px 0", // Add vertical margin for spacing
-                
-            }}
-        />
-    </Box>
+                        sx={{
+                            width: "100%", // Adjust image width
+                            textAlign: "center", // Center image horizontally
+                        }}
+                    >
+                        <img
+                            src={Images.reading} // Replace with the actual image URL
+                            alt="Descriptive Alt Text"
+                            style={{
+                                width: "100%", // Make the image responsive
+                                maxWidth: "100px", // Set a max width
+                                height: "auto", // Maintain aspect ratio
+                                margin: "10px 0", // Add vertical margin for spacing
 
+                            }}
+                        />
+                    </Box>
+
+                    <Box
+                        sx={{
+                            width: "100%", // Adjust image width
+                            textAlign: "center", // Center image horizontally
+                        }}
+                    >
+                        <img
+                            src={Images.handImg} // Replace with the actual image URL
+                            alt="Descriptive Alt Text"
+                            style={{
+                                width: "100%", // Make the image responsive
+                                maxWidth: "100px", // Set a max width
+                                height: "auto", // Maintain aspect ratio
+                                margin: "10px 0", // Add vertical margin for spacing
+
+                            }}
+                        />
+                    </Box>
+                    <Box
+                        sx={{
+                            width: "100%", // Adjust image width
+                            textAlign: "center", // Center image horizontally
+                        }}
+                    >
+                        <img
+                            src={Images.rainbow} // Replace with the actual image URL
+                            alt="Descriptive Alt Text"
+                            style={{
+                                width: "100%", // Make the image responsive
+                                maxWidth: "100px", // Set a max width
+                                height: "auto", // Maintain aspect ratio
+                                margin: "10px 0", // Add vertical margin for spacing
+
+                            }}
+                        />
+                    </Box>
                 </Grid>
             </Grid>
 

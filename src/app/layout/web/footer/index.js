@@ -26,7 +26,8 @@ function Footer() {
       height: "100%",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
-      p: 4
+      p: 4,
+      zIndex:5
     }}
   >
     <Grid
@@ -86,13 +87,16 @@ function Footer() {
         <Box sx={{ height: "100%", display: "flex", alignItems: "center" }}>
           <Box
             sx={{
-              display: "flex",
+              display: "grid", // Use grid layout
+              gridTemplateColumns: { sm: "1fr 1fr 1fr", xs: "1fr" }, // 3 columns for sm and above, 1 column for xs
+              gridTemplateRows: { sm: "repeat(2, auto)" }, // 2 rows
               flexDirection: "column",
               height: { md: "160px", sm: "100%", xs: "100%" },
               justifyContent: "flex-start",
               width: { md: "360px", sm: "100%", xs: "100%" },
               flexWrap: "wrap",
               rowGap: "20px",
+              columnGap:"5px"
             }}
           >
             {navigation.map((item, i) => (

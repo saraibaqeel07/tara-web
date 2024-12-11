@@ -470,7 +470,7 @@ function Character() {
           backgroundSize: "cover",
           backgroundPosition: "bottom center",
           width: "100%",
-          height: { md: "610px", xs: "300px",xl:"950px",sm:"590px" },
+          height: { md: "500px", xs: "300px", xl: "800px", sm: "350px" },
           position: "relative", // Ensure child content is positioned relative to this container
           overflow: "hidden", // Prevent content from going outside
         }}
@@ -478,32 +478,32 @@ function Character() {
         {/* Right-side Image */}
         <Box
           sx={{
-            margin: "0 auto",
+            margin: {sm:"20px auto 0 auto",xs:"50px auto 0 auto"},
             width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
             height: "100%", // Full height of the parent container
             backgroundImage: `url(${Images.mainCharacter})`,
             backgroundSize: { md: "contain", xl: "contain", lg: "contain", xs: "contain", sm: "contain" },
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center", // Ensures the image is aligned at the bottom
-           
+
           }}
         />
       </Box>
 
 
-      <Box sx={{ backgroundImage:`url(${Images.mainBGPink})`,backgroundSize:'cover', position:"relative" }}>
-      <Box
-                component="img"
-                src={Images.pencil} // Replace with actual right image URL
-                alt="Right Decorative Image"
-                sx={{
-                  width: { xs: "50px", sm: "60px", md: "80px" },
-                  height: "auto",
-                  position: "absolute",
-                  right: { md: 80, xs: 0, sm: 25 },
-                  top:"100px"
-                }}
-              />
+      <Box sx={{ backgroundImage: `url(${Images.mainBGPink})`, backgroundSize: 'cover', position: "relative" }}>
+        <Box
+          component="img"
+          src={Images.pencil} // Replace with actual right image URL
+          alt="Right Decorative Image"
+          sx={{
+            width: { xs: "50px", sm: "60px", md: "80px" },
+            height: "auto",
+            position: "absolute",
+            right: { md: 80, xs: 0, sm: 25 },
+            top: "100px"
+          }}
+        />
         <Typography
           variant="h1"
           className="heading-font"
@@ -513,7 +513,7 @@ function Character() {
               lg: "90px",
               md: "70px",
               sm: "45px",
-              xs: "35px",
+              xs: "30px",
             }, // Adjusts font size for different screens
             fontWeight: 600,
             whiteSpace: "nowrap",
@@ -547,11 +547,11 @@ function Character() {
             charcter's
           </span>
         </Typography>
-        
+
         <Box pb={10}>
-          <Box sx={{ width: "100%", margin: "0 auto", overflowX:"visible"}}>
+          <Box sx={{ width: "100%", margin: "0 auto", overflowX: "visible" }}>
             <Grid item md={11} sm={11} xs={11} >
-              <Swiper 
+              <Swiper
                 loop={true}
                 spaceBetween={10}
                 slidesPerView={3}
@@ -561,15 +561,19 @@ function Character() {
                 }}
                 modules={[Autoplay, Pagination, Navigation]}
                 breakpoints={{
-              
-                  481: {
-                    slidesPerView: 1, 
-                    alignItems:"center"
+                  300: {
+                    slidesPerView: 1,
+                    alignItems: "center"
+
+                  },
+                  460: {
+                    slidesPerView: 2,
+                    alignItems: "center"
 
                   },
                   786: {
                     slidesPerView: 3, // Keep two cards for this range too
-                    
+
                   },
                   1080: {
                     slidesPerView: 4, // For large screens
@@ -704,63 +708,63 @@ function Character() {
       <Box
         component={"section"}
         sx={{
-          backgroundColor:"#5B73AD",
+          backgroundColor: "#5B73AD",
           width: "100%",
           p: "60px",
-          position:"relative"
+          position: "relative"
         }}
       >
-           <Box
-                component="img"
-                src={Images.star} // Replace with actual right image URL
-                alt="Right Decorative Image"
-                sx={{
-                  width: { xs: "50px", sm: "60px", md: "80px" },
-                  height: "auto",
-                  position: "absolute",
-                  right: { lg: 80, xs: 0, sm: 0, md:40  },
-                  top:"180px",
-                  // display:{xs:"none", sm:"none",md:"block"}
-                }}
-              />
-              <Box
-                component="img"
-                src={Images.pinkArrow} // Replace with actual right image URL
-                alt="Right Decorative Image"
-                sx={{
-                  width: { xs: "50px", sm: "60px", md: "80px" },
-                  height: "auto",
-                  position: "absolute",
-                  right: { lg: 80, xs: 0, sm: 0, md:40  },
-                  bottom:"100px",
-                  // display:{xs:"none", sm:"none",md:"block"}
-                }}
-              />
-                 <Box
-                component="img"
-                src={Images.cloud} // Replace with actual right image URL
-                alt="Right Decorative Image"
-                sx={{
-                  width: { xs: "50px", sm: "60px", md: "80px" },
-                  height: "auto",
-                  position: "absolute",
-                  left: { md: 80, xs: 0, sm: 25 },
-                  top:"50px"
-                }}
-              />
-               <Box
-                component="img"
-                src={Images.sun} // Replace with actual right image URL
-                alt="Right Decorative Image"
-                sx={{
-                  width: { xs: "50px", sm: "60px", md: "80px" },
-                  height: "auto",
-                  position: "absolute",
-                  left: { md: 80, xs: 0, sm: 0 },
-                  bottom:"500px",
+        <Box
+          component="img"
+          src={Images.star} // Replace with actual right image URL
+          alt="Right Decorative Image"
+          sx={{
+            width: { xs: "50px", sm: "60px", md: "80px" },
+            height: "auto",
+            position: "absolute",
+            right: { lg: 80, xs: 0, sm: 0, md: 40 },
+            top: "180px",
+            // display:{xs:"none", sm:"none",md:"block"}
+          }}
+        />
+        <Box
+          component="img"
+          src={Images.pinkArrow} // Replace with actual right image URL
+          alt="Right Decorative Image"
+          sx={{
+            width: { xs: "50px", sm: "60px", md: "80px" },
+            height: "auto",
+            position: "absolute",
+            right: { lg: 80, xs: 0, sm: 0, md: 40 },
+            bottom: "100px",
+            // display:{xs:"none", sm:"none",md:"block"}
+          }}
+        />
+        <Box
+          component="img"
+          src={Images.cloud} // Replace with actual right image URL
+          alt="Right Decorative Image"
+          sx={{
+            width: { xs: "50px", sm: "60px", md: "80px" },
+            height: "auto",
+            position: "absolute",
+            left: { md: 80, xs: 0, sm: 25 },
+            top: "50px"
+          }}
+        />
+        <Box
+          component="img"
+          src={Images.sun} // Replace with actual right image URL
+          alt="Right Decorative Image"
+          sx={{
+            width: { xs: "50px", sm: "60px", md: "80px" },
+            height: "auto",
+            position: "absolute",
+            left: { md: 80, xs: 0, sm: 0 },
+            bottom: "500px",
 
-                }}
-              />
+          }}
+        />
         <Typography
           variant="h1"
           className="heading-font"
@@ -796,7 +800,11 @@ function Character() {
           <Grid item md={8} sm={12} xs={12}>
             <Grid container spacing={4} justifyContent={"space-between"}>
               {teamData.map((item, i) => (
-                <Grid key={i} item md={6} sm={12} xs={12}>
+                <Grid key={i} item md={6} sm={12} xs={12}
+                sx={{
+                  height:{xl:"100%"}
+                }}
+                >
                   <Box
                     sx={{
                       display: "flex",
@@ -808,7 +816,7 @@ function Character() {
                       src={item.image}
                       sx={{
                         width: "100%",
-                        height: "350px",
+                        height: {md:"350px",xl:"950px"},
                         objectFit: "cover",
                         objectPosition: "top",
                       }}
