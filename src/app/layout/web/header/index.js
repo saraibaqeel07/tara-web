@@ -66,6 +66,7 @@ function Header(props) {
       console.log('logout');
       localStorage.clear()
       setUser('')
+      handleClose()
     }).catch((error) => {
       // An error happened.
     });
@@ -143,10 +144,13 @@ function Header(props) {
               <>
                 {!item?.children ? <Button
                   key={i}
+                  className='para-text'
                   sx={{
                     color: '#fff',
                     backgroundColor: currentPath == item.path ? `#FF9D04 !important` : "transparent",
-                    px: 4
+                    px: 3,
+                    textTransform:'capitalize'
+                  
                   }}
                   onClick={() => {
                     navigate(item.path);
@@ -154,12 +158,13 @@ function Header(props) {
                 >
                   {item.name}
                 </Button> : <> <Button
+                       className='para-text'
                   id="basic-button"
                   aria-controls={open1 ? 'basic-menu' : undefined}
                   aria-haspopup="true"
                   aria-expanded={open1 ? 'true' : undefined}
                   onClick={handleClick1}
-                  sx={{ color: 'white', display: { xs: 'block', sm: 'block', md: 'block', lg: 'block' } }}
+                  sx={{ color: 'white', display: { xs: 'block', sm: 'block', md: 'block', lg: 'block' } ,     textTransform:'capitalize'}}
                 >{item?.name}
 
 
@@ -289,7 +294,10 @@ function Header(props) {
               </Box>
             } */}
             {!user && !loginUser ?
-              <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button> :
+            <Box sx={{display:'flex',justifyContent:'center',mt:2}}>
+              <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>
+              </Box>
+               :
               <Box sx={{ display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>
                 <Button
                   id="basic-button"
