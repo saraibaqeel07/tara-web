@@ -1100,70 +1100,56 @@ function Watch() {
 
         </Grid>
 
+      
         <Box
           component={"section"}
           sx={{
             position: "relative",
             backgroundColor: "#FF9D04",
             width: "100%",
-            height: "auto",
+            height: { xs: "260px", sm: "250px", md: "500px" },
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             overflow: "hidden",
-            padding: { xs: "4rem 0", sm: "10rem 0", md: "10rem 0", xl: "15rem 0" },
+            padding: { xs: "10px", sm: "10px", md: "10px" },
+
           }}
         >
-          {/* Left Background Image */}
-          <Box
+          {/* <Box
             sx={{
               position: "absolute",
-              bottom: 0,
-              left: 0,
+              top: 40,
+              left: 20,
               zIndex: 0,
               display: "block",
+              width: "60px",
             }}
-          >
-            <CardMedia
-              component={"img"}
-              src={Images.Character3}
-              sx={{
-                width: { xs: "180px", sm: "280px", md: "380px", lg: "500px" },
-                height: { xs: "180px", sm: "180px", md: "650px", lg: "650px" },
-                objectFit: "cover",
-              }}
-            />
-          </Box>
-
-          {/* Right Background Image */}
-          <Box
+            component={"img"}
+            src={Images.hand}
+          ></Box> */}
+          {/* <Box
             sx={{
               position: "absolute",
-              bottom: 0,
-              right: 0,
+              top: 20,
+              right: 50,
               zIndex: 0,
               display: "block",
+              width:"60px"
             }}
-          >
-            <CardMedia
-              component={"img"}
-              src={Images.Character4}
-              sx={{
-                width: { xs: "180px", sm: "280px", md: "500px", lg: "750px" },
-                height: { xs: "180px", sm: "180px", md: "650px", lg: "650px" },
-                objectFit: "cover",
-              }}
-            />
-          </Box>
+            component={'img'}
+            src={Images.rainbow}
+          ></Box> */}
 
           {/* Small Centered Image on Right */}
           <Box
             sx={{
               position: "absolute",
-
               right: "3%", // Adjust spacing from the right
               display: "flex", alignItems: "center",
               zIndex: 1,
+              right: { xs: "0", xl: 260 },
+
             }}
           >
             <CardMedia
@@ -1178,98 +1164,136 @@ function Watch() {
               }}
             />
           </Box>
+          <Grid container justifyContent={"center"}>
+            <Grid item xs={4}></Grid>
+            <Grid item lg={4} md={4} sm={4} xs={4}>
+              {/* Center Content */}
+              <Box
+                sx={{
+                  position: "relative",
+                  textAlign: "center",
+                  zIndex: 1,
+                  padding: { sm: "20px 0" }
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  className="para-text"
+                  sx={{
+                    fontSize: {
+                      xs: "18px",
+                      sm: "22px",
+                      md: "32px",
+                      lg: "42px",
+                    },
+                    fontWeight: 600,
+                    textAlign: "center",
+                    mb: 2,
+                  }}
+                >
+                  Subscribe to get information, latest news, and other
+                  interesting offers about{" "}
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                      display: "block",
+                      WebkitTextStroke: "0.5px white ",
+                      WebkitTextFillColor: "#5B73AD",
+                    }}
+                  >
+                    Shine With Tara
+                  </span>
+                </Typography>
+                <TextField
+                  className="para-text"
+                  placeholder={"Your email"}
+                  sx={{
+                    background: Colors.white,
+                    borderRadius: "4px",
+                    width: { sm: "100%", xs: "120%" },
+                    "& fieldset": {
+                      border: "none",
+                    },
+                    "& .MuiOutlinedInput-root": {
+                      paddingRight: 0.5,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      color: `${Colors.primary} !important`,
+                      fontSize: { xs: "8px", sm: "16px", md: "18px" },
+                    },
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <Button
+                        className="para-text"
+                        sx={{
+                          color: `${Colors.white} !important`,
+                          backgroundColor: `#5B73AD`,
+                          px: { xs: 0.5, sm: 4 },
+                          py: { sm: 1.5, xs: 1 },
+                          textTransform: "uppercase",
+                          fontSize: { xs: "8px", sm: "14px", md: "16px" },
+                          "&:hover": {
+                            backgroundColor: `#5B73AD`,
+                            color: `${Colors.white}`,
+                          },
+                        }}
+                      >
+                        Subscribe
+                      </Button>
+                    ),
+                  }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={4}></Grid>
+          </Grid>
+          {/* Left Background Image */}
           <Box
             sx={{
               position: "absolute",
-              top: 30,
-              left: "3%", // Adjust spacing from the right
-              display: "flex",
-              zIndex: 1,
+              bottom: 0,
+              left: { xl: 280, lg: 0, md: -50, xs: 0, sm: 0 },
+              zIndex: 0,
+              display: "block",
+              "@media (min-width: 1536px) and (max-width: 2200px)": {
+               left:90
+              },
+
             }}
           >
-            {/* <CardMedia
+            <CardMedia
               component={"img"}
-              src={Images.yellowFlower} // Replace with your small image source
-              alt="Small Image"
+              src={Images.Character3}
               sx={{
-                display: { sm: "none", xs: "none", md: "block" },
-                width: { md: "40px", lg: "60px" },
-
-                height: "auto",
-                objectFit: "contain",
+                width: "100%", // Adjust width for smaller screens
+                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                objectFit: "cover",
               }}
-            /> */}
+            />
           </Box>
 
-          {/* Center Content */}
+          {/* Right Background Image */}
           <Box
             sx={{
-              position: "relative",
-              textAlign: "center",
-              zIndex: 1,
-              width: { xs: "90%", sm: "80%", md: "20%", lg: "25%" },
+              position: "absolute",
+              bottom: 0,
+              right: { xs: "0", xl: 260 ,md:-50 },
+              zIndex: 0,
+              display: "block",
+              "@media (min-width: 1536px) and (max-width: 2200px)": {
+                right:60
+               },
             }}
           >
-            <Typography
-              variant="h5"
-              className="para-text"
+            <CardMedia
+              component={"img"}
+              src={Images.Character4}
               sx={{
-                fontSize: { xs: "20px", sm: "24px", md: "32px", lg: "42px" },
-                fontWeight: 600,
-                textAlign: "center",
-                mb: 2,
-              }}
-            >
-              Subscribe to get information, latest news, and other interesting offers
-              about{" "}
-              <span
-                style={{
-                  fontWeight: "bold",
-                  WebkitTextStroke: "0.5px white ",
-                  WebkitTextFillColor: "#3D5A98",
-                }}
-              >
-                Shine With Tara
-              </span>
-            </Typography>
-            <TextField
-              className="para-text"
-              placeholder={"Your email"}
-              sx={{
-                background: Colors.white,
-                borderRadius: "4px",
-                width: "100%",
-                "& fieldset": {
-                  border: "none",
-                },
-                "& .MuiOutlinedInput-root": {
-                  paddingRight: 0.5,
-                },
-                "& .MuiOutlinedInput-input": {
-                  color: `${Colors.primary} !important`,
-                  fontSize: { xs: "14px", sm: "16px", md: "18px" },
-                },
-              }}
-              InputProps={{
-                endAdornment: (
-                  <Button
-                    className="para-text"
-                    sx={{
-                      color: `${Colors.white} !important`,
-                      backgroundColor: `#5B73AD`,
-                      px: { xs: 2, sm: 4 },
-                      py: 1.5,
-                      textTransform: "uppercase",
-                      fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                      "&:hover": {
-                        backgroundColor: `#5B73AD`,
-                        color: `${Colors.white}`,
-                      },
-                    }}
-                  >
-                    Subscribe
-                  </Button>
-                ),
+                width: "100%", // Adjust width for smaller screens
+                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                objectFit: "cover",
+                
               }}
             />
           </Box>

@@ -1227,7 +1227,7 @@ function Shop() {
             <Box
               component={"section"}
               sx={{
-                backgroundColor:"#CA6680", // Ensures the image covers the entire area
+                backgroundColor: "#CA6680", // Ensures the image covers the entire area
 
                 position: "relative",
                 height: "100%",
@@ -1281,7 +1281,7 @@ function Shop() {
                     display: "grid",
                     gridTemplateColumns: {
                       md: "repeat(3, 1fr)",
-                      sm:"repeat(2, 1fr)",
+                      sm: "repeat(2, 1fr)",
                       xs: "repeat(1, 1fr)",
                     },
                     gap: "16px",
@@ -1339,11 +1339,11 @@ function Shop() {
                         loading || !delayPassed
                           ? "center"
                           : currentCards.length <= 2
-                          ? "center" // Center align when only 1 or 2 items
-                          : "flex-start", // Default alignment
+                            ? "center" // Center align when only 1 or 2 items
+                            : "flex-start", // Default alignment
                     }}
                   >
-                        <Box
+                    <Box
                       component={"img"}
                       src={Images.pencil} // Replace with your image source
                       alt="Decorative"
@@ -1369,7 +1369,7 @@ function Shop() {
                         display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
                       }}
                     />
-                          <Box
+                    <Box
                       component={"img"}
                       src={Images.reading} // Replace with your image source
                       alt="Decorative"
@@ -1586,19 +1586,19 @@ function Shop() {
                       display: "flex",
                       alignItems:
                         loading ||
-                        !delayPassed ||
-                        activityLoading ||
-                        !activityDelayPassed
+                          !delayPassed ||
+                          activityLoading ||
+                          !activityDelayPassed
                           ? "center" // Center align if loading or delay not passed
                           : currentCards.length <= 2
-                          ? "center" // Center align when only 1 or 2 items
-                          : "flex-start", // Default alignment
+                            ? "center" // Center align when only 1 or 2 items
+                            : "flex-start", // Default alignment
                     }}
                   >
                     {loading ||
-                    !delayPassed ||
-                    activityLoading ||
-                    !activityDelayPassed ? (
+                      !delayPassed ||
+                      activityLoading ||
+                      !activityDelayPassed ? (
                       // Loader view with delay
                       <Grid
                         item
@@ -1810,8 +1810,8 @@ function Shop() {
                         coloringLoading || !coloringDelayPassed
                           ? "center" // Center align if loading or delay not passed
                           : displayedColoringSheets.length <= 2
-                          ? "center" // Center align when only 1 or 2 items
-                          : "flex-start", // Default alignment
+                            ? "center" // Center align when only 1 or 2 items
+                            : "flex-start", // Default alignment
                     }}
                   >
                     {coloringLoading || !coloringDelayPassed ? (
@@ -2026,8 +2026,8 @@ function Shop() {
                         extraLoading || !extraDelayPassed
                           ? "center" // Center align if loading or delay not passed
                           : extraCurrentProducts.length <= 2
-                          ? "center" // Center align when only 1 or 2 items
-                          : "flex-start", // Default alignment
+                            ? "center" // Center align when only 1 or 2 items
+                            : "flex-start", // Default alignment
                     }}
                   >
                     {extraLoading || !extraDelayPassed ? (
@@ -2140,53 +2140,88 @@ function Shop() {
               </Box>
             )}
 
+
+
             <Box
               component={"section"}
               sx={{
                 position: "relative",
-                backgroundColor: "#FF9D04",
+                backgroundColor: activeButton === 4 ?"#FF9D04":"#5B73AD",
                 width: "100%",
-                height: { xs: "180px", sm: "180px", md: "500px" },
+                height: { xs: "260px", sm: "250px", md: "500px" },
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 overflow: "hidden",
                 padding: { xs: "10px", sm: "10px", md: "10px" },
+
               }}
             >
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: 40,
-                  left: 20,
-                  zIndex: 0,
-                  display: "block",
-                  width: "60px",
-                }}
-                component={"img"}
-                src={Images.hand}
-              ></Box>
+              {/* <Box
+            sx={{
+              position: "absolute",
+              top: 40,
+              left: 20,
+              zIndex: 0,
+              display: "block",
+              width: "60px",
+            }}
+            component={"img"}
+            src={Images.hand}
+          ></Box> */}
+              {/* <Box
+            sx={{
+              position: "absolute",
+              top: 20,
+              right: 50,
+              zIndex: 0,
+              display: "block",
+              width:"60px"
+            }}
+            component={'img'}
+            src={Images.rainbow}
+          ></Box> */}
               <Box
                 sx={{
                   position: "absolute",
                   top: 20,
-                  right: 50,
+                  right: { xl: 280, lg: 50, md: 50 },
                   zIndex: 0,
                   display: "block",
                   width: "60px",
+                  display: { sm: "none", xs: "none", md: "block" },
+
                 }}
                 component={"img"}
                 src={Images.rainbow}
               ></Box>
+              <CardMedia
+                component={"img"}
+                src={Images.handImg} // Replace with your small image source
+                alt="Small Image"
+                sx={{
+                  display: { sm: "none", xs: "none", md: "block" },
+                  width: { md: "40px", lg: "60px" },
+                  top: "50px !important",
+                  height: "auto",
+                  objectFit: "contain",
+                  left: { xl: 230, lg: 0, md: 0 },
+                  position: "absolute",
+                  "@media (min-width: 1536px) and (max-width: 2200px)": {
+                    left: 90
+                  },
+                }}
+              />
               <Grid container justifyContent={"center"}>
                 <Grid item xs={4}></Grid>
-                <Grid item lg={4} md={4} sm={10} xs={11}>
+                <Grid item lg={4} md={4} sm={4} xs={4}>
                   {/* Center Content */}
                   <Box
                     sx={{
                       position: "relative",
                       textAlign: "center",
                       zIndex: 1,
+                      padding: { sm: "20px 0" }
                     }}
                   >
                     <Typography
@@ -2194,8 +2229,8 @@ function Shop() {
                       className="para-text"
                       sx={{
                         fontSize: {
-                          xs: "20px",
-                          sm: "24px",
+                          xs: "18px",
+                          sm: "22px",
                           md: "32px",
                           lg: "42px",
                         },
@@ -2210,8 +2245,10 @@ function Shop() {
                         style={{
                           fontWeight: "bold",
                           display: "block",
-                          WebkitTextStroke: "0.5px white ",
-                          WebkitTextFillColor: "#FF9D04",
+
+                          WebkitTextStroke: "1px white",
+                          WebkitTextFillColor: "#F9BF29",
+
                         }}
                       >
                         Shine With Tara
@@ -2223,7 +2260,7 @@ function Shop() {
                       sx={{
                         background: Colors.white,
                         borderRadius: "4px",
-                        width: "100%",
+                        width: { sm: "100%", xs: "120%" },
                         "& fieldset": {
                           border: "none",
                         },
@@ -2232,7 +2269,7 @@ function Shop() {
                         },
                         "& .MuiOutlinedInput-input": {
                           color: `${Colors.primary} !important`,
-                          fontSize: { xs: "14px", sm: "16px", md: "18px" },
+                          fontSize: { xs: "8px", sm: "16px", md: "18px" },
                         },
                       }}
                       InputProps={{
@@ -2242,10 +2279,10 @@ function Shop() {
                             sx={{
                               color: `${Colors.white} !important`,
                               backgroundColor: `#5B73AD`,
-                              px: { xs: 2, sm: 4 },
-                              py: 1.5,
+                              px: { xs: 0.5, sm: 4 },
+                              py: { sm: 1.5, xs: 1 },
                               textTransform: "uppercase",
-                              fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                              fontSize: { xs: "8px", sm: "14px", md: "16px" },
                               "&:hover": {
                                 backgroundColor: `#5B73AD`,
                                 color: `${Colors.white}`,
@@ -2266,14 +2303,18 @@ function Shop() {
                 sx={{
                   position: "absolute",
                   bottom: 0,
-                  left: 0,
+                  left: { xl: 230, lg: 0, md: 0, xs: 0, sm: 0 },
                   zIndex: 0,
                   display: "block",
+                  "@media (min-width: 1536px) and (max-width: 2200px)": {
+                    left: 90
+                  },
+
                 }}
               >
                 <CardMedia
                   component={"img"}
-                  src={Character1}
+                  src={Images.Character1}
                   sx={{
                     width: "100%", // Adjust width for smaller screens
                     height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
@@ -2287,18 +2328,22 @@ function Shop() {
                 sx={{
                   position: "absolute",
                   bottom: 0,
-                  right: 0,
+                  right: { xs: "0", xl: 280 },
                   zIndex: 0,
                   display: "block",
+                  "@media (min-width: 1536px) and (max-width: 2200px)": {
+                    right: 60
+                  },
                 }}
               >
                 <CardMedia
                   component={"img"}
-                  src={Character2}
+                  src={Images.Character2}
                   sx={{
                     width: "100%", // Adjust width for smaller screens
                     height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
                     objectFit: "cover",
+
                   }}
                 />
               </Box>

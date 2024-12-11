@@ -129,7 +129,6 @@ const Images = {
  mainFaq:require( "../../assets/images/main-faq.png"),
  faq1:require( "../../assets/images/faq-1.png"),
  reading:require( "../../assets/images/reading.png"),
- handImg:require( "../../assets/images/hand-img.png"),
  mainBGPink:require( "../../assets/images/mainPinkBG.png"),
  blog1:require( "../../assets/images/blog1.png"),
  blog2:require( "../../assets/images/blog2.png"),
@@ -141,6 +140,7 @@ const Images = {
  paymentIcons:require( "../../assets/images/paymentIcons.png"),
  aboutImg1:require( "../../assets/images/about-img1.png"),
  aboutImg2:require( "../../assets/images/about-img2.png"),
+ blogDetail2:require( "../../assets/images/blog-details2.png"),
 
 
 

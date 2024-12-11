@@ -132,7 +132,13 @@ function Header(props) {
               }}
             />
           </Box>
-          <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'flex', xl: 'flex' }, width: '60%' }}>
+          <Box sx={{
+            display: { xs: 'none', sm: 'none', md: 'none', lg: 'flex', xl: 'flex' },
+            width: '60%',
+            alignItems: { xl: 'center' }, 
+            justifyContent: { xl: 'center' },
+
+          }}>
             {navigationNested.map((item, i) => (
               <>
                 {!item?.children ? <Button
@@ -177,7 +183,7 @@ function Header(props) {
                         onClick={() => {
                           if (item.path) {
                             navigate(item.path);
-                          } 
+                          }
                         }}
                       >
                         {item.name}
@@ -188,11 +194,11 @@ function Header(props) {
             ))}
           </Box>
           <Box sx={{ width: '20%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-            {true && <Box component={'img'} src={Images.cartIcon} width={'30px'} onClick={()=> navigate('/cart')}></Box>} &nbsp;&nbsp;
+            {true && <Box component={'img'} src={Images.cartIcon} width={'30px'} onClick={() => navigate('/cart')}></Box>} &nbsp;&nbsp;
             {!user && !loginUser ?
               <>
 
-               &nbsp; <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid #FF9D04', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>&nbsp;&nbsp;&nbsp;</> : <Box sx={{ display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>
+                &nbsp; <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid #FF9D04', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>&nbsp;&nbsp;&nbsp;</> : <Box sx={{ display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>
 
                 <Button
                   id="basic-button"
@@ -256,7 +262,7 @@ function Header(props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            
+
             display: { xs: 'block', sm: 'block', md: 'block', lg: 'block', xl: "none" },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', background: Colors.primaryGradient },
           }}
@@ -264,7 +270,7 @@ function Header(props) {
           <Box sx={{ textAlign: 'center' }}>
             <Box
               component={"div"}
-              sx={{ p: 2 ,width:'300px',}}
+              sx={{ p: 2, width: '300px', }}
             >
               <CardMedia
                 component={"img"}
