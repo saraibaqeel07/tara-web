@@ -139,6 +139,8 @@ const Images = {
  cuttingPapers:require( "../../assets/images/cutting-papers.png"),
  pinkArrow:require( "../../assets/images/pink-arrow.png"),
  paymentIcons:require( "../../assets/images/paymentIcons.png"),
+ aboutImg1:require( "../../assets/images/about-img1.png"),
+ aboutImg2:require( "../../assets/images/about-img2.png"),
 
 
 
