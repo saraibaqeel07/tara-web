@@ -623,9 +623,7 @@ function Contact() {
                 zIndex: 0,
                 display: "block",
                 width: "60px",
-                '@media (min-width: 1536px)and (max-width:2150px)': {
-                  right:150
-              },
+               
               }}
               component={'img'}
               src={Images.rainbow}

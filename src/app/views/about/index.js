@@ -920,19 +920,19 @@ function About() {
         <Grid
           container
           sx={{
-            backgroundColor: "#CA6680",
-
+            backgroundImage: `url(${Images.introBg})`, // Replace with the actual image path or import
+            backgroundSize: "cover", // Ensures the image covers the entire container
+            backgroundPosition: "center", // Centers the image
+            backgroundRepeat: "no-repeat", // Prevents tiling
             padding: 0,
             margin: 0,
-            position: "relative", // Needed for absolute positioning of child elements
+            position: "relative", // Keeps it ready for absolute positioning of child elements
           }}
         >
           {/* Flex container for image and heading */}
           <Grid
             container
             sx={{
-              backgroundColor: "#CA6680",
-
               position: "relative",
               display: "flex",
               justifyContent: "center", // Centers content horizontally
@@ -1129,6 +1129,9 @@ function About() {
                 backgroundPosition: "center",
                 width: "100%",
                 height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: '1700px' }, // Adjust for small screens
+                '@media (min-width: 1536px)and (max-width:2150px)': {
+                  height:"1350px"
+                },
               }}
             />
           </Grid>
@@ -1137,9 +1140,12 @@ function About() {
         <Grid
           container
           sx={{
-            backgroundColor: "#5B73AD",
+            backgroundImage: `url(${Images.ceoBg})`, // Replace with the actual image path or import
+            backgroundSize: "cover", // Ensures the image covers the entire container
+            backgroundPosition: "center", // Centers the image
+            backgroundRepeat: "no-repeat", // Prevents tilin
             minHeight: "40vh", // Full height for the section
-            padding: "5rem 0 0 0",
+            padding: "30px 0",
             margin: 0,
             display: "flex",
             alignItems: "center", // Vertically centers the content
@@ -1279,7 +1285,10 @@ function About() {
         <Grid
           container
           sx={{
-            backgroundColor: "#CA6680",
+            backgroundImage: `url(${Images.pagesNavBg})`, 
+            backgroundSize: "cover", 
+            backgroundPosition: "center", 
+            backgroundRepeat: "no-repeat", 
             minHeight: "80vh",
             position: "relative",
             display: "flex",
@@ -1454,7 +1463,10 @@ function About() {
         <Grid
           container
           sx={{
-            backgroundColor: "#5B73AD",
+            backgroundImage: `url(${Images.reviewBg})`, 
+            backgroundSize: "cover", 
+            backgroundPosition: "center", 
+            backgroundRepeat: "no-repeat", 
             maxHeight: "1500vh", // Adjusted height
             paddingTop: "20rem",
             margin: 0,

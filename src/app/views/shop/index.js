@@ -1227,7 +1227,10 @@ function Shop() {
             <Box
               component={"section"}
               sx={{
-                backgroundColor: "#CA6680", // Ensures the image covers the entire area
+                backgroundImage: `url(${Images.introBg})`, 
+                backgroundSize: "cover", 
+                backgroundPosition: "center", 
+                backgroundRepeat: "no-repeat", 
 
                 position: "relative",
                 height: "100%",
@@ -1506,7 +1509,10 @@ function Shop() {
                 id="activity-section"
                 sx={{
                   height: "100%",
-                  backgroundColor: "#5B73AD",
+                  backgroundImage: `url(${Images.reviewBg})`, 
+                  backgroundSize: "cover", 
+                  backgroundPosition: "center", 
+                  backgroundRepeat: "no-repeat", 
                   width: "100%",
                   pt: "40px",
                 }}
@@ -1547,8 +1553,7 @@ function Shop() {
             {(activeButton === 1 || activeButton === 4) && (
               <Box
                 sx={{
-                  position: "relative",
-                  backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
+                  position: "relative", 
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
@@ -1570,7 +1575,10 @@ function Shop() {
 
                 <Container
                   sx={{
-                    backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
+                    backgroundImage: activeButton === 4 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
                     height: "100%", // Full height
                     padding: "60px 0", // Padding adjustment
                     width: "100%", // Full width
@@ -1713,7 +1721,10 @@ function Shop() {
                 component={"section"}
                 id="coloring-section"
                 sx={{
-                  backgroundColor: "#CA6680",
+                  backgroundImage:`url(${Images.coloringBg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
                   height: "100%",
                   width: "100%",
                   pt: "40px",
@@ -1764,7 +1775,10 @@ function Shop() {
               >
                 <Container
                   sx={{
-                    backgroundColor: "#CA6680", // Conditional background color
+                    backgroundImage: activeButton === 4 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
                     height: "100%", // Full height
                     padding: "60px 0", // Padding adjustment
                     width: "100%", // Full width
@@ -1930,7 +1944,10 @@ function Shop() {
                 id="extra-section"
                 sx={{
                   height: "100%",
-                  backgroundColor: "#5B73AD", // Customize the background color
+                  backgroundImage:`url(${Images.reviewBg})` ,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
                   width: "100%",
                   pt: "40px",
                 }}
@@ -1981,7 +1998,10 @@ function Shop() {
               >
                 <Container
                   sx={{
-                    backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
+                    backgroundImage: activeButton === 4 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
                     height: "100%", // Full height
                     padding: "60px 0", // Padding adjustment
                     width: "100%", // Full width

@@ -141,7 +141,11 @@ const Images = {
  aboutImg1:require( "../../assets/images/about-img1.png"),
  aboutImg2:require( "../../assets/images/about-img2.png"),
  blogDetail2:require( "../../assets/images/blog-details2.png"),
-
+ introBg:require( "../../assets/images/about-us-intro-bg.png"),
+ ceoBg:require( "../../assets/images/ceobg.png"),
+ pagesNavBg:require( "../../assets/images/navigate-pg-bg.png"),
+ reviewBg:require( "../../assets/images/review-bg.png"),
+coloringBg:require("../../assets/images/coloring-bg.png")
 
 
 
