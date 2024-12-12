@@ -1092,7 +1092,7 @@ function About() {
                   className="para-text"
                   sx={{
                     paddingBottom: 2,
-                    fontSize: { sm: "18px", xs: "16px", xl: "30px" },
+                    fontSize: { sm: "18px", xs: "16px", xl: "35px" },
                   }}
                 >
                   Through each adventure, Tara and Shine explore timeless

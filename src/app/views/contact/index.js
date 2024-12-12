@@ -246,7 +246,10 @@ function Contact() {
           height: "100%",
           py: "40px",
           position: 'relative',
-          pb: { xs: '300px', sm: '500px', md: '700px', lg: '800px', xl: '800px' },
+          pb: { xs: '300px', sm: '500px', md: '700px', lg: '850px', xl: '2000px' },
+          '@media (min-width: 1536px)and (max-width:2150px)': {
+            pb:"1400px"
+          },
 
 
         }}
@@ -601,33 +604,41 @@ function Contact() {
           </Grid>
           <Grid>
             <Box
-            sx={{
-              position: "absolute",
-              bottom: 700,
-              left: 220,
-              zIndex: 0,
-              display: "block",
-              width:"60px"
-            }}
-            component={'img'}
-            src={Images.hearts}
-          ></Box>
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: 400,
-              right: 210,
-              zIndex: 0,
-              display: "block",
-              width:"60px"
-            }}
-            component={'img'}
-            src={Images.rainbow}
-          ></Box>
+              sx={{
+                position: "absolute",
+                bottom: {xl:1200,lg:600,md:400,sm:350,xs:200},
+                left: {lg:220,xl:150, md:100,sm:50,xs:30},
+                zIndex: 0,
+                display: "block",
+                width: "60px"
+              }}
+              component={'img'}
+              src={Images.hearts}
+            ></Box>
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: {lg:400,md:200,xs:100},
+                right: {lg:210,xl:150, md:100,sm:50,xs:30},
+                zIndex: 0,
+                display: "block",
+                width: "60px",
+                '@media (min-width: 1536px)and (max-width:2150px)': {
+                  right:150
+              },
+              }}
+              component={'img'}
+              src={Images.rainbow}
+            ></Box>
           </Grid>
           <Grid container justifyContent={'center'} >
-          
-            <Box sx={{ backgroundImage: `url(${Images.contactBrothers})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', position: 'absolute', bottom: 0, height: { xs: "300px", sm: "500px", md: "700px" }, width: '80%' }}>
+
+            <Box sx={{
+              backgroundImage: `url(${Images.contactBrothers})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', position: 'absolute', bottom: 0, height: { xs: "300px", sm: "500px", md: "760px", xl: "2000px" }, width: { xs: '80%', xl: "100%" },
+              '@media (min-width: 1536px)and (max-width:2150px)': {
+                height:"1350px"
+              },
+            }}>
 
             </Box>
           </Grid>
