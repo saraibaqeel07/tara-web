@@ -884,7 +884,10 @@ function FAQ() {
         <Grid
           container
           sx={{
-            backgroundColor: "#5B73AD",
+            backgroundImage: `url(${Images.reviewBg})`, 
+            backgroundSize: "cover", 
+            backgroundPosition: "center", 
+            backgroundRepeat: "no-repeat", 
             maxHeight: "1500vh", // Adjusted height
             paddingTop: "80px",
             margin: 0,
@@ -985,6 +988,9 @@ function FAQ() {
             320: { slidesPerView: 1 },
             786: { slidesPerView: 2 },
             1080: { slidesPerView: 3 },
+            1550: { slidesPerView: 4 },
+            2000: { slidesPerView: 5 },
+            2550: { slidesPerView: 6 },
           }}
           pagination={{
             clickable: true,
@@ -1100,16 +1106,29 @@ function FAQ() {
 
 
 
-          <Grid container sx={{
-            backgroundImage: `url(${Images.reviewSection})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: {
-              xs: '300px',  // Smallest screens
-              sm: '400px',  // Small screens
-              md: '500px',  // Medium screens
-              lg: '700px',  // Large screens
-            }, mt: '20px'
-          }}>
-
-          </Grid>
+    <Grid
+            container
+            sx={{
+              backgroundImage: `url(${Images.reviewSection})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              height: {
+                xs: "300px", // Smallest screens
+                sm: "430px", // Small screens
+                md: "530px", // Medium screens
+                lg: "700px", // Large screens
+                xl: "1600px"
+              },
+              mt: "40px",
+              "@media (min-width: 2300px) and (max-width: 2700px)": {
+                height:"1400px"
+              },
+              "@media (min-width: 1536px) and (max-width: 2299px)": {
+                height:"1050px"
+              },
+            }}
+          ></Grid>
 
    
 
