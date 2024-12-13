@@ -241,7 +241,10 @@ function Contact() {
       <Box
         component={"section"}
         sx={{
-          background: '#CA6680',
+          backgroundImage: `url(${Images.introBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           width: "100%",
           height: "100%",
           py: "40px",

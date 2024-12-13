@@ -28,6 +28,7 @@ function Footer() {
       backgroundRepeat: "no-repeat",
       p: 4,
       zIndex:5
+      
     }}
   >
     <Grid

@@ -401,7 +401,7 @@ const Blog = () => {
       
           {/* Fourth image */}
           <Box sx={{ width: "100%", height: "auto" }}>
-            <img src={Images.character15} alt="Image 4" style={{ width: "100%", height: "auto" }} />
+            <img src={Images.blog4} alt="Image 4" style={{ width: "100%", height: "auto" }} />
           </Box>
       
           {/* Last image */}

@@ -708,7 +708,10 @@ function Character() {
       <Box
         component={"section"}
         sx={{
-          backgroundColor: "#5B73AD",
+          backgroundImage: `url(${Images.reviewBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           width: "100%",
           p: "60px",
           position: "relative"

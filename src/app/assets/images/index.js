@@ -12,7 +12,6 @@ const Images = {
   pic10: require("./WhatsApp Image 2024-07-24 at 1.13.36 AM.jpeg"),
   contactCharacter: require("./characterContact.png"),
   mainCharacter: require("./main-character.png"),
-  footerBg: require("./footer.png"),
   bannerBg: require("./bannerBg.png"),
   aboutImage: require("./about-us.png"),
   shineStar: require("./shine-03 (1) 3.png"),
@@ -145,7 +144,9 @@ const Images = {
  ceoBg:require( "../../assets/images/ceobg.png"),
  pagesNavBg:require( "../../assets/images/navigate-pg-bg.png"),
  reviewBg:require( "../../assets/images/review-bg.png"),
-coloringBg:require("../../assets/images/coloring-bg.png")
+coloringBg:require("../../assets/images/coloring-bg.png"),
+footerBg:require("../../assets/images/footer-bg.png"),
+blog4:require("../../assets/images/blog4.png"),
 
 
 

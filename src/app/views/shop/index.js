@@ -1227,10 +1227,10 @@ function Shop() {
             <Box
               component={"section"}
               sx={{
-                backgroundImage: `url(${Images.introBg})`, 
-                backgroundSize: "cover", 
-                backgroundPosition: "center", 
-                backgroundRepeat: "no-repeat", 
+                backgroundImage: `url(${Images.introBg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
 
                 position: "relative",
                 height: "100%",
@@ -1366,7 +1366,7 @@ function Shop() {
                       sx={{
                         position: "absolute",
                         bottom: "400px", // Adjusted to move the image slightly higher
-                        right: { md: 10, lg: 20 },
+                        right: { xl: 200, md: 10, lg: 20 },
                         width: { lg: "100px", md: "70px" },
                         zIndex: 2,
                         display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
@@ -1509,10 +1509,10 @@ function Shop() {
                 id="activity-section"
                 sx={{
                   height: "100%",
-                  backgroundImage: `url(${Images.reviewBg})`, 
-                  backgroundSize: "cover", 
-                  backgroundPosition: "center", 
-                  backgroundRepeat: "no-repeat", 
+                  backgroundImage: `url(${Images.reviewBg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
                   width: "100%",
                   pt: "40px",
                 }}
@@ -1553,10 +1553,14 @@ function Shop() {
             {(activeButton === 1 || activeButton === 4) && (
               <Box
                 sx={{
-                  position: "relative", 
+                  position: "relative",
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
+                  backgroundImage: activeButton === 4 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
                 }}
               >
                 <Box
@@ -1566,7 +1570,7 @@ function Shop() {
                   sx={{
                     position: "absolute",
                     top: "1000px", // Adjusted to move the image slightly higher
-                    right: { md: 10, lg: 20 },
+                    right: {xl:200, md: 10, lg: 20 },
                     width: { lg: "100px", md: "70px" },
                     zIndex: 2,
                     display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
@@ -1721,7 +1725,7 @@ function Shop() {
                 component={"section"}
                 id="coloring-section"
                 sx={{
-                  backgroundImage:`url(${Images.coloringBg})`,
+                  backgroundImage: `url(${Images.coloringBg})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -1770,7 +1774,10 @@ function Shop() {
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundColor: "#CA6680", // Conditional background color
+                  backgroundImage: activeButton === 4 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
                 }}
               >
                 <Container
@@ -1792,7 +1799,7 @@ function Shop() {
                     sx={{
                       position: "absolute",
                       top: "400px", // Adjusted to move the image slightly higher
-                      left: "1px",
+                      left: { xs: "1px", xl: 200 },
                       width: "100px",
                       zIndex: 2,
                       display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
@@ -1805,7 +1812,7 @@ function Shop() {
                     sx={{
                       position: "absolute",
                       top: "800px", // Adjusted to move the image slightly higher
-                      right: { md: 10 },
+                      right: {xl:200, md: 10 },
                       width: { lg: "100px", md: "70px" },
                       zIndex: 2,
                       display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
@@ -1944,7 +1951,7 @@ function Shop() {
                 id="extra-section"
                 sx={{
                   height: "100%",
-                  backgroundImage:`url(${Images.reviewBg})` ,
+                  backgroundImage: `url(${Images.reviewBg})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -1993,7 +2000,10 @@ function Shop() {
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundColor: activeButton === 4 ? "#5B73AD" : "#CA6680", // Conditional background color
+                  backgroundImage: activeButton === 4 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
                 }}
               >
                 <Container
@@ -2014,7 +2024,7 @@ function Shop() {
                     sx={{
                       position: "absolute",
                       top: "10px", // Adjusted to move the image slightly higher
-                      left: { md: "30px", lg: "60px" },
+                      left: { xl:200 ,md: "30px", lg: "60px" },
                       width: { md: "60px", lg: "100px" },
                       zIndex: 2,
                       display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
@@ -2027,7 +2037,7 @@ function Shop() {
                     sx={{
                       position: "absolute",
                       top: "1000px", // Adjusted to move the image slightly higher
-                      right: { md: 10, lg: 20 },
+                      right: {xl:200, md: 10, lg: 20 },
                       width: { lg: "100px", md: "70px" },
                       zIndex: 2,
                       display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
@@ -2166,7 +2176,7 @@ function Shop() {
               component={"section"}
               sx={{
                 position: "relative",
-                backgroundColor: activeButton === 4 ?"#FF9D04":"#5B73AD",
+                backgroundColor: activeButton === 4 ? "#FF9D04" : "#5B73AD",
                 width: "100%",
                 height: { xs: "260px", sm: "250px", md: "500px" },
                 display: "flex",
