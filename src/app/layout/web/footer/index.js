@@ -22,7 +22,7 @@ function Footer() {
     component={'div'}
     className='footer-img'
     sx={{
-      backgroundImage: `url(${footerBackground})`, // Use backticks to interpolate the variable
+      backgroundImage: `url(${Images.footerBg})`, // Use backticks to interpolate the variable
       height: "100%",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",

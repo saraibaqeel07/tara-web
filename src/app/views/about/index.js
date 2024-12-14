@@ -1132,6 +1132,9 @@ function About() {
                 '@media (min-width: 1536px)and (max-width:2150px)': {
                   height:"1350px"
                 },
+                '@media (min-width: 1300px)and (max-width:1535px)': {
+                  height:"980px"
+                },
               }}
             />
           </Grid>
