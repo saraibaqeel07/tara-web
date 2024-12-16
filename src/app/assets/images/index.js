@@ -140,6 +140,8 @@ const Images = {
  aboutImg1:require( "../../assets/images/about-img1.png"),
  aboutImg2:require( "../../assets/images/about-img2.png"),
  blogDetail2:require( "../../assets/images/blog-details2.png"),
+ blogDetail3:require( "../../assets/images/blog-detail3.png"),
+ blogDetail4:require( "../../assets/images/blog-detail4.png"),
  introBg:require( "../../assets/images/about-us-intro-bg.png"),
  ceoBg:require( "../../assets/images/ceobg.png"),
  pagesNavBg:require( "../../assets/images/navigate-pg-bg.png"),
@@ -147,6 +149,13 @@ const Images = {
 coloringBg:require("../../assets/images/coloring-bg.png"),
 footerBg:require("../../assets/images/footer-bg.png"),
 blog4:require("../../assets/images/blog4.png"),
+AllahMiracle:require("../../assets/images/Allah-miracle.png"),
+islamTeaches:require("../../assets/images/islam-teaches.png"),
+canopyIslam:require("../../assets/images/canopy-islam.png"),
+msgPic:require("../../assets/images/msg-pic.png"),
+
+
+
 
 
 

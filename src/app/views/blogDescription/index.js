@@ -101,7 +101,7 @@ const BlogDetail = () => {
                 </Box>
             </Grid>
 
-            <Grid container sx={{ justifyContent: { md: "flex-start", xs: "center" }, alignItems: "flex-start", py: 20 }}  >
+            <Grid container sx={{ justifyContent: { md: "flex-start", xs: "center" }, alignItems: "flex-start", py: 20 ,px:5}}  >
                 <Grid item md={9} sm={11} xs={11}>
                     <Grid
                         container

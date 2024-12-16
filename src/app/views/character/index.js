@@ -90,33 +90,57 @@ function Character() {
     { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
     { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
     { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
     { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
     { name: "SHINE", comment: "Guides Tara towards good deed." },
+    { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
+    { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
     { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-
-
-
+    { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
+    { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
+    { name: "SHINE", comment: "Guides Tara towards good deed." }, 
+    
   ]
+  
+  const images = [
+    { id: 0, src: Images.character14, message: "A boy solving puzzles to enhance his skills" },
+    { id: 1, src: Images.blog4, message: "Peering into the world of endless possibilities!" },
+    { id: 2, src: Images.character16, message: "Every star holds a wish waiting to come true."},
+  ];
+  
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageIndex, setMessageIndex] = useState(null);
 
+  // Number of images to display at a time
+  const visibleImages = 3;
 
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  const getVisibleImages = () => {
+    const result = [];
+    for (let i = 0; i < visibleImages; i++) {
+      result.push(images[(currentIndex + i) % images.length]);
+    }
+    return result;
+  };
+  
+
+  const currentImages = getVisibleImages();
+
+  const handleAddClick = (id) => {
+    setMessageIndex(id);
+    setShowMessage(true);
+  };
+  
 
   const handleIncrement = (id) => {
     const updatedData = cartItems.map((item) =>
@@ -478,7 +502,7 @@ function Character() {
         {/* Right-side Image */}
         <Box
           sx={{
-            margin: {sm:"20px auto 0 auto",xs:"50px auto 0 auto"},
+            margin: { sm: "20px auto 0 auto", xs: "50px auto 0 auto" },
             width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
             height: "100%", // Full height of the parent container
             backgroundImage: `url(${Images.mainCharacter})`,
@@ -687,20 +711,162 @@ function Character() {
 
 
 
+        <Box
+  sx={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+    width: "100%",
+    height: "auto",
+    overflow: "hidden",
+  }}
+  onClick={() => setShowMessage(false)} // Close message when clicking anywhere on the screen
+>
+  {/* Left Arrow */}
+  <Box
+    component="button"
+    onClick={handlePrev}
+    sx={{
+      position: "absolute",
+      left: "10px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      background: "transparent",
+      border: "none",
+      cursor: "pointer",
+      zIndex: 2,
+       width: {md:"60px", xl:"80px"},
+       height: {md:"40px", xl:"60px"} 
+    }}
+  >
+    <img
+      src={Images.backwardArrow}
+      alt="Previous"
+      
+    />
+  </Box>
 
+  {/* Images */}
+  <Box
+    sx={{
+      display: "flex",
+      gap: "10px",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      padding: "10px",
+    }}
+  >
+    {currentImages.map((image, index) => (
+      <Box
+        key={index}
+        sx={{
+          position: "relative",
+          width: { xs: "100px", sm: "150px", md: "300px", lg: "500px", xl: "900px" },
+          height: "auto",
+          flexShrink: 0,
+          "@media (min-width: 1536px) and (max-width: 2000px)": {
+            width: "500px",
+          },
+          "@media (min-width: 1750px) and (max-width: 2270px)": {
+            width: "600px",
+          },
+          "@media (min-width: 2271px) and (max-width: 2500px)": {
+            width: "800px",
+          },
+        }}
+      >
+        {/* Background Image */}
+        <Box
+          component="img"
+          src={image.src}
+          alt={`Image ${image.id}`}
+          sx={{
+            width: "100%",
+            height: "auto",
+            borderRadius: "8px",
+          }}
+        />
 
-
-        <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", padding: "10px", alignItems: "center" }}>
-          <Box sx={{ width: "100%", height: "auto" }}>
-            <img src={Images.character14} alt="Image 1" style={{ width: "100%", height: "auto" }} />
-          </Box>
-          <Box sx={{ width: "100%", height: "auto" }}>
-            <img src={Images.character15} alt="Image 2" style={{ width: "100%", height: "auto" }} />
-          </Box>
-          <Box sx={{ width: "100%", height: "auto" }}>
-            <img src={Images.character16} alt="Image 3" style={{ width: "100%", height: "auto" }} />
-          </Box>
+        {/* Message and Icon */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: "calc(45% - 20px)", // Center the icon vertically
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClick={(e) => e.stopPropagation()} // Prevent the parent click handler from firing
+        >
+          {/* Add Icon */}
+          <Box
+            component="img"
+            src={Images.msgPic}
+            alt="Add"
+            onClick={() => handleAddClick(image.id)}
+            sx={{
+              position: "relative",
+              width: { xs: "30px", md: "40px", xl: "75px" },
+              height: { xs: "30px", md: "40px", xl: "75px" },
+              cursor: "pointer",
+              borderRadius: "50%",
+              padding: "5px",
+              marginBottom: "10px",
+            }}
+          />
+          {/* Message */}
+          {showMessage && messageIndex === image.id && (
+            <Typography
+              sx={{
+                backgroundColor: "#5B73AD",
+                color: "white",
+                padding: "10px",
+                borderRadius: "5px",
+                fontSize: { xl: "26px", md: "14px", xs: "12px" },
+                textAlign: "center",
+                position: "relative", // Ensures the message stays at its original position
+                top: 0, // Adjust the message position relative to the icon
+              }}
+            >
+              {image.message}
+            </Typography>
+          )}
         </Box>
+      </Box>
+    ))}
+  </Box>
+
+  {/* Right Arrow */}
+  <Box
+    component="button"
+    onClick={handleNext}
+    sx={{
+      position: "absolute",
+      right: "20px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      background: "transparent",
+      border: "none",
+      cursor: "pointer",
+      zIndex: 2,
+      width: {md:"60px", xl:"80px"},
+      height: {md:"40px", xl:"60px"} 
+    }}
+  >
+    <img
+      src={Images.forwardArrow}
+      alt="Next"
+   
+    />
+  </Box>
+</Box>
+
+
 
 
       </Box>
@@ -804,9 +970,9 @@ function Character() {
             <Grid container spacing={4} justifyContent={"space-between"}>
               {teamData.map((item, i) => (
                 <Grid key={i} item md={6} sm={12} xs={12}
-                sx={{
-                  height:{xl:"100%"}
-                }}
+                  sx={{
+                    height: { xl: "100%" }
+                  }}
                 >
                   <Box
                     sx={{
@@ -819,7 +985,7 @@ function Character() {
                       src={item.image}
                       sx={{
                         width: "100%",
-                        height: {md:"350px",xl:"950px"},
+                        height: { md: "350px", xl: "950px" },
                         objectFit: "cover",
                         objectPosition: "top",
                       }}
