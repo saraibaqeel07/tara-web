@@ -275,7 +275,7 @@ function About() {
         "Tara is 9 years old. She is a shy Muslim girl. Her imaginary best friend is Shine. She is very kind, helpful, and loving. Her special skill is drawing. She gets nervous around a lot of people, but Shine overcomes her weakness.",
       image: Images.Shop,
       logo: Images.logoTara,
-      path: "/shop",
+      path: "/products",
     },
     {
       name: "Shine",
@@ -285,14 +285,14 @@ function About() {
       logo: Images.logoShine,
       path: "/watch",
     },
-    {
-      name: "Ahmed",
-      detail:
-        "Ahmed is Tara’s younger brother; he is 8 years old. Ahmed is very kind and helpful boy. He loves to play video games.",
-      image: Images.portfolio,
-      logo: Images.logoAhmed,
-      path: "/about",
-    },
+    // {
+    //   name: "Ahmed",
+    //   detail:
+    //     "Ahmed is Tara’s younger brother; he is 8 years old. Ahmed is very kind and helpful boy. He loves to play video games.",
+    //   image: Images.portfolio,
+    //   logo: Images.logoAhmed,
+    //   path: "/about",
+    // },
     {
       name: "Laila",
       detail:
@@ -317,21 +317,21 @@ function About() {
       logo: Images.logoLaila,
       path: "/contact-us",
     },
-    {
-      name: "Laila",
-      detail:
-        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
-      image: Images.EventShow,
-      logo: Images.logoLaila,
-      path: "/event-show",
-    },
+    // {
+    //   name: "Laila",
+    //   detail:
+    //     "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+    //   image: Images.EventShow,
+    //   logo: Images.logoLaila,
+    //   path: "/event-show",
+    // },
     {
       name: "Laila",
       detail:
         "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.blog,
       logo: Images.logoLaila,
-      path: "/colorfull-club",
+      path: "/blog",
     },
   ];
 

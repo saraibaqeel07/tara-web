@@ -183,25 +183,22 @@ function Watch() {
       url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
     },
     {
-      image: Images.sliderImage5,
-      title: "Story Of Miraj",
+      image: Images.AllahMiracle,
+      title: "Allah’s miracle",
       url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
     },
     {
-      image: Images.sliderImage5,
-      title: "Story Of Miraj",
+      image: Images.islamTeaches,
+      title: " Islam teaches",
       url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
     },
     {
-      image: Images.sliderImage5,
-      title: "Story Of Miraj",
+      image: Images.canopyIslam,
+      title: " Canopy of Islam",
       url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
     },
-      {
-      image: Images.sliderImage5,
-      title: "Story Of Miraj",
-      url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
-    },
+   
+
   ];
 
   const cardData = [
@@ -894,8 +891,8 @@ function Watch() {
                       p: 3,
                       borderRadius: "20px",
                       cursor: "pointer",
-                      maxHeight: "400px",
-                      maxWidth:"400px",
+                      maxHeight: "700px",
+                      maxWidth:"700px",
                       overflow: "hidden",
                       display: "flex",
                       flexDirection: "column",
@@ -1059,8 +1056,11 @@ function Watch() {
               item
               xs={8} // Full width in extra-small screens
               sm={5} // Adjust width for small screens
-              md={5} // Adjust width for medium screens
-              xl={4}
+              md={5}
+              lg={3} // Adjust width for medium screens
+              xl={2}
+
+              
               sx={{ display: "flex", justifyContent: "center" }}
             >
               <Box
@@ -1081,7 +1081,9 @@ function Watch() {
               xs={8} // Full width in extra-small screens
               sm={5} // Adjust width for small screens
               md={5} // Adjust width for medium screens
-              xl={4}
+              lg={3}
+              xl={2}
+              
 
               sx={{ display: "flex", justifyContent: "center" }}
             >
