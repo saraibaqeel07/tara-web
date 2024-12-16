@@ -1,34 +1,59 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
-import { Box, Button, CardMedia, Container, Grid, Typography, ButtonGroup, TextField, Drawer, Accordion, AccordionSummary, AccordionDetails, Rating } from '@mui/material';
-import Images, { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from '../../assets/images';
-import Colors from '../../styles/colors';
-import Slider from 'react-slick';
+import React, { Fragment, useContext, useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  CardMedia,
+  Container,
+  Grid,
+  Typography,
+  ButtonGroup,
+  TextField,
+  Drawer,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Rating,
+} from "@mui/material";
+import Images, {
+  FacebookRounded,
+  InstagramRounded,
+  TiktokRounded,
+  YoutubeRounded,
+} from "../../assets/images";
+import Colors from "../../styles/colors";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
-import "../../../App.css"
-import Fonts from '../../styles/fonts';
+import "../../../App.css";
+import Fonts from "../../styles/fonts";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
-import ProductModal from '../modal/ProductModal';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Avatar, Divider } from 'antd';
-import CloseIcon from '@mui/icons-material/Close';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Star } from '@mui/icons-material';
-import { SwiperSlide, Swiper } from 'swiper/react';
-import 'swiper/css';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import { CartContext } from '../../Context/CartContext';
-import { CartCounter } from '../../Context/CartCounter';
-
+import {
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+} from "firebase/firestore";
+import ProductModal from "../modal/ProductModal";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Avatar, Divider } from "antd";
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Star } from "@mui/icons-material";
+import { SwiperSlide, Swiper } from "swiper/react";
+import "swiper/css";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { CartContext } from "../../Context/CartContext";
+import { CartCounter } from "../../Context/CartCounter";
 
 // import "slick-carousel/slick/slick-theme.css";
 
-
-
 function Watch() {
-  const { state } = useLocation()
+  const { state } = useLocation();
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
   const [activeIndex, setActiveIndex] = useState(0); // Track the active index
@@ -37,7 +62,7 @@ function Watch() {
   const handleBeforeChange = (current, next) => {
     setActiveIndex(next); // Update active index when the slide changes
   };
-  console.log(cartVisible, 'cartVisible');
+  console.log(cartVisible, "cartVisible");
 
   const firebaseConfig = {
     apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
@@ -46,80 +71,88 @@ function Watch() {
     storageBucket: "shinetara-86ec0.appspot.com",
     messagingSenderId: "182521981077",
     appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
-    measurementId: "G-BHYZDHJCK9"
+    measurementId: "G-BHYZDHJCK9",
   };
-  let productId = ''
+  let productId = "";
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const [selected, setSelected] = useState("episode");
-  const [products, setProducts] = useState([])
-  const [textColor, setTextColor] = useState(Colors.orange)
+  const [products, setProducts] = useState([]);
+  const [textColor, setTextColor] = useState(Colors.orange);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [cardProduct, setCardProduct] = useState({})
-  const [coloringSheets, setColoringSheets] = useState([])
-  const [activitySheets, setActivitySheets] = useState([])
-  const [extraSheets, setExtraSheets] = useState([])
+  const [cardProduct, setCardProduct] = useState({});
+  const [coloringSheets, setColoringSheets] = useState([]);
+  const [activitySheets, setActivitySheets] = useState([]);
+  const [extraSheets, setExtraSheets] = useState([]);
 
   const [open, setOpen] = useState(false);
-  const [cartArray, setCartArray] = useState([])
+  const [cartArray, setCartArray] = useState([]);
   const [cartItems, setCartItems] = useState(products);
-  const [faqData, setFaqData] = useState([])
-  const [totalAmount, setTotalAmount] = useState(0)
-  const [reviewBoxes, setReviewBoxes] = useState([])
+  const [faqData, setFaqData] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [reviewBoxes, setReviewBoxes] = useState([]);
 
   const handleIncrement = (id) => {
-    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item)
+    const updatedData = cartItems.map((item) =>
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+    );
     const totalPrice = updatedData.reduce((total, item) => {
-      return total + (parseFloat(item.price) * item.quantity);
+      return total + parseFloat(item.price) * item.quantity;
     }, 0);
-    setTotalAmount(totalPrice)
+    setTotalAmount(totalPrice);
     setCartItems(updatedData);
-    setCount(updatedData?.length)
-    localStorage.setItem('cartData', JSON.stringify(updatedData))
+    setCount(updatedData?.length);
+    localStorage.setItem("cartData", JSON.stringify(updatedData));
   };
 
   const handleDecrement = (id) => {
-    const updatedData = cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 1 } : item)
+    const updatedData = cartItems.map((item) =>
+      item.id === id
+        ? { ...item, quantity: item.quantity > 0 ? item.quantity - 1 : 1 }
+        : item
+    );
     const totalPrice = updatedData.reduce((total, item) => {
-      return total + (parseFloat(item.price) * item.quantity);
+      return total + parseFloat(item.price) * item.quantity;
     }, 0);
-    setTotalAmount(totalPrice)
+    setTotalAmount(totalPrice);
     setCartItems(updatedData);
-    setCount(updatedData?.length)
-    localStorage.setItem('cartData', JSON.stringify(updatedData))
+    setCount(updatedData?.length);
+    localStorage.setItem("cartData", JSON.stringify(updatedData));
   };
 
   const toggleDrawer = (isOpen) => (event) => {
-    console.log('dasdasas');
+    console.log("dasdasas");
     setOpen(!open);
-    toggleCartVisibility()
+    toggleCartVisibility();
   };
   const getFaqs = async () => {
     const q = query(collection(db, "Faq"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    setFaqData(dataArray)
-
-
-  }
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setFaqData(dataArray);
+  };
   const getReviews = async () => {
     const q = query(collection(db, "reviews"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     console.log(dataArray);
-    setReviewBoxes(dataArray)
-
-  }
+    setReviewBoxes(dataArray);
+  };
   const showModal = (item) => {
     setIsModalOpen(true);
     console.log(item);
-    setCardProduct(item)
-
+    setCardProduct(item);
   };
   const handleOk = () => {
     setIsModalOpen(false);
@@ -130,25 +163,25 @@ function Watch() {
   const buttons = [
     <Button
       key="episode"
-      variant={selected == 'episode' ? "contained" : "outlined"}
+      variant={selected == "episode" ? "contained" : "outlined"}
       sx={{
         // width: { md: "180px", sm: "150px", xs: "100%" },
         width: "100%",
         px: 4,
-        py: 1.5
+        py: 1.5,
       }}
       onClick={() => setSelected("episode")}
     >
       Episodes
     </Button>,
     <Button
-      variant={selected == 'merchandise' ? "contained" : "outlined"}
+      variant={selected == "merchandise" ? "contained" : "outlined"}
       key="merchandise"
       sx={{
         // width: { md: "180px", sm: "150px", xs: "100%" },
         width: "100%",
         px: 4,
-        py: 1.5
+        py: 1.5,
       }}
       onClick={() => setSelected("merchandise")}
     >
@@ -160,118 +193,118 @@ function Watch() {
     {
       image: Images.sliderImage1,
       title: "Jungle Adventure",
-      url: 'https://www.youtube.com/watch?v=JjEc2iIPaYE'
+      url: "https://www.youtube.com/watch?v=JjEc2iIPaYE",
     },
     {
       image: Images.sliderImage2,
       title: "Bugs Adventure",
-      url: 'https://www.youtube.com/watch?v=vbu-5oSw_zU'
+      url: "https://www.youtube.com/watch?v=vbu-5oSw_zU",
     },
     {
       image: Images.sliderImage3,
       title: "Space Adventure",
-      url: 'https://www.youtube.com/watch?v=SCyHeBrBgbI'
+      url: "https://www.youtube.com/watch?v=SCyHeBrBgbI",
     },
     {
       image: Images.sliderImage4,
       title: "Sibling Race",
-      url: 'https://www.youtube.com/watch?v=sG8hhCjMOXo'
+      url: "https://www.youtube.com/watch?v=sG8hhCjMOXo",
     },
     {
       image: Images.sliderImage5,
       title: "Story Of Miraj",
-      url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
+      url: "https://www.youtube.com/watch?v=6a_qlXUkI-Q",
     },
     {
       image: Images.AllahMiracle,
       title: "Allah’s miracle",
-      url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
+      url: "https://www.youtube.com/watch?v=6a_qlXUkI-Q",
     },
     {
       image: Images.islamTeaches,
       title: " Islam teaches",
-      url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
+      url: "https://www.youtube.com/watch?v=6a_qlXUkI-Q",
     },
     {
       image: Images.canopyIslam,
       title: " Canopy of Islam",
-      url: 'https://www.youtube.com/watch?v=6a_qlXUkI-Q'
+      url: "https://www.youtube.com/watch?v=6a_qlXUkI-Q",
     },
-   
-
   ];
 
   const cardData = [
     {
       image: Images.cardImg1,
       title: "Dua Book",
-      price: "$13"
+      price: "$13",
     },
     {
       image: Images.cardImg2,
       title: "Calender",
-      price: "$15"
+      price: "$15",
     },
     {
       image: Images.cardImg3,
       title: "Bookmarks",
-      price: "$9"
+      price: "$9",
     },
     {
       image: Images.cardImg4,
       title: "Worksheet",
-      price: "$30"
+      price: "$30",
     },
     {
       image: Images.cardImg5,
       title: "Puzzle",
-      price: "$1/card"
+      price: "$1/card",
     },
     {
       image: Images.cardImg6,
       title: "Good Deeds",
-      price: "$13"
+      price: "$13",
     },
-  ]
-
-
+  ];
 
   const getProducts = async () => {
     const q = query(collection(db, "products"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
-    console.log('books', sortedData);
+    console.log("books", sortedData);
     // Update state with sorted data
     setProducts(sortedData);
-
-
-  }
+  };
 
   const getActivitySheets = async () => {
     const q = query(collection(db, "activitysheets"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
 
-    setActivitySheets(sortedData)
-
-
-  }
+    setActivitySheets(sortedData);
+  };
 
   const getColoringSheets = async () => {
     const q = query(collection(db, "coloringsheets"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
@@ -279,53 +312,49 @@ function Watch() {
 
     // Update state with sorted data
     setColoringSheets(sortedData);
-
-  }
+  };
 
   const getExtrasheets = async () => {
     const q = query(collection(db, "extra"));
 
     const querySnapshot = await getDocs(q);
-    const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
 
-    setExtraSheets(sortedData)
-
-  }
+    setExtraSheets(sortedData);
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       // Generate a random color
 
-      let element = document.getElementById('follow-text')
-      let element2 = document.getElementById('learn-text')
-      let element3 = document.getElementById('explore-text')
+      let element = document.getElementById("follow-text");
+      let element2 = document.getElementById("learn-text");
+      let element3 = document.getElementById("explore-text");
       if (element) {
-
-        if (element.style.color == 'rgb(254, 157, 4)') {
-          element.style.color = 'white'
-          element2.style.color = Colors.darkblue
-          element3.style.color = 'white'
-        }
-
-        else if (element3.style.color == 'white') {
-          element.style.color = 'white'
-          element2.style.color = 'white'
-          element3.style.color = Colors.pink
-        }
-        else {
-          element.style.color = 'rgb(254, 157, 4)'
-          element2.style.color = 'white'
-          element3.style.color = 'white'
+        if (element.style.color == "rgb(254, 157, 4)") {
+          element.style.color = "white";
+          element2.style.color = Colors.darkblue;
+          element3.style.color = "white";
+        } else if (element3.style.color == "white") {
+          element.style.color = "white";
+          element2.style.color = "white";
+          element3.style.color = Colors.pink;
+        } else {
+          element.style.color = "rgb(254, 157, 4)";
+          element2.style.color = "white";
+          element3.style.color = "white";
         }
       }
     }, 1000); // Change color every 1000ms (1 second)
 
     return () => clearInterval(intervalId);
   }, []);
-
 
   useEffect(() => {
     getProducts();
@@ -336,131 +365,177 @@ function Watch() {
     getFaqs();
 
     if (state?.colorful) {
-      setSelected('merchandise');
+      setSelected("merchandise");
 
       // Delay execution by 2 seconds
       setTimeout(() => {
-
         let element = document.getElementById(state?.section);
-        console.log(element, 'element');
+        console.log(element, "element");
         if (element) {
-          console.log(element, 'eeee');
-          element.scrollIntoView({ behavior: 'smooth' });
+          console.log(element, "eeee");
+          element.scrollIntoView({ behavior: "smooth" });
         }
       }, 2000);
     }
 
-    let cart = localStorage.getItem('cartData')
+    let cart = localStorage.getItem("cartData");
     if (cart) {
-      cart = JSON.parse(cart)
+      cart = JSON.parse(cart);
       if (cart?.length > 0) {
-        setCartItems(cart)
-        setCount(cart.length)
+        setCartItems(cart);
+        setCount(cart.length);
       }
-
     }
   }, []);
 
-
   useEffect(() => {
-
-    setOpen(cartVisible)
-
-
-  }, [cartVisible])
-
+    setOpen(cartVisible);
+  }, [cartVisible]);
 
   return (
-    <>  <div>
-
-      <Drawer
-        anchor="right"
-        open={open}
-        onClose={toggleDrawer(false)}
-      >
-        <Box
-          sx={{ width: 400, padding: 2 }}
-          role="presentation"
-
-        >
-          {console.log(cartItems)}
-          <Box display="flex" flexWrap="wrap">
-
-            {cartItems?.length > 0 ? cartItems?.map((product, index) => (
-              <React.Fragment key={index}>
+    <>
+      {" "}
+      <div>
+        <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+          <Box sx={{ width: 400, padding: 2 }} role="presentation">
+            {console.log(cartItems)}
+            <Box display="flex" flexWrap="wrap">
+              {cartItems?.length > 0 ? (
+                cartItems?.map((product, index) => (
+                  <React.Fragment key={index}>
+                    <Box
+                      onClick={() => {
+                        const updatedData = cartItems.filter(
+                          (item) => product.id != item.id
+                        );
+                        const totalPrice = updatedData.reduce((total, item) => {
+                          return total + parseFloat(item.price) * item.quantity;
+                        }, 0);
+                        setTotalAmount(totalPrice);
+                        setCartItems(updatedData);
+                        setCount(updatedData?.length);
+                        localStorage.setItem(
+                          "cartData",
+                          JSON.stringify(updatedData)
+                        );
+                      }}
+                      sx={{ color: "black", cursor: "pointer" }}
+                    >
+                      <CloseIcon />
+                    </Box>
+                    <Box
+                      sx={{
+                        height: 100,
+                        display: "flex",
+                        padding: 2,
+                        textAlign: "center",
+                      }}
+                    >
+                      <img
+                        src={product.imgUrl}
+                        alt={product.name}
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          objectFit: "cover",
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: "12px",
+                          color: "black",
+                          width: "100px",
+                        }}
+                        variant="h6"
+                      >
+                        {product.name}
+                      </Typography>
+                      <Typography
+                        sx={{ fontSize: "12px", color: "black" }}
+                        variant="body1"
+                      >
+                        ${product.price}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: "12px",
+                          color: "black",
+                          width: "50px",
+                          fontWeight: "bold",
+                        }}
+                        variant="body1"
+                      >
+                        $
+                        {product.quantity
+                          ? product.quantity * product.price
+                          : 1 * product.price}
+                      </Typography>
+                      <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        sx={{ width: "10px" }}
+                        marginTop={1}
+                      >
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => handleDecrement(product.id)}
+                        >
+                          -
+                        </Button>
+                        <Typography
+                          sx={{ fontSize: "12px", color: "black" }}
+                          variant="body1"
+                          marginX={2}
+                        >
+                          {product.quantity ? product.quantity : 1}
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => handleIncrement(product.id)}
+                        >
+                          +
+                        </Button>
+                      </Box>
+                    </Box>
+                    <Divider />
+                  </React.Fragment>
+                ))
+              ) : (
                 <Box
-
-                  onClick={() => {
-                    const updatedData = cartItems.filter(item => product.id != item.id)
-                    const totalPrice = updatedData.reduce((total, item) => {
-                      return total + (parseFloat(item.price) * item.quantity);
-                    }, 0);
-                    setTotalAmount(totalPrice)
-                    setCartItems(updatedData)
-                    setCount(updatedData?.length)
-                    localStorage.setItem('cartData', JSON.stringify(updatedData))
-                  }}
-                  sx={{ color: 'black', cursor: 'pointer' }}
+                  sx={{ color: "black", fontWeight: "bold", margin: "0 auto" }}
                 >
-                  <CloseIcon />
+                  No Items in Cart
                 </Box>
-                <Box
-                  sx={{
-                    height: 100,
-                    display: 'flex',
-                    padding: 2,
-                    textAlign: 'center',
-                  }}
-                >
-
-                  <img
-                    src={product.imgUrl}
-                    alt={product.name}
-                    style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-                  />
-                  <Typography sx={{ fontSize: '12px', color: 'black', width: '100px' }} variant="h6">
-                    {product.name}
-                  </Typography>
-                  <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1">
-                    ${product.price}
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: '12px', color: 'black', width: '50px', fontWeight: 'bold' }}
-                    variant="body1"
-                  >
-                    ${product.quantity ? product.quantity * product.price : 1 * product.price}
-                  </Typography>
-                  <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: '10px' }} marginTop={1}>
-                    <Button variant="contained" color="secondary" onClick={() => handleDecrement(product.id)}>
-                      -
-                    </Button>
-                    <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1" marginX={2}>
-                      {product.quantity ? product.quantity : 1}
-                    </Typography>
-                    <Button variant="contained" color="secondary" onClick={() => handleIncrement(product.id)}>
-                      +
-                    </Button>
-
-                  </Box>
-                </Box>
-                <Divider />
-              </React.Fragment>
-            )) : <Box sx={{ color: 'black', fontWeight: 'bold', margin: '0 auto' }}>No Items in Cart</Box>}
+              )}
+            </Box>
+            <Box
+              sx={{
+                color: "black",
+                fontSize: "27px",
+                textAlign: "center",
+                fontFamily: Fonts.righteous,
+              }}
+            >
+              Sub Total : $ {totalAmount}
+            </Box>
           </Box>
-          <Box sx={{ color: 'black', fontSize: '27px', textAlign: 'center', fontFamily: Fonts.righteous, }}>Sub Total :  $ {totalAmount}</Box>
-        </Box>
-        <Button sx={{ width: '90%', textAlign: 'center', margin: '0 auto' }} variant="contained" color="secondary" onClick={() => navigate(
-          `/order`,
-          { state: cartItems }
-        )}>
-          CheckOut
-        </Button>
-      </Drawer>
-    </div>
+          <Button
+            sx={{ width: "90%", textAlign: "center", margin: "0 auto" }}
+            variant="contained"
+            color="secondary"
+            onClick={() => navigate(`/order`, { state: cartItems })}
+          >
+            CheckOut
+          </Button>
+        </Drawer>
+      </div>
       <Box
         component={"main"}
         sx={{
-          width: "100%"
+          width: "100%",
         }}
       >
         {/* <Box
@@ -643,11 +718,9 @@ function Watch() {
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center", // Ensures the image is aligned at the bottom
-
             }}
           />
         </Box>
-
 
         <Grid
           container
@@ -663,7 +736,6 @@ function Watch() {
             alignItems: "center",
             justifyContent: "center",
             backgroundAttachment: "fixed", // Fix background during scroll
-
           }}
         >
           <Grid
@@ -683,11 +755,9 @@ function Watch() {
                 marginBottom: 0, // Space below heading
               }}
             >
-
               {/* Heading */}
               <Typography
                 variant="h1"
-
                 className="heading-font"
                 sx={{
                   fontSize: {
@@ -701,7 +771,6 @@ function Watch() {
                   color: "#F9BF29",
                   textTransform: "uppercase",
                   position: "relative",
-
                 }}
                 style={{
                   WebkitTextStroke: "1px white",
@@ -709,7 +778,6 @@ function Watch() {
                 }}
               >
                 Youtube
-
               </Typography>
               {/* Right Image */}
               <Box
@@ -721,16 +789,10 @@ function Watch() {
                   height: "auto",
                   position: "absolute",
                   right: { md: 80, xs: 0, sm: 25 },
-
-
-
-
-
                 }}
               />
             </Box>
           </Grid>
-
 
           {selected === "episode" ? (
             <Box
@@ -754,7 +816,7 @@ function Watch() {
                       cursor: "pointer",
                       zIndex: 10,
                     }}
-                    onClick={() => { }}
+                    onClick={() => {}}
                   >
                     <img
                       src={Images.backwardArrow}
@@ -772,7 +834,7 @@ function Watch() {
                       transform: "translateY(-50%)",
                       cursor: "pointer",
                     }}
-                    onClick={() => { }}
+                    onClick={() => {}}
                   >
                     <img
                       src={Images.forwardArrow}
@@ -790,7 +852,7 @@ function Watch() {
                 centerMode={true}
                 responsive={[
                   {
-                    breakpoint: 4000, 
+                    breakpoint: 4000,
                     settings: {
                       slidesToShow: 6,
                       slidesToScroll: 1,
@@ -803,7 +865,7 @@ function Watch() {
                     },
                   },
                   {
-                    breakpoint: 2550, 
+                    breakpoint: 2550,
                     settings: {
                       slidesToShow: 6,
                       slidesToScroll: 1,
@@ -816,7 +878,7 @@ function Watch() {
                     },
                   },
                   {
-                    breakpoint: 1550, 
+                    breakpoint: 1550,
                     settings: {
                       slidesToShow: 5,
                       slidesToScroll: 1,
@@ -829,7 +891,7 @@ function Watch() {
                     },
                   },
                   {
-                    breakpoint: 1025, 
+                    breakpoint: 1025,
                     settings: {
                       slidesToShow: 3,
                       slidesToScroll: 1,
@@ -841,7 +903,7 @@ function Watch() {
                       arrows: true,
                     },
                   },
-            
+
                   {
                     breakpoint: 1024,
                     settings: {
@@ -892,13 +954,12 @@ function Watch() {
                       borderRadius: "20px",
                       cursor: "pointer",
                       maxHeight: "700px",
-                      maxWidth:"700px",
+                      maxWidth: "700px",
                       overflow: "hidden",
                       display: "flex",
                       flexDirection: "column",
                       backgroundColor: "transparent", // Change background color on active slide
                       transition: "background-color 0.3s ease", // Smooth transition for background color
-
                     }}
                     component={"div"}
                     onClick={() => window.open(item?.url, "_blank")}
@@ -917,7 +978,8 @@ function Watch() {
                     />
                     <Box
                       sx={{
-                        backgroundColor: activeIndex === i ? "#FF9D04" : "#5B73AD",
+                        backgroundColor:
+                          activeIndex === i ? "#FF9D04" : "#5B73AD",
                         textAlign: "center",
                         borderBottomLeftRadius: "20px",
                         borderBottomRightRadius: "20px",
@@ -929,7 +991,10 @@ function Watch() {
                         overflow: "hidden",
                       }}
                     >
-                      <Typography className="heading-font" sx={{ color: "#fff" }}>
+                      <Typography
+                        className="heading-font"
+                        sx={{ color: "#fff" }}
+                      >
                         {item.title}
                       </Typography>
                     </Box>
@@ -960,8 +1025,6 @@ function Watch() {
           )}
         </Grid>
 
-
-
         <Grid
           container
           sx={{
@@ -986,7 +1049,6 @@ function Watch() {
             }}
           >
             <Box
-
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -1004,15 +1066,11 @@ function Watch() {
                   height: "auto",
                   position: "absolute",
                   left: { md: 80, xs: 0, sm: 25 },
-
-
-
                 }}
               />
               {/* Heading */}
               <Typography
                 variant="h1"
-
                 className="heading-font"
                 sx={{
                   fontSize: {
@@ -1026,7 +1084,6 @@ function Watch() {
                   color: "#F9BF29",
                   textTransform: "uppercase",
                   position: "relative",
-
                 }}
                 style={{
                   WebkitTextStroke: "1px white",
@@ -1034,10 +1091,8 @@ function Watch() {
                 }}
               >
                 Collaboration
-
               </Typography>
               {/* Right Image */}
-
             </Box>
           </Grid>
           <Grid
@@ -1058,9 +1113,7 @@ function Watch() {
               sm={5} // Adjust width for small screens
               md={5}
               lg={3} // Adjust width for medium screens
-              xl={2}
-
-              
+              xl={3}
               sx={{ display: "flex", justifyContent: "center" }}
             >
               <Box
@@ -1082,9 +1135,6 @@ function Watch() {
               sm={5} // Adjust width for small screens
               md={5} // Adjust width for medium screens
               lg={3}
-              xl={2}
-              
-
               sx={{ display: "flex", justifyContent: "center" }}
             >
               <Box
@@ -1099,10 +1149,8 @@ function Watch() {
               />
             </Grid>
           </Grid>
-
         </Grid>
 
-      
         <Box
           component={"section"}
           sx={{
@@ -1115,7 +1163,6 @@ function Watch() {
             justifyContent: "center",
             overflow: "hidden",
             padding: { xs: "10px", sm: "10px", md: "10px" },
-
           }}
         >
           {/* <Box
@@ -1147,10 +1194,10 @@ function Watch() {
           <Box
             sx={{
               position: "absolute",
-              right: "3%", // Adjust spacing from the right
-              display: "flex", alignItems: "center",
+              display: "flex",
+              alignItems: "center",
               zIndex: 1,
-              right: { xs: "0", xl: 260 },
+              right: { xs: "0", xl: 100 },
 
             }}
           >
@@ -1175,7 +1222,7 @@ function Watch() {
                   position: "relative",
                   textAlign: "center",
                   zIndex: 1,
-                  padding: { sm: "20px 0" }
+                  padding: { sm: "20px 0" },
                 }}
               >
                 <Typography
@@ -1259,9 +1306,8 @@ function Watch() {
               zIndex: 0,
               display: "block",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
-               left:90
+                left: 90,
               },
-
             }}
           >
             <CardMedia
@@ -1280,12 +1326,12 @@ function Watch() {
             sx={{
               position: "absolute",
               bottom: 0,
-              right: { xs: "0", xl: 260 ,md:-50 },
+              right: { xs: "0", xl: 260, md: -50 },
               zIndex: 0,
               display: "block",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
-                right:60
-               },
+                right: 60,
+              },
             }}
           >
             <CardMedia
@@ -1295,16 +1341,10 @@ function Watch() {
                 width: "100%", // Adjust width for smaller screens
                 height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
                 objectFit: "cover",
-                
               }}
             />
           </Box>
         </Box>
-
-
-
-
-
 
         {/* <Box
           component={"section"}
@@ -1597,10 +1637,9 @@ function Watch() {
             ))}
           </Grid>
         </Box> */}
-
       </Box>
     </>
-  )
+  );
 }
 
-export default Watch
+export default Watch;
