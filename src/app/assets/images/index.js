@@ -153,6 +153,12 @@ AllahMiracle:require("../../assets/images/Allah-miracle.png"),
 islamTeaches:require("../../assets/images/islam-teaches.png"),
 canopyIslam:require("../../assets/images/canopy-islam.png"),
 msgPic:require("../../assets/images/msg-pic.png"),
+sara2:require("../../assets/images/sara2.png"),
+laila2:require("../../assets/images/laila2.png"),
+ali2:require("../../assets/images/ali2.png"),
+fatima2:require("../../assets/images/fatima2.png"),
+maya2:require("../../assets/images/maya2.png"),
+taha2:require("../../assets/images/taha2.png"),
 
 
 

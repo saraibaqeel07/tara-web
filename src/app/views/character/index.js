@@ -87,25 +87,30 @@ function Character() {
 
 
   const scrollCharacter = [
+    { name: "Fatima", comment: "loves nature, her pet is her bird." },
+    { name: "Ali", comment: "book worm, loves to read books." },
+    { name: "Laila", comment: "loves to eat  and cooks." },
     { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
     { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
     { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
-    { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
-    { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
-    { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." }, 
+    { name: "Sara", comment: "She is very shy, and best friends with Tara." },
+    { name: "Maya", comment: "4 years old, adventurous and has a kitten name fluffy." },
+    { name: "Taha", comment: "  Loves Science, Scientist." },
     
   ]
   
   const images = [
-    { id: 0, src: Images.character14, message: "A boy solving puzzles to enhance his skills" },
-    { id: 1, src: Images.blog4, message: "Peering into the world of endless possibilities!" },
-    { id: 2, src: Images.character16, message: "Every star holds a wish waiting to come true."},
+    { id: 0, src: Images.fatima2, name: "Fatima", comment: "loves nature, her pet is her bird." },
+    { id: 1, src: Images.ali2, name: "Ali", comment: "book worm, loves to read books."},
+    { id: 2, src: Images.laila2, name: "Laila", comment: "loves to eat  and cooks."},
+    { id: 3, src: Images.character14, name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
+    { id: 4, src: Images.blog4, name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
+    { id: 5, src: Images.character16, name: "SHINE", comment: "Guides Tara towards good deed."  },
+    { id: 6, src: Images.sara2,name: "Sara", comment: "She is very shy, and best friends with Tara." },
+    { id: 7, src: Images.maya2, name: "Maya", comment: "4 years old, adventurous and has a kitten name fluffy." },
+    { id: 8, src: Images.taha2, name: "Taha", comment: "  Loves Science, Scientist." },
+
+
   ];
   
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -624,7 +629,7 @@ function Character() {
                         justifyContent: "center", // Center the image horizontally
                         alignItems: "center", // Center the image vertically
                         height: "auto", // Let the height adjust based on content
-                        maxWidth: "300px"
+                        maxWidth: "250px"
                       }}
                     >
                       {/* Image Positioned Outside of Box */}
@@ -736,14 +741,13 @@ function Character() {
       border: "none",
       cursor: "pointer",
       zIndex: 2,
-       width: {md:"60px", xl:"80px"},
-       height: {md:"40px", xl:"60px"} 
+      width: { md: "60px", xl: "70px" },
+      height: { md: "40px", xl: "50px" },
     }}
   >
     <img
       src={Images.backwardArrow}
       alt="Previous"
-      
     />
   </Box>
 
@@ -758,87 +762,160 @@ function Character() {
       padding: "10px",
     }}
   >
-    {currentImages.map((image, index) => (
-      <Box
-        key={index}
-        sx={{
-          position: "relative",
-          width: { xs: "100px", sm: "150px", md: "300px", lg: "500px", xl: "900px" },
-          height: "auto",
-          flexShrink: 0,
-          "@media (min-width: 1536px) and (max-width: 2000px)": {
-            width: "500px",
-          },
-          "@media (min-width: 1750px) and (max-width: 2270px)": {
-            width: "600px",
-          },
-          "@media (min-width: 2271px) and (max-width: 2500px)": {
-            width: "800px",
-          },
-        }}
-      >
-        {/* Background Image */}
-        <Box
-          component="img"
-          src={image.src}
-          alt={`Image ${image.id}`}
-          sx={{
-            width: "100%",
-            height: "auto",
-            borderRadius: "8px",
-          }}
-        />
+{currentImages.map((image, index) => (
+  <Box
+    key={index}
+    sx={{
+      position: "relative",
+      width: { xs: "100px", sm: "150px", md: "300px", lg: "500px", xl: "900px" },
+      height: "auto",
+      flexShrink: 0,
+    }}
+  >
+    {/* Background Image */}
+    <Box
+      component="img"
+      src={image.src}
+      alt={`Image ${image.id}`}
+      sx={{
+        width: "100%",
+        height: "auto",
+        borderRadius: "8px",
+      }}
+    />
 
-        {/* Message and Icon */}
+    {/* Message and Icon */}
+    <Box
+      sx={{
+        position: "absolute",
+        top: "50%", // Adjusted top position to make message appear at the top
+        left: "50%",
+        transform: "translateX(50%,-50%)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+      }}
+      onClick={(e) => {
+        e.stopPropagation(); // Prevent the parent click handler from firing
+        setShowMessage(!showMessage);
+        setMessageIndex(image.id);
+      }}
+    >
+      {/* Add Icon */}
+      <Box
+        component="img"
+        src={Images.msgPic}
+        alt="Add"
+        sx={{
+          width: { xs: "30px", md: "40px", xl: "75px" },
+          height: { xs: "30px", md: "40px", xl: "75px" },
+          borderRadius: "50%",
+          padding: "5px",
+          marginBottom: "10px",
+        }}
+      />
+
+      {/* Message */}
+      {showMessage && messageIndex === image.id && (
         <Box
           sx={{
             position: "absolute",
-            top: "calc(45% - 20px)", // Center the icon vertically
+            top: "-480%", // Ensures the message card appears at the top of the main background
             left: "50%",
             transform: "translateX(-50%)",
+            padding: "7px",
+            backgroundColor: "orange",
+            borderRadius: "50px 40px 40px 40px",
+            border: "4px solid black",
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
             justifyContent: "center",
+            alignItems: "center",
+            height: "auto",
+            maxWidth: "250px",
+            zIndex: 1, // Ensure the message card appears above the background image
           }}
-          onClick={(e) => e.stopPropagation()} // Prevent the parent click handler from firing
         >
-          {/* Add Icon */}
+          {/* Image Positioned Outside of Box */}
           <Box
             component="img"
-            src={Images.msgPic}
-            alt="Add"
-            onClick={() => handleAddClick(image.id)}
+            src={Images.character13}
+            alt="Corner Decoration"
             sx={{
-              position: "relative",
-              width: { xs: "30px", md: "40px", xl: "75px" },
-              height: { xs: "30px", md: "40px", xl: "75px" },
-              cursor: "pointer",
-              borderRadius: "50%",
-              padding: "5px",
-              marginBottom: "10px",
+              position: "absolute",
+              top: "-36px",
+              left: "-50px",
+              width: "150px",
+              height: "160px",
+              zIndex: 2,
+              objectFit: "cover",
             }}
           />
-          {/* Message */}
-          {showMessage && messageIndex === image.id && (
-            <Typography
+
+          {/* Middle Dashed Border */}
+          <Box
+            sx={{
+              position: "relative",
+              padding: "7px",
+              backgroundColor: "orange",
+              borderRadius: "40px 40px 40px 40px",
+              border: "4px dashed black",
+            }}
+          >
+            {/* Inner Card */}
+            <Box
               sx={{
-                backgroundColor: "#5B73AD",
-                color: "white",
-                padding: "10px",
-                borderRadius: "5px",
-                fontSize: { xl: "26px", md: "14px", xs: "12px" },
-                textAlign: "center",
-                position: "relative", // Ensures the message stays at its original position
-                top: 0, // Adjust the message position relative to the icon
+                py: 1,
+                px: 4,
+                borderRadius: "30px 30px 30px 30px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                backgroundColor: "#6692DC",
+                height: "80px",
+                border: "2px solid #F9BF29",
+                maxWidth: "400px",
               }}
             >
-              {image.message}
-            </Typography>
-          )}
+              <Typography
+                className="heading-font"
+                sx={{
+                  fontWeight: 600,
+                  mb: 0.5,
+                  textAlign: "center",
+                  fontSize: "20px",
+                  color: "transparent",
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
+                }}
+              >
+                {image?.name}
+              </Typography>
+              <Typography
+                className="heading-font"
+                variant={"body2"}
+                sx={{
+                  color: "white",
+                  fontSize: "12px",
+                  textAlign: "center",
+                  width: "100%",
+                  overflow: "hidden",
+                  wordWrap: "break-word",
+                  whiteSpace: "normal",
+                }}
+              >
+                {image.comment}
+              </Typography>
+            </Box>
+          </Box>
         </Box>
-      </Box>
-    ))}
+      )}
+    </Box>
+  </Box>
+))}
+
+
   </Box>
 
   {/* Right Arrow */}
@@ -847,25 +924,23 @@ function Character() {
     onClick={handleNext}
     sx={{
       position: "absolute",
-      right: "20px",
+      right: "55px",
       top: "50%",
       transform: "translateY(-50%)",
       background: "transparent",
       border: "none",
       cursor: "pointer",
       zIndex: 2,
-      width: {md:"60px", xl:"80px"},
-      height: {md:"40px", xl:"60px"} 
+      width: { md: "60px", xl: "70px" },
+      height: { md: "40px", xl: "50px" },
     }}
   >
     <img
       src={Images.forwardArrow}
       alt="Next"
-   
     />
   </Box>
 </Box>
-
 
 
 
