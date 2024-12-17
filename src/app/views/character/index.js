@@ -741,14 +741,13 @@ function Character() {
       border: "none",
       cursor: "pointer",
       zIndex: 2,
-       width: {md:"60px", xl:"70px"},
-       height: {md:"40px", xl:"50px"} 
+      width: { md: "60px", xl: "70px" },
+      height: { md: "40px", xl: "50px" },
     }}
   >
     <img
       src={Images.backwardArrow}
       alt="Previous"
-      
     />
   </Box>
 
@@ -763,178 +762,160 @@ function Character() {
       padding: "10px",
     }}
   >
-    {currentImages.map((image, index) => (
-      <Box
-        key={index}
-        sx={{
-          position: "relative",
-          width: { xs: "100px", sm: "150px", md: "300px", lg: "500px", xl: "900px" },
-          height: "auto",
-          flexShrink: 0,
-          "@media (min-width: 1536px) and (max-width: 2000px)": {
-            width: "500px",
-          },
-          "@media (min-width: 1750px) and (max-width: 2270px)": {
-            width: "600px",
-          },
-          "@media (min-width: 2271px) and (max-width: 2500px)": {
-            width: "800px",
-          },
-        }}
-      >
-        {/* Background Image */}
-        <Box
-          component="img"
-          src={image.src}
-          alt={`Image ${image.id}`}
-          sx={{
-            width: "100%",
-            height: "auto",
-            borderRadius: "8px",
-          }}
-        />
+{currentImages.map((image, index) => (
+  <Box
+    key={index}
+    sx={{
+      position: "relative",
+      width: { xs: "100px", sm: "150px", md: "300px", lg: "500px", xl: "900px" },
+      height: "auto",
+      flexShrink: 0,
+    }}
+  >
+    {/* Background Image */}
+    <Box
+      component="img"
+      src={image.src}
+      alt={`Image ${image.id}`}
+      sx={{
+        width: "100%",
+        height: "auto",
+        borderRadius: "8px",
+      }}
+    />
 
-        {/* Message and Icon */}
+    {/* Message and Icon */}
+    <Box
+      sx={{
+        position: "absolute",
+        top: "50%", // Adjusted top position to make message appear at the top
+        left: "50%",
+        transform: "translateX(50%,-50%)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+      }}
+      onClick={(e) => {
+        e.stopPropagation(); // Prevent the parent click handler from firing
+        setShowMessage(!showMessage);
+        setMessageIndex(image.id);
+      }}
+    >
+      {/* Add Icon */}
+      <Box
+        component="img"
+        src={Images.msgPic}
+        alt="Add"
+        sx={{
+          width: { xs: "30px", md: "40px", xl: "75px" },
+          height: { xs: "30px", md: "40px", xl: "75px" },
+          borderRadius: "50%",
+          padding: "5px",
+          marginBottom: "10px",
+        }}
+      />
+
+      {/* Message */}
+      {showMessage && messageIndex === image.id && (
         <Box
           sx={{
             position: "absolute",
-            top: "calc(45% - 20px)", // Center the icon vertically
+            top: "-480%", // Ensures the message card appears at the top of the main background
             left: "50%",
             transform: "translateX(-50%)",
+            padding: "7px",
+            backgroundColor: "orange",
+            borderRadius: "50px 40px 40px 40px",
+            border: "4px solid black",
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
             justifyContent: "center",
+            alignItems: "center",
+            height: "auto",
+            maxWidth: "250px",
+            zIndex: 1, // Ensure the message card appears above the background image
           }}
-          onClick={(e) => e.stopPropagation()} // Prevent the parent click handler from firing
         >
-          {/* Add Icon */}
+          {/* Image Positioned Outside of Box */}
           <Box
             component="img"
-            src={Images.msgPic}
-            alt="Add"
-            onClick={() => handleAddClick(image.id)}
+            src={Images.character13}
+            alt="Corner Decoration"
             sx={{
-              position: "relative",
-              width: { xs: "30px", md: "40px", xl: "75px" },
-              height: { xs: "30px", md: "40px", xl: "75px" },
-              cursor: "pointer",
-              borderRadius: "50%",
-              padding: "5px",
-              marginBottom: "10px",
+              position: "absolute",
+              top: "-36px",
+              left: "-50px",
+              width: "150px",
+              height: "160px",
+              zIndex: 2,
+              objectFit: "cover",
             }}
           />
-          {/* Message */}
-          {showMessage && messageIndex === image.id && (
-            // <Typography
-            //   sx={{
-            //     backgroundColor: "#5B73AD",
-            //     color: "white",
-            //     padding: "10px",
-            //     borderRadius: "5px",
-            //     fontSize: { xl: "26px", md: "14px", xs: "12px" },
-            //     textAlign: "center",
-            //     position: "relative", // Ensures the message stays at its original position
-            //     top: 0, // Adjust the message position relative to the icon
-            //     zIndex:10
-            //   }}
-            // >
-            //   {image.message}
-            // </Typography>
-            <Box
+
+          {/* Middle Dashed Border */}
+          <Box
             sx={{
-              position: "absolute", // Ensures the image and borders stack properly
-              padding: "7px", // Gap for the outer border
-              backgroundColor: "orange", // Outer yellow background
-              borderRadius: "50px 40px 40px 40px", // Outer border radius
-              border: "4px solid black", // Outer solid border
-              overflow: "visible", // Ensure image is not clipped
-              display: "flex", // Use flexbox to center the content
-              justifyContent: "center", // Center the image horizontally
-              alignItems: "center", // Center the image vertically
-              height: "auto", // Let the height adjust based on content
-              maxWidth: "250px",
+              position: "relative",
+              padding: "7px",
+              backgroundColor: "orange",
+              borderRadius: "40px 40px 40px 40px",
+              border: "4px dashed black",
             }}
           >
-            {/* Image Positioned Outside of Box */}
-            <Box
-              component="img"
-              src={Images.character13} // Replace with your image path
-              alt="Corner Decoration"
-              sx={{
-                position: "absolute", // Absolute positioning for the image
-                top: "-36px", // Adjusted top to ensure image stays within bounds
-                left: "-50px", // Adjust as needed
-                width: "150px", // Adjust image size
-                height: "160px", // Adjust image size
-                zIndex: 10, // Ensure it's above all borders
-                objectFit: "cover", // Ensures the image covers the area and doesn't get clipped
-              }}
-            />
-            {/* Middle Dashed Border */}
+            {/* Inner Card */}
             <Box
               sx={{
-                position: "relative",
-                padding: "7px", // Gap for the middle dashed border
-                backgroundColor: "orange", // Transparent background
-                borderRadius: "40px 40px 40px 40px", // Middle border radius
-                border: "4px dashed black", // Middle dashed border
+                py: 1,
+                px: 4,
+                borderRadius: "30px 30px 30px 30px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                backgroundColor: "#6692DC",
+                height: "80px",
+                border: "2px solid #F9BF29",
+                maxWidth: "400px",
               }}
             >
-              {/* Inner Card */}
-              <Box
+              <Typography
+                className="heading-font"
                 sx={{
-                  py: 1,
-                  px: 4,
-                  borderRadius: "30px 30px 30px 30px", // Inner card border radius
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                  backgroundColor: "#6692DC", // Inner card background
-                  height: "80px", // Fixed height for all cards
-                  border: "2px solid #F9BF29", // Inner solid border
-                  maxWidth: "400px",
-                  // maxHeight:"400px"
-
+                  fontWeight: 600,
+                  mb: 0.5,
+                  textAlign: "center",
+                  fontSize: "20px",
+                  color: "transparent",
+                  WebkitTextStroke: "1px white",
+                  WebkitTextFillColor: "#F9BF29",
                 }}
               >
-                <Typography
-                  className="heading-font"
-                  sx={{
-                    fontWeight: 600,
-                    mb: 0.5, // Adjust spacing between name and comment
-                    textAlign: "center",
-                    fontSize: "20px", // Adjust text size
-                    color: "transparent", // Make text transparent initially
-                    WebkitTextStroke: "1px white", // Outline color
-                    WebkitTextFillColor: "#F9BF29", // Fill color
-                  }}
-                >
-                  {image?.name}
-                </Typography>
-                <Typography
-                  className="heading-font"
-                  variant={"body2"}
-                  sx={{
-                    color: "white",
-                    fontSize: "12px", // Smaller text size
-                    textAlign: "center", // Center-align text
-                    width: "100%", // Ensure it takes full width
-                    overflow: "hidden", // Remove text overflow
-                    wordWrap: "break-word", // Break long words to fit within the box
-                    whiteSpace: "normal", // Allow text to wrap onto the next line
-                  }}
-                >
-                  {image.comment}
-                </Typography>
-
-              </Box>
+                {image?.name}
+              </Typography>
+              <Typography
+                className="heading-font"
+                variant={"body2"}
+                sx={{
+                  color: "white",
+                  fontSize: "12px",
+                  textAlign: "center",
+                  width: "100%",
+                  overflow: "hidden",
+                  wordWrap: "break-word",
+                  whiteSpace: "normal",
+                }}
+              >
+                {image.comment}
+              </Typography>
             </Box>
           </Box>
-          )}
         </Box>
-      </Box>
-    ))}
+      )}
+    </Box>
+  </Box>
+))}
+
+
   </Box>
 
   {/* Right Arrow */}
@@ -950,18 +931,16 @@ function Character() {
       border: "none",
       cursor: "pointer",
       zIndex: 2,
-      width: {md:"60px", xl:"70px"},
-      height: {md:"40px", xl:"50px"}, 
+      width: { md: "60px", xl: "70px" },
+      height: { md: "40px", xl: "50px" },
     }}
   >
     <img
       src={Images.forwardArrow}
       alt="Next"
-   
     />
   </Box>
 </Box>
-
 
 
 
