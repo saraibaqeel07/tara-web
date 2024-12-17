@@ -87,25 +87,30 @@ function Character() {
 
 
   const scrollCharacter = [
+    { name: "Fatima", comment: "loves nature, her pet is her bird." },
+    { name: "Ali", comment: "book worm, loves to read books." },
+    { name: "Laila", comment: "loves to eat  and cooks." },
     { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
     { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
     { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
-    { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
-    { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." },
-    { name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
-    { name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
-    { name: "SHINE", comment: "Guides Tara towards good deed." }, 
+    { name: "Sara", comment: "She is very shy, and best friends with Tara." },
+    { name: "Maya", comment: "4 years old, adventurous and has a kitten name fluffy." },
+    { name: "Taha", comment: "  Loves Science, Scientist." },
     
   ]
   
   const images = [
-    { id: 0, src: Images.character14, message: "A boy solving puzzles to enhance his skills" },
-    { id: 1, src: Images.blog4, message: "Peering into the world of endless possibilities!" },
-    { id: 2, src: Images.character16, message: "Every star holds a wish waiting to come true."},
+    { id: 0, src: Images.fatima2, name: "Fatima", comment: "loves nature, her pet is her bird." },
+    { id: 1, src: Images.ali2, name: "Ali", comment: "book worm, loves to read books."},
+    { id: 2, src: Images.laila2, name: "Laila", comment: "loves to eat  and cooks."},
+    { id: 3, src: Images.character14, name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
+    { id: 4, src: Images.blog4, name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
+    { id: 5, src: Images.character16, name: "SHINE", comment: "Guides Tara towards good deed."  },
+    { id: 6, src: Images.sara2,name: "Sara", comment: "She is very shy, and best friends with Tara." },
+    { id: 7, src: Images.maya2, name: "Maya", comment: "4 years old, adventurous and has a kitten name fluffy." },
+    { id: 8, src: Images.taha2, name: "Taha", comment: "  Loves Science, Scientist." },
+
+
   ];
   
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -624,7 +629,7 @@ function Character() {
                         justifyContent: "center", // Center the image horizontally
                         alignItems: "center", // Center the image vertically
                         height: "auto", // Let the height adjust based on content
-                        maxWidth: "300px"
+                        maxWidth: "250px"
                       }}
                     >
                       {/* Image Positioned Outside of Box */}
@@ -736,8 +741,8 @@ function Character() {
       border: "none",
       cursor: "pointer",
       zIndex: 2,
-       width: {md:"60px", xl:"80px"},
-       height: {md:"40px", xl:"60px"} 
+       width: {md:"60px", xl:"70px"},
+       height: {md:"40px", xl:"50px"} 
     }}
   >
     <img
@@ -821,20 +826,111 @@ function Character() {
           />
           {/* Message */}
           {showMessage && messageIndex === image.id && (
-            <Typography
+            // <Typography
+            //   sx={{
+            //     backgroundColor: "#5B73AD",
+            //     color: "white",
+            //     padding: "10px",
+            //     borderRadius: "5px",
+            //     fontSize: { xl: "26px", md: "14px", xs: "12px" },
+            //     textAlign: "center",
+            //     position: "relative", // Ensures the message stays at its original position
+            //     top: 0, // Adjust the message position relative to the icon
+            //     zIndex:10
+            //   }}
+            // >
+            //   {image.message}
+            // </Typography>
+            <Box
+            sx={{
+              position: "absolute", // Ensures the image and borders stack properly
+              padding: "7px", // Gap for the outer border
+              backgroundColor: "orange", // Outer yellow background
+              borderRadius: "50px 40px 40px 40px", // Outer border radius
+              border: "4px solid black", // Outer solid border
+              overflow: "visible", // Ensure image is not clipped
+              display: "flex", // Use flexbox to center the content
+              justifyContent: "center", // Center the image horizontally
+              alignItems: "center", // Center the image vertically
+              height: "auto", // Let the height adjust based on content
+              maxWidth: "250px",top:0
+            }}
+          >
+            {/* Image Positioned Outside of Box */}
+            <Box
+              component="img"
+              src={Images.character13} // Replace with your image path
+              alt="Corner Decoration"
               sx={{
-                backgroundColor: "#5B73AD",
-                color: "white",
-                padding: "10px",
-                borderRadius: "5px",
-                fontSize: { xl: "26px", md: "14px", xs: "12px" },
-                textAlign: "center",
-                position: "relative", // Ensures the message stays at its original position
-                top: 0, // Adjust the message position relative to the icon
+                position: "absolute", // Absolute positioning for the image
+                top: "-36px", // Adjusted top to ensure image stays within bounds
+                left: "-50px", // Adjust as needed
+                width: "150px", // Adjust image size
+                height: "160px", // Adjust image size
+                zIndex: 10, // Ensure it's above all borders
+                objectFit: "cover", // Ensures the image covers the area and doesn't get clipped
+              }}
+            />
+            {/* Middle Dashed Border */}
+            <Box
+              sx={{
+                position: "relative",
+                padding: "7px", // Gap for the middle dashed border
+                backgroundColor: "orange", // Transparent background
+                borderRadius: "40px 40px 40px 40px", // Middle border radius
+                border: "4px dashed black", // Middle dashed border
               }}
             >
-              {image.message}
-            </Typography>
+              {/* Inner Card */}
+              <Box
+                sx={{
+                  py: 1,
+                  px: 4,
+                  borderRadius: "30px 30px 30px 30px", // Inner card border radius
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                  backgroundColor: "#6692DC", // Inner card background
+                  height: "80px", // Fixed height for all cards
+                  border: "2px solid #F9BF29", // Inner solid border
+                  maxWidth: "400px",
+                  // maxHeight:"400px"
+
+                }}
+              >
+                <Typography
+                  className="heading-font"
+                  sx={{
+                    fontWeight: 600,
+                    mb: 0.5, // Adjust spacing between name and comment
+                    textAlign: "center",
+                    fontSize: "20px", // Adjust text size
+                    color: "transparent", // Make text transparent initially
+                    WebkitTextStroke: "1px white", // Outline color
+                    WebkitTextFillColor: "#F9BF29", // Fill color
+                  }}
+                >
+                  {image?.name}
+                </Typography>
+                <Typography
+                  className="heading-font"
+                  variant={"body2"}
+                  sx={{
+                    color: "white",
+                    fontSize: "12px", // Smaller text size
+                    textAlign: "center", // Center-align text
+                    width: "100%", // Ensure it takes full width
+                    overflow: "hidden", // Remove text overflow
+                    wordWrap: "break-word", // Break long words to fit within the box
+                    whiteSpace: "normal", // Allow text to wrap onto the next line
+                  }}
+                >
+                  {image.comment}
+                </Typography>
+
+              </Box>
+            </Box>
+          </Box>
           )}
         </Box>
       </Box>
@@ -847,15 +943,15 @@ function Character() {
     onClick={handleNext}
     sx={{
       position: "absolute",
-      right: "20px",
+      right: "55px",
       top: "50%",
       transform: "translateY(-50%)",
       background: "transparent",
       border: "none",
       cursor: "pointer",
       zIndex: 2,
-      width: {md:"60px", xl:"80px"},
-      height: {md:"40px", xl:"60px"} 
+      width: {md:"60px", xl:"70px"},
+      height: {md:"40px", xl:"50px"}, 
     }}
   >
     <img

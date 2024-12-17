@@ -730,7 +730,7 @@ function Watch() {
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             minHeight: "40vh",
-            padding: { md: "5rem 0", sm: "1rem 0" },
+            padding: "5rem 0",
             margin: 0,
             display: "flex",
             alignItems: "center",
@@ -816,7 +816,7 @@ function Watch() {
                       cursor: "pointer",
                       zIndex: 10,
                     }}
-                    onClick={() => {}}
+                    onClick={() => { }}
                   >
                     <img
                       src={Images.backwardArrow}
@@ -834,7 +834,7 @@ function Watch() {
                       transform: "translateY(-50%)",
                       cursor: "pointer",
                     }}
-                    onClick={() => {}}
+                    onClick={() => { }}
                   >
                     <img
                       src={Images.forwardArrow}
@@ -854,7 +854,7 @@ function Watch() {
                   {
                     breakpoint: 4000,
                     settings: {
-                      slidesToShow: 6,
+                      slidesToShow: 5,
                       slidesToScroll: 1,
                       infinite: true,
                       dots: false,
@@ -867,7 +867,7 @@ function Watch() {
                   {
                     breakpoint: 2550,
                     settings: {
-                      slidesToShow: 6,
+                      slidesToShow: 5,
                       slidesToScroll: 1,
                       infinite: true,
                       dots: false,
@@ -880,7 +880,7 @@ function Watch() {
                   {
                     breakpoint: 1550,
                     settings: {
-                      slidesToShow: 5,
+                      slidesToShow: 4,
                       slidesToScroll: 1,
                       infinite: true,
                       dots: false,
@@ -954,12 +954,13 @@ function Watch() {
                       borderRadius: "20px",
                       cursor: "pointer",
                       maxHeight: "700px",
-                      maxWidth: "700px",
                       overflow: "hidden",
                       display: "flex",
                       flexDirection: "column",
                       backgroundColor: "transparent", // Change background color on active slide
                       transition: "background-color 0.3s ease", // Smooth transition for background color
+                      maxWidth: { xs: "90%", sm: "500px", md: "600px", xl: "800px" }, // Adjust widths for responsive breakpoints
+                      mx: "auto", // Center cards horizontally
                     }}
                     component={"div"}
                     onClick={() => window.open(item?.url, "_blank")}
@@ -973,13 +974,12 @@ function Watch() {
                         objectFit: { xl: "contain" },
                         borderTopLeftRadius: "20px",
                         borderTopRightRadius: "20px",
-                        maxHeight: "250px",
+                        maxWidth: { xs: "90%", sm: "500px", md: "600px", xl: "800px" }, // Adjust widths for responsive breakpoints
                       }}
                     />
                     <Box
                       sx={{
-                        backgroundColor:
-                          activeIndex === i ? "#FF9D04" : "#5B73AD",
+                        backgroundColor: activeIndex === i ? "#FF9D04" : "#5B73AD",
                         textAlign: "center",
                         borderBottomLeftRadius: "20px",
                         borderBottomRightRadius: "20px",
@@ -991,15 +991,13 @@ function Watch() {
                         overflow: "hidden",
                       }}
                     >
-                      <Typography
-                        className="heading-font"
-                        sx={{ color: "#fff" }}
-                      >
+                      <Typography className="heading-font" sx={{ color: "#fff" ,fontSize:{xl:"20px"} }}>
                         {item.title}
                       </Typography>
                     </Box>
                   </Box>
                 ))}
+
               </Slider>
             </Box>
           ) : (
@@ -1033,7 +1031,7 @@ function Watch() {
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             minHeight: "40vh",
-            padding: { md: "5rem 0", sm: "1rem 0" },
+            padding: "5rem 0",
             margin: 0,
             display: "flex",
             alignItems: "center",
@@ -1054,7 +1052,7 @@ function Watch() {
                 alignItems: "center",
                 justifyContent: "center", // Center heading with images
                 gap: 2, // Space between images and heading
-                marginBottom: 0, // Space below heading
+                marginBottom: 7, // Space below heading
               }}
             >
               <Box
