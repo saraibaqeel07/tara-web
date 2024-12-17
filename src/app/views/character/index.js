@@ -853,7 +853,7 @@ function Character() {
               justifyContent: "center", // Center the image horizontally
               alignItems: "center", // Center the image vertically
               height: "auto", // Let the height adjust based on content
-              maxWidth: "250px",top:0
+              maxWidth: "250px",
             }}
           >
             {/* Image Positioned Outside of Box */}
