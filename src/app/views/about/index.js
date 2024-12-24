@@ -696,11 +696,14 @@ function About() {
             }}>
               <div className="slider">
                 <Carousel
+
                   indicators={false}
                   controls={false}
-                  interval={300000}
+                  interval={3000}
                   activeStep={currentSlide}
-                // sx={{height:"100%"}}
+                  sx={{
+                    '& .MuiIconButton-root': { display: 'none' },
+                  }}
                 >
 
 
@@ -872,7 +875,7 @@ function About() {
                     container
                     spacing={0}
                     sx={{
-                      height: { md: "550px", lg: "500px", sm: "1000px", xs: "350px", xl: "500px" },
+                      height: { md: "550px", lg: "500px", sm: "1000px", xs: "500px", xl: "500px" },
                       overflow: "hidden",
                       flexWrap: "nowrap",
                       margin: "0 auto",
@@ -924,7 +927,7 @@ function About() {
                         md: "550px",
                         lg: "500px",
                         sm: "1000px",
-                        xs: "600px",
+                        xs: "500px",
                         xl: "500px"
                       },
                       overflow: "hidden",
