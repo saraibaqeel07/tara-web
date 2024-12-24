@@ -96,23 +96,10 @@ function Character() {
     { name: "Sara", comment: "She is very shy, and best friends with Tara." },
     { name: "Maya", comment: "4 years old, adventurous and has a kitten name fluffy." },
     { name: "Taha", comment: "  Loves Science, Scientist." },
-    
+
   ]
-  
-  const images = [
-    { id: 0, src: Images.fatima2, name: "Fatima", comment: "loves nature, her pet is her bird." },
-    { id: 1, src: Images.ali2, name: "Ali", comment: "book worm, loves to read books."},
-    { id: 2, src: Images.laila2, name: "Laila", comment: "loves to eat  and cooks."},
-    { id: 3, src: Images.character14, name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
-    { id: 4, src: Images.blog4, name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
-    { id: 5, src: Images.character16, name: "SHINE", comment: "Guides Tara towards good deed."  },
-    { id: 6, src: Images.sara2,name: "Sara", comment: "She is very shy, and best friends with Tara." },
-    { id: 7, src: Images.maya2, name: "Maya", comment: "4 years old, adventurous and has a kitten name fluffy." },
-    { id: 8, src: Images.taha2, name: "Taha", comment: "  Loves Science, Scientist." },
 
 
-  ];
-  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
   const [messageIndex, setMessageIndex] = useState(null);
@@ -130,22 +117,73 @@ function Character() {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
-  const getVisibleImages = () => {
-    const result = [];
-    for (let i = 0; i < visibleImages; i++) {
-      result.push(images[(currentIndex + i) % images.length]);
-    }
-    return result;
-  };
-  
+  const images = [
+    { id: 0, name: "Fatima", comment: "loves nature, her pet is her bird." },
+    { id: 1, name: "Ali", comment: "book worm, loves to read books." },
+    { id: 2, name: "Laila", comment: "loves to eat  and cooks." },
+    { id: 3, name: "Ahmed", comment: "loves to solve puzzles, creative mind." },
+    { id: 4, name: "Tara", comment: "Adventurous and have imaginary best friend shine." },
+    { id: 5, name: "SHINE", comment: "Guides Tara towards good deed." },
+    { id: 6, name: "Sara", comment: "She is very shy, and best friends with Tara." },
+    { id: 7, name: "Maya", comment: "4 years old, adventurous and has a kitten name fluffy." },
+    { id: 8, name: "Taha", comment: "  Loves Science, Scientist." },
 
-  const currentImages = getVisibleImages();
+
+  ];
+
+
+  const currentImages = [{
+    id: 0,
+    src: Images.character11
+    , name: "Fatima", comment: "loves nature, her pet is her bird."
+
+  },
+  {
+    id: 1,
+    src: Images.character12
+    , name: "Ali", comment: "book worm, loves to read books."
+  },
+  {
+    id: 2,
+    src: Images.character13
+    , name: "Laila", comment: "loves to eat  and cooks."
+  },
+  {
+    id: 3,
+    src: Images.character14, name: "Ahmed", comment: "loves to solve puzzles, creative mind."
+  },
+  {
+    id: 4,
+    src: Images.character15
+    , name: "Tara", comment: "Adventurous and have imaginary best friend shine."
+  },
+  {
+    id: 5,
+    src: Images.character16
+    , name: "SHINE", comment: "Guides Tara towards good deed."
+  },
+  {
+    id: 6,
+    src: Images.character17
+    , name: "Sara", comment: "She is very shy, and best friends with Tara."
+  },
+  {
+    id: 7,
+    src: Images.character18
+    , name: "Maya", comment: "4 years old, adventurous and has a kitten name fluffy."
+
+  },
+  {
+    id: 8,
+    src: Images.character19
+    , name: "Taha", comment: "  Loves Science, Scientist."
+  }]
 
   const handleAddClick = (id) => {
     setMessageIndex(id);
     setShowMessage(true);
   };
-  
+
 
   const handleIncrement = (id) => {
     const updatedData = cartItems.map((item) =>
@@ -313,7 +351,7 @@ function Character() {
       name: "Amna Farooq",
       email: "amna.publications@gmail.com",
       profession: "Illustrator,  2D Animator",
-      image: Images.character17,
+      image: Images.team4,
     },
   ];
   useEffect(() => {
@@ -581,6 +619,7 @@ function Character() {
           <Box sx={{ width: "100%", margin: "0 auto", overflowX: "visible" }}>
             <Grid item md={11} sm={11} xs={11} >
               <Swiper
+                style={{ display: 'flex', alignItems: 'flex-end' }}
                 loop={true}
                 spaceBetween={10}
                 slidesPerView={3}
@@ -601,7 +640,7 @@ function Character() {
 
                   },
                   786: {
-                    slidesPerView: 3, // Keep two cards for this range too
+                    slidesPerView: 4, // Keep two cards for this range too
 
                   },
                   1080: {
@@ -614,97 +653,160 @@ function Character() {
                 onSlideChange={() => console.log("slide change")}
                 onSwiper={(swiper) => console.log(swiper)}
               >
-                {scrollCharacter?.map((item, ind) => (
-                  <SwiperSlide key={ind}>
-                    {/* Outer Box */}
+                {currentImages?.map((image, index) => (
+                  <SwiperSlide key={index}>
                     <Box
+                      key={index}
+
+
                       sx={{
-                        position: "relative", // Ensures the image and borders stack properly
-                        padding: "7px", // Gap for the outer border
-                        backgroundColor: "orange", // Outer yellow background
-                        borderRadius: "50px 40px 40px 40px", // Outer border radius
-                        border: "4px solid black", // Outer solid border
-                        overflow: "visible", // Ensure image is not clipped
-                        display: "flex", // Use flexbox to center the content
-                        justifyContent: "center", // Center the image horizontally
-                        alignItems: "center", // Center the image vertically
-                        height: "auto", // Let the height adjust based on content
-                        maxWidth: "250px"
+                        position: "relative",
+                        width: '100%',
+                        height: "auto",
+
                       }}
                     >
-                      {/* Image Positioned Outside of Box */}
-                      <Box
-                        component="img"
-                        src={Images.character13} // Replace with your image path
-                        alt="Corner Decoration"
-                        sx={{
-                          position: "absolute", // Absolute positioning for the image
-                          top: "-36px", // Adjusted top to ensure image stays within bounds
-                          left: "-50px", // Adjust as needed
-                          width: "150px", // Adjust image size
-                          height: "160px", // Adjust image size
-                          zIndex: 10, // Ensure it's above all borders
-                          objectFit: "cover", // Ensures the image covers the area and doesn't get clipped
-                        }}
-                      />
-                      {/* Middle Dashed Border */}
-                      <Box
-                        sx={{
-                          position: "relative",
-                          padding: "7px", // Gap for the middle dashed border
-                          backgroundColor: "orange", // Transparent background
-                          borderRadius: "40px 40px 40px 40px", // Middle border radius
-                          border: "4px dashed black", // Middle dashed border
-                        }}
-                      >
-                        {/* Inner Card */}
+                      {/* Message */}
+                      {showMessage && messageIndex === image.id && (
                         <Box
                           sx={{
-                            py: 1,
-                            px: 4,
-                            borderRadius: "30px 30px 30px 30px", // Inner card border radius
+                            position: "absolute",
+                            top: "50px", // Ensures the message card appears at the top of the main background
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                            padding: "7px",
+                            backgroundColor: "orange",
+                            borderRadius: "50px 40px 40px 40px",
+                            border: "4px solid black",
                             display: "flex",
-                            flexDirection: "column",
-                            gap: "10px",
-                            backgroundColor: "#6692DC", // Inner card background
-                            height: "80px", // Fixed height for all cards
-                            border: "2px solid #F9BF29", // Inner solid border
-                            maxWidth: "400px",
-                            // maxHeight:"400px"
-
+                            justifyContent: "center",
+                            alignItems: "center",
+                            height: "auto",
+                            width: "100%",
+                            zIndex: 1, // Ensure the message card appears above the background image
                           }}
                         >
-                          <Typography
-                            className="heading-font"
+                          {/* Image Positioned Outside of Box */}
+                          <Box
+                            component="img"
+                            src={Images.char13}
+                            alt="Corner Decoration"
                             sx={{
-                              fontWeight: 600,
-                              mb: 0.5, // Adjust spacing between name and comment
-                              textAlign: "center",
-                              fontSize: "20px", // Adjust text size
-                              color: "transparent", // Make text transparent initially
-                              WebkitTextStroke: "1px white", // Outline color
-                              WebkitTextFillColor: "#F9BF29", // Fill color
+                              position: "absolute",
+                              top: "-36px",
+                              left: "-50px",
+                              width: "150px",
+                              height: "160px",
+                              zIndex: 2,
+                              objectFit: "cover",
                             }}
-                          >
-                            {item?.name}
-                          </Typography>
-                          <Typography
-                            className="heading-font"
-                            variant={"body2"}
-                            sx={{
-                              color: "white",
-                              fontSize: "12px", // Smaller text size
-                              textAlign: "center", // Center-align text
-                              width: "100%", // Ensure it takes full width
-                              overflow: "hidden", // Remove text overflow
-                              wordWrap: "break-word", // Break long words to fit within the box
-                              whiteSpace: "normal", // Allow text to wrap onto the next line
-                            }}
-                          >
-                            {item.comment}
-                          </Typography>
+                          />
 
+                          {/* Middle Dashed Border */}
+                          <Box
+                            sx={{
+                              position: "relative",
+                              padding: "7px",
+                              backgroundColor: "orange",
+                              borderRadius: "40px 40px 40px 40px",
+                              border: "4px dashed black",
+                            }}
+                          >
+                            {/* Inner Card */}
+                            <Box
+                              sx={{
+                                py: 1,
+                                px: 4,
+                                borderRadius: "30px 30px 30px 30px",
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "10px",
+                                backgroundColor: "#6692DC",
+                                height: "80px",
+                                border: "2px solid #F9BF29",
+                                maxWidth: "400px",
+                              }}
+                            >
+                              <Typography
+                                className="heading-font"
+                                sx={{
+                                  fontWeight: 600,
+                                  mb: 0.5,
+                                  textAlign: "center",
+                                  fontSize: "20px",
+                                  color: "transparent",
+                                  WebkitTextStroke: "1px white",
+                                  WebkitTextFillColor: "#F9BF29",
+                                }}
+                              >
+                                {image?.name}
+                              </Typography>
+                              <Typography
+                                className="heading-font"
+                                variant={"body2"}
+                                sx={{
+                                  color: "white",
+                                  fontSize: "12px",
+                                  textAlign: "center",
+                                  width: "100%",
+                                  overflow: "hidden",
+                                  wordWrap: "break-word",
+                                  whiteSpace: "normal",
+                                }}
+                              >
+                                {image.comment}
+                              </Typography>
+                            </Box>
+                          </Box>
                         </Box>
+                      )}
+                      {/* Background Image */}
+                      <Box
+                        component="img"
+                        src={image.src}
+                        alt={`Image ${image.id}`}
+                        sx={{
+                          width: "100%",
+                          height: "auto",
+                          borderRadius: "8px",
+
+                        }}
+                      />
+
+                      {/* Message and Icon */}
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: "50%", // Adjusted top position to make message appear at the top
+                          left: "45%",
+
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          cursor: "pointer",
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent the parent click handler from firing
+                          setShowMessage(!showMessage);
+                          setMessageIndex(image.id);
+                        }}
+                      >
+                        {/* Add Icon */}
+                        <Box
+                          component="img"
+                          src={Images.msgPic}
+                          alt="Add"
+                          sx={{
+                            width: { xs: "20px", md: "30px", xl: "55px" },
+                            height: { xs: "20px", md: "30px", xl: "55px" },
+                            borderRadius: "50%",
+                            padding: "5px",
+                            marginBottom: "10px",
+                          }}
+                        />
+
+
                       </Box>
                     </Box>
                   </SwiperSlide>
@@ -716,231 +818,6 @@ function Character() {
 
 
 
-        <Box
-  sx={{
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
-    width: "100%",
-    height: "auto",
-    overflow: "hidden",
-  }}
-  onClick={() => setShowMessage(false)} // Close message when clicking anywhere on the screen
->
-  {/* Left Arrow */}
-  <Box
-    component="button"
-    onClick={handlePrev}
-    sx={{
-      position: "absolute",
-      left: "10px",
-      top: "50%",
-      transform: "translateY(-50%)",
-      background: "transparent",
-      border: "none",
-      cursor: "pointer",
-      zIndex: 2,
-      width: { md: "60px", xl: "70px" },
-      height: { md: "40px", xl: "50px" },
-    }}
-  >
-    <img
-      src={Images.backwardArrow}
-      alt="Previous"
-    />
-  </Box>
-
-  {/* Images */}
-  <Box
-    sx={{
-      display: "flex",
-      gap: "10px",
-      justifyContent: "center",
-      alignItems: "center",
-      width: "100%",
-      padding: "10px",
-    }}
-  >
-{currentImages.map((image, index) => (
-  <Box
-    key={index}
-    sx={{
-      position: "relative",
-      width: { xs: "100px", sm: "150px", md: "300px", lg: "500px", xl: "900px" },
-      height: "auto",
-      flexShrink: 0,
-    }}
-  >
-    {/* Background Image */}
-    <Box
-      component="img"
-      src={image.src}
-      alt={`Image ${image.id}`}
-      sx={{
-        width: "100%",
-        height: "auto",
-        borderRadius: "8px",
-      }}
-    />
-
-    {/* Message and Icon */}
-    <Box
-      sx={{
-        position: "absolute",
-        top: "50%", // Adjusted top position to make message appear at the top
-        left: "50%",
-        transform: "translateX(50%,-50%)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "pointer",
-      }}
-      onClick={(e) => {
-        e.stopPropagation(); // Prevent the parent click handler from firing
-        setShowMessage(!showMessage);
-        setMessageIndex(image.id);
-      }}
-    >
-      {/* Add Icon */}
-      <Box
-        component="img"
-        src={Images.msgPic}
-        alt="Add"
-        sx={{
-          width: { xs: "30px", md: "40px", xl: "75px" },
-          height: { xs: "30px", md: "40px", xl: "75px" },
-          borderRadius: "50%",
-          padding: "5px",
-          marginBottom: "10px",
-        }}
-      />
-
-      {/* Message */}
-      {showMessage && messageIndex === image.id && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: "-480%", // Ensures the message card appears at the top of the main background
-            left: "50%",
-            transform: "translateX(-50%)",
-            padding: "7px",
-            backgroundColor: "orange",
-            borderRadius: "50px 40px 40px 40px",
-            border: "4px solid black",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "auto",
-            maxWidth: "250px",
-            zIndex: 1, // Ensure the message card appears above the background image
-          }}
-        >
-          {/* Image Positioned Outside of Box */}
-          <Box
-            component="img"
-            src={Images.character13}
-            alt="Corner Decoration"
-            sx={{
-              position: "absolute",
-              top: "-36px",
-              left: "-50px",
-              width: "150px",
-              height: "160px",
-              zIndex: 2,
-              objectFit: "cover",
-            }}
-          />
-
-          {/* Middle Dashed Border */}
-          <Box
-            sx={{
-              position: "relative",
-              padding: "7px",
-              backgroundColor: "orange",
-              borderRadius: "40px 40px 40px 40px",
-              border: "4px dashed black",
-            }}
-          >
-            {/* Inner Card */}
-            <Box
-              sx={{
-                py: 1,
-                px: 4,
-                borderRadius: "30px 30px 30px 30px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                backgroundColor: "#6692DC",
-                height: "80px",
-                border: "2px solid #F9BF29",
-                maxWidth: "400px",
-              }}
-            >
-              <Typography
-                className="heading-font"
-                sx={{
-                  fontWeight: 600,
-                  mb: 0.5,
-                  textAlign: "center",
-                  fontSize: "20px",
-                  color: "transparent",
-                  WebkitTextStroke: "1px white",
-                  WebkitTextFillColor: "#F9BF29",
-                }}
-              >
-                {image?.name}
-              </Typography>
-              <Typography
-                className="heading-font"
-                variant={"body2"}
-                sx={{
-                  color: "white",
-                  fontSize: "12px",
-                  textAlign: "center",
-                  width: "100%",
-                  overflow: "hidden",
-                  wordWrap: "break-word",
-                  whiteSpace: "normal",
-                }}
-              >
-                {image.comment}
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
-      )}
-    </Box>
-  </Box>
-))}
-
-
-  </Box>
-
-  {/* Right Arrow */}
-  <Box
-    component="button"
-    onClick={handleNext}
-    sx={{
-      position: "absolute",
-      right: "55px",
-      top: "50%",
-      transform: "translateY(-50%)",
-      background: "transparent",
-      border: "none",
-      cursor: "pointer",
-      zIndex: 2,
-      width: { md: "60px", xl: "70px" },
-      height: { md: "40px", xl: "50px" },
-    }}
-  >
-    <img
-      src={Images.forwardArrow}
-      alt="Next"
-    />
-  </Box>
-</Box>
 
 
 

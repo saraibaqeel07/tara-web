@@ -287,7 +287,7 @@ const Cart = () => {
                             <Grid container   mt={8}>
                                 <Grid item lg={6} md={6} sm={12} xs={12} sx={{display:'flex',justifyContent:{lg:'flex-start',md:'flex-start',sm:'center',xs:'center'},alignItems:'flex-start'}} mb={6}>
                                     <Box sx={{ display: 'flex', justifyContent:{lg:'flex-end',md:'flex-end',sm:'center',xs:'center'}, gap: 2,flexWrap:'wrap' }}>
-                                        <Button variant="contained" className='para-text' color="secondary" sx={{ marginTop: 2, backgroundColor: 'transparent', textTransform: "capitalize", textAlign: 'center', p: "11px 40px", boxShadow: 'none', border: '1px solid white' }} onClick={() => navigate('/shop')}>
+                                        <Button variant="contained" className='para-text' color="secondary" sx={{ marginTop: 2, backgroundColor: 'transparent', textTransform: "capitalize", textAlign: 'center', p: "11px 40px", boxShadow: 'none', border: '1px solid white' }} onClick={() => navigate('/products')}>
                                             Return To Shop
                                         </Button>
                                         <Button variant="contained" className='para-text' color="secondary" sx={{ marginTop: 2, backgroundColor: 'transparent', textTransform: "capitalize", textAlign: 'center', p: "11px 40px", boxShadow: 'none', border: '1px solid white' }} onClick={() => updateCartInFirebase()}>
