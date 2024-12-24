@@ -88,6 +88,25 @@ function About() {
   ];
 
 
+  const sliderImages1 = [
+    Images.sliderCharacter1,
+    Images.sliderCharacter2,
+    Images.sliderCharacter3,
+    Images.sliderCharacter4,
+    Images.sliderCharacter5,
+    Images.sliderCharacter6,
+    Images.sliderCharacter7,
+  ];
+
+  const sliderImages2 = [
+    Images.sliderCharacter8,
+    Images.sliderCharacter9,
+    Images.sliderCharacter10,
+    Images.sliderCharacter11,
+    Images.sliderCharacter12,
+    Images.sliderCharacter13,
+    Images.sliderCharacter14,
+  ];
 
   useEffect(() => {
     // Clear the previous interval if it exists
@@ -671,25 +690,26 @@ function About() {
             }}
           >
             <Box className="section-content" sx={{
-              width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
-              height: { xl: "500px", lg: "500px", md: '550px', sm: '500px', xs: '400px' }, // Fixed height for the slider
+              // width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
+              height: { xl: "500px", lg: "500px", md: '550px', sm: '500px', xs: '400px' },
             }}>
               <div className="slider">
                 <Carousel
                   indicators={false}
                   controls={false}
-                  interval={3000}
+                  interval={3000000}
                   activeStep={currentSlide}
                 // sx={{height:"100%"}}
                 >
 
 
-                  <Grid container sx={{ height: "100%", margin: "0 auto", px: 0,
-                  "@media (min-width: 2550px)": {
-                    width:"80%",
-                   },
-                
-                }}>
+                  <Grid container sx={{
+                    height: "100%", margin: "0 auto", px: 0,
+                    "@media (min-width: 2550px)": {
+                      width: "80%",
+                    },
+
+                  }}>
                     <Grid item xl={7} md={6} sm={12} xs={12} >
                       <Box
                         sx={{
@@ -700,7 +720,9 @@ function About() {
                           pt: { md: "300px", lg: "200px", sm: "240px", xs: "200px" },
                           px: { md: "48px", sm: "12px", xs: "12px" },
                           position: "relative",
-                          alignItems: "center"
+                          alignItems: "center",
+              width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
+
 
                         }}
                       >
@@ -746,24 +768,26 @@ function About() {
                             xs: "none",
                           },
                           "@media (min-width: 1536px) and (max-width: 2200px)": {
-                            py:"200px",
-                          
+                            py: "200px",
 
-                           },
+
+                          },
                         }}
                       />
                     </Grid>
                   </Grid>
 
-                  <Grid container sx={{ height: { lg: "500px", md: '550px', sm: '500px', xs: '450px' },
-                   margin: "0 auto",
-                   "@media (min-width: 2550px)": {
-                    width:"70%",
-                   },
-                   "@media (min-width: 1536px) and( max-width: 2549px)": {
-                    width:"120%",
-                   },
-                   }}>
+                  <Grid container sx={{
+                    height: { lg: "500px", md: '550px', sm: '500px', xs: '450px' },
+                    margin: "0 auto",
+                    "@media (min-width: 2550px)": {
+                      width: "70%",
+                    },
+                    "@media (min-width: 1536px) and( max-width: 2549px)": {
+                      width: "120%",
+                    },
+
+                  }}>
                     <Grid item md={6} sm={12} xs={12}>
                       <Box
                         sx={{
@@ -774,6 +798,8 @@ function About() {
                           pt: { md: "90px", sm: "120px", xs: "97px" },
                           px: { md: "48px", sm: "12px", xs: "12px" },
                           position: "relative",
+              width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
+
                         }}
                       >
                         <Typography
@@ -781,7 +807,7 @@ function About() {
                           className="heading-font"
                           sx={{
                             fontFamily: Fonts.righteous,
-                            fontSize: { lg:"90px",md: "100px", sm: "70px", xs: "60px" },
+                            fontSize: { lg: "90px", md: "100px", sm: "70px", xs: "60px" },
                             fontWeight: 700,
                             whiteSpace: "nowrap",
                             overflow: "hidden",
@@ -868,44 +894,99 @@ function About() {
 
                     </Grid>
                   </Grid>
-                  <Grid container sx={{ height: { lg: "500px", md: '550px', sm: '500px', xs: '500px' }, }}>
-                    <Grid item xs={12}>
-                      <Box
+                  <Grid
+                    container
+                    spacing={0}
+                    sx={{
+                      height: { md: "550px", lg: "500px", sm: "400px", xs: "350px", xl: "500px" },
+                      overflow: "hidden",
+                      flexWrap: "nowrap",
+                      margin: "0 auto",
+                      top: { md: "70px", lg: "30px", xl: "40px" },
+                      justifyContent: "center",
+                      alignItems: "center",
+                      position: "relative",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
+                  >
+                    {sliderImages1.map((image, index) => (
+                      <Grid
+                        md={2}
+                        item
+                        key={index}
                         sx={{
-                          width: { xs: "100%", sm: "100%", md: "100%" },
-                          height: { lg: "500px", md: '550px', sm: '500px', xs: '550px' },
-                          marginTop: { sm: "30px", xs: 0 },
-                          backgroundImage: `url(${Images.mainCharacter})`, // Replace with your image path
-                          backgroundSize: "contain",
-                          backgroundRepeat: "no-repeat",
-                          backgroundPosition: "center",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          py: { md: "200px", sm: "150px", xs: "100px" },
+                          width: {
+                            xs: "calc(150% / 7)",
+                            sm: "calc(140% / 7)",
+                            md: "calc(100% / 7)",
+                            lg: "calc(100% / 7)",
+                          },
+                          height: "100%",
                         }}
-                      />
-                    </Grid>
+                      >
+                        <Box
+                          sx={{
+                            width: { xs: "150%", sm: "140%", md: "140%" },
+                            height: { xl: "90%", lg: "95%", md: "95%", sm: "120%", xs: "120%" },
+                            backgroundImage: `url(${image})`,
+                            backgroundSize: "contain",
+                            backgroundRepeat: "no-repeat",
+                            backgroundPosition: "center",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </Grid>
+                    ))}
                   </Grid>
 
-                  <Grid container sx={{ height: "100%" }}>
-                    <Grid item xs={12}>
-                      <Box
-                        sx={{
-                          width: { xs: "100%", sm: "100%", md: "100%" },
-                          height: { lg: "500px", md: '550px', sm: '500px', xs: '490px' },
 
-                          backgroundImage: `url(${Images.aboutImg2})`, // Replace with your image path
-                          backgroundSize: "contain",
-                          backgroundRepeat: "no-repeat",
-                          backgroundPosition: "center",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          py: { md: "200px", sm: "150px", xs: "100px" },
+
+                  <Grid
+                    container
+                    spacing={0}
+                    sx={{
+                      height: { md: "550px", lg: "500px", sm: "400px", xs: "350px", xl: "500px" },
+                      overflow: "hidden",
+                      flexWrap: "nowrap",
+                      margin: "0 auto",
+                      top: { md: "70px", lg: "30px", xl: "40px" },
+                      justifyContent: "center",
+                      alignItems: "center",
+                      position: "relative",
+                      left: "48%",
+                      transform: "translateX(-50%)",
+                      width:"105%"
+                    }}
+                  >
+                    {sliderImages2.map((image, index) => (
+                      <Grid
+                        md={2}
+                        item
+                        key={index}
+                        sx={{
+                          width: {
+                            xs: "calc(150% / 7)",
+                            sm: "calc(140% / 7)",
+                            md: "calc(100% / 7)",
+                            lg: "calc(100% / 7)",
+                          },
+                          height: "100%",
                         }}
-                      />
-                    </Grid>
+                      >
+                        <Box
+                          sx={{
+                            width: "115%",
+                            height: { xl: "90%", lg: "95%", md: "95%", sm: "120%", xs: "120%" },
+                            backgroundImage: `url(${image})`,
+                            backgroundSize: "contain",
+                            backgroundRepeat: "no-repeat",
+                            backgroundPosition: "center",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </Grid>
+                    ))}
                   </Grid>
 
                 </Carousel>
@@ -1130,10 +1211,10 @@ function About() {
                 width: "100%",
                 height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: '1700px' }, // Adjust for small screens
                 '@media (min-width: 1536px)and (max-width:2150px)': {
-                  height:"1350px"
+                  height: "1350px"
                 },
                 '@media (min-width: 1300px)and (max-width:1535px)': {
-                  height:"980px"
+                  height: "980px"
                 },
               }}
             />
@@ -1243,7 +1324,7 @@ function About() {
             <Typography
               className="para-text"
               sx={{
-                fontSize: {xl:"30px", sm: "18px", xs: "16px" },
+                fontSize: { xl: "30px", sm: "18px", xs: "16px" },
                 color: "white",
                 lineHeight: 1.6,
                 marginBottom: 3,
@@ -1256,7 +1337,7 @@ function About() {
             <Typography
               className="para-text"
               sx={{
-                fontSize: { xl:"30px",sm: "18px", xs: "16px" },
+                fontSize: { xl: "30px", sm: "18px", xs: "16px" },
                 color: "white",
                 lineHeight: 1.6,
                 marginBottom: 3,
@@ -1271,7 +1352,7 @@ function About() {
             <Typography
               className="para-text"
               sx={{
-                fontSize: { xl:"30px",sm: "18px", xs: "16px" },
+                fontSize: { xl: "30px", sm: "18px", xs: "16px" },
                 color: "white",
                 lineHeight: 1.6,
                 marginBottom: 5,
@@ -1288,10 +1369,10 @@ function About() {
         <Grid
           container
           sx={{
-            backgroundImage: `url(${Images.pagesNavBg})`, 
-            backgroundSize: "cover", 
-            backgroundPosition: "center", 
-            backgroundRepeat: "no-repeat", 
+            backgroundImage: `url(${Images.pagesNavBg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
             minHeight: "80vh",
             position: "relative",
             display: "flex",
@@ -1466,10 +1547,10 @@ function About() {
         <Grid
           container
           sx={{
-            backgroundImage: `url(${Images.reviewBg})`, 
-            backgroundSize: "cover", 
-            backgroundPosition: "center", 
-            backgroundRepeat: "no-repeat", 
+            backgroundImage: `url(${Images.reviewBg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
             maxHeight: "1500vh", // Adjusted height
             paddingTop: "20rem",
             margin: 0,
@@ -1726,10 +1807,10 @@ function About() {
               },
               mt: "40px",
               "@media (min-width: 2300px) and (max-width: 2700px)": {
-                height:"1400px"
+                height: "1400px"
               },
               "@media (min-width: 1536px) and (max-width: 2299px)": {
-                height:"1050px"
+                height: "1050px"
               },
             }}
           ></Grid>
@@ -1803,7 +1884,7 @@ function About() {
               left: { xl: 230, lg: 0, md: 0 },
               position: "absolute",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
-               left:90
+                left: 90
               },
             }}
           />
@@ -1900,7 +1981,7 @@ function About() {
               zIndex: 0,
               display: "block",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
-               left:90
+                left: 90
               },
 
             }}
@@ -1925,8 +2006,8 @@ function About() {
               zIndex: 0,
               display: "block",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
-                right:60
-               },
+                right: 60
+              },
             }}
           >
             <CardMedia
@@ -1936,7 +2017,7 @@ function About() {
                 width: "100%", // Adjust width for smaller screens
                 height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
                 objectFit: "cover",
-                
+
               }}
             />
           </Box>
