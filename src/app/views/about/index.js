@@ -697,7 +697,7 @@ function About() {
                 <Carousel
                   indicators={false}
                   controls={false}
-                  interval={3000000}
+                  interval={3000}
                   activeStep={currentSlide}
                 // sx={{height:"100%"}}
                 >
