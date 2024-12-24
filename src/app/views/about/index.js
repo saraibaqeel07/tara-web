@@ -677,6 +677,7 @@ function About() {
             background: Colors.primaryGradient,
             width: "100%",
             marginTop: "20px",
+            height: { xs: "800px", md: "0", sm: "1300px" }
           }}
         >
           <Box
@@ -691,26 +692,39 @@ function About() {
           >
             <Box className="section-content" sx={{
               // width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
-              height: { xl: "500px", lg: "500px", md: '550px', sm: '500px', xs: '400px' },
+              height: { xl: "500px", lg: "500px", md: '550px', sm: '1300px', xs: '800px' },
             }}>
               <div className="slider">
                 <Carousel
                   indicators={false}
                   controls={false}
-                  interval={3000}
+                  interval={300000}
                   activeStep={currentSlide}
                 // sx={{height:"100%"}}
                 >
 
 
-                  <Grid container sx={{
-                    height: "100%", margin: "0 auto", px: 0,
-                    "@media (min-width: 2550px)": {
-                      width: "80%",
-                    },
-
-                  }}>
-                    <Grid item xl={7} md={6} sm={12} xs={12} >
+                  <Grid
+                    container
+                    sx={{
+                      height: "100%",
+                      margin: "0 auto",
+                      px: 0,
+                      "@media (min-width: 2550px)": {
+                        width: "80%",
+                      },
+                      flexDirection: { sm: 'column', xs: 'column', md: 'row' }, // Stack items in column on small screens
+                    }}
+                  >
+                    {/* First Row (Text Content) */}
+                    <Grid
+                      item
+                      xl={7}
+                      md={6}
+                      sm={12}
+                      xs={12}
+                      order={{ sm: 1, xs: 1, md: 0 }} // Ensures text is first on small screens
+                    >
                       <Box
                         sx={{
                           display: "flex",
@@ -720,13 +734,10 @@ function About() {
                           pt: { md: "300px", lg: "200px", sm: "240px", xs: "200px" },
                           px: { md: "48px", sm: "12px", xs: "12px" },
                           position: "relative",
-                          alignItems: "center",
-              width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
-
-
+                          width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' },
+                          margin: '0 auto',
                         }}
                       >
-
                         <Typography
                           variant="h1"
                           className="heading-font"
@@ -736,8 +747,6 @@ function About() {
                             fontWeight: 700,
                             whiteSpace: "nowrap",
                             overflow: "hidden",
-
-
                           }}
                         >
                           <span className="heading-font" style={{ color: "#F9BF29", WebkitTextStroke: "1px #f9bf29", WebkitTextFillColor: "#f49604" }}>
@@ -749,156 +758,121 @@ function About() {
                         </Typography>
                       </Box>
                     </Grid>
-                    <Grid item md={6} xl={5} sm={12} xs={12} sx={{ display: 'flex', justifyItems: 'center', alignItems: "center", }}>
+
+                    {/* Second Row (Image) */}
+                    <Grid
+                      item
+                      xl={5}
+                      md={6}
+                      sm={12}
+                      xs={12}
+                      order={{ sm: 2, xs: 2, md: 1 }} // Ensures image is second on small screens
+                      sx={{
+                        display: 'flex',
+                        justifyItems: 'center',
+                        alignItems: "center",
+                        paddingTop: { sm: 2, xs: 2, md: 0 }, // Adjust padding for small screens
+                      }}
+                    >
                       <Box
                         sx={{
-                          width: { md: "600px", lg: "800px" },
-                          height: "auto",
+                          width: { md: "600px", lg: "800px", sm: "100%", xs: "100%" }, // Adjust width for small screens
+                          height: { md: "auto", sm: "770px", xs: "500px" }, // Ensure height is maintained
                           backgroundImage: `url(${Images.aboutImg1})`,
-                          backgroundSize: { md: "cover", xl: "contain", lg: "contain" },
+                          backgroundSize: { md: "cover", xl: "contain", lg: "contain", xs: "contain", sm: "contain" }, // Ensure cover for xs and sm
                           backgroundRepeat: "no-repeat",
                           backgroundPosition: "center bottom",
-                          py: { md: "300px", lg: "250px" },
+                          py: { md: "300px", lg: "250px", sm: "0" },
                           px: { md: 2 },
-                          display: {
-                            md: "block",
-                            xl: "block",
-                            lg: "block",
-                            sm: "none",
-                            xs: "none",
-                          },
+                          display: "block",
                           "@media (min-width: 1536px) and (max-width: 2200px)": {
                             py: "200px",
-
-
                           },
                         }}
                       />
+
                     </Grid>
                   </Grid>
 
+
+
                   <Grid container sx={{
-                    height: { lg: "500px", md: '550px', sm: '500px', xs: '450px' },
-                    margin: "0 auto",
-                    "@media (min-width: 2550px)": {
-                      width: "70%",
-                    },
-                    "@media (min-width: 1536px) and( max-width: 2549px)": {
-                      width: "120%",
-                    },
+                    flexDirection: { sm: "column", xs: "column", md: "row" },
+                    height: "100%",
 
                   }}>
                     <Grid item md={6} sm={12} xs={12}>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "flex-start",
-                          gap: { sm: "24px", xs: "12px" },
-                          pt: { md: "90px", sm: "120px", xs: "97px" },
-                          px: { md: "48px", sm: "12px", xs: "12px" },
-                          position: "relative",
-              width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
-
-                        }}
-                      >
-                        <Typography
-                          variant="h1"
-                          className="heading-font"
-                          sx={{
-                            fontFamily: Fonts.righteous,
-                            fontSize: { lg: "90px", md: "100px", sm: "70px", xs: "60px" },
-                            fontWeight: 700,
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
-                          <span className="heading-font" style={{ color: "#F9BF29", WebkitTextStroke: "1px #f9bf29", WebkitTextFillColor: "#f49604" }}>
-                            I
-                          </span>{" "}
-                          <span className="heading-font" style={{ color: "white", WebkitTextStroke: "1px #f9bf29", WebkitTextFillColor: "white" }}>
-                            AM TARA
-                          </span>
+                      <Box sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                        gap: { sm: "24px", xs: "12px" },
+                        pt: { md: "90px", sm: "120px", xs: "97px" },
+                        px: { md: "48px", sm: "12px", xs: "12px" },
+                        position: "relative",
+                        width: { xl: '50%', lg: '90%', md: '100%', sm: '80%', xs: '90%' },
+                        margin: '0 auto',
+                      }}>
+                        <Typography variant="h1" className="heading-font" sx={{
+                          fontFamily: Fonts.righteous,
+                          fontSize: { lg: "90px", md: "100px", sm: "70px", xs: "60px" },
+                          fontWeight: 700,
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}>
+                          <span className="heading-font" style={{ color: "#F9BF29", WebkitTextStroke: "1px #f9bf29", WebkitTextFillColor: "#f49604" }}> I </span>{" "}
+                          <span className="heading-font" style={{ color: "white", WebkitTextStroke: "1px #f9bf29", WebkitTextFillColor: "white" }}> AM TARA </span>
                         </Typography>
-
-                        <Typography
-                          variant="h3"
-                          className="para-text"
-                          sx={{ fontSize: { md: "38px", sm: "28px", xs: "20px" } }}
-                        >
+                        <Typography variant="h3" className="para-text" sx={{ fontSize: { md: "38px", sm: "28px", xs: "20px" } }}>
                           Click To See Latest Adventures!
                         </Typography>
-
-                        <Button
-                          variant="contained"
-                          className="para-text"
-                          sx={{
-                            py: 1.2,
-                            px: 2,
-                            backgroundColor: "#f49604",
-                            textTransform: "capitalize",
-                            fontWeight: "bold",
-                            fontSize: "18px",
-                            alignSelf: "flex-start",
-                          }}
-                          href="https://www.youtube.com/@Shinewithtara"
-                        >
+                        <Button variant="contained" className="para-text" sx={{
+                          py: 1.2,
+                          px: 2,
+                          backgroundColor: "#f49604",
+                          textTransform: "capitalize",
+                          fontWeight: "bold",
+                          fontSize: "18px",
+                          alignSelf: "flex-start",
+                        }} href="https://www.youtube.com/@Shinewithtara">
                           START ADVENTURE
                         </Button>
-
-                        <Box
-                          sx={{
-                            mt: 2,
-                            display: "flex",
-                            gap: 0.5,
-                            flexDirection: "row",
-                            position: "relative",
-                            zIndex: 1,
-                            pb: "60px",
-                          }}
-                        >
-                          <Button href="https://www.facebook.com/profile.php?id=61554711500749">
-                            <FacebookRounded />
-                          </Button>
-                          <Button href="https://www.instagram.com/shineswithtara/">
-                            <InstagramRounded />
-                          </Button>
-                          <Button href="https://www.youtube.com/@Shinewithtara">
-                            <YoutubeRounded />
-                          </Button>
-                          <Button href="https://www.tiktok.com/@shinewithtara">
-                            <TiktokRounded />
-                          </Button>
+                        <Box sx={{
+                          mt: 2,
+                          display: "flex",
+                          gap: 0.5,
+                          flexDirection: "row",
+                          position: "relative",
+                          zIndex: 1,
+                          pb: "60px",
+                        }}>
+                          <Button href="https://www.facebook.com/profile.php?id=61554711500749"><FacebookRounded /></Button>
+                          <Button href="https://www.instagram.com/shineswithtara/"><InstagramRounded /></Button>
+                          <Button href="https://www.youtube.com/@Shinewithtara"><YoutubeRounded /></Button>
+                          <Button href="https://www.tiktok.com/@shinewithtara"><TiktokRounded /></Button>
                         </Box>
                       </Box>
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
-                      <Box
-                        sx={{
-                          width: { xs: "100%", sm: "100%", md: "100%" }, // Responsive width
-                          height: "100%",
-                          backgroundImage: `url(${Images.mainTara})`,
-                          backgroundSize: { md: "cover", xl: "contain", lg: "contain" },
-                          backgroundRepeat: "no-repeat",
-                          backgroundPosition: "center bottom",
-                          display: {
-                            md: "block",
-                            xl: "block",
-                            lg: "block",
-                            sm: "none",
-                            xs: "none",
-                          },
-                        }}
-                      />
-
+                      <Box sx={{
+                        width: "100%", // Ensure image fills the available width
+                        backgroundImage: `url(${Images.mainTara})`,
+                        backgroundSize: { xs: "contain", sm: "cover", md: "cover", lg: "contain", xl: "contain" },
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center bottom",
+                        display: "block",
+                        height: { md: "100%", sm: '800px', xs: '400px' }, // Adjust height for smaller screens
+                      }} />
                     </Grid>
                   </Grid>
+
+
                   <Grid
                     container
                     spacing={0}
                     sx={{
-                      height: { md: "550px", lg: "500px", sm: "400px", xs: "350px", xl: "500px" },
+                      height: { md: "550px", lg: "500px", sm: "1000px", xs: "350px", xl: "500px" },
                       overflow: "hidden",
                       flexWrap: "nowrap",
                       margin: "0 auto",
@@ -946,17 +920,27 @@ function About() {
                     container
                     spacing={0}
                     sx={{
-                      height: { md: "550px", lg: "500px", sm: "400px", xs: "350px", xl: "500px" },
+                      height: {
+                        md: "550px",
+                        lg: "500px",
+                        sm: "1000px",
+                        xs: "600px",
+                        xl: "500px"
+                      },
                       overflow: "hidden",
                       flexWrap: "nowrap",
                       margin: "0 auto",
-                      top: { md: "70px", lg: "30px", xl: "40px" },
+                      top: {
+                        md: "70px",
+                        lg: "30px",
+                        xl: "40px"
+                      },
                       justifyContent: "center",
                       alignItems: "center",
                       position: "relative",
                       left: "48%",
                       transform: "translateX(-50%)",
-                      width:"105%"
+                      width: "105%",
                     }}
                   >
                     {sliderImages2.map((image, index) => (
@@ -966,8 +950,8 @@ function About() {
                         key={index}
                         sx={{
                           width: {
-                            xs: "calc(150% / 7)",
-                            sm: "calc(140% / 7)",
+                            xs: "calc(180% / 7)",
+                            sm: "calc(220% / 7)",
                             md: "calc(100% / 7)",
                             lg: "calc(100% / 7)",
                           },
@@ -976,18 +960,24 @@ function About() {
                       >
                         <Box
                           sx={{
-                            width: "115%",
-                            height: { xl: "90%", lg: "95%", md: "95%", sm: "120%", xs: "120%" },
+                            width: { md: "120%", sm: "120%" },
+                            height: {
+                              xl: "100%",
+                              lg: "100%",
+                              md: "100%",
+                              sm: "140%",
+                              xs: "150%"
+                            },
                             backgroundImage: `url(${image})`,
                             backgroundSize: "contain",
                             backgroundRepeat: "no-repeat",
                             backgroundPosition: "center",
-                            borderRadius: "8px",
                           }}
                         />
                       </Grid>
                     ))}
                   </Grid>
+
 
                 </Carousel>
               </div>
