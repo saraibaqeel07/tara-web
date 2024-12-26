@@ -699,7 +699,7 @@ function About() {
 
                   indicators={false}
                   controls={false}
-                  interval={300000}
+                  interval={3000}
                   activeStep={currentSlide}
                   sx={{
                     '& .MuiIconButton-root': { display: 'none' },
