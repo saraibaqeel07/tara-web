@@ -733,13 +733,13 @@ function About() {
 
                       }}
                     >
-                      
+
                       <Box
                         sx={{
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "center",
-                          gap: { md: "15px" },
+                          gap: { md: "14px" },
                           pt: { md: "300px", lg: "200px", sm: "240px", xs: "200px" },
                           px: { md: "48px", sm: "12px", xs: "12px" },
                           position: "relative",
