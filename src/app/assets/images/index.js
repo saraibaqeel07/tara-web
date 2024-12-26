@@ -183,6 +183,9 @@ sliderCharacter13:require( "../../assets/images/slider-character13.png"),
 sliderCharacter14:require( "../../assets/images/slider-character14.png"),
 sliderFamily1:require( "../../assets/images/slider-family1.png"),
 sliderFamily2:require( "../../assets/images/slider-family2.png"),
+sliderFamily2:require( "../../assets/images/slider-family2.png"),
+eventPic:require( "../../assets/images/event-pic.png"),
+eventCharacters:require( "../../assets/images/event-characters.png"),
 
 
 
