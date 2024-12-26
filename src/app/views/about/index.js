@@ -691,7 +691,7 @@ function About() {
             }}
           >
             <Box className="section-content" sx={{
-              width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
+              // width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
               height: { xl: "500px", lg: "500px", md: '550px', sm: '700px', xs: '400px' },
             }}>
               <div className="slider">
@@ -699,7 +699,7 @@ function About() {
 
                   indicators={false}
                   controls={false}
-                  interval={3000}
+                  interval={300000}
                   activeStep={currentSlide}
                   sx={{
                     '& .MuiIconButton-root': { display: 'none' },
