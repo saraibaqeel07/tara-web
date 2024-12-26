@@ -872,50 +872,47 @@ function About() {
 
 
                   <Grid
-                    container
-                    spacing={0}
-                    sx={{
-                      height: { md: "550px", lg: "500px", sm: "1000px", xs: "500px", xl: "500px" },
-                      overflow: "hidden",
-                      flexWrap: "nowrap",
-                      margin: "0 auto",
-                      top: { md: "70px", lg: "30px", xl: "40px" },
-                      justifyContent: "center",
-                      alignItems: "center",
-                      position: "relative",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                    }}
-                  >
-                    {sliderImages1.map((image, index) => (
-                      <Grid
-                        md={2}
-                        item
-                        key={index}
-                        sx={{
-                          width: {
-                            xs: "calc(150% / 7)",
-                            sm: "calc(140% / 7)",
-                            md: "calc(100% / 7)",
-                            lg: "calc(100% / 7)",
-                          },
-                          height: "100%",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: { xs: "150%", sm: "140%", md: "140%" },
-                            height: { xl: "90%", lg: "95%", md: "95%", sm: "120%", xs: "120%" },
-                            backgroundImage: `url(${image})`,
-                            backgroundSize: "contain",
-                            backgroundRepeat: "no-repeat",
-                            backgroundPosition: "center",
-                            borderRadius: "8px",
-                          }}
-                        />
-                      </Grid>
-                    ))}
-                  </Grid>
+  container
+  spacing={2} // Adjust spacing between images
+  sx={{
+    margin: "0 auto",
+    top: { md: "70px", lg: "30px", xl: "40px" },
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    left: "50%",
+    transform: "translateX(-50%)",
+  }}
+>
+  {sliderImages1.map((image, index) => (
+    <Grid
+      item
+      lg={3} // 4 items per row in a 12-column grid
+      md={3}
+      sm={6} // For smaller screens, show 2 items per row
+      xs={12} // For extra small screens, show 1 item per row
+      key={index}
+      sx={{
+        display: "flex", // Center image within each grid item
+        justifyContent: "center",
+      }}
+    >
+      <Box
+        sx={{
+          width: "100%", // Adjust as per your design
+          maxWidth: "250px", // Optional: Max width for images
+          height: "300px", // Adjust height
+          backgroundImage: `url(${image})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          borderRadius: "8px",
+        }}
+      />
+    </Grid>
+  ))}
+</Grid>
+
 
 
 
@@ -948,29 +945,21 @@ function About() {
                   >
                     {sliderImages2.map((image, index) => (
                       <Grid
-                        md={2}
+                        lg={4}
+                        md={4}
+                        sm={4}
+                        xs={4}
                         item
                         key={index}
                         sx={{
-                          width: {
-                            xs: "calc(180% / 7)",
-                            sm: "calc(220% / 7)",
-                            md: "calc(100% / 7)",
-                            lg: "calc(100% / 7)",
-                          },
+                          width: '100%',
                           height: "100%",
                         }}
                       >
                         <Box
                           sx={{
-                            width: { md: "120%", sm: "120%" },
-                            height: {
-                              xl: "100%",
-                              lg: "100%",
-                              md: "100%",
-                              sm: "140%",
-                              xs: "150%"
-                            },
+                            width: '100%',
+                            height: '100%',
                             backgroundImage: `url(${image})`,
                             backgroundSize: "contain",
                             backgroundRepeat: "no-repeat",
