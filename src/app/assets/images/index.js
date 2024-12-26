@@ -180,6 +180,8 @@ sliderCharacter11:require( "../../assets/images/slider-character11.png"),
 sliderCharacter12:require( "../../assets/images/slider-character12.png"),
 sliderCharacter13:require( "../../assets/images/slider-character13.png"),
 sliderCharacter14:require( "../../assets/images/slider-character14.png"),
+sliderFamily1:require( "../../assets/images/slider-family1.png"),
+sliderFamily2:require( "../../assets/images/slider-family2.png"),
 
 
 

@@ -677,7 +677,7 @@ function About() {
             background: Colors.primaryGradient,
             width: "100%",
             marginTop: "20px",
-            height: { xs: "800px", md: "0", sm: "1300px" }
+            height: { xs: "400px", md: "0", sm: "700px" }
           }}
         >
           <Box
@@ -691,8 +691,8 @@ function About() {
             }}
           >
             <Box className="section-content" sx={{
-              // width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
-              height: { xl: "500px", lg: "500px", md: '550px', sm: '1300px', xs: '800px' },
+              width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
+              height: { xl: "500px", lg: "500px", md: '550px', sm: '700px', xs: '400px' },
             }}>
               <div className="slider">
                 <Carousel
@@ -727,6 +727,11 @@ function About() {
                       sm={12}
                       xs={12}
                       order={{ sm: 1, xs: 1, md: 0 }} // Ensures text is first on small screens
+                      sx={{
+                        display: { md: "block", sm: "none", xs: "none" },
+                        
+
+                      }}
                     >
                       <Box
                         sx={{
@@ -780,13 +785,13 @@ function About() {
                       <Box
                         sx={{
                           width: { md: "600px", lg: "800px", sm: "100%", xs: "100%" }, // Adjust width for small screens
-                          height: { md: "auto", sm: "770px", xs: "500px" }, // Ensure height is maintained
+                          height: { md: "auto", sm: "700px", xs: "350px" }, // Ensure height is maintained
                           backgroundImage: `url(${Images.aboutImg1})`,
                           backgroundSize: { md: "cover", xl: "contain", lg: "contain", xs: "contain", sm: "contain" }, // Ensure cover for xs and sm
                           backgroundRepeat: "no-repeat",
                           backgroundPosition: "center bottom",
                           py: { md: "300px", lg: "250px", sm: "0" },
-                          px: { md: 2 },
+                          px: { md: 2 ,xs:0, sm:0 },
                           display: "block",
                           "@media (min-width: 1536px) and (max-width: 2200px)": {
                             py: "200px",
@@ -804,7 +809,10 @@ function About() {
                     height: "100%",
 
                   }}>
-                    <Grid item md={6} sm={12} xs={12}>
+                    <Grid item md={6} sm={12} xs={12} sx={{
+                        display: { md: "block", sm: "none", xs: "none" },
+
+                    }}>
                       <Box sx={{
                         display: "flex",
                         flexDirection: "column",
@@ -865,13 +873,82 @@ function About() {
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "center bottom",
                         display: "block",
-                        height: { md: "100%", sm: '800px', xs: '400px' }, // Adjust height for smaller screens
+                        height: { md: "100%", sm: '700px', xs: '400px' }, // Adjust height for smaller screens
                       }} />
                     </Grid>
                   </Grid>
 
 
+
+
                   <Grid
+                    container
+                    spacing={0}
+                    sx={{
+                      height: { md: "960px", lg: "850px", sm: "1300px", xs: "750px", },
+                      overflow: "hidden",
+                      flexWrap: "nowrap",
+                      margin: "0 auto",
+                      top: { md: "70px", lg: "30px", xl: "40px" },
+                      justifyContent: "center",
+                      alignItems: "center",
+
+
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        margin: '0 auto',
+                        width: { xs: "100%", sm: "100%", md: "100%", lg: "100%", xl: "66%" },
+                        height: "100%",
+                        backgroundImage: `url(${Images.sliderFamily1})`,
+                        backgroundSize:"contain",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center",
+                        display: { xs: "block", sm: "block", md: "block", lg: "block", xl: "block" }, // Always visible, you can remove this line unless there’s a specific visibility control needed
+
+                      }}
+
+
+                    />
+
+                  </Grid>
+
+
+                  <Grid
+                    container
+                    spacing={0}
+                    sx={{
+                      height: { md: "950px", lg: "850px", sm: "1300px", xs: "750px", },
+                      overflow: "hidden",
+                      flexWrap: "nowrap",
+                      margin: "0 auto",
+                      top: { md: "70px", lg: "30px", xl: "40px" },
+                      justifyContent: "center",
+                      alignItems: "center",
+
+
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        margin: '0 auto',
+                        width: { xs: "100%", sm: "100%", md: "100%", lg: "100%", xl: "66%" },
+                        height: "100%",
+                        backgroundImage: `url(${Images.sliderFamily2})`,
+                        backgroundSize: "contain", 
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center",
+                        display: { xs: "block", sm: "block", md: "block", lg: "block", xl: "block" }, // Always visible, you can remove this line unless there’s a specific visibility control needed
+                      }}
+
+
+                    />
+
+                  </Grid>
+
+
+                  {/* <Grid
                     container
                     spacing={0}
                     sx={{
@@ -915,11 +992,11 @@ function About() {
                         />
                       </Grid>
                     ))}
-                  </Grid>
+                  </Grid> */}
 
 
 
-                  <Grid
+                  {/* <Grid
                     container
                     spacing={0}
                     sx={{
@@ -979,7 +1056,7 @@ function About() {
                         />
                       </Grid>
                     ))}
-                  </Grid>
+                  </Grid> */}
 
 
                 </Carousel>
