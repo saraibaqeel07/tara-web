@@ -1025,29 +1025,21 @@ function About() {
                   >
                     {sliderImages2.map((image, index) => (
                       <Grid
-                        md={2}
+                        lg={4}
+                        md={4}
+                        sm={4}
+                        xs={4}
                         item
                         key={index}
                         sx={{
-                          width: {
-                            xs: "calc(180% / 7)",
-                            sm: "calc(220% / 7)",
-                            md: "calc(100% / 7)",
-                            lg: "calc(100% / 7)",
-                          },
+                          width: '100%',
                           height: "100%",
                         }}
                       >
                         <Box
                           sx={{
-                            width: { md: "120%", sm: "120%" },
-                            height: {
-                              xl: "100%",
-                              lg: "100%",
-                              md: "100%",
-                              sm: "140%",
-                              xs: "150%"
-                            },
+                            width: '100%',
+                            height: '100%',
                             backgroundImage: `url(${image})`,
                             backgroundSize: "contain",
                             backgroundRepeat: "no-repeat",

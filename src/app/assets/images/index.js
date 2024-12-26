@@ -94,6 +94,7 @@ const Images = {
   rainbow: require("./rainbow.png"),
   pencil: require("./pencil.png"),
   hearts: require("./hearts.png"),
+  heart: require("./heart.png"),
   contactBrothers: require("./contactBrothers.png"),
   character11: require("./chacrter11.png"),
   character12: require("./character12.png"),
