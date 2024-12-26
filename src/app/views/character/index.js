@@ -150,7 +150,7 @@ function Character() {
   },
   {
     id: 3,
-    src: Images.character14, name: "Ahmed", comment: "loves to solve puzzles, creative mind."
+    src: Images.character14, name: "Ahmed", comment: "loves to solve puzzles, creative mindss."
   },
   {
     id: 4,
