@@ -98,7 +98,7 @@ const Images = {
   contactBrothers: require("./contactBrothers.png"),
   character11: require("./chacrter11.png"),
   character12: require("./character12.png"),
-  character13: require("./character13.png"),
+  character13: require("./Character2.png"),
   character14: require("./character14.png"),
   character15: require("./character15.png"),
   character16: require("./character16.png"),
