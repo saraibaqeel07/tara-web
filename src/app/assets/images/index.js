@@ -101,7 +101,7 @@ const Images = {
   character13: require("./characters13.png"),
   character14: require("./character14.png"),
   character15: require("./character15.png"),
-  character16: require("./character16.png"),
+  character16: require("./characters16.png"),
   character17: require("./characters17.png"),
   character18: require("./character18.png"),
   character19: require("./character19.png"),
