@@ -90,6 +90,10 @@ export const navigationNested = [
     name: "Blog"
   },
   {
+    path: "/event-show",
+    name: "Event Show"
+  },
+  {
     path: "/contact-us",
     name: "Contact us"
   },
