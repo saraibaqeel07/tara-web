@@ -304,14 +304,14 @@ function About() {
       logo: Images.logoShine,
       path: "/watch",
     },
-    // {
-    //   name: "Ahmed",
-    //   detail:
-    //     "Ahmed is Tara’s younger brother; he is 8 years old. Ahmed is very kind and helpful boy. He loves to play video games.",
-    //   image: Images.portfolio,
-    //   logo: Images.logoAhmed,
-    //   path: "/about",
-    // },
+    {
+      name: "Ahmed",
+      detail:
+        "Ahmed is Tara’s younger brother; he is 8 years old. Ahmed is very kind and helpful boy. He loves to play video games.",
+      image: Images.portfolio,
+      logo: Images.logoAhmed,
+      
+    },
     {
       name: "Laila",
       detail:
@@ -336,14 +336,14 @@ function About() {
       logo: Images.logoLaila,
       path: "/contact-us",
     },
-    // {
-    //   name: "Laila",
-    //   detail:
-    //     "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
-    //   image: Images.EventShow,
-    //   logo: Images.logoLaila,
-    //   path: "/event-show",
-    // },
+    {
+      name: "Laila",
+      detail:
+        "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
+      image: Images.EventShow,
+      logo: Images.logoLaila,
+      path: "/event-show",
+    },
     {
       name: "Laila",
       detail:
@@ -794,9 +794,7 @@ function About() {
                           py: { md: "300px", lg: "250px", sm: "0" },
                           px: { md: 2 ,xs:0, sm:0 },
                           display: "block",
-                          "@media (min-width: 1536px) and (max-width: 2200px)": {
-                            py: "200px",
-                          },
+                    
                         }}
                       />
 
@@ -808,6 +806,15 @@ function About() {
                   <Grid container sx={{
                     flexDirection: { sm: "column", xs: "column", md: "row" },
                     height: "100%",
+              width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
+              "@media (min-width: 1787px) and (max-width:2400px)": {
+
+                width: "80% !important",
+              },
+              "@media (min-width: 1536px) and (max-width:1787px)": {
+
+                width: "100% !important",
+              }
 
                   }}>
                     <Grid item md={6} sm={12} xs={12} sx={{
@@ -920,7 +927,7 @@ function About() {
                     container
                     spacing={0}
                     sx={{
-                      height: { md: "950px", lg: "850px", sm: "1300px", xs: "750px", },
+                      height: { md: "700px", lg: "550px", sm: "1120px", xs: "640px", },
                       overflow: "hidden",
                       flexWrap: "nowrap",
                       margin: "0 auto",
@@ -1562,7 +1569,11 @@ function About() {
                 key={i}
                 component={"div"}
                 sx={{ cursor: "pointer", mt: 4 }}
-                onClick={() => navigate(item?.path)}
+                onClick={() =>
+                  item.name === "Ahmed"
+                    ? window.open("https://www.instagram.com/shineswithtara/", "_blank")
+                    : navigate(item?.path)
+                }
                 item
                 md={4}
                 sm={4}

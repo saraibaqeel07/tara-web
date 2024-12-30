@@ -337,7 +337,7 @@ function Character() {
     },
     {
       name: "Onam",
-      email: "archiotshimo@gmail.com",
+      email: "onamdoesart@gmail.com ",
       profession: "Animator, Storyboard, Illustrator, Character",
       image: Images.storyBoard,
     },
@@ -537,7 +537,7 @@ function Character() {
           backgroundSize: "cover",
           backgroundPosition: "bottom center",
           width: "100%",
-          height: { md: "500px", xs: "300px", xl: "800px", sm: "350px" },
+          height: { md: "450px", xs: "300px", xl: "730px", sm: "350px" },
           position: "relative", // Ensure child content is positioned relative to this container
           overflow: "hidden", // Prevent content from going outside
         }}
@@ -548,7 +548,7 @@ function Character() {
             margin: { sm: "20px auto 0 auto", xs: "50px auto 0 auto" },
             width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
             height: "100%", // Full height of the parent container
-            backgroundImage: `url(${Images.mainCharacter})`,
+            backgroundImage: `url(${Images.sliderFamily2})`,
             backgroundSize: { md: "contain", xl: "contain", lg: "contain", xs: "contain", sm: "contain" },
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center", // Ensures the image is aligned at the bottom
