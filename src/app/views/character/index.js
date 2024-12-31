@@ -611,7 +611,7 @@ function Character() {
             }}
           >
             {" "}
-            charcter's
+            character's
           </span>
         </Typography>
 
@@ -671,7 +671,7 @@ function Character() {
                         <Box
                           sx={{
                             position: "absolute",
-                            top: "50px", // Ensures the message card appears at the top of the main background
+                            top: "50px", 
                             left: "50%",
                             transform: "translateX(-50%)",
                             padding: "7px",
@@ -682,7 +682,7 @@ function Character() {
                             justifyContent: "center",
                             alignItems: "center",
                             height: "auto",
-                            width: "100%",
+                            width: "260px",
                             zIndex: 1, // Ensure the message card appears above the background image
                           }}
                         >
