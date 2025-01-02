@@ -893,7 +893,7 @@ function About() {
                     container
                     spacing={0}
                     sx={{
-                      height: { md: "960px", lg: "850px", sm: "1300px", xs: "750px", },
+                      height: { md: "700px", lg: "550px", sm: "1120px", xs: "640px", },
                       overflow: "hidden",
                       flexWrap: "nowrap",
                       margin: "0 auto",
@@ -910,11 +910,10 @@ function About() {
                         width: { xs: "100%", sm: "100%", md: "100%", lg: "100%", xl: "66%" },
                         height: "100%",
                         backgroundImage: `url(${Images.sliderFamily1})`,
-                        backgroundSize:"contain",
+                        backgroundSize: "contain", 
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "center",
                         display: { xs: "block", sm: "block", md: "block", lg: "block", xl: "block" }, // Always visible, you can remove this line unless there’s a specific visibility control needed
-
                       }}
 
 
