@@ -10,6 +10,7 @@ import { CartCounter } from '../../Context/CartCounter'
 import { useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close';
 import taraImage from "../../assets/images/tara-pic.png"
+import moment from 'moment'
 
 function Contact() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -476,7 +477,7 @@ function Contact() {
                         Email : <span className='heading-font' style={{ color: '#FCAE32', textDecoration: 'underline' }}> shineswithtara@gmail.com</span>
                       </Typography>
                       <Typography className='para-text' sx={{ fontSize: '20px' }}>
-                        Copyright 2024 © All rights Reserved By Shine With Tara Design By Sana Kazmi
+                        Copyright {moment().format('YYYY')} © All rights Reserved By Shine With Tara Design By Sana Kazmi
                       </Typography>
                     </Box>
                   </Grid>
