@@ -702,7 +702,7 @@ function Watch() {
             backgroundSize: "cover",
             backgroundPosition: "bottom center",
             width: "100%",
-            height: { md: "520px", xs: "490px" },
+            height: { md: "520px", xs: "490px" ,xl:"730px" },
             position: "relative", // Ensure child content is positioned relative to this container
             overflow: "hidden", // Prevent content from going outside
           }}

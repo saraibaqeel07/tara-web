@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState ,} from "react";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate,useLocation } from "react-router-dom";
 import Layout from "./app/layout/web";
 import AdminLayout from "./app/layout/admin";
 import "@fontsource/poppins";
@@ -115,6 +115,15 @@ function App() {
   //   setTokenState(localStorage.getItem("token"))
 
   // }, [tokenState])
+  function ScrollToTop() {
+    const { pathname } = useLocation();
+    
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+  
+    return null;
+  }
 
   return (
     <PayPalScriptProvider options={initialOptions}>
@@ -124,7 +133,8 @@ function App() {
     <CartCounter.Provider value={{ count, setCount }}>
       <ToasterContainer/>
       <BrowserRouter>
-    
+      <ScrollToTop />
+
         <Routes>
           <Route path="/" element={<Layout />}>
             {Webroutes.map((item, i) => (

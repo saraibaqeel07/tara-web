@@ -8,7 +8,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import Colors from "../../styles/colors";
 import Fonts from "../../styles/fonts";
 import Images, {
@@ -55,6 +55,7 @@ function Character() {
 
   // // Firestore reference
   // const db = getFirestore(app);
+  const swiperRef = useRef(null);
 
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
@@ -619,59 +620,45 @@ function Character() {
           <Box sx={{ width: "100%", margin: "0 auto", overflowX: "visible" }}>
             <Grid item md={11} sm={11} xs={11} >
               <Swiper
-                style={{ display: 'flex', alignItems: 'flex-end' }}
+                ref={swiperRef}
+                style={{ display: "flex", alignItems: "flex-end" }}
                 loop={true}
                 spaceBetween={10}
                 slidesPerView={3}
                 autoplay={{
                   delay: 2500,
-                  disableOnInteraction: false,
+                  disableOnInteraction: false, 
                 }}
                 modules={[Autoplay, Pagination, Navigation]}
                 breakpoints={{
-                  300: {
-                    slidesPerView: 1,
-                    alignItems: "center"
-
-                  },
-                  460: {
-                    slidesPerView: 2,
-                    alignItems: "center"
-
-                  },
-                  786: {
-                    slidesPerView: 4, // Keep two cards for this range too
-
-                  },
-                  1080: {
-                    slidesPerView: 4, // For large screens
-                  },
-                  1700: {
-                    slidesPerView: 6, // For large screens
-                  },
+                  300: { slidesPerView: 1 },
+                  460: { slidesPerView: 2 },
+                  786: { slidesPerView: 4 },
+                  1080: { slidesPerView: 4 },
+                  1700: { slidesPerView: 6 },
                 }}
-                onSlideChange={() => console.log("slide change")}
-                onSwiper={(swiper) => console.log(swiper)}
+                onSlideChange={() => {
+                  if (swiperRef.current) {
+                    swiperRef.current.swiper.autoplay.start(); 
+                  }
+                }}
               >
                 {currentImages?.map((image, index) => (
                   <SwiperSlide key={index}>
                     <Box
                       key={index}
-
-
                       sx={{
                         position: "relative",
-                        width: '100%',
+                        width: "100%",
                         height: "auto",
-
                       }}
                     >
-                      {/* Message */}
+                      {/* Message Box */}
                       {showMessage && messageIndex === image.id && (
                         <Box
                           sx={{
                             position: "absolute",
-                            top: "50px", 
+                            top: "50px",
                             left: "50%",
                             transform: "translateX(-50%)",
                             padding: "7px",
@@ -683,10 +670,9 @@ function Character() {
                             alignItems: "center",
                             height: "auto",
                             width: "260px",
-                            zIndex: 1, // Ensure the message card appears above the background image
+                            zIndex: 1,
                           }}
                         >
-                          {/* Image Positioned Outside of Box */}
                           <Box
                             component="img"
                             src={Images.char13}
@@ -701,23 +687,20 @@ function Character() {
                               objectFit: "cover",
                             }}
                           />
-
-                          {/* Middle Dashed Border */}
                           <Box
                             sx={{
                               position: "relative",
                               padding: "7px",
                               backgroundColor: "orange",
-                              borderRadius: "40px 40px 40px 40px",
+                              borderRadius: "40px",
                               border: "4px dashed black",
                             }}
                           >
-                            {/* Inner Card */}
                             <Box
                               sx={{
                                 py: 1,
                                 px: 4,
-                                borderRadius: "30px 30px 30px 30px",
+                                borderRadius: "30px",
                                 display: "flex",
                                 flexDirection: "column",
                                 gap: "10px",
@@ -760,6 +743,7 @@ function Character() {
                           </Box>
                         </Box>
                       )}
+
                       {/* Background Image */}
                       <Box
                         component="img"
@@ -769,7 +753,6 @@ function Character() {
                           width: "100%",
                           height: "auto",
                           borderRadius: "8px",
-
                         }}
                       />
 
@@ -777,9 +760,8 @@ function Character() {
                       <Box
                         sx={{
                           position: "absolute",
-                          top: "50%", // Adjusted top position to make message appear at the top
+                          top: "50%",
                           left: "45%",
-
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "center",
@@ -787,12 +769,25 @@ function Character() {
                           cursor: "pointer",
                         }}
                         onClick={(e) => {
-                          e.stopPropagation(); // Prevent the parent click handler from firing
-                          setShowMessage(!showMessage);
-                          setMessageIndex(image.id);
+                          e.stopPropagation();
+                          
+                          if (showMessage) {
+                            setShowMessage(false);
+                            setMessageIndex(null);
+                            
+                            if (swiperRef.current) {
+                              swiperRef.current.swiper.autoplay.start();
+                            }
+                          } else {
+                            setShowMessage(true);
+                            setMessageIndex(image.id);
+                      
+                            if (swiperRef.current) {
+                              swiperRef.current.swiper.autoplay.stop();
+                            }
+                          }
                         }}
                       >
-                        {/* Add Icon */}
                         <Box
                           component="img"
                           src={Images.msgPic}
@@ -805,8 +800,6 @@ function Character() {
                             marginBottom: "10px",
                           }}
                         />
-
-
                       </Box>
                     </Box>
                   </SwiperSlide>
