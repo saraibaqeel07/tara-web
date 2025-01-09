@@ -819,7 +819,7 @@ function Shop() {
             backgroundSize: "cover",
             backgroundPosition: "bottom center",
             width: "100%",
-            height: { md: "578px", xs: "490px" ,xl:"730px" },
+            height: { md: "578px", xs: "490px", xl: "730px" },
             position: "relative", // Ensure child content is positioned relative to this container
             overflow: "hidden", // Prevent content from going outside
           }}
@@ -1328,7 +1328,6 @@ function Shop() {
                   ))}
                 </Box>
               </Box>
-
               {(activeButton === 0 || activeButton === 4) && (
                 <Container>
                   <Grid
@@ -1336,59 +1335,59 @@ function Shop() {
                     spacing={2}
                     justifyContent={"center"}
                     sx={{
-                      minHeight: "1000px", // Adjust this value based on your card size and rows
+                      minHeight: "1000px",
                       display: "flex",
                       alignItems:
                         loading || !delayPassed
                           ? "center"
                           : currentCards.length <= 2
-                            ? "center" // Center align when only 1 or 2 items
-                            : "flex-start", // Default alignment
+                            ? "center"
+                            : "flex-start",
                     }}
                   >
                     <Box
                       component={"img"}
-                      src={Images.pencil} // Replace with your image source
+                      src={Images.pencil}
                       alt="Decorative"
                       sx={{
                         position: "absolute",
-                        top: "450px", // Adjusted to move the image slightly higher
+                        top: "450px",
                         right: { md: 10, lg: 200 },
                         width: { lg: "80px", md: "70px" },
                         zIndex: 2,
-                        display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                        display: { xs: "none", sm: "none", md: "block" },
                       }}
                     />
                     <Box
                       component={"img"}
-                      src={Images.cuttingPapers} // Replace with your image source
+                      src={Images.cuttingPapers}
                       alt="Decorative"
                       sx={{
                         position: "absolute",
-                        bottom: "400px", // Adjusted to move the image slightly higher
+                        bottom: "400px",
                         right: { xl: 200, md: 10, lg: 20 },
                         width: { lg: "100px", md: "70px" },
                         zIndex: 2,
-                        display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                        display: { xs: "none", sm: "none", md: "block" },
                       }}
                     />
                     <Box
                       component={"img"}
-                      src={Images.reading} // Replace with your image source
+                      src={Images.reading}
                       alt="Decorative"
                       sx={{
                         position: "absolute",
-                        top: "100px", // Adjusted to move the image slightly higher
+                        top: "100px",
                         left: { md: 10, lg: 200 },
                         width: { lg: "100px", md: "70px" },
                         zIndex: 2,
-                        display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
-                        transform: "rotate(-25deg)"/* Rotates the image -45 degrees */
-
+                        display: { xs: "none", sm: "none", md: "block" },
+                        transform: "rotate(-25deg)",
                       }}
                     />
+
                     {loading || !delayPassed ? (
-                      // Loader view with delay
+                      // Show Loader
                       <Grid
                         item
                         xs={12}
@@ -1399,21 +1398,29 @@ function Shop() {
                           height: "455px",
                         }}
                       >
-                        <CircularProgress size={50} sx={{ color: "#5B73AD" }} />{" "}
-                        {/* Updated loader color */}
+                        <CircularProgress size={50} sx={{ color: "#ff9d04" }} />
+                      </Grid>
+                    ) : currentCards.length === 0 ? (
+                      // Show "No Data Available" Message
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "455px",
+                        }}
+                      >
+                        <Typography className="para-text" variant="h6" color="textSecondary" sx={{ fontSize: "25px", color: "white" }}>
+                          No Data Available
+                        </Typography>
                       </Grid>
                     ) : (
-                      // Cards view once data is loaded
-                      Array.isArray(currentCards) &&
+                      // Show Cards
                       currentCards.map((card, i) => (
                         <React.Fragment key={i}>
-                          <Grid
-                            className="product-card"
-                            md={5}
-                            sm={8}
-                            xs={12}
-                            item
-                          >
+                          <Grid className="product-card" md={5} sm={8} xs={12} item>
                             <Box
                               sx={{
                                 display: "flex",
@@ -1429,10 +1436,7 @@ function Shop() {
                                 sx={{
                                   width: "100%",
                                   height: card?.price !== 0 ? "400px" : "455px",
-                                  borderRadius:
-                                    card?.price !== 0
-                                      ? "20px 20px 0px 0px"
-                                      : "20px",
+                                  borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
                                   objectFit: "cover",
                                 }}
                               />
@@ -1446,22 +1450,10 @@ function Shop() {
                                     borderRadius: "0px 0px 20px 20px",
                                   }}
                                 >
-                                  <Typography
-                                    className="heading-font"
-                                    sx={{
-                                      textTransform: "uppercase",
-                                      fontSize: "20px",
-                                    }}
-                                  >
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
                                     {card?.name}
                                   </Typography>
-                                  <Typography
-                                    className="heading-font"
-                                    sx={{
-                                      textTransform: "uppercase",
-                                      fontSize: "20px",
-                                    }}
-                                  >
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
                                     $ {card?.price}
                                   </Typography>
                                 </Box>
@@ -1478,10 +1470,8 @@ function Shop() {
                                   addToCart(card);
                                 }}
                               >
-                                Add To Cart &nbsp;{" "}
-                                <ShoppingCartIcon
-                                  sx={{ cursor: "pointer", color: "white" }}
-                                />
+                                Add To Cart &nbsp;
+                                <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
                               </div>
                             )}
                           </Grid>
@@ -1490,18 +1480,21 @@ function Shop() {
                     )}
                   </Grid>
 
-                  {/* Pagination Controls */}
-                  <PageNavigator
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPrevPage={handlePrevPage}
-                    onNextPage={handleNextPage}
-                    onPageClick={handlePageClick}
-                    backwardArrow={backwardArrow}
-                    forwardArrow={forwardArrow}
-                  />
+                  {/* Pagination Controls (Only Show if Data is Available) */}
+                  {!loading && delayPassed && currentCards.length > 0 && (
+                    <PageNavigator
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPrevPage={handlePrevPage}
+                      onNextPage={handleNextPage}
+                      onPageClick={handlePageClick}
+                      backwardArrow={backwardArrow}
+                      forwardArrow={forwardArrow}
+                    />
+                  )}
                 </Container>
               )}
+
             </Box>
             {activeButton === 4 && (
               <Box
@@ -1570,7 +1563,7 @@ function Shop() {
                   sx={{
                     position: "absolute",
                     top: "1000px", // Adjusted to move the image slightly higher
-                    right: {xl:200, md: 10, lg: 20 },
+                    right: { xl: 200, md: 10, lg: 20 },
                     width: { lg: "100px", md: "70px" },
                     zIndex: 2,
                     display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
@@ -1607,10 +1600,7 @@ function Shop() {
                             : "flex-start", // Default alignment
                     }}
                   >
-                    {loading ||
-                      !delayPassed ||
-                      activityLoading ||
-                      !activityDelayPassed ? (
+                    {(loading || !delayPassed || activityLoading || !activityDelayPassed) ? (
                       // Loader view with delay
                       <Grid
                         item
@@ -1622,8 +1612,28 @@ function Shop() {
                           height: "455px",
                         }}
                       >
-                        <CircularProgress size={50} sx={{ color: "#F9BF29" }} />{" "}
-                        {/* Updated loader color */}
+                        <CircularProgress size={50} sx={{ color: "#F9BF29" }} /> {/* Updated loader color */}
+                      </Grid>
+                    ) : currentCards.length === 0 ? (
+                      // Show "No Data Available" Message
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "455px",
+                        }}
+                      >
+                        <Typography
+                          className="para-text"
+                          variant="h6"
+                          color="textSecondary"
+                          sx={{ fontSize: "25px", color: "white" }}
+                        >
+                          No Data Available
+                        </Typography>
                       </Grid>
                     ) : (
                       // Display activity cards
@@ -1695,9 +1705,7 @@ function Shop() {
                                 }}
                               >
                                 Add To Cart &nbsp;{" "}
-                                <ShoppingCartIcon
-                                  sx={{ cursor: "pointer", color: "white" }}
-                                />
+                                <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
                               </div>
                             )}
                           </Grid>
@@ -1707,18 +1715,21 @@ function Shop() {
                   </Grid>
 
                   {/* Pagination */}
-                  <PageNavigator
-                    currentPage={activityCurrentPage}
-                    totalPages={activityTotalPages}
-                    onPrevPage={handleActivityPrevPage}
-                    onNextPage={handleActivityNextPage}
-                    onPageClick={handleActivityPageClick}
-                    backwardArrow={backwardArrow}
-                    forwardArrow={forwardArrow}
-                  />
+                  {!loading && delayPassed && currentCards.length > 0 && (
+                    <PageNavigator
+                      currentPage={activityCurrentPage}
+                      totalPages={activityTotalPages}
+                      onPrevPage={handleActivityPrevPage}
+                      onNextPage={handleActivityNextPage}
+                      onPageClick={handleActivityPageClick}
+                      backwardArrow={backwardArrow}
+                      forwardArrow={forwardArrow}
+                    />
+                  )}
                 </Container>
               </Box>
             )}
+
 
             {activeButton === 4 && (
               <Box
@@ -1812,7 +1823,7 @@ function Shop() {
                     sx={{
                       position: "absolute",
                       top: "800px", // Adjusted to move the image slightly higher
-                      right: {xl:200, md: 10 },
+                      right: { xl: 200, md: 10 },
                       width: { lg: "100px", md: "70px" },
                       zIndex: 2,
                       display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
@@ -1849,6 +1860,22 @@ function Shop() {
                       >
                         <CircularProgress size={50} sx={{ color: "#5B73AD" }} />{" "}
                         {/* Updated loader color */}
+                      </Grid>
+                    ) : currentCards.length === 0 ? (
+                      // Show "No Data Available" Message
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "455px",
+                        }}
+                      >
+                        <Typography className="para-text" variant="h6" color="textSecondary" sx={{ fontSize: "25px", color: "white" }}>
+                          No Data Available
+                        </Typography>
                       </Grid>
                     ) : (
                       // Display coloring cards
@@ -1932,15 +1959,17 @@ function Shop() {
                   </Grid>
 
                   {/* Pagination */}
-                  <PageNavigator
-                    currentPage={coloringCurrentPage}
-                    totalPages={coloringTotalPages}
-                    onPrevPage={handleColoringPrevPage}
-                    onNextPage={handleColoringNextPage}
-                    onPageClick={handleColoringPageClick}
-                    backwardArrow={backwardArrow}
-                    forwardArrow={forwardArrow}
-                  />
+                  {!loading && delayPassed && currentCards.length > 0 && (
+                    <PageNavigator
+                      currentPage={coloringCurrentPage}
+                      totalPages={coloringTotalPages}
+                      onPrevPage={handleColoringPrevPage}
+                      onNextPage={handleColoringNextPage}
+                      onPageClick={handleColoringPageClick}
+                      backwardArrow={backwardArrow}
+                      forwardArrow={forwardArrow}
+                    />
+                  )}
                 </Container>
               </Box>
             )}
@@ -2024,7 +2053,7 @@ function Shop() {
                     sx={{
                       position: "absolute",
                       top: "10px", // Adjusted to move the image slightly higher
-                      left: { xl:200 ,md: "30px", lg: "60px" },
+                      left: { xl: 200, md: "30px", lg: "60px" },
                       width: { md: "60px", lg: "100px" },
                       zIndex: 2,
                       display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
@@ -2037,7 +2066,7 @@ function Shop() {
                     sx={{
                       position: "absolute",
                       top: "1000px", // Adjusted to move the image slightly higher
-                      right: {xl:200, md: 10, lg: 20 },
+                      right: { xl: 200, md: 10, lg: 20 },
                       width: { lg: "100px", md: "70px" },
                       zIndex: 2,
                       display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
@@ -2074,6 +2103,22 @@ function Shop() {
                       >
                         <CircularProgress size={50} sx={{ color: "#F9BF29" }} />{" "}
                         {/* Updated loader color */}
+                      </Grid>
+                    ) : currentCards.length === 0 ? (
+                      // Show "No Data Available" Message
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "455px",
+                        }}
+                      >
+                        <Typography className="para-text" variant="h6" color="textSecondary" sx={{ fontSize: "25px", color: "white" }}>
+                          No Data Available
+                        </Typography>
                       </Grid>
                     ) : (
                       // Display extra sheets cards
@@ -2157,15 +2202,17 @@ function Shop() {
                   </Grid>
 
                   {/* Pagination */}
-                  <PageNavigator
-                    currentPage={extraCurrentPage}
-                    totalPages={extraTotalPages}
-                    onPrevPage={handleExtraPrevPage}
-                    onNextPage={handleExtraNextPage}
-                    onPageClick={handleExtraPageClick}
-                    backwardArrow={backwardArrow}
-                    forwardArrow={forwardArrow}
-                  />
+                  {!loading && delayPassed && currentCards.length > 0 && (
+                    <PageNavigator
+                      currentPage={extraCurrentPage}
+                      totalPages={extraTotalPages}
+                      onPrevPage={handleExtraPrevPage}
+                      onNextPage={handleExtraNextPage}
+                      onPageClick={handleExtraPageClick}
+                      backwardArrow={backwardArrow}
+                      forwardArrow={forwardArrow}
+                    />
+                  )}
                 </Container>
               </Box>
             )}

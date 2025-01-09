@@ -690,7 +690,7 @@ function About() {
             background: Colors.primaryGradient,
             width: "100%",
             marginTop: "20px",
-            height: { xs: "400px", md: "0", sm: "700px", xl: "730px", lg: "550px" },
+            height: { xs: "400px", md: "0", sm: "700px", xl: "600px", lg: "500px" },
           }}
         >
           <Box
@@ -705,7 +705,7 @@ function About() {
           >
             <Box className="section-content" sx={{
               // width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
-              height: { xl: "730px", md: '550px', sm: '700px', xs: '400px' },
+              height: { xl: "600px", md: '550px', sm: '700px', xs: '400px',lg:"500px" },
             }}>
               <div className="slider">
                 <Carousel
@@ -753,7 +753,7 @@ function About() {
                           flexDirection: "column",
                           alignItems: "center",
                           gap: { md: "14px" },
-                          pt: { md: "300px", lg: "220px", sm: "240px", xs: "200px", xl: "320px" },
+                          pt: { md: "300px", lg: "220px", sm: "240px", xs: "200px", xl: "280px" },
                           px: { md: "48px", sm: "12px", xs: "12px" },
                           position: "relative",
                           width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' },
@@ -828,12 +828,12 @@ function About() {
                           backgroundSize: { md: "cover", xl: "contain", lg: "contain", xs: "contain", sm: "contain" },
                           backgroundRepeat: "no-repeat",
                           backgroundPosition: "center bottom",
-                          py: { md: "300px", lg: "270px", sm: "0", xl: "360px" },
+                          py: { md: "300px", lg: "270px", sm: "0", xl: "320px" },
                           px: { md: 2, xs: 0, sm: 0 },
                           display: "block",
-                          [theme.breakpoints.between(1536, 1700)]: {
-                            py: "320px !important",
-                          },
+                          // [theme.breakpoints.between(1536, 1700)]: {
+                          //   py: "320px !important",
+                          // },
                         })}
                       />
 
@@ -865,7 +865,7 @@ function About() {
                         flexDirection: "column",
                         alignItems: "flex-start",
                         gap: { sm: "24px", xs: "12px" },
-                        pt: { md: "90px", sm: "120px", xs: "97px", xl: "180px" },
+                        pt: { md: "90px", sm: "120px", xs: "97px", xl: "140px" },
                         px: { md: "48px", sm: "12px", xs: "12px" },
                         position: "relative",
                         width: { xl: '50%', lg: '90%', md: '100%', sm: '80%', xs: '90%' },
@@ -948,7 +948,7 @@ function About() {
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "center bottom",
                         display: "block",
-                        height: { md: "100%", sm: '700px', xs: '400px', xl: "750px", lg: "600px" },
+                        height: { md: "100%", sm: '700px', xs: '400px', xl: "600px", lg: "550px" },
                       }} />
                     </Grid>
                   </Grid>
@@ -960,29 +960,26 @@ function About() {
                     container
                     spacing={0}
                     sx={(theme) => ({
-                      height: { md: "700px", lg: "550px", sm: "1120px", xs: "640px", xl: "750px" },
+                      height: { md: "700px", lg: "550px", sm: "1120px", xs: "640px", xl: "610px" },
                       overflow: "hidden",
                       flexWrap: "nowrap",
                       margin: "0 auto",
                       top: { md: "70px", lg: "30px", xl: "40px" },
                       justifyContent: "center",
                       alignItems: "center",
-                      [theme.breakpoints.between(1536, 1700)]: {
-                        height: "1000px",
+                      [theme.breakpoints.between(1536, 1770)]: {
+                        height: "765px",
 
                       },
-                      [theme.breakpoints.between(2355, 2560)]: {
-                        height: "800px",
+                    
+                      [theme.breakpoints.between(1770, 2084)]: {
+                        height: "700px",
 
                       },
-                      [theme.breakpoints.between(2000, 2354)]: {
-                        height: "900px",
+                      // [theme.breakpoints.between(1700, 1999)]: {
+                      //   height: "970px",
 
-                      },
-                      [theme.breakpoints.between(1700, 1999)]: {
-                        height: "970px",
-
-                      },
+                      // },
                       [theme.breakpoints.between(1200, 1300)]: {
                         height: "580px",
 
@@ -1014,29 +1011,27 @@ function About() {
                     container
                     spacing={0}
                     sx={(theme) => ({
-                      height: { md: "700px", lg: "580px", sm: "1120px", xs: "640px", xl: "750px" },
+                      height: { md: "700px", lg: "580px", sm: "1120px", xs: "640px", xl: "610px" },
                       overflow: "hidden",
                       flexWrap: "nowrap",
                       margin: "0 auto",
                       top: { md: "70px", lg: "30px", xl: "40px" },
                       justifyContent: "center",
                       alignItems: "center",
-                      [theme.breakpoints.between(1536, 1700)]: {
-                        height: "1000px",
+                      [theme.breakpoints.between(1536, 1770)]: {
+                        height: "750px",
 
                       },
-                      [theme.breakpoints.between(2355, 2560)]: {
-                        height: "800px",
+                    
+                      [theme.breakpoints.between(1770, 2084)]: {
+                        height: "700px",
 
                       },
-                      [theme.breakpoints.between(2000, 2354)]: {
-                        height: "900px",
+                      // [theme.breakpoints.between(1700, 1999)]: {
+                      //   height: "970px",
 
-                      },
-                      [theme.breakpoints.between(1700, 1999)]: {
-                        height: "970px",
-
-                      },
+                      // },
+                     
                     })}
 
                   >
@@ -1287,117 +1282,110 @@ function About() {
           </Grid>
 
           {/* Paragraph and Image Section */}
-                   <Grid
-                container
+          <Grid
+            container
+            className="para-text"
+            sx={{
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+              gap: "20px",
+              width: "100%",
+            }}
+          >
+            {/* Left Side: Paragraph */}
+            <Grid
+              item
+              md={5}
+              xs={12}
+              sx={{
+                textAlign: "left",
+                paddingLeft: { lg: 6, md: 4, sm: 2, xs: 2 }, // Adjust padding based on screen size
+              }}
+            >
+              <Box
                 className="para-text"
                 sx={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  justifyContent: "space-between",
+                  textAlign: "left",
+                  padding: { lg: 6, md: 4, sm: 3, xs: 2 }, // Adjust padding
                   width: "100%",
-                  marginRight: 3, 
                 }}
               >
-                {/* Left Side: Paragraph */}
-                <Grid
-                  item
-                  md={5}
-                  xs={12}
+                <Typography
+                  className="para-text"
                   sx={{
-                    textAlign: "left",
-                    paddingLeft: { lg: 6, md: 4, sm: 2, xs: 2 }, 
-                    paddingRight: 0, 
+                    paddingBottom: 3,
+                    fontSize: { sm: "18px", xs: "16px", xl: "35px" },
                   }}
                 >
-                  <Box
-                    className="para-text"
-                    sx={{
-                      textAlign: "left",
-                      padding: { lg: 6, md: 4, sm: 3, xs: 2 }, 
-                      width: "100%",
-                    }}
-                  >
-                    <Typography
-                      className="para-text"
-                      sx={{
-                        paddingBottom: 3,
-                        fontSize: { sm: "18px", xs: "16px", xl: "35px" },
-                      }}
-                    >
-                      Welcome to "Shine with Tara"! ✨
-                    </Typography>
-                    <Typography
-                      className="para-text"
-                      sx={{
-                        paddingBottom: 2,
-                        fontSize: { sm: "18px", xs: "16px", xl: "35px" },
-                      }}
-                    >
-                      "Shine with Tara" is an enchanting Islamic cartoon series
-                      designed especially for Muslim children worldwide. At the
-                      heart of our stories is Tara, a delightful, adventurous
-                      character, and her imaginary friend Shine, a radiant companion
-                      who brings joy, curiosity, and wonder to every journey.
-                      Together, Tara and Shine travel through magical realms,
-                      bringing Islamic teachings to life in a way that captivates
-                      and inspires.
-                    </Typography>
-                    <Typography
-                      className="para-text"
-                      sx={{
-                        paddingBottom: 2,
-                        fontSize: { sm: "18px", xs: "16px", xl: "35px" },
-                      }}
-                    >
-                      Through each adventure, Tara and Shine explore timeless
-                      stories from the Qur'an, dive into the beautiful recitation of
-                      verses, and share the moral lessons of the Hadith. They weave
-                      essential values like kindness, courage, and the importance of
-                      family into every episode, making spiritual growth and
-                      character building both enjoyable and relatable for young
-                      minds.
-                    </Typography>
-                    <Typography
-                      className="para-text"
-                      sx={{
-                        paddingBottom: 5,
-                        fontSize: { sm: "18px", xs: "16px", xl: "40px" },
-                      }}
-                    >
-                      Join us as Tara and Shine illuminate the wonders of Islamic
-                      teachings, taking young viewers on a path filled with
-                      thrilling discoveries, heartfelt moments, and lessons that
-                      will stay with them for life. Perfect for nurturing your
-                      child’s faith, values, and character! 🌙
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid
-                  item
-                  md={7} 
-                  xs={12}
+                  Welcome to "Shine with Tara"! ✨
+                </Typography>
+                <Typography
+                  className="para-text"
                   sx={{
-                    textAlign: "left",
-                    backgroundImage: `url(${introImage})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    width: "100%",
-                    height: { xs: "575px", sm: "900px", md: "100%", lg: "100%", xl: '1800px' }, 
-
-                    '@media (min-width: 1700px)and (max-width:2150px)': {
-                      height: "1800px"
-                    },
-                    '@media (min-width: 1536px)and (max-width:1700px)': {
-                      height: "1850px"
-                    },
-                    '@media (min-width: 1300px)and (max-width:1535px)': {
-                      height: "980px"
-                    },
-                    display: "flex",
-                    alignItems: "flex-end", 
+                    paddingBottom: 2,
+                    fontSize: { sm: "18px", xs: "16px", xl: "35px" },
                   }}
-                />
-              </Grid>
+                >
+                  "Shine with Tara" is an enchanting Islamic cartoon series
+                  designed especially for Muslim children worldwide. At the
+                  heart of our stories is Tara, a delightful, adventurous
+                  character, and her imaginary friend Shine, a radiant companion
+                  who brings joy, curiosity, and wonder to every journey.
+                  Together, Tara and Shine travel through magical realms,
+                  bringing Islamic teachings to life in a way that captivates
+                  and inspires.
+                </Typography>
+                <Typography
+                  className="para-text"
+                  sx={{
+                    paddingBottom: 2,
+                    fontSize: { sm: "18px", xs: "16px", xl: "35px" },
+                  }}
+                >
+                  Through each adventure, Tara and Shine explore timeless
+                  stories from the Qur'an, dive into the beautiful recitation of
+                  verses, and share the moral lessons of the Hadith. They weave
+                  essential values like kindness, courage, and the importance of
+                  family into every episode, making spiritual growth and
+                  character building both enjoyable and relatable for young
+                  minds.
+                </Typography>
+                <Typography
+                  className="para-text"
+                  sx={{
+                    paddingBottom: 5,
+                    fontSize: { sm: "18px", xs: "16px", xl: "40px" },
+                  }}
+                >
+                  Join us as Tara and Shine illuminate the wonders of Islamic
+                  teachings, taking young viewers on a path filled with
+                  thrilling discoveries, heartfelt moments, and lessons that
+                  will stay with them for life. Perfect for nurturing your
+                  child’s faith, values, and character! 🌙
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+              sx={{
+                textAlign: "left",
+                backgroundImage: `url(${introImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                width: "100%",
+                height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: '1700px' }, // Adjust for small screens
+                '@media (min-width: 1536px)and (max-width:2150px)': {
+                  height: "1350px"
+                },
+                '@media (min-width: 1300px)and (max-width:1535px)': {
+                  height: "980px"
+                },
+              }}
+            />
+          </Grid>
         </Grid>
 
         <Grid
