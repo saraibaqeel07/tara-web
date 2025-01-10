@@ -186,6 +186,8 @@ sliderFamily2:require( "../../assets/images/slider-family2.png"),
 sliderFamily2:require( "../../assets/images/slider-family2.png"),
 eventPic:require( "../../assets/images/event-pic.png"),
 eventCharacters:require( "../../assets/images/event-characters.png"),
+vector:require( "../../assets/images/vector.png"),
+vectorStarFrame:require( "../../assets/images/vector-star-frame.png"),
 
 
 
