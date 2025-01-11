@@ -525,7 +525,7 @@ function FAQ() {
                             </Button>
                           </Grid>
                           <Grid item md={2}>
-                            <Button href='https://www.instagram.com/shineswithtara/ '>
+                            <Button href='https://www.instagram.com/shinewith.tara/ '>
                               <InstagramRounded />
                             </Button>
                           </Grid>

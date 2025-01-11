@@ -145,7 +145,7 @@ const BlogDetail = () => {
                                     width: "40px",
                                 }}
                                 component="a"
-                                href="https://www.instagram.com/shineswithtara/"
+                                href="https://www.instagram.com/shinewith.tara/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >

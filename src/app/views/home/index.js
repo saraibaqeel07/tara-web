@@ -751,7 +751,7 @@ function Home() {
                     <Button href="https://www.facebook.com/profile.php?id=61554711500749">
                       <FacebookRounded />
                     </Button>
-                    <Button href="https://www.instagram.com/shineswithtara/">
+                    <Button href="https://www.instagram.com/shinewith.tara/">
                       <InstagramRounded />
                     </Button>
                     <Button href="https://www.youtube.com/@Shinewithtara">

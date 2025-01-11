@@ -937,7 +937,7 @@ function About() {
                           pb: "60px",
                         }}>
                           <Button href="https://www.facebook.com/profile.php?id=61554711500749"><FacebookRounded /></Button>
-                          <Button href="https://www.instagram.com/shineswithtara/"><InstagramRounded /></Button>
+                          <Button href="https://www.instagram.com/shinewith.tara/"><InstagramRounded /></Button>
                           <Button href="https://www.youtube.com/@Shinewithtara"><YoutubeRounded /></Button>
                           <Button href="https://www.tiktok.com/@shinewithtara"><TiktokRounded /></Button>
                         </Box>
@@ -1744,7 +1744,7 @@ function About() {
                 sx={{ cursor: "pointer", mt: 4 }}
                 onClick={() =>
                   item.name === "Ahmed"
-                    ? window.open("https://www.instagram.com/shineswithtara/", "_blank")
+                    ? window.open("https://www.instagram.com/shinewith.tara/", "_blank")
                     : navigate(item?.path)
                 }
                 item

@@ -59,7 +59,7 @@ function Footer() {
     <Facebook href='https://www.facebook.com/profile.php?id=61554711500749' />
   </IconButton>
   <IconButton sx={{ p: 0, color: "#6791DE" }}>
-    <Instagram href='https://www.instagram.com/shineswithtara/' />
+    <Instagram href='https://www.instagram.com/shinewith.tara/' />
   </IconButton>
   <IconButton sx={{ p: 0, color: "#6791DE" }}>
     <Tiktok href='https://www.tiktok.com/@shinewithtara' />
