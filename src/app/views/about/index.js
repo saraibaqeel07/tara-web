@@ -1231,6 +1231,13 @@ function About() {
                     sm: "80px",
                     xs: "60px",
                   },
+                  display: {
+                    xl: "flex",
+                    lg: "flex",
+                    md: "flex",
+                    sm: "flex",
+                    xs: "none",
+                  },
                   backgroundImage: `url(${taraImage})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
@@ -1262,16 +1269,26 @@ function About() {
                   WebkitTextFillColor: "#F9BF29",
                 }}
               >
-                <span>Introducing</span>
-                <span
-                  style={{
+                <Box component={'span'} sx={{fontSize:{ xl: "140px",
+                    lg: "90px",
+                    md: "70px",
+                    sm: "45px",
+                    xs: "25px",}}} >Introducing</Box>
+                <Box
+                component={'span'}
+                  sx={{
                     display: "block",
                     WebkitTextStroke: "1px white",
                     WebkitTextFillColor: "#4FAAFB",
+                    fontSize:{ xl: "140px",
+                      lg: "90px",
+                      md: "70px",
+                      sm: "45px",
+                      xs: "25px",}
                   }}
                 >
                   Tara and Shine
-                </span>
+                </Box>
               </Typography>
             </Box>
           </Grid>
@@ -1373,7 +1390,7 @@ function About() {
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
-            height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: '1700px' },
+            height: { xs: "420px", sm: "900px", md: "100%", lg: "100%", xl: '1700px' },
             '@media (min-width: 1536px)and (max-width:2150px)': {
               height: "1350px"
             },
