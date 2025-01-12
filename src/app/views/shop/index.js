@@ -669,143 +669,7 @@ function Shop() {
   return (
     <>
       {" "}
-      <div>
-        <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-          <Box sx={{ width: 400, padding: 2 }} role="presentation">
-            {console.log(cartItems)}
-            <Box display="flex" flexWrap="wrap">
-              {cartItems?.length > 0 ? (
-                cartItems?.map((product, index) => (
-                  <React.Fragment key={index}>
-                    <Box
-                      onClick={() => {
-                        const updatedData = cartItems.filter(
-                          (item) => product.id != item.id
-                        );
-                        const totalPrice = updatedData.reduce((total, item) => {
-                          return total + parseFloat(item.price) * item.quantity;
-                        }, 0);
-                        setTotalAmount(totalPrice);
-                        setCartItems(updatedData);
-                        setCount(updatedData?.length);
-                        localStorage.setItem(
-                          "cartData",
-                          JSON.stringify(updatedData)
-                        );
-                      }}
-                      sx={{ color: "black", cursor: "pointer" }}
-                    >
-                      <CloseIcon />
-                    </Box>
-                    <Box
-                      sx={{
-                        height: 100,
-                        display: "flex",
-                        padding: 2,
-                        textAlign: "center",
-                      }}
-                    >
-                      <img
-                        src={product.imgUrl}
-                        alt={product.name}
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          objectFit: "cover",
-                        }}
-                      />
-                      <Typography
-                        sx={{
-                          fontSize: "12px",
-                          color: "black",
-                          width: "100px",
-                        }}
-                        variant="h6"
-                      >
-                        {product.name}
-                      </Typography>
-                      <Typography
-                        sx={{ fontSize: "12px", color: "black" }}
-                        variant="body1"
-                      >
-                        ${product.price}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: "12px",
-                          color: "black",
-                          width: "50px",
-                          fontWeight: "bold",
-                        }}
-                        variant="body1"
-                      >
-                        $
-                        {product.quantity
-                          ? product.quantity * product.price
-                          : 1 * product.price}
-                      </Typography>
-                      <Box
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        sx={{ width: "10px" }}
-                        marginTop={1}
-                      >
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          onClick={() => handleDecrement(product.id)}
-                        >
-                          -
-                        </Button>
-                        <Typography
-                          sx={{ fontSize: "12px", color: "black" }}
-                          variant="body1"
-                          marginX={2}
-                        >
-                          {product.quantity ? product.quantity : 1}
-                        </Typography>
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          onClick={() => handleIncrement(product.id)}
-                        >
-                          +
-                        </Button>
-                      </Box>
-                    </Box>
-                    <Divider />
-                  </React.Fragment>
-                ))
-              ) : (
-                <Box
-                  sx={{ color: "black", fontWeight: "bold", margin: "0 auto" }}
-                >
-                  No Items in Cart
-                </Box>
-              )}
-            </Box>
-            <Box
-              sx={{
-                color: "black",
-                fontSize: "27px",
-                textAlign: "center",
-                fontFamily: Fonts.righteous,
-              }}
-            >
-              Sub Total : $ {totalAmount}
-            </Box>
-          </Box>
-          <Button
-            sx={{ width: "90%", textAlign: "center", margin: "0 auto" }}
-            variant="contained"
-            color="secondary"
-            onClick={() => navigate(`/order`, { state: cartItems })}
-          >
-            CheckOut
-          </Button>
-        </Drawer>
-      </div>
+      
       <Box
         component={"main"}
         sx={{
@@ -1420,7 +1284,7 @@ function Shop() {
                       // Show Cards
                       currentCards.map((card, i) => (
                         <React.Fragment key={i}>
-                          <Grid className="product-card" md={5} sm={8} xs={12} item>
+                          <Grid className="product-card" lg={5} md={5} sm={11} xs={11} item>
                             <Box
                               sx={{
                                 display: "flex",
@@ -1435,9 +1299,9 @@ function Shop() {
                                 src={card?.imgUrl}
                                 sx={{
                                   width: "100%",
-                                  height: card?.price !== 0 ? "400px" : "455px",
-                                  borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px",
-                                  objectFit: "cover",
+                                  height: card?.price !== 0 ? "455px" : "455px",
+                                  borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px 20px 0px 0px",
+                            
                                 }}
                               />
                               {card?.price !== 0 && (
@@ -1640,7 +1504,7 @@ function Shop() {
                       Array.isArray(activityCurrentProducts) &&
                       activityCurrentProducts.map((card, i) => (
                         <React.Fragment key={i}>
-                          <Grid className="product-card" md={5} item>
+                           <Grid className="product-card" lg={5} md={5} sm={11} xs={11} item>
                             <Box
                               sx={{
                                 display: "flex",
@@ -1654,12 +1518,10 @@ function Shop() {
                                 component={"img"}
                                 src={card?.imgUrl}
                                 sx={{
-                                  height: card?.price !== 0 ? "400px" : "455px",
-                                  borderRadius:
-                                    card?.price !== 0
-                                      ? "20px 20px 0px 0px"
-                                      : "20px",
-                                  objectFit: "cover",
+                                  width: "100%",
+                                  height: card?.price !== 0 ? "455px" : "455px",
+                                  borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px 20px 0px 0px",
+                            
                                 }}
                               />
                               {card?.price !== 0 && (
@@ -1672,22 +1534,10 @@ function Shop() {
                                     borderRadius: "0px 0px 20px 20px",
                                   }}
                                 >
-                                  <Typography
-                                    className="heading-font"
-                                    sx={{
-                                      textTransform: "uppercase",
-                                      fontSize: "20px",
-                                    }}
-                                  >
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
                                     {card?.name}
                                   </Typography>
-                                  <Typography
-                                    className="heading-font"
-                                    sx={{
-                                      textTransform: "uppercase",
-                                      fontSize: "20px",
-                                    }}
-                                  >
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
                                     $ {card?.price}
                                   </Typography>
                                 </Box>
@@ -1704,7 +1554,7 @@ function Shop() {
                                   addToCart(card);
                                 }}
                               >
-                                Add To Cart &nbsp;{" "}
+                                Add To Cart &nbsp;
                                 <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
                               </div>
                             )}
@@ -1882,7 +1732,7 @@ function Shop() {
                       Array.isArray(displayedColoringSheets) &&
                       displayedColoringSheets.map((card, i) => (
                         <React.Fragment key={i}>
-                          <Grid className="product-card" md={5} item>
+                           <Grid className="product-card" lg={5} md={5} sm={11} xs={11} item>
                             <Box
                               sx={{
                                 display: "flex",
@@ -1896,12 +1746,10 @@ function Shop() {
                                 component={"img"}
                                 src={card?.imgUrl}
                                 sx={{
-                                  height: card?.price !== 0 ? "400px" : "455px",
-                                  borderRadius:
-                                    card?.price !== 0
-                                      ? "20px 20px 0px 0px"
-                                      : "20px",
-                                  objectFit: "cover",
+                                  width: "100%",
+                                  height: card?.price !== 0 ? "455px" : "455px",
+                                  borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px 20px 0px 0px",
+                            
                                 }}
                               />
                               {card?.price !== 0 && (
@@ -1914,22 +1762,10 @@ function Shop() {
                                     borderRadius: "0px 0px 20px 20px",
                                   }}
                                 >
-                                  <Typography
-                                    className="heading-font"
-                                    sx={{
-                                      textTransform: "uppercase",
-                                      fontSize: "20px",
-                                    }}
-                                  >
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
                                     {card?.name}
                                   </Typography>
-                                  <Typography
-                                    className="heading-font"
-                                    sx={{
-                                      textTransform: "uppercase",
-                                      fontSize: "20px",
-                                    }}
-                                  >
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
                                     $ {card?.price}
                                   </Typography>
                                 </Box>
@@ -1946,10 +1782,8 @@ function Shop() {
                                   addToCart(card);
                                 }}
                               >
-                                Add To Cart &nbsp;{" "}
-                                <ShoppingCartIcon
-                                  sx={{ cursor: "pointer", color: "white" }}
-                                />
+                                Add To Cart &nbsp;
+                                <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
                               </div>
                             )}
                           </Grid>
@@ -2125,7 +1959,7 @@ function Shop() {
                       Array.isArray(extraCurrentProducts) &&
                       extraCurrentProducts.map((card, i) => (
                         <React.Fragment key={i}>
-                          <Grid className="product-card" md={5} item>
+                           <Grid className="product-card" lg={5} md={5} sm={11} xs={11} item>
                             <Box
                               sx={{
                                 display: "flex",
@@ -2139,12 +1973,10 @@ function Shop() {
                                 component={"img"}
                                 src={card?.imgUrl}
                                 sx={{
-                                  height: card?.price !== 0 ? "400px" : "455px",
-                                  borderRadius:
-                                    card?.price !== 0
-                                      ? "20px 20px 0px 0px"
-                                      : "20px",
-                                  objectFit: "cover",
+                                  width: "100%",
+                                  height: card?.price !== 0 ? "455px" : "455px",
+                                  borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px 20px 0px 0px",
+                            
                                 }}
                               />
                               {card?.price !== 0 && (
@@ -2157,22 +1989,10 @@ function Shop() {
                                     borderRadius: "0px 0px 20px 20px",
                                   }}
                                 >
-                                  <Typography
-                                    className="heading-font"
-                                    sx={{
-                                      textTransform: "uppercase",
-                                      fontSize: "20px",
-                                    }}
-                                  >
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
                                     {card?.name}
                                   </Typography>
-                                  <Typography
-                                    className="heading-font"
-                                    sx={{
-                                      textTransform: "uppercase",
-                                      fontSize: "20px",
-                                    }}
-                                  >
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
                                     $ {card?.price}
                                   </Typography>
                                 </Box>
@@ -2189,10 +2009,8 @@ function Shop() {
                                   addToCart(card);
                                 }}
                               >
-                                Add To Cart &nbsp;{" "}
-                                <ShoppingCartIcon
-                                  sx={{ cursor: "pointer", color: "white" }}
-                                />
+                                Add To Cart &nbsp;
+                                <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
                               </div>
                             )}
                           </Grid>

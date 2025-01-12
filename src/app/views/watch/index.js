@@ -959,7 +959,7 @@ function Watch() {
                       flexDirection: "column",
                       backgroundColor: "transparent", // Change background color on active slide
                       transition: "background-color 0.3s ease", // Smooth transition for background color
-                      maxWidth: { xs: "90%", sm: "500px", md: "600px", xl: "800px" }, // Adjust widths for responsive breakpoints
+                      maxWidth: { xs: "100%", sm: "500px", md: "600px", xl: "800px" }, // Adjust widths for responsive breakpoints
                       mx: "auto", // Center cards horizontally
                     }}
                     component={"div"}
@@ -974,7 +974,7 @@ function Watch() {
                         objectFit: { xl: "contain" },
                         borderTopLeftRadius: "20px",
                         borderTopRightRadius: "20px",
-                        maxWidth: { xs: "90%", sm: "500px", md: "600px", xl: "800px" }, // Adjust widths for responsive breakpoints
+                        maxWidth: { xs: "100%", sm: "500px", md: "600px", xl: "800px" }, // Adjust widths for responsive breakpoints
                       }}
                     />
                     <Box
@@ -1076,7 +1076,7 @@ function Watch() {
                     lg: "70px",
                     md: "60px",
                     sm: "50px",
-                    xs: "40px",
+                    xs: "30px",
                   }, // Responsive font size
                   fontWeight: 600,
                   color: "#F9BF29",

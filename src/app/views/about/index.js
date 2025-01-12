@@ -66,8 +66,7 @@ import starImg from "../../assets/images/star.png";
 import rainbowImg from "../../assets/images/rainbow.png";
 import haveforyou from "../../assets/images/haveforyou.png";
 import shopFrame from "../../assets/images/Shop-Frame.png";
-import Aos from "aos";
-import "aos/dist/aos.css";
+
 
 // import "slick-carousel/slick/slick-theme.css";
 
@@ -89,7 +88,7 @@ function About() {
   }, []);
 
   const { state } = useLocation();
-  Aos.init();
+
 
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
@@ -525,14 +524,7 @@ function About() {
       }
     }
   }, []);
-  useEffect(() => {
-    Aos.init({
-      duration: 1000, // Animation duration
-      easing: "ease-in-out", // Easing option
-      once: false, // Whether animation should happen only once
-      mirror: false, // Whether elements should animate out while scrolling past them
-    });
-  }, []);
+
 
   useEffect(() => {
     setOpen(cartVisible);

@@ -474,7 +474,7 @@ function Contact() {
                       sx={{ display: "flex", flexDirection: "column" }}
                     >
                       <Typography className='para-text' sx={{ fontSize: '20px' }}>
-                        Email : <span className='heading-font' style={{ color: '#FCAE32', textDecoration: 'underline' }}> shineswithtara@gmail.com</span>
+                        Email : <Box component={'span'} className='heading-font' sx={{ color: '#FCAE32', textDecoration: 'underline',fontSize: {lg:'20px',md:'20px',sm:'20px',xs:'14px'} }}> shineswithtara@gmail.com</Box>
                       </Typography>
                       <Typography className='para-text' sx={{ fontSize: '20px' }}>
                         Copyright {moment().format('YYYY')} © All rights Reserved By Shine With Tara Design By Sana Kazmi
