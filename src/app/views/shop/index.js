@@ -669,7 +669,7 @@ function Shop() {
   return (
     <>
       {" "}
-      
+
       <Box
         component={"main"}
         sx={{
@@ -1193,7 +1193,7 @@ function Shop() {
                 </Box>
               </Box>
               {(activeButton === 0 || activeButton === 4) && (
-                <Container>
+                <Container sx={{ px: { sm: '0px !important', xs: '0px !important' }, }}>
                   <Grid
                     container
                     spacing={2}
@@ -1207,6 +1207,9 @@ function Shop() {
                           : currentCards.length <= 2
                             ? "center"
                             : "flex-start",
+
+
+
                     }}
                   >
                     <Box
@@ -1301,7 +1304,7 @@ function Shop() {
                                   width: "100%",
                                   height: card?.price !== 0 ? "455px" : "455px",
                                   borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px 20px 0px 0px",
-                            
+
                                 }}
                               />
                               {card?.price !== 0 && (
@@ -1315,7 +1318,7 @@ function Shop() {
                                   }}
                                 >
                                   <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
-                                    {card?.name}
+                                    {card?.name}ss
                                   </Typography>
                                   <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
                                     $ {card?.price}
@@ -1346,15 +1349,19 @@ function Shop() {
 
                   {/* Pagination Controls (Only Show if Data is Available) */}
                   {!loading && delayPassed && currentCards.length > 0 && (
-                    <PageNavigator
-                      currentPage={currentPage}
-                      totalPages={totalPages}
-                      onPrevPage={handlePrevPage}
-                      onNextPage={handleNextPage}
-                      onPageClick={handlePageClick}
-                      backwardArrow={backwardArrow}
-                      forwardArrow={forwardArrow}
-                    />
+                    <>
+                      <Box sx={{ width: '90%', margin: '0  auto' }}>
+                        <PageNavigator
+                          currentPage={currentPage}
+                          totalPages={totalPages}
+                          onPrevPage={handlePrevPage}
+                          onNextPage={handleNextPage}
+                          onPageClick={handlePageClick}
+                          backwardArrow={backwardArrow}
+                          forwardArrow={forwardArrow}
+                        />
+                      </Box>
+                    </>
                   )}
                 </Container>
               )}
@@ -1504,7 +1511,7 @@ function Shop() {
                       Array.isArray(activityCurrentProducts) &&
                       activityCurrentProducts.map((card, i) => (
                         <React.Fragment key={i}>
-                           <Grid className="product-card" lg={5} md={5} sm={11} xs={11} item>
+                          <Grid className="product-card" lg={5} md={5} sm={11} xs={11} item>
                             <Box
                               sx={{
                                 display: "flex",
@@ -1521,7 +1528,7 @@ function Shop() {
                                   width: "100%",
                                   height: card?.price !== 0 ? "455px" : "455px",
                                   borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px 20px 0px 0px",
-                            
+
                                 }}
                               />
                               {card?.price !== 0 && (
@@ -1566,15 +1573,18 @@ function Shop() {
 
                   {/* Pagination */}
                   {!loading && delayPassed && currentCards.length > 0 && (
-                    <PageNavigator
-                      currentPage={activityCurrentPage}
-                      totalPages={activityTotalPages}
-                      onPrevPage={handleActivityPrevPage}
-                      onNextPage={handleActivityNextPage}
-                      onPageClick={handleActivityPageClick}
-                      backwardArrow={backwardArrow}
-                      forwardArrow={forwardArrow}
-                    />
+                    <Box sx={{ width: '90%', margin: '0  auto' }}>
+                      <PageNavigator
+                        currentPage={activityCurrentPage}
+                        totalPages={activityTotalPages}
+                        onPrevPage={handleActivityPrevPage}
+                        onNextPage={handleActivityNextPage}
+                        onPageClick={handleActivityPageClick}
+                        backwardArrow={backwardArrow}
+                        forwardArrow={forwardArrow}
+                      />
+                    </Box>
+
                   )}
                 </Container>
               </Box>
@@ -1732,7 +1742,7 @@ function Shop() {
                       Array.isArray(displayedColoringSheets) &&
                       displayedColoringSheets.map((card, i) => (
                         <React.Fragment key={i}>
-                           <Grid className="product-card" lg={5} md={5} sm={11} xs={11} item>
+                          <Grid className="product-card" lg={5} md={5} sm={11} xs={11} item>
                             <Box
                               sx={{
                                 display: "flex",
@@ -1749,7 +1759,7 @@ function Shop() {
                                   width: "100%",
                                   height: card?.price !== 0 ? "455px" : "455px",
                                   borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px 20px 0px 0px",
-                            
+
                                 }}
                               />
                               {card?.price !== 0 && (
@@ -1794,15 +1804,18 @@ function Shop() {
 
                   {/* Pagination */}
                   {!loading && delayPassed && currentCards.length > 0 && (
-                    <PageNavigator
-                      currentPage={coloringCurrentPage}
-                      totalPages={coloringTotalPages}
-                      onPrevPage={handleColoringPrevPage}
-                      onNextPage={handleColoringNextPage}
-                      onPageClick={handleColoringPageClick}
-                      backwardArrow={backwardArrow}
-                      forwardArrow={forwardArrow}
-                    />
+                    <Box sx={{ width: '90%', margin: '0  auto' }}>
+                      <PageNavigator
+                        currentPage={coloringCurrentPage}
+                        totalPages={coloringTotalPages}
+                        onPrevPage={handleColoringPrevPage}
+                        onNextPage={handleColoringNextPage}
+                        onPageClick={handleColoringPageClick}
+                        backwardArrow={backwardArrow}
+                        forwardArrow={forwardArrow}
+                      />
+                    </Box>
+
                   )}
                 </Container>
               </Box>
@@ -1959,7 +1972,7 @@ function Shop() {
                       Array.isArray(extraCurrentProducts) &&
                       extraCurrentProducts.map((card, i) => (
                         <React.Fragment key={i}>
-                           <Grid className="product-card" lg={5} md={5} sm={11} xs={11} item>
+                          <Grid className="product-card" lg={5} md={5} sm={11} xs={11} item>
                             <Box
                               sx={{
                                 display: "flex",
@@ -1976,7 +1989,7 @@ function Shop() {
                                   width: "100%",
                                   height: card?.price !== 0 ? "455px" : "455px",
                                   borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px 20px 0px 0px",
-                            
+
                                 }}
                               />
                               {card?.price !== 0 && (
@@ -2021,15 +2034,18 @@ function Shop() {
 
                   {/* Pagination */}
                   {!loading && delayPassed && currentCards.length > 0 && (
-                    <PageNavigator
-                      currentPage={extraCurrentPage}
-                      totalPages={extraTotalPages}
-                      onPrevPage={handleExtraPrevPage}
-                      onNextPage={handleExtraNextPage}
-                      onPageClick={handleExtraPageClick}
-                      backwardArrow={backwardArrow}
-                      forwardArrow={forwardArrow}
-                    />
+                    <Box sx={{ width: '90%', margin: '0  auto' }}>
+                      <PageNavigator
+                        currentPage={extraCurrentPage}
+                        totalPages={extraTotalPages}
+                        onPrevPage={handleExtraPrevPage}
+                        onNextPage={handleExtraNextPage}
+                        onPageClick={handleExtraPageClick}
+                        backwardArrow={backwardArrow}
+                        forwardArrow={forwardArrow}
+                      />
+                    </Box>
+
                   )}
                 </Container>
               </Box>
