@@ -443,7 +443,7 @@ const EventShow = () => {
 
           </Typography>
           <Grid container spacing={2}>
-{/* 
+
             {videos.map((video, index) => (
               <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                 <Box sx={{ position: 'relative', paddingTop: '56.25%' }}>
@@ -466,7 +466,7 @@ const EventShow = () => {
                 </Box>
 
               </Grid>
-            ))} */}
+            ))}
           </Grid>
         </Box>
         {/* Bottom images */}
