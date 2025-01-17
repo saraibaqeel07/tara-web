@@ -79,7 +79,7 @@ const Images = {
   ali: require("./ali.jpg"),
   annie: require("./annie.jpg"),
   grandma: require("./grandma.jpg"),
-  Shop: require("./shop.webp"),
+  Shop: require("./Shop-Frame.webp"),
   character: require("./characters.webp"),
   faq: require("./FAQ.webp"),
   test: require("./hometest.jpg"),
