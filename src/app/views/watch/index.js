@@ -27,6 +27,7 @@ import "../../../App.css";
 import Fonts from "../../styles/fonts";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { isIOS, isMobile } from 'react-device-detect';
 import {
   collection,
   addDoc,
@@ -702,7 +703,7 @@ function Watch() {
             backgroundSize: "cover",
             backgroundPosition: "bottom center",
             width: "100%",
-            height: { md: "520px", xs: "490px" ,xl:"730px" },
+            height: { md: "520px", xs: "490px", xl: "730px" },
             position: "relative", // Ensure child content is positioned relative to this container
             overflow: "hidden", // Prevent content from going outside
           }}
@@ -991,7 +992,7 @@ function Watch() {
                         overflow: "hidden",
                       }}
                     >
-                      <Typography className="heading-font" sx={{ color: "#fff" ,fontSize:{xl:"20px"} }}>
+                      <Typography className="heading-font" sx={{ color: "#fff", fontSize: { xl: "20px" } }}>
                         {item.title}
                       </Typography>
                     </Box>
@@ -1300,7 +1301,7 @@ function Watch() {
             sx={{
               position: "absolute",
               bottom: 0,
-              left: { xl: 280, lg: 0, md: -50, xs: 0, sm: 0 },
+              left: isIOS && isMobile ? -60 : { xl: 280, lg: 0, md: -50, xs: 0, sm: 0 },
               zIndex: 0,
               display: "block",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
@@ -1312,9 +1313,10 @@ function Watch() {
               component={"img"}
               src={Images.Character3}
               sx={{
-                width: "100%", // Adjust width for smaller screens
-                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
-                objectFit: "cover",
+                width: isIOS && isMobile ? "80%" : "100%",
+                height: isIOS && isMobile ? "220px" : { xs: "180px", sm: "180px", md: "500px" },
+                objectFit: isIOS && isMobile ? "contain" : "cover",
+
               }}
             />
           </Box>
@@ -1324,7 +1326,7 @@ function Watch() {
             sx={{
               position: "absolute",
               bottom: 0,
-              right: { xs: "0", xl: 260, md: -50 },
+              right: isIOS && isMobile ? -190 : { xs: "0", xl: 260, md: -50 },
               zIndex: 0,
               display: "block",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
@@ -1336,9 +1338,10 @@ function Watch() {
               component={"img"}
               src={Images.Character4}
               sx={{
-                width: "100%", // Adjust width for smaller screens
-                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
-                objectFit: "cover",
+                width: "100%",
+                height: isIOS && isMobile ? "220px" : { xs: "180px", sm: "180px", md: "500px" }, 
+                objectFit: isIOS && isMobile ? "contain" : "cover",
+
               }}
             />
           </Box>

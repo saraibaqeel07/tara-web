@@ -38,6 +38,7 @@ import {
   where,
   deleteDoc,
 } from "firebase/firestore";
+import { isIOS, isMobile } from 'react-device-detect';
 import ProductModal from "../modal/ProductModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -2214,7 +2215,7 @@ function Shop() {
                 sx={{
                   position: "absolute",
                   bottom: 0,
-                  left: { xl: 230, lg: 0, md: 0, xs: 0, sm: 0 },
+                  left: isIOS && isMobile ? -60 : { xl: 230, lg: 0, md: 0, xs: 0, sm: 0 },
                   zIndex: 0,
                   display: "block",
                   "@media (min-width: 1536px) and (max-width: 2200px)": {
@@ -2227,9 +2228,9 @@ function Shop() {
                   component={"img"}
                   src={Images.Character1}
                   sx={{
-                    width: "100%", // Adjust width for smaller screens
-                    height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
-                    objectFit: "cover",
+                    width: isIOS && isMobile ? "80%" : "100%", // Adjust width for smaller screens
+                    height: isIOS && isMobile ? "220px" : { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                    objectFit: isIOS && isMobile ? "contain" : "cover",
                   }}
                 />
               </Box>
@@ -2239,7 +2240,7 @@ function Shop() {
                 sx={{
                   position: "absolute",
                   bottom: 0,
-                  right: { xs: "0", xl: 280 },
+                  right: isIOS && isMobile ? -120 : { xs: "0", xl: 280 },
                   zIndex: 0,
                   display: "block",
                   "@media (min-width: 1536px) and (max-width: 2200px)": {
@@ -2252,8 +2253,8 @@ function Shop() {
                   src={Images.Character2}
                   sx={{
                     width: "100%", // Adjust width for smaller screens
-                    height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
-                    objectFit: "cover",
+                    height: isIOS && isMobile ? "220px" : { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                    objectFit: isIOS && isMobile ? "contain" : "cover",
 
                   }}
                 />
