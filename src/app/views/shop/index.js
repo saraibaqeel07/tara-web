@@ -49,7 +49,7 @@ import { ArrowBack, Star } from "@mui/icons-material";
 import { SwiperSlide, Swiper } from "swiper/react";
 import "swiper/css";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import { CartContext } from "../../Context/CartContext";
+import { setCart,CartContext } from "../../Context/CartContext";
 import { CartCounter } from "../../Context/CartCounter";
 import taraImage from "../../assets/images/tara-pic.png";
 import shopImg1 from "../../assets/images/shop-intro.png";
@@ -610,7 +610,7 @@ function Shop() {
       cart = JSON.parse(cart);
       if (cart?.length > 0) {
         setCartItems(cart);
-        setCount(cart.length);
+        // setCount(cart.length);
       }
     }
   }, []);
@@ -638,12 +638,14 @@ function Shop() {
           updatedData[existingItemIndex].qty += 1;
 
           await updateDoc(docRef, { data: updatedData });
+          getCartData()
           SuccessToaster("Quantity Increased");
         } else {
           // Item doesn't exist: Append new item with qty = 1
           const newItem = { ...data, qty: 1 };
           await updateDoc(docRef, { data: [...cartDoc.data, newItem] });
           SuccessToaster("Added To Cart");
+          getCartData()
         }
       } else {
         // No cart document for the user: Create a new cart document
@@ -655,17 +657,47 @@ function Shop() {
 
         const docRef = await addDoc(cartRef, newCart);
         console.log("Document written with ID: ", docRef.id);
+        
         SuccessToaster("Added To Cart");
+        getCartData()
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
       ErrorToaster("Something Went Wrong");
     }
   };
+  const getCartData = async () => {
+    try {
+      
+        const userId = User.uid;
+
+        
+        const q = query(collection(db, "cartData"), where("userId", "==", userId));
+
+        const querySnapshot = await getDocs(q);
+        const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        console.log(dataArray[0]?.data, 'dataArray');
+
+
+
+       
+        setCartItems(dataArray[0]?.data);
+        console.log(dataArray[0]?.data?.length);
+        
+        setCount(dataArray[0]?.data?.length)
+    } catch (error) {
+        console.error("Error fetching cart data:", error);
+    }
+};
+
 
   useEffect(() => {
     setOpen(cartVisible);
   }, [cartVisible]);
+  useEffect(() => {
+    getCartData()
+  }, [])
+  
 
   return (
     <>
