@@ -61,7 +61,6 @@ import taraImage from "../../assets/images/tara-pic.png";
 import starImg from "../../assets/images/star.png";
 import rainbowImg from "../../assets/images/rainbow.png";
 import haveforyou from "../../assets/images/haveforyou.png";
-import shopFrame from "../../assets/images/Shop-Frame.png";
 
 
 // import "slick-carousel/slick/slick-theme.css";

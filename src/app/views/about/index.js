@@ -19,10 +19,9 @@ import {
   AccordionSummary,
   AccordionDetails,
   Rating,
-  useMediaQuery
+  useMediaQuery 
 } from "@mui/material";
 import Carousel from 'react-material-ui-carousel';
-import { isIOS, isMobile } from 'react-device-detect';
 
 import {
   FacebookRounded,
@@ -66,8 +65,8 @@ import taraImage from "../../assets/images/tara-pic.png";
 import starImg from "../../assets/images/star.png";
 import rainbowImg from "../../assets/images/rainbow.png";
 import haveforyou from "../../assets/images/haveforyou.png";
-import shopFrame from "../../assets/images/Shop-Frame.png";
-
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 // import "slick-carousel/slick/slick-theme.css";
 
@@ -75,7 +74,7 @@ function About() {
   const isSmallScreen = useMediaQuery('(max-width:900px)');
 
   const [highLighted, setHighlighted] = useState("I");
-
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setHighlighted((prev) => {
@@ -89,7 +88,7 @@ function About() {
   }, []);
 
   const { state } = useLocation();
-
+  Aos.init();
 
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
@@ -525,7 +524,14 @@ function About() {
       }
     }
   }, []);
-
+  useEffect(() => {
+    Aos.init({
+      duration: 1000, // Animation duration
+      easing: "ease-in-out", // Easing option
+      once: false, // Whether animation should happen only once
+      mirror: false, // Whether elements should animate out while scrolling past them
+    });
+  }, []);
 
   useEffect(() => {
     setOpen(cartVisible);
@@ -1232,13 +1238,6 @@ function About() {
                     sm: "80px",
                     xs: "60px",
                   },
-                  display: {
-                    xl: "flex",
-                    lg: "flex",
-                    md: "flex",
-                    sm: "flex",
-                    xs: "none",
-                  },
                   backgroundImage: `url(${taraImage})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
@@ -1270,32 +1269,16 @@ function About() {
                   WebkitTextFillColor: "#F9BF29",
                 }}
               >
-                <Box component={'span'} sx={{
-                  fontSize: {
-                    xl: "140px",
-                    lg: "90px",
-                    md: "70px",
-                    sm: "45px",
-                    xs: "25px",
-                  }
-                }} >Introducing</Box>
-                <Box
-                  component={'span'}
-                  sx={{
+                <span>Introducing</span>
+                <span
+                  style={{
                     display: "block",
                     WebkitTextStroke: "1px white",
                     WebkitTextFillColor: "#4FAAFB",
-                    fontSize: {
-                      xl: "140px",
-                      lg: "90px",
-                      md: "70px",
-                      sm: "45px",
-                      xs: "25px",
-                    }
                   }}
                 >
                   Tara and Shine
-                </Box>
+                </span>
               </Typography>
             </Box>
           </Grid>
@@ -1385,96 +1368,96 @@ function About() {
                 </Typography>
               </Box>
             </Grid>
+           
+      {isSmallScreen ? (
+        // This grid will be shown for screens below 900px
+        <Grid
+          item
+          xs={12}
+          sx={{
+            textAlign: "left",
+            backgroundImage: `url(${introImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            width: "100%",
+            height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: '1700px' },
+            '@media (min-width: 1536px)and (max-width:2150px)': {
+              height: "1350px"
+            },
+            '@media (min-width: 1300px)and (max-width:1535px)': {
+              height: "980px"
+            },
+          }}
+        />
+      ) : (
+        // This grid will be shown for screens above 900px
+        <Grid
+        item
+        md={6}
+        xs={12}
+        sx={{
+          textAlign: "left",
+          backgroundImage: `url(${Images.vector})`, 
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          width: "100%",
+          height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: "1700px" },
+          "@media (min-width: 1536px) and (max-width:2150px)": {
+            height: "1840px",
+          },
+          "@media (min-width: 1300px) and (max-width:1535px)": {
+            height: "980px",
+          },
+          position: "relative",
+        }}
+      >
+        {/* Second Image Box Inside Grid */}
+        <Box
+          sx={(theme) => ({
+            backgroundImage: `url(${Images.vectorStarFrame})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            width: "100%", // Increase width to extend towards the right
+            height: "100%", // Make it full height
+            position: "absolute", // Allow free positioning
+            bottom: 0, // Align to the bottom
+            right: 0, // Align to the right
+            zIndex: 11, // Ensure it stays behind text
+            [theme.breakpoints.between(900, 1200)]: {
+              height: "800px",
+              width: "678px",
+              bottom: "-54px",
+            },
+            [theme.breakpoints.between(1200, 1300)]: {
+              height: "667px",
+              width: "679px",
+              bottom: "0",
+              right:"4px"
+            },
+            [theme.breakpoints.between(1300, 1536)]: {
+              height: "910px",
+              width: "900px",
+              bottom: "0",
+            },   [theme.breakpoints.between(1536, 2200)]: {
+              height: "1873px",
+              width: "1205px",
+              bottom: "-135px",
+            },
 
-            {isSmallScreen ? (
-              // This grid will be shown for screens below 900px
-              <Grid
-                item
-                xs={12}
-                sx={{
-                  textAlign: "left",
-                  backgroundImage: `url(${introImage})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  width: "100%",
-                  height: { xs: "420px", sm: "900px", md: "100%", lg: "100%", xl: '1700px' },
-                  '@media (min-width: 1536px)and (max-width:2150px)': {
-                    height: "1350px"
-                  },
-                  '@media (min-width: 1300px)and (max-width:1535px)': {
-                    height: "980px"
-                  },
-                }}
-              />
-            ) : (
-              // This grid will be shown for screens above 900px
-              <Grid
-                item
-                md={6}
-                xs={12}
-                sx={{
-                  textAlign: "left",
-                  backgroundImage: `url(${Images.vector})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  width: "100%",
-                  height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: "1700px" },
-                  "@media (min-width: 1536px) and (max-width:2150px)": {
-                    height: "1840px",
-                  },
-                  "@media (min-width: 1300px) and (max-width:1535px)": {
-                    height: "980px",
-                  },
-                  position: "relative",
-                }}
-              >
-                {/* Second Image Box Inside Grid */}
-                <Box
-                  sx={(theme) => ({
-                    backgroundImage: `url(${Images.vectorStarFrame})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    width: "100%", // Increase width to extend towards the right
-                    height: "100%", // Make it full height
-                    position: "absolute", // Allow free positioning
-                    bottom: 0, // Align to the bottom
-                    right: 0, // Align to the right
-                    zIndex: 11, // Ensure it stays behind text
-                    [theme.breakpoints.between(900, 1200)]: {
-                      height: "800px",
-                      width: "678px",
-                      bottom: "-54px",
-                    },
-                    [theme.breakpoints.between(1200, 1300)]: {
-                      height: "667px",
-                      width: "679px",
-                      bottom: "0",
-                      right: "4px"
-                    },
-                    [theme.breakpoints.between(1300, 1536)]: {
-                      height: "910px",
-                      width: "900px",
-                      bottom: "0",
-                    }, [theme.breakpoints.between(1536, 2200)]: {
-                      height: "1873px",
-                      width: "1205px",
-                      bottom: "-135px",
-                    },
-
-                    [theme.breakpoints.between(2200, 3000)]: {
-                      height: "1872px",
-                      width: "1548px",
-                      bottom: "-135px",
-                    },
-                  })}
-                ></Box>
+            [theme.breakpoints.between(2200, 3000)]: {
+              height: "1872px",
+              width: "1548px",
+              bottom: "-135px",
+            },
+          })}
+        ></Box>
 
 
-              </Grid>
-            )}
-
+      </Grid>
+      )}
+         
 
 
 
@@ -2240,21 +2223,22 @@ function About() {
             sx={{
               position: "absolute",
               bottom: 0,
-              left: isIOS && isMobile ? -60 : { xl: 280, lg: 0, md: 0, xs: 0, sm: 0 },
+              left: { xl: 280, lg: 0, md: 0, xs: 0, sm: 0 },
               zIndex: 0,
               display: "block",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
                 left: 90
               },
+
             }}
           >
             <CardMedia
               component={"img"}
               src={Images.Character1}
               sx={{
-                width: isIOS && isMobile ? "80%" : "100%",
-                height: isIOS && isMobile ? "220px" : { xs: "180px", sm: "180px", md: "500px" },
-                objectFit: isIOS && isMobile ? "contain" : "cover",
+                width: "100%", // Adjust width for smaller screens
+                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                objectFit: "cover",
               }}
             />
           </Box>
@@ -2264,7 +2248,7 @@ function About() {
             sx={{
               position: "absolute",
               bottom: 0,
-              right: isIOS && isMobile ? -120 : { xs: "0", xl: 260 },
+              right: { xs: "0", xl: 260 },
               zIndex: 0,
               display: "block",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
@@ -2276,9 +2260,10 @@ function About() {
               component={"img"}
               src={Images.Character2}
               sx={{
-                width: "100%",
-                height: isIOS && isMobile ? "220px" : { xs: "180px", sm: "180px", md: "500px" },
-                objectFit: isIOS && isMobile ? "contain" : "cover",
+                width: "100%", // Adjust width for smaller screens
+                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                objectFit: "cover",
+
               }}
             />
           </Box>
