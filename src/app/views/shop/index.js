@@ -2204,7 +2204,7 @@ function Shop() {
                       sx={{
                         background: Colors.white,
                         borderRadius: "4px",
-                        width: { sm: "100%", xs: "120%" },
+                        width: { sm: "100%", xs: "100%" },
                         "& fieldset": {
                           border: "none",
                         },
@@ -2247,7 +2247,7 @@ function Shop() {
                 sx={{
                   position: "absolute",
                   bottom: 0,
-                  left: isIOS && isMobile ? -60 : { xl: 230, lg: 0, md: 0, xs: 0, sm: 0 },
+                  left: isIOS && isMobile ? -110 : { xl: 230, lg: 0, md: 0, xs: 0, sm: 0 },
                   zIndex: 0,
                   display: "block",
                   "@media (min-width: 1536px) and (max-width: 2200px)": {
@@ -2261,7 +2261,7 @@ function Shop() {
                   src={Images.Character1}
                   sx={{
                     width: isIOS && isMobile ? "80%" : "100%", // Adjust width for smaller screens
-                    height: isIOS && isMobile ? "220px" : { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                    height: isIOS && isMobile ? "160px" : { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
                     objectFit: isIOS && isMobile ? "contain" : "cover",
                   }}
                 />
@@ -2272,7 +2272,7 @@ function Shop() {
                 sx={{
                   position: "absolute",
                   bottom: 0,
-                  right: isIOS && isMobile ? -120 : { xs: "0", xl: 280 },
+                  right: isIOS && isMobile ? -180 : { xs: "0", xl: 280 },
                   zIndex: 0,
                   display: "block",
                   "@media (min-width: 1536px) and (max-width: 2200px)": {
@@ -2285,7 +2285,7 @@ function Shop() {
                   src={Images.Character2}
                   sx={{
                     width: "100%", // Adjust width for smaller screens
-                    height: isIOS && isMobile ? "220px" : { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
+                    height: isIOS && isMobile ? "160px" : { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
                     objectFit: isIOS && isMobile ? "contain" : "cover",
 
                   }}

@@ -69,7 +69,7 @@ const PageNavigator = ({
       }}
     >
       {/* Left Arrow */}
-      <Box
+         <Box
         sx={{
           position: "absolute",
           left: "20px",
@@ -79,22 +79,27 @@ const PageNavigator = ({
           '@media (max-width: 920px)': {
             width: "45px", // Smaller arrow on smaller screens
             height: "30px", // Smaller arrow on smaller screens
+            bottom: "14px",
           },
           '@media (max-width: 700px)': {
             width: "40px", // Even smaller arrow on smaller screens
             height: "28px",
+            bottom: "10px",
+
           },
           '@media (max-width: 481px)': {
             width: "30px", // Further reduce arrow size on very small screens
-            height: "22px",
+            height: "15px",
+            bottom: "17px",
           },
         }}
         onClick={onPrevPage}
       >
-        <img
+        <Box
+          component="img"
           src={backwardArrow}
           alt="Previous"
-          style={{
+          sx={{
             width: "55px",
             height: "40px",
             objectFit: "cover",
@@ -107,8 +112,8 @@ const PageNavigator = ({
               height: "28px",
             },
             '@media (max-width: 481px)': {
-              width: "30px", // Further reduce arrow size on very small screens
-              height: "22px",
+              width: "40px", 
+              height: "28px",
             },
           }}
         />
@@ -152,7 +157,7 @@ const PageNavigator = ({
       </Box>
 
       {/* Right Arrow */}
-      <Box
+       <Box
         sx={{
           position: "absolute",
           right: "20px",
@@ -161,23 +166,29 @@ const PageNavigator = ({
           bottom: "10px",
           '@media (max-width: 920px)': {
             width: "45px", // Smaller arrow on smaller screens
-            height: "30px", // Smaller arrow on smaller screens
+            height: "30px",
+            bottom: "14px",
           },
           '@media (max-width: 700px)': {
             width: "40px", // Even smaller arrow on smaller screens
             height: "28px",
+            bottom: "10px",
+
           },
           '@media (max-width: 481px)': {
             width: "30px", // Further reduce arrow size on very small screens
-            height: "22px",
+            height: "15px",
+            bottom: "17px",
+
           },
         }}
         onClick={onNextPage}
       >
-        <img
+        <Box
+          component="img"
           src={forwardArrow}
           alt="Next"
-          style={{
+          sx={{
             width: "55px",
             height: "40px",
             objectFit: "cover",
@@ -190,8 +201,8 @@ const PageNavigator = ({
               height: "28px",
             },
             '@media (max-width: 481px)': {
-              width: "30px", // Further reduce arrow size on very small screens
-              height: "22px",
+              width: "40px", 
+              height: "28px",
             },
           }}
         />

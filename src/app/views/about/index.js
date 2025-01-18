@@ -47,6 +47,7 @@ import {
   where,
   deleteDoc,
 } from "firebase/firestore";
+import { isIOS, isMobile } from 'react-device-detect';
 import ProductModal from "../modal/ProductModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -692,7 +693,7 @@ function About() {
             background: Colors.primaryGradient,
             width: "100%",
             marginTop: "20px",
-            height: { xs: "400px", md: "0", sm: "700px", xl: "600px", lg: "500px" },
+            height: { xs: "220px", md: "0", sm: "700px", xl: "600px", lg: "500px" },
           }}
         >
           <Box
@@ -707,7 +708,7 @@ function About() {
           >
             <Box className="section-content" sx={{
               // width: { xl: '60%', lg: '90%', md: '100%', sm: '100%', xs: '100%' }, margin: '0 auto',
-              height: { xl: "600px", md: '550px', sm: '700px', xs: '400px', lg: "500px" },
+              height: { xl: "600px", md: '550px', sm: '700px', xs: '220px', lg: "500px" },
             }}>
               <div className="slider">
                 <Carousel
@@ -825,7 +826,7 @@ function About() {
                       <Box
                         sx={(theme) => ({
                           width: { md: "600px", lg: "800px", sm: "100%", xs: "100%" },
-                          height: { md: "auto", sm: "700px", xs: "350px" },
+                          height: { md: "auto", sm: "700px", xs: "220px" },
                           backgroundImage: `url(${Images.aboutImg1})`,
                           backgroundSize: { md: "cover", xl: "contain", lg: "contain", xs: "contain", sm: "contain" },
                           backgroundRepeat: "no-repeat",
@@ -950,7 +951,7 @@ function About() {
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "center bottom",
                         display: "block",
-                        height: { md: "100%", sm: '700px', xs: '400px', xl: "600px", lg: "550px" },
+                        height: { md: "100%", sm: '700px', xs: '250px', xl: "600px", lg: "550px" },
                       }} />
                     </Grid>
                   </Grid>
@@ -962,7 +963,7 @@ function About() {
                     container
                     spacing={0}
                     sx={(theme) => ({
-                      height: { md: "700px", lg: "550px", sm: "1120px", xs: "640px", xl: "610px" },
+                      height: { md: "700px", lg: "550px", sm: "1120px", xs: "310px", xl: "610px" },
                       overflow: "hidden",
                       flexWrap: "nowrap",
                       margin: "0 auto",
@@ -984,6 +985,10 @@ function About() {
                       // },
                       [theme.breakpoints.between(1200, 1300)]: {
                         height: "580px",
+
+                      },
+                      [theme.breakpoints.between(400, 600)]: {
+                        height: "270px",
 
                       },
 
@@ -1013,7 +1018,7 @@ function About() {
                     container
                     spacing={0}
                     sx={(theme) => ({
-                      height: { md: "700px", lg: "580px", sm: "1120px", xs: "640px", xl: "610px" },
+                      height: { md: "700px", lg: "580px", sm: "1120px", xs: "310px", xl: "610px" },
                       overflow: "hidden",
                       flexWrap: "nowrap",
                       margin: "0 auto",
@@ -1029,11 +1034,10 @@ function About() {
                         height: "700px",
 
                       },
-                      // [theme.breakpoints.between(1700, 1999)]: {
-                      //   height: "970px",
+                      [theme.breakpoints.between(400, 600)]: {
+                        height: "270px",
 
-                      // },
-
+                      },
                     })}
 
                   >
@@ -1241,6 +1245,7 @@ function About() {
                   backgroundImage: `url(${taraImage})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
+                  display: {xs:"none", sm:"block"}
                 }}
               />
 
@@ -2180,12 +2185,12 @@ function About() {
                   sx={{
                     background: Colors.white,
                     borderRadius: "4px",
-                    width: { sm: "100%", xs: "120%" },
+                    width: { sm: "100%", xs: "100%" },
                     "& fieldset": {
                       border: "none",
                     },
                     "& .MuiOutlinedInput-root": {
-                      paddingRight: 0.5,
+                      paddingRight: 0.8,
                     },
                     "& .MuiOutlinedInput-input": {
                       color: `${Colors.primary} !important`,
@@ -2223,7 +2228,7 @@ function About() {
             sx={{
               position: "absolute",
               bottom: 0,
-              left: { xl: 280, lg: 0, md: 0, xs: 0, sm: 0 },
+              left: isIOS && isMobile ? -110 : { xl: 280, lg: 0, md: 0, xs: 0, sm: 0 },
               zIndex: 0,
               display: "block",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
@@ -2236,9 +2241,9 @@ function About() {
               component={"img"}
               src={Images.Character1}
               sx={{
-                width: "100%", // Adjust width for smaller screens
-                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
-                objectFit: "cover",
+                width: isIOS && isMobile ? "80%" : "100%",
+                height: isIOS && isMobile ? "160px" : { xs: "180px", sm: "180px", md: "500px" },
+                objectFit: isIOS && isMobile ? "contain" : "cover",
               }}
             />
           </Box>
@@ -2248,7 +2253,7 @@ function About() {
             sx={{
               position: "absolute",
               bottom: 0,
-              right: { xs: "0", xl: 260 },
+              right: isIOS && isMobile ? -180 : { xs: "0", xl: 260 },
               zIndex: 0,
               display: "block",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
@@ -2260,9 +2265,9 @@ function About() {
               component={"img"}
               src={Images.Character2}
               sx={{
-                width: "100%", // Adjust width for smaller screens
-                height: { xs: "180px", sm: "180px", md: "500px" }, // Adjust height for smaller screens
-                objectFit: "cover",
+                width: "100%",
+                height: isIOS && isMobile ? "160px" : { xs: "180px", sm: "180px", md: "500px" },
+                objectFit: isIOS && isMobile ? "contain" : "cover",
 
               }}
             />

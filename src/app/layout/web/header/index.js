@@ -80,7 +80,10 @@ function Header(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
+  const handleRouteClick = (path) => {
+    navigate(path);
+    handleDrawerToggle(); 
+  };
 
   const handleGoogleLogin = async () => {
 
@@ -295,7 +298,8 @@ function Header(props) {
               edge="start"
               onClick={handleDrawerToggle}
               sx={{
-                display: { xl: 'none', lg: 'block', md: "block", sm: "block", xs: "block" }
+                display: { xl: 'none', lg: 'block', md: "block", sm: "block", xs: "block" },
+                                
               }}
             >
               <MenuIcon />
@@ -304,87 +308,84 @@ function Header(props) {
         </Toolbar>
       </AppBar>
       <nav>
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
+      <Drawer
+      variant="temporary"
+      open={mobileOpen}
+      onClose={handleDrawerToggle}
+      ModalProps={{
+        keepMounted: true, 
+      }}
+      transitionDuration={{ enter: 500, exit: 500 }} 
+      sx={{
+        display: { xs: 'block', sm: 'block', md: 'block', lg: 'block', xl: "none" },
+        '& .MuiDrawer-paper': { boxSizing: 'border-box', background: Colors.primaryGradient },
+        transition: 'transform 0.3s ease-in-out', 
 
-            display: { xs: 'block', sm: 'block', md: 'block', lg: 'block', xl: "none" },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', background: Colors.primaryGradient },
-          }}
+      }}
+    >
+      <Box sx={{ textAlign: 'center' }}>
+        <Box
+          component={"div"}
+          sx={{ p: 2, width: '300px', }}
         >
-          <Box sx={{ textAlign: 'center' }}>
-            <Box
-              component={"div"}
-              sx={{ p: 2, width: '300px', }}
-            >
-              <CardMedia
-                component={"img"}
-                src={Images.logo}
-                sx={{
-                  width: "180px",
-                  height: "35px",
-                  objectFit: "contain"
-                }}
-              />
-            </Box>
-            <Divider />
-            {/* {!user && !loginUser ? <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button> :
-              <Box mb={1} mt={1}> <Box >{loginUser.displayName}</Box>
-
-              </Box>
-            } */}
-            {!user && !loginUser ?
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>
-              </Box>
-              :
-              <Box sx={{ display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>
-                <Button
-                  id="basic-button"
-                  aria-controls={open ? 'basic-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? 'true' : undefined}
-                  onClick={handleClick}
-                  sx={{ color: 'white' }}
-                >
-                  {loginUser?.displayName}
-                </Button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                  }}
-
-                >
-                  {/* <MenuItem sx={{ color: 'black' }} onClick={handleClose}>Profile</MenuItem> */}
-                  <MenuItem sx={{ color: 'black' }} onClick={() => navigate('/myorders')}>My Orders</MenuItem>
-                  <MenuItem sx={{ color: 'black' }} onClick={handleLogout}>Logout</MenuItem>
-                </Menu>
-              </Box>}
-            <List>
-              {navigation.map((item, i) => (
-                <ListItem key={i} disablePadding>
-                  <ListItemButton
-                    sx={{
-                      textAlign: 'center'
-                    }}
-                    onClick={() => navigate(item.path)}
-                  >
-                    <ListItemText primary={item.name} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </List>
+          <CardMedia
+            component={"img"}
+            src={Images.logo}
+            sx={{
+              width: "180px",
+              height: "35px",
+              objectFit: "contain"
+            }}
+          />
+        </Box>
+        
+        <Divider />
+        {!user && !loginUser ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+            <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>
           </Box>
-        </Drawer>
+        ) : (
+          <Box sx={{ display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>
+            <Button
+              id="basic-button"
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+              sx={{ color: 'white' }}
+            >
+              {loginUser?.displayName}
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <MenuItem sx={{ color: 'black' }} onClick={() => { handleClose(); handleRouteClick('/myorders'); }}>My Orders</MenuItem>
+              <MenuItem sx={{ color: 'black' }} onClick={handleLogout}>Logout</MenuItem>
+            </Menu>
+          </Box>
+        )}
+        <List>
+          {navigation.map((item, i) => (
+            <ListItem key={i} disablePadding>
+              <ListItemButton
+                sx={{
+                  textAlign: 'center'
+                }}
+                onClick={() => handleRouteClick(item.path)}
+              >
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+    </Drawer>
       </nav>
       {/* <Toolbar /> */}
     </Box>

@@ -1258,7 +1258,7 @@ function Watch() {
                   sx={{
                     background: Colors.white,
                     borderRadius: "4px",
-                    width: { sm: "100%", xs: "120%" },
+                    width: { sm: "100%", xs: "100%" },
                     "& fieldset": {
                       border: "none",
                     },
@@ -1301,7 +1301,7 @@ function Watch() {
             sx={{
               position: "absolute",
               bottom: 0,
-              left: isIOS && isMobile ? -60 : { xl: 280, lg: 0, md: -50, xs: 0, sm: 0 },
+              left: isIOS && isMobile ? -100  : { xl: 280, lg: 0, md: -50, xs: 0, sm: 0 },
               zIndex: 0,
               display: "block",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
@@ -1314,7 +1314,7 @@ function Watch() {
               src={Images.Character3}
               sx={{
                 width: isIOS && isMobile ? "80%" : "100%",
-                height: isIOS && isMobile ? "220px" : { xs: "180px", sm: "180px", md: "500px" },
+                height: isIOS && isMobile ? "160px" : { xs: "180px", sm: "180px", md: "500px" },
                 objectFit: isIOS && isMobile ? "contain" : "cover",
 
               }}
@@ -1326,7 +1326,7 @@ function Watch() {
             sx={{
               position: "absolute",
               bottom: 0,
-              right: isIOS && isMobile ? -190 : { xs: "0", xl: 260, md: -50 },
+              right: isIOS && isMobile ? -250 : { xs: "0", xl: 260, md: -50 },
               zIndex: 0,
               display: "block",
               "@media (min-width: 1536px) and (max-width: 2200px)": {
@@ -1339,7 +1339,7 @@ function Watch() {
               src={Images.Character4}
               sx={{
                 width: "100%",
-                height: isIOS && isMobile ? "220px" : { xs: "180px", sm: "180px", md: "500px" }, 
+                height: isIOS && isMobile ? "160px" : { xs: "180px", sm: "180px", md: "500px" }, 
                 objectFit: isIOS && isMobile ? "contain" : "cover",
 
               }}
