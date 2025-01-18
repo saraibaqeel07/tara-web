@@ -35,13 +35,13 @@ function Header(props) {
 
   User = JSON.parse(User)
   const app = initializeApp(firebaseConfig);
-  
+
   const db = getFirestore(app);
   const location = useLocation();
   const { cart, toggleCartVisibility } = useContext(CartContext);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState(location.pathname)
-  const { count,setCount } = useContext(CartCounter);
+  const { count, setCount } = useContext(CartCounter);
   const [cartItems, setCartItems] = useState([])
   const navigate = useNavigate();
   let loginUser = localStorage.getItem('user')
@@ -82,7 +82,7 @@ function Header(props) {
   };
   const handleRouteClick = (path) => {
     navigate(path);
-    handleDrawerToggle(); 
+    handleDrawerToggle();
   };
 
   const handleGoogleLogin = async () => {
@@ -129,13 +129,13 @@ function Header(props) {
       console.error("Error fetching cart data:", error);
     }
   };
-  
+
 
   useEffect(() => {
     setCurrentPath(location.pathname);
   }, [location.pathname]);
   useEffect(() => {
-   
+
     getCartData()
   }, [location.pathname])
 
@@ -230,7 +230,7 @@ function Header(props) {
             ))}
           </Box>
           <Box sx={{ width: '20%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-          
+
             {true && <Badge
               badgeContent={count > 0 ? count : '0'}
               color="primary"
@@ -299,7 +299,7 @@ function Header(props) {
               onClick={handleDrawerToggle}
               sx={{
                 display: { xl: 'none', lg: 'block', md: "block", sm: "block", xs: "block" },
-                                
+
               }}
             >
               <MenuIcon />
@@ -308,84 +308,84 @@ function Header(props) {
         </Toolbar>
       </AppBar>
       <nav>
-      <Drawer
-      variant="temporary"
-      open={mobileOpen}
-      onClose={handleDrawerToggle}
-      ModalProps={{
-        keepMounted: true, 
-      }}
-      transitionDuration={{ enter: 500, exit: 500 }} 
-      sx={{
-        display: { xs: 'block', sm: 'block', md: 'block', lg: 'block', xl: "none" },
-        '& .MuiDrawer-paper': { boxSizing: 'border-box', background: Colors.primaryGradient },
-        transition: 'transform 0.3s ease-in-out', 
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          transitionDuration={{ enter: 500, exit: 500 }}
+          sx={{
+            display: { xs: 'block', sm: 'block', md: 'block', lg: 'block', xl: "none" },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', background: Colors.primaryGradient },
+            transition: 'transform 0.3s ease-in-out',
 
-      }}
-    >
-      <Box sx={{ textAlign: 'center' }}>
-        <Box
-          component={"div"}
-          sx={{ p: 2, width: '300px', }}
+          }}
         >
-          <CardMedia
-            component={"img"}
-            src={Images.logo}
-            sx={{
-              width: "180px",
-              height: "35px",
-              objectFit: "contain"
-            }}
-          />
-        </Box>
-        
-        <Divider />
-        {!user && !loginUser ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-            <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>
-          </Box>
-        ) : (
-          <Box sx={{ display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>
-            <Button
-              id="basic-button"
-              aria-controls={open ? 'basic-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              onClick={handleClick}
-              sx={{ color: 'white' }}
+          <Box sx={{ textAlign: 'center' }}>
+            <Box
+              component={"div"}
+              sx={{ p: 2, width: '300px', }}
             >
-              {loginUser?.displayName}
-            </Button>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                'aria-labelledby': 'basic-button',
-              }}
-            >
-              <MenuItem sx={{ color: 'black' }} onClick={() => { handleClose(); handleRouteClick('/myorders'); }}>My Orders</MenuItem>
-              <MenuItem sx={{ color: 'black' }} onClick={handleLogout}>Logout</MenuItem>
-            </Menu>
-          </Box>
-        )}
-        <List>
-          {navigation.map((item, i) => (
-            <ListItem key={i} disablePadding>
-              <ListItemButton
+              <CardMedia
+                component={"img"}
+                src={Images.logo}
                 sx={{
-                  textAlign: 'center'
+                  width: "180px",
+                  height: "35px",
+                  objectFit: "contain"
                 }}
-                onClick={() => handleRouteClick(item.path)}
-              >
-                <ListItemText primary={item.name} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-    </Drawer>
+              />
+            </Box>
+
+            <Divider />
+            {!user && !loginUser ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>
+              </Box>
+            ) : (
+              <Box sx={{ display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                  sx={{ color: 'white' }}
+                >
+                  {loginUser?.displayName}
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                  }}
+                >
+                  <MenuItem sx={{ color: 'black' }} onClick={() => { handleClose(); handleRouteClick('/myorders'); }}>My Orders</MenuItem>
+                  <MenuItem sx={{ color: 'black' }} onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </Box>
+            )}
+            <List>
+              {navigation.map((item, i) => (
+                <ListItem key={i} disablePadding>
+                  <ListItemButton
+                    sx={{
+                      textAlign: 'center'
+                    }}
+                    onClick={() => handleRouteClick(item.path)}
+                  >
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Drawer>
       </nav>
       {/* <Toolbar /> */}
     </Box>

@@ -532,27 +532,31 @@ function Character() {
       </Drawer>
 
       <Box
-        sx={{
+        sx={(theme) => ({
           backgroundImage: `url(${Images.bannerBg})`,
 
           backgroundSize: "cover",
           backgroundPosition: "bottom center",
           width: "100%",
           height: { md: "450px", xs: "300px", xl: "730px", sm: "350px" },
-          position: "relative", // Ensure child content is positioned relative to this container
-          overflow: "hidden", // Prevent content from going outside
-        }}
+          position: "relative",
+          overflow: "hidden",
+          [theme.breakpoints.between(200, 450)]: {
+            height:"250px"
+          },
+        })}
       >
         {/* Right-side Image */}
         <Box
           sx={{
             margin: { sm: "20px auto 0 auto", xs: "50px auto 0 auto" },
-            width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
-            height: "100%", // Full height of the parent container
+            width: { md: "100%", sm: "100%", xs: "100%" },
+            height: "100%",
             backgroundImage: `url(${Images.sliderFamily2})`,
             backgroundSize: { md: "contain", xl: "contain", lg: "contain", xs: "contain", sm: "contain" },
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "center", // Ensures the image is aligned at the bottom
+            backgroundPosition: "center",
+
 
           }}
         />
@@ -627,7 +631,7 @@ function Character() {
                 slidesPerView={3}
                 autoplay={{
                   delay: 2500,
-                  disableOnInteraction: false, 
+                  disableOnInteraction: false,
                 }}
                 modules={[Autoplay, Pagination, Navigation]}
                 breakpoints={{
@@ -639,7 +643,7 @@ function Character() {
                 }}
                 onSlideChange={() => {
                   if (swiperRef.current) {
-                    swiperRef.current.swiper.autoplay.start(); 
+                    swiperRef.current.swiper.autoplay.start();
                   }
                 }}
               >
@@ -770,18 +774,18 @@ function Character() {
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
-                          
+
                           if (showMessage) {
                             setShowMessage(false);
                             setMessageIndex(null);
-                            
+
                             if (swiperRef.current) {
                               swiperRef.current.swiper.autoplay.start();
                             }
                           } else {
                             setShowMessage(true);
                             setMessageIndex(image.id);
-                      
+
                             if (swiperRef.current) {
                               swiperRef.current.swiper.autoplay.stop();
                             }
