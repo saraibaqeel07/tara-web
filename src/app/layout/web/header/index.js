@@ -14,7 +14,7 @@ import { Avatar } from 'antd';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { CartContext } from '../../../Context/CartContext';
 import { CartCounter } from '../../../Context/CartCounter';
-import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import { addDoc, collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import firebase from 'firebase/compat/app';
 import { initializeApp } from 'firebase/app';
 import moment from 'moment';
@@ -30,15 +30,19 @@ function Header(props) {
     appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
     measurementId: "G-BHYZDHJCK9"
   };
+  let User = localStorage.getItem('user')
 
+
+  User = JSON.parse(User)
   const app = initializeApp(firebaseConfig);
+  
   const db = getFirestore(app);
   const location = useLocation();
   const { cart, toggleCartVisibility } = useContext(CartContext);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState(location.pathname)
-  const { count } = useContext(CartCounter);
-
+  const { count,setCount } = useContext(CartCounter);
+  const [cartItems, setCartItems] = useState([])
   const navigate = useNavigate();
   let loginUser = localStorage.getItem('user')
   loginUser = JSON.parse(loginUser)
@@ -101,12 +105,36 @@ function Header(props) {
       console.error("Error during Google login: ", error);
     }
   };
+  const getCartData = async () => {
+    try {
+
+      const userId = User.uid;
+
+
+      const q = query(collection(db, "cartData"), where("userId", "==", userId));
+
+      const querySnapshot = await getDocs(q);
+      const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      console.log(dataArray[0]?.data, 'dataArray');
+
+
+
+
+      setCartItems(dataArray[0]?.data);
+      setCount(dataArray[0]?.data?.length)
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+    }
+  };
+  
+
   useEffect(() => {
     setCurrentPath(location.pathname);
   }, [location.pathname]);
   useEffect(() => {
-    console.log(count, 'count');
-  }, [count])
+   
+    getCartData()
+  }, [location.pathname])
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -136,7 +164,7 @@ function Header(props) {
           <Box sx={{
             display: { xs: 'none', sm: 'none', md: 'none', lg: 'flex', xl: 'flex' },
             width: '60%',
-            alignItems: { xl: 'center' }, 
+            alignItems: { xl: 'center' },
             justifyContent: { xl: 'center' },
 
           }}>
@@ -149,8 +177,8 @@ function Header(props) {
                     color: '#fff',
                     backgroundColor: currentPath == item.path ? `#FF9D04 !important` : "transparent",
                     px: 3,
-                    textTransform:'capitalize'
-                  
+                    textTransform: 'capitalize'
+
                   }}
                   onClick={() => {
                     navigate(item.path);
@@ -158,13 +186,13 @@ function Header(props) {
                 >
                   {item.name}
                 </Button> : <> <Button
-                       className='para-text'
+                  className='para-text'
                   id="basic-button"
                   aria-controls={open1 ? 'basic-menu' : undefined}
                   aria-haspopup="true"
                   aria-expanded={open1 ? 'true' : undefined}
                   onClick={handleClick1}
-                  sx={{ color: 'white', display: { xs: 'block', sm: 'block', md: 'block', lg: 'block' } ,     textTransform:'capitalize'}}
+                  sx={{ color: 'white', display: { xs: 'block', sm: 'block', md: 'block', lg: 'block' }, textTransform: 'capitalize' }}
                 >{item?.name}
 
 
@@ -199,7 +227,24 @@ function Header(props) {
             ))}
           </Box>
           <Box sx={{ width: '20%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-            {true && <Box component={'img'} src={Images.cartIcon} width={'30px'} onClick={() => navigate('/cart')}></Box>} &nbsp;&nbsp;
+          
+            {true && <Badge
+              badgeContent={count > 0 ? count : '0'}
+              color="primary"
+              overlap="circular"
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <Box
+                component="img"
+                src={Images.cartIcon}
+                width="30px"
+                onClick={() => navigate('/cart')}
+                sx={{ cursor: 'pointer' }}
+              />
+            </Badge>} &nbsp;&nbsp;
             {!user && !loginUser ?
               <>
 
@@ -294,10 +339,10 @@ function Header(props) {
               </Box>
             } */}
             {!user && !loginUser ?
-            <Box sx={{display:'flex',justifyContent:'center',mt:2}}>
-              <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>
               </Box>
-               :
+              :
               <Box sx={{ display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>
                 <Button
                   id="basic-button"
