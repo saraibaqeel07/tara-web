@@ -19,7 +19,7 @@ import {
   AccordionSummary,
   AccordionDetails,
   Rating,
-  useMediaQuery 
+  useMediaQuery
 } from "@mui/material";
 import Carousel from 'react-material-ui-carousel';
 
@@ -75,7 +75,7 @@ function About() {
   const isSmallScreen = useMediaQuery('(max-width:900px)');
 
   const [highLighted, setHighlighted] = useState("I");
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setHighlighted((prev) => {
@@ -310,6 +310,7 @@ function About() {
         "Tara is 9 years old. She is a shy Muslim girl. Her imaginary best friend is Shine. She is very kind, helpful, and loving. Her special skill is drawing. She gets nervous around a lot of people, but Shine overcomes her weakness.",
       image: Images.Shop,
       logo: Images.logoTara,
+      title:"Shop",
       path: "/products",
     },
     {
@@ -318,6 +319,7 @@ function About() {
         "Tara's best imaginary friend is named Shine. She always lends a hand to Tara. She has a lot of energy. She has a bold personality and inspires confidence",
       image: Images.watch,
       logo: Images.logoShine,
+      title:"Watch",
       path: "/watch",
     },
     {
@@ -325,6 +327,7 @@ function About() {
       detail:
         "Ahmed is Tara’s younger brother; he is 8 years old. Ahmed is very kind and helpful boy. He loves to play video games.",
       image: Images.portfolio,
+      title:"Portfolio",
       logo: Images.logoAhmed,
 
     },
@@ -334,6 +337,7 @@ function About() {
         "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.character,
       logo: Images.logoLaila,
+      title:"Character",
       path: "/main-character",
     },
     {
@@ -342,6 +346,7 @@ function About() {
         "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.faq,
       logo: Images.logoLaila,
+      title:"FAQ",
       path: "/faq",
     },
     {
@@ -350,6 +355,7 @@ function About() {
         "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.ContactUs,
       logo: Images.logoLaila,
+      title:"Contact",
       path: "/contact-us",
     },
     {
@@ -358,6 +364,7 @@ function About() {
         "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.EventShow,
       logo: Images.logoLaila,
+      title:"Event Show",
       path: "/event-show",
     },
     {
@@ -366,6 +373,7 @@ function About() {
         "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.blog,
       logo: Images.logoLaila,
+      title:"Blog",
       path: "/blog",
     },
   ];
@@ -1245,7 +1253,7 @@ function About() {
                   backgroundImage: `url(${taraImage})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
-                  display: {xs:"none", sm:"block"}
+                  display: { xs: "none", sm: "block" }
                 }}
               />
 
@@ -1373,96 +1381,96 @@ function About() {
                 </Typography>
               </Box>
             </Grid>
-           
-      {isSmallScreen ? (
-        // This grid will be shown for screens below 900px
-        <Grid
-          item
-          xs={12}
-          sx={{
-            textAlign: "left",
-            backgroundImage: `url(${introImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            width: "100%",
-            height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: '1700px' },
-            '@media (min-width: 1536px)and (max-width:2150px)': {
-              height: "1350px"
-            },
-            '@media (min-width: 1300px)and (max-width:1535px)': {
-              height: "980px"
-            },
-          }}
-        />
-      ) : (
-        // This grid will be shown for screens above 900px
-        <Grid
-        item
-        md={6}
-        xs={12}
-        sx={{
-          textAlign: "left",
-          backgroundImage: `url(${Images.vector})`, 
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          width: "100%",
-          height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: "1700px" },
-          "@media (min-width: 1536px) and (max-width:2150px)": {
-            height: "1840px",
-          },
-          "@media (min-width: 1300px) and (max-width:1535px)": {
-            height: "980px",
-          },
-          position: "relative",
-        }}
-      >
-        {/* Second Image Box Inside Grid */}
-        <Box
-          sx={(theme) => ({
-            backgroundImage: `url(${Images.vectorStarFrame})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            width: "100%", // Increase width to extend towards the right
-            height: "100%", // Make it full height
-            position: "absolute", // Allow free positioning
-            bottom: 0, // Align to the bottom
-            right: 0, // Align to the right
-            zIndex: 11, // Ensure it stays behind text
-            [theme.breakpoints.between(900, 1200)]: {
-              height: "800px",
-              width: "678px",
-              bottom: "-54px",
-            },
-            [theme.breakpoints.between(1200, 1300)]: {
-              height: "667px",
-              width: "679px",
-              bottom: "0",
-              right:"4px"
-            },
-            [theme.breakpoints.between(1300, 1536)]: {
-              height: "910px",
-              width: "900px",
-              bottom: "0",
-            },   [theme.breakpoints.between(1536, 2200)]: {
-              height: "1873px",
-              width: "1205px",
-              bottom: "-135px",
-            },
 
-            [theme.breakpoints.between(2200, 3000)]: {
-              height: "1872px",
-              width: "1548px",
-              bottom: "-135px",
-            },
-          })}
-        ></Box>
+            {isSmallScreen ? (
+              // This grid will be shown for screens below 900px
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  textAlign: "left",
+                  backgroundImage: `url(${introImage})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  width: "100%",
+                  height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: '1700px' },
+                  '@media (min-width: 1536px)and (max-width:2150px)': {
+                    height: "1350px"
+                  },
+                  '@media (min-width: 1300px)and (max-width:1535px)': {
+                    height: "980px"
+                  },
+                }}
+              />
+            ) : (
+              // This grid will be shown for screens above 900px
+              <Grid
+                item
+                md={6}
+                xs={12}
+                sx={{
+                  textAlign: "left",
+                  backgroundImage: `url(${Images.vector})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                  width: "100%",
+                  height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: "1700px" },
+                  "@media (min-width: 1536px) and (max-width:2150px)": {
+                    height: "1840px",
+                  },
+                  "@media (min-width: 1300px) and (max-width:1535px)": {
+                    height: "980px",
+                  },
+                  position: "relative",
+                }}
+              >
+                {/* Second Image Box Inside Grid */}
+                <Box
+                  sx={(theme) => ({
+                    backgroundImage: `url(${Images.vectorStarFrame})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    width: "100%", // Increase width to extend towards the right
+                    height: "100%", // Make it full height
+                    position: "absolute", // Allow free positioning
+                    bottom: 0, // Align to the bottom
+                    right: 0, // Align to the right
+                    zIndex: 11, // Ensure it stays behind text
+                    [theme.breakpoints.between(900, 1200)]: {
+                      height: "800px",
+                      width: "678px",
+                      bottom: "-54px",
+                    },
+                    [theme.breakpoints.between(1200, 1300)]: {
+                      height: "667px",
+                      width: "679px",
+                      bottom: "0",
+                      right: "4px"
+                    },
+                    [theme.breakpoints.between(1300, 1536)]: {
+                      height: "910px",
+                      width: "900px",
+                      bottom: "0",
+                    }, [theme.breakpoints.between(1536, 2200)]: {
+                      height: "1873px",
+                      width: "1205px",
+                      bottom: "-135px",
+                    },
+
+                    [theme.breakpoints.between(2200, 3000)]: {
+                      height: "1872px",
+                      width: "1548px",
+                      bottom: "-135px",
+                    },
+                  })}
+                ></Box>
 
 
-      </Grid>
-      )}
-         
+              </Grid>
+            )}
+
 
 
 
@@ -1746,11 +1754,7 @@ function About() {
                 key={i}
                 component={"div"}
                 sx={{ cursor: "pointer", mt: 4 }}
-                onClick={() =>
-                  item.name === "Ahmed"
-                    ? window.open("https://www.instagram.com/shinewith.tara/", "_blank")
-                    : navigate(item?.path)
-                }
+              
                 item
                 md={4}
                 sm={4}
@@ -1759,7 +1763,6 @@ function About() {
                 <Grid
                   container
                   sx={{
-                    // border: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`,
                     borderRadius: "20px",
                     justifyContent: "center",
                   }}
@@ -1769,10 +1772,10 @@ function About() {
                     md={12}
                     sm={12}
                     xs={12}
-                  // sx={{ borderLeft: { md: `8px solid ${item.name == "Tara" ? "#0C789D" : item.name == "Shine" ? "#C40A66" : item.name == "Ahmed" ? "#A36506" : "#5B0276"}`, sm: "none", xs: "none" } }}
                   >
                     <Box
                       sx={{
+                        position: "relative", // Make Box the relative container
                         width: "100%",
                         height: "100%",
                       }}
@@ -1787,11 +1790,38 @@ function About() {
                           borderRadius: "12px",
                         }}
                       />
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          width:'90%',
+                          bottom: "-2%",
+                          left: "50%",
+                          transform: "translate(-50%, -50%)",
+                          zIndex: 2, // Ensures the button appears over the image
+                        }}
+                      >
+                        <Button
+                         className="heading-font"
+                          variant="contained"
+                          fullWidth
+                          color="primary"
+                          sx={{backgroundColor:"#FF9D04" ,WebkitTextStroke: "1px white",
+                            WebkitTextFillColor: "#57ABF1",fontSize:'35px',px:'35px',border:'3px solid white',borderRadius:"12px"}}
+                            onClick={() =>
+                              item.name === "Ahmed"
+                                ? window.open("https://www.instagram.com/shinewith.tara/", "_blank")
+                                : navigate(item?.path)
+                            }
+                        >
+                         {item.title}
+                        </Button>
+                      </Box>
                     </Box>
                   </Grid>
                 </Grid>
               </Grid>
             ))}
+
           </Grid>
         </Grid>
 

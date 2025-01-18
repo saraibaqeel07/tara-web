@@ -42,6 +42,7 @@ import { isIOS, isMobile } from 'react-device-detect';
 import ProductModal from "../modal/ProductModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { Avatar, Divider } from "antd";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -659,6 +660,57 @@ function Shop() {
         console.log("Document written with ID: ", docRef.id);
         
         SuccessToaster("Added To Cart");
+        getCartData()
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      ErrorToaster("Something Went Wrong");
+    }
+  };
+  const buyNow = async (data) => {
+    console.log("submit");
+
+    try {
+      const cartRef = collection(db, "cartData");
+
+      const querySnapshot = await getDocs(
+        query(cartRef, where("userId", "==", User.uid))
+      );
+
+      if (!querySnapshot.empty) {
+        const docRef = querySnapshot.docs[0].ref;
+        const cartDoc = querySnapshot.docs[0].data();
+
+        const existingItemIndex = cartDoc.data.findIndex(
+          (item) => item.id === data.id
+        );
+
+        if (existingItemIndex !== -1) {
+          const updatedData = [...cartDoc.data];
+          updatedData[existingItemIndex].qty += 1;
+
+          await updateDoc(docRef, { data: updatedData });
+          getCartData()
+          navigate('/cart')
+        } else {
+          // Item doesn't exist: Append new item with qty = 1
+          const newItem = { ...data, qty: 1 };
+          await updateDoc(docRef, { data: [...cartDoc.data, newItem] });
+          navigate('/cart')
+          getCartData()
+        }
+      } else {
+        // No cart document for the user: Create a new cart document
+        const newCart = {
+          userId: User.uid,
+          data: [{ ...data, qty: 1 }], // Initialize with the first item
+          created_at: moment().format("MMMM Do YYYY, h:mm a"),
+        };
+
+        const docRef = await addDoc(cartRef, newCart);
+        console.log("Document written with ID: ", docRef.id);
+        
+        navigate('/cart')
         getCartData()
       }
     } catch (error) {
@@ -1374,6 +1426,23 @@ function Shop() {
                                 <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
                               </div>
                             )}
+                             {card?.price !== 0 && (
+                              <div
+                                className="buy-now"
+                                style={{
+                                  display: "flex",
+                                  alignItems: "flex-end",
+                                  paddingLeft:'10px',
+                                   paddingRight:'10px'
+                                }}
+                                onClick={() => {
+                                  buyNow(card);
+                                }}
+                              >
+                                Buy Now &nbsp;
+                                <LocalMallIcon sx={{ cursor: "pointer", color: "white" }} />
+                              </div>
+                            )}
                           </Grid>
                         </React.Fragment>
                       ))
@@ -1596,6 +1665,23 @@ function Shop() {
                               >
                                 Add To Cart &nbsp;
                                 <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                              </div>
+                            )}
+                              {card?.price !== 0 && (
+                              <div
+                                className="buy-now"
+                                style={{
+                                  display: "flex",
+                                  alignItems: "flex-end",
+                                  paddingLeft:'10px',
+                                   paddingRight:'10px'
+                                }}
+                                onClick={() => {
+                                  buyNow(card);
+                                }}
+                              >
+                                Buy Now &nbsp;
+                                <LocalMallIcon sx={{ cursor: "pointer", color: "white" }} />
                               </div>
                             )}
                           </Grid>
@@ -1829,6 +1915,23 @@ function Shop() {
                                 <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
                               </div>
                             )}
+                              {card?.price !== 0 && (
+                              <div
+                                className="buy-now"
+                                style={{
+                                  display: "flex",
+                                  alignItems: "flex-end",
+                                  paddingLeft:'10px',
+                                   paddingRight:'10px'
+                                }}
+                                onClick={() => {
+                                  buyNow(card);
+                                }}
+                              >
+                                Buy Now &nbsp;
+                                <LocalMallIcon sx={{ cursor: "pointer", color: "white" }} />
+                              </div>
+                            )}
                           </Grid>
                         </React.Fragment>
                       ))
@@ -2057,6 +2160,23 @@ function Shop() {
                               >
                                 Add To Cart &nbsp;
                                 <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} />
+                              </div>
+                            )}
+                              {card?.price !== 0 && (
+                              <div
+                                className="buy-now"
+                                style={{
+                                  display: "flex",
+                                  alignItems: "flex-end",
+                                  paddingLeft:'10px',
+                                   paddingRight:'10px'
+                                }}
+                                onClick={() => {
+                                  buyNow(card);
+                                }}
+                              >
+                                Buy Now &nbsp;
+                                <LocalMallIcon sx={{ cursor: "pointer", color: "white" }} />
                               </div>
                             )}
                           </Grid>

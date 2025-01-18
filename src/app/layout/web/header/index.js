@@ -342,10 +342,10 @@ function Header(props) {
             <Divider />
             {!user && !loginUser ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>Login</Button>
+                <Button onClick={handleGoogleLogin} sx={{ color: 'white', border: '1px solid white', display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>Login</Button>
               </Box>
             ) : (
-              <Box sx={{ display: { lg: 'block', md: "none", sm: "none", xs: "none" } }}>
+              <Box sx={{ display: { lg: 'block', md: "block", sm: "block", xs: "block" } }}>
                 <Button
                   id="basic-button"
                   aria-controls={open ? 'basic-menu' : undefined}

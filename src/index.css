@@ -151,6 +151,25 @@ margin: 0;
 .add-to-cart {
   display: none !important;
 }
+.buy-now {
+  display: none !important;
+}
+.product-card:hover .buy-now  {
+  display: flex !important;
+  position: absolute;
+  top: 62%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #8f52a1;
+  padding: 12px;
+  padding-left: 25px !important;
+
+  padding-right: 25px !important;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+}
 
 .product-card:hover .add-to-cart {
   display: flex !important;
@@ -166,7 +185,9 @@ margin: 0;
   color: #fff;
 }
 
-
+.custom-Btn{
+  background-color: #FF9D04;
+}
 
 
 
