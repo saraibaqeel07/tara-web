@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Select, MenuItem, Typography, Paper, TextField, IconButton, Divider } from '@mui/material';
 import Images from '../../assets/images';
-import reviewSection from "../../assets/images/review-section.png"
+import reviewSection from "../../assets/images/review-section.webp"
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { collection, doc, getDocs, getFirestore, query, updateDoc, where } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { useNavigate } from 'react-router-dom';
 import { SuccessToaster } from '../../components/Toaster';
-import shopImg1 from "../../assets/images/shop-intro.png"
+import shopImg1 from "../../assets/images/shop-intro.webp"
 
 const Cart = () => {
     let User = localStorage.getItem('user')

@@ -56,11 +56,11 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { CartContext } from "../../Context/CartContext";
 import { CartCounter } from "../../Context/CartCounter";
 import navigation from "../../../Navigation";
-import introImage from "../../assets/images/intro-pic.png";
-import taraImage from "../../assets/images/tara-pic.png";
-import starImg from "../../assets/images/star.png";
-import rainbowImg from "../../assets/images/rainbow.png";
-import haveforyou from "../../assets/images/haveforyou.png";
+import introImage from "../../assets/images/intro-pic.webp";
+import taraImage from "../../assets/images/tara-pic.webp";
+import starImg from "../../assets/images/star.webp";
+import rainbowImg from "../../assets/images/rainbow.webp";
+import haveforyou from "../../assets/images/haveforyou.webp";
 
 
 // import "slick-carousel/slick/slick-theme.css";

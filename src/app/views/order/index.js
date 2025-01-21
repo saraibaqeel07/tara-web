@@ -16,8 +16,8 @@ import { AuthContext } from '../../Context/AuthContext'
 import { useTheme } from '@emotion/react'
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 import { Modal } from 'antd'
-import shopImg1 from "../../assets/images/shop-intro.png"
-import reviewSection from "../../assets/images/review-section.png"
+import shopImg1 from "../../assets/images/shop-intro.webp"
+import reviewSection from "../../assets/images/review-section.webp"
 import VisaIcon from '@mui/icons-material/CreditCard'; // Replace with actual Visa/Mastercard icons
 import MasterCardIcon from '@mui/icons-material/CreditCard'; // Replace with an appropriate icon
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'; // For cash on delivery

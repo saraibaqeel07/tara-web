@@ -9,7 +9,7 @@ import { CartContext } from '../../Context/CartContext'
 import { CartCounter } from '../../Context/CartCounter'
 import { useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close';
-import taraImage from "../../assets/images/tara-pic.png"
+import taraImage from "../../assets/images/tara-pic.webp"
 import moment from 'moment'
 
 function Contact() {

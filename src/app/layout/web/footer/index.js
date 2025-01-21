@@ -4,10 +4,10 @@ import Images, { CreditCard, Facebook, Instagram, PayPal, Tiktok, Youtube } from
 import Colors from '../../../styles/colors'
 import navigation from '../../../../Navigation'
 import { useNavigate, useLocation } from 'react-router-dom'
-import footerImg from "../../../assets/images/footer-img.png"
+import footerImg from "../../../assets/images/footer-img.webp"
 import Fonts from '../../../styles/fonts'
 import getFontSizes from 'antd/es/theme/themes/shared/genFontSizes'
-import footerBackground from "../../../assets/images/footer-background.png"
+import footerBackground from "../../../assets/images/footer-background.webp"
 
 function Footer() {
   const navigate = useNavigate();

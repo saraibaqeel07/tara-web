@@ -10,7 +10,7 @@
   width: 60px;
   border: none;
   border-radius: 50%;
-  background-image: url(../src/app/assets/images/left-arrow.png);
+  background-image: url(../src/app/assets/images/left-arrow.webp);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 40%;
@@ -28,7 +28,7 @@
   width: 60px;
   border: none;
   border-radius: 50%;
-  background-image: url(../src/app/assets/images/right-arrow.png);
+  background-image: url(../src/app/assets/images/right-arrow.webp);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 40%;

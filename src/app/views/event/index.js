@@ -23,7 +23,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import PageNavigator from "../../components/pagination/index"
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
-import shopImg1 from "../../assets/images/shop-intro.png";
+import shopImg1 from "../../assets/images/shop-intro.webp";
 import Colors from "../../styles/colors";
 
 const EventShow = () => {
