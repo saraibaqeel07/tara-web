@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^41.1.0",
+    "@ckeditor/ckeditor5-react": "^6.2.0",
+    "@ckeditor/ckeditor5-upload": "^44.1.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fontsource/poppins": "^5.0.13",
@@ -17,6 +20,7 @@
     "antd": "^5.16.4",
     "aos": "^2.3.4",
     "caniuse-lite": "^1.0.30001684",
+    "ckeditor5": "^44.0.0",
     "firebase": "^10.11.0",
     "moment": "^2.30.1",
     "react": "^18.2.0",

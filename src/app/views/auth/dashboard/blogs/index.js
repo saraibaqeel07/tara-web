@@ -16,6 +16,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
 
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+
+
 
 function Blogs() {
 
@@ -59,17 +63,27 @@ function Blogs() {
 
     };
 
+
     const navigate = useNavigate();
 
     const auth = getAuth();
     const storage = getStorage();
     const storageRef = ref(storage, 'images' + Math.random());
     const [image, setImage] = useState(null);
+    const [image2, setImage2] = useState(null);
     const [products, setProducts] = useState([])
     const [tableId, setTableId] = useState()
     const [imgUrl, setImgUrl] = useState()
-
+    
+    const [imgUrl2, setImgUrl2] = useState()
     const [open1, setOpen1] = useState(false);
+    const [editorData, setEditorData] = useState("");
+
+    const handleEditorChange = (event, editor) => {
+        const data = editor.getData();
+        setEditorData(data);
+        console.log(data); // You can see the editor's content here.
+    };
 
     const handleClickOpenModal = () => {
         setOpen1(true);
@@ -116,6 +130,10 @@ function Blogs() {
         }
     };
 
+  
+    
+    
+    
 
     const addProduct = async () => {
         console.log('submit');
@@ -191,6 +209,48 @@ function Blogs() {
 
     }
 
+    function uploadAdapter(loader) {
+        return {
+          upload: () => {
+            return loader.file.then(file => {
+              return new Promise((resolve, reject) => {
+                const formData = new FormData();
+                formData.append("image", file);
+      
+                // Call handleImageChange2 to upload the image to Firebase Storage
+                const imageRef = ref(storage, `images/${file.name}`);
+      
+                uploadBytes(imageRef, file)
+                  .then((snapshot) => {
+                    console.log("Uploaded a blob or file!");
+                    getDownloadURL(snapshot.ref)
+                      .then((url) => {
+                        console.log("Download URL:", url);
+                        // Return the download URL as part of the upload process
+                        resolve({
+                          default: url // The key 'default' is required by CKEditor for image URLs
+                        });
+                      })
+                      .catch((error) => {
+                        console.error("Error getting download URL:", error);
+                        reject(error);
+                      });
+                  })
+                  .catch((error) => {
+                    console.error("Error uploading file:", error);
+                    reject(error);
+                  });
+              });
+            });
+          }
+        };
+      }
+      
+      function uploadPlugin(editor) {
+        editor.plugins.get("FileRepository").createUploadAdapter = loader => {
+          return uploadAdapter(loader);
+        };
+      }
     useEffect(() => {
         const token = localStorage.getItem("token");
         console.log(token, 'tokentokentokentoken');
@@ -293,13 +353,28 @@ function Blogs() {
 
                     <Grid item xs={12}>
 
-                        <TextField multiline rows={5} inputProps={{ sx: { color: 'black !important' } }} className='text-color' sx={{ color: 'black',width:"92%" }}  {...register('productPrice', { required: true })} error={!!errors.productPrice} 
+                        <TextField multiline rows={5} inputProps={{ sx: { color: 'black !important' } }} className='text-color' sx={{ color: 'black', width: "92%" }}  {...register('productPrice', { required: true })} error={!!errors.productPrice}
                             helperText={errors.productPrice ? "Description is required" : ""} size='small' id="outlined-basic" label="Description" variant="outlined" />
                     </Grid>
 
                 </Grid>
-
-                <Grid container xs={9} mt={5} justifyContent={'flex-end'} s>
+                <div>
+                    <h2>CKEditor 5 in React</h2>
+                    <CKEditor
+                        editor={ClassicEditor}
+                        config={{
+                            extraPlugins: [uploadPlugin], // Ensure the custom plugin is passed here
+                          }}
+                  
+                        data="<p>Start writing here...</p>"
+                        onChange={handleEditorChange}
+                    />
+                    <div>
+                        <h3>Editor Data:</h3>
+                        <p>{editorData}</p>
+                    </div>
+                </div>
+                <Grid container xs={9} mt={5} justifyContent={'flex-end'} >
                     <Button type='submit' variant="contained">Add</Button>
 
                 </Grid>
@@ -327,7 +402,7 @@ function Blogs() {
                                 </TableCell>
 
                                 <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.title}</TableCell>
-                             
+
                                 <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >
 
                                     <Box component={'img'} src={item?.imgUrl} sx={{ width: '80px', textAlign: 'center' }} >
