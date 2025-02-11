@@ -1315,7 +1315,7 @@ function Shop() {
                     spacing={2}
                     justifyContent={"center"}
                     sx={{
-                      minHeight: "1000px",
+                    
                       display: "flex",
                       alignItems:
                         loading || !delayPassed
@@ -1580,7 +1580,7 @@ function Shop() {
                     spacing={2}
                     justifyContent={"center"}
                     sx={{
-                      minHeight: "1000px", // Adjust this value based on your card size and rows
+                     // Adjust this value based on your card size and rows
                       display: "flex",
                       alignItems:
                         loading ||
@@ -1811,7 +1811,7 @@ function Shop() {
                     spacing={2}
                     justifyContent={"center"}
                     sx={{
-                      minHeight: "1000px", // Adjust this value based on your card size and rows
+                     // Adjust this value based on your card size and rows
                       display: "flex",
                       alignItems:
                         coloringLoading || !coloringDelayPassed
@@ -2034,7 +2034,7 @@ function Shop() {
                     spacing={2}
                     justifyContent={"center"}
                     sx={{
-                      minHeight: "1000px", // Adjust this value based on your card size and rows
+                     // Adjust this value based on your card size and rows
                       display: "flex",
                       alignItems:
                         extraLoading || !extraDelayPassed

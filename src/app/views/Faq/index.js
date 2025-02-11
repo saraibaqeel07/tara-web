@@ -839,6 +839,7 @@ function FAQ() {
                   <Button
                     variant="contained"
                     className="para-text"
+                    onClick={()=> navigate('/contact-us')}
                     sx={{
                       backgroundColor: "#FF9D04",
                       color: "white",

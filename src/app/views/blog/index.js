@@ -37,6 +37,7 @@ const Blog = () => {
   const [currentCards, setCurrentCards] = useState([])
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0)
+  const [originalArray, setOriginalArray] = useState([])
   const [data, setData] = useState([]); // All data fetched
   const cardsPerRow = 4; // Number of cards per row
   const cardsPerPage = 2 * cardsPerRow; // Two rows of cards per page
@@ -138,8 +139,21 @@ const Blog = () => {
 
     console.log(dataArray);
     setCurrentCards(dataArray)
+    setOriginalArray(dataArray)
 
   }
+  const handleFilter = (value) => {
+    if(value){
+
+      const filtered = originalArray.filter((card) =>
+        card.title.toLowerCase().includes(value.toLowerCase())
+      );
+      setCurrentCards(filtered);
+    }
+    else{
+      setCurrentCards(originalArray);
+    }
+  };
 
 
   // Calculate filtered and paginated data
@@ -261,7 +275,7 @@ const Blog = () => {
             variant="outlined"
             placeholder="search text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {handleFilter(e.target.value); setSearchQuery(e.target.value)}}
             sx={{
               maxWidth: "400px", // Restrict width
               backgroundColor: "#ECE6F0", // Light background

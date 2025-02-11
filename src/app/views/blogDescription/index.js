@@ -203,11 +203,11 @@ console.log(description);
                     xs={11} // For extra small screens, also take most of the space
                     sx={{
                         display: "flex",
-                        justifyContent: { md: "flex-end", sm: "center" }, // Align to the right
+                        justifyContent: 'space-between', // Align to the right
                         alignItems: "center",
                         padding: "20px",
                         flexDirection: "column", // Arrange items in a column
-                        gap: "600px", // Add vertical space between elements
+               
 
 
                     }}

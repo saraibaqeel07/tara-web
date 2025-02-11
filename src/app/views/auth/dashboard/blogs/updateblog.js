@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Box, Button, Grid, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -21,15 +21,19 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 
 
-function Blogs() {
+function UpdateBlog() {
 
     const {
         register,
         handleSubmit,
+        setValue,
         getValues,
         formState: { errors },
         reset
     } = useForm();
+    const { state } = useLocation()
+    console.log(state);
+
 
     const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 }, control: control2 } = useForm();
 
@@ -178,17 +182,20 @@ function Blogs() {
 
         try {
 
-            const productRef = doc(db, 'activitysheets', tableId);
+            const productRef = doc(db, 'blogs', state?.id);
 
             // Update the product fields
             await updateDoc(productRef, {
+                title: getValues('productName'),
 
-                price: modalValue,  // Update the product price
-
+                imgUrl: imgUrl,
+                html: editorData
             })
                 .then(() => {
-                    console.log("Document successfully updated!");
-                    getProducts()
+                    console.log("successfully updated!");
+                    SuccessToaster('Blog Updated Successfully')
+                    navigate('/admin/blogs')
+
                     handleClose()
                 })
                 .catch((error) => {
@@ -213,13 +220,26 @@ function Blogs() {
     const handleDelete = async (id) => {
         console.log(id);
         console.log(tableId);
-        let result = await deleteDoc(doc(db, "blogs", tableId));
+        let result = await deleteDoc(doc(db, "blogs", state?.id));
         console.log(result);
         SuccessToaster('blog Deleted Successfully')
         setOpen(false)
         getProducts()
 
     }
+    useEffect(() => {
+
+        if (state) {
+
+            setEditorData(state?.html)
+            setValue('productName', state?.title)
+            setImgUrl(state?.imgUrl)
+            setImage(state?.imgUrl)
+            setDisabled(false)
+        }
+
+    }, [])
+
 
     function uploadAdapter(loader) {
         return {
@@ -337,7 +357,7 @@ function Blogs() {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Box component={'form'} onSubmit={handleSubmit(addProduct)} sx={{ width: "80%", margin: '0 auto', mt: 10 }}>
+            <Box component={'form'} onSubmit={handleSubmit(editProduct)} sx={{ width: "80%", margin: '0 auto', mt: 10 }}>
 
                 <Grid container>
                     <Grid item xs={6} display={'flex'} alignItems={'center'}>
@@ -382,7 +402,7 @@ function Blogs() {
                                     "imageStyle:alignRight",
                                     "|",
                                     "resizeImage",
-                                    
+
 
                                 ],
                                 styles: ["alignLeft", "alignCenter", "alignRight"], // Ensure alignment options
@@ -402,67 +422,19 @@ function Blogs() {
                             },
                         }}
 
-                        data="<p>Start writing here...</p>"
+                        data={editorData}
                         onChange={handleEditorChange}
                     />
 
                 </div>
                 <Grid container xs={9} mt={5} justifyContent={'flex-end'} >
-                    <Button type='submit' variant="contained" disabled={disabled}>Add</Button>
+                    <Button type='submit' variant="contained" disabled={disabled}>Update</Button>
 
                 </Grid>
             </Box>
-            <TableContainer component={Paper} sx={{ color: 'black !important', mt: 5, mb: 5, height: '500px', overflowY: 'scroll' }}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead sx={{ color: 'black !important' }}>
-                        <TableRow>
-                            <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Sr.</TableCell>
 
-                            <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }}>Title</TableCell>
-
-                            <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Picture</TableCell>
-                            <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Action</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {products?.map((item, index) => (
-                            <TableRow
-                                key={index}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} component="th" scope="row">
-                                    {index + 1}
-                                </TableCell>
-
-                                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.title}</TableCell>
-
-                                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >
-
-                                    <Box component={'img'} src={item?.imgUrl} sx={{ width: '80px', textAlign: 'center' }} >
-
-                                    </Box>
-                                </TableCell>
-                                {/* <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => { setOpen1(true); setModalValue(item?.price); setTableId(item?.id) }} >Edit</span></TableCell> */}
-                                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > 
-                                    <Box sx={{display:'flex',gap:'10px',justifyContent:'center'}}>
-                                    <span onClick={() => {
-                                    setOpen(true)
-                                    setTableId(item?.id)
-                                }} >Delete</span>
-                                 <span onClick={() => {
-                                  
-                                  navigate(`/admin/update-blog`, { state: item })
-                                }} >Edit</span>
-                                    </Box>
-                                  </TableCell>
-
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
         </Box>
     )
 }
 
-export default Blogs
+export default UpdateBlog
