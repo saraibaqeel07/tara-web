@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import Images from "../../assets/images";
 import { CreditCard, Facebook, Instagram, PayPal, Tiktok, Youtube } from '../../assets/images'
+import parse from 'html-react-parser';
 
 
 const BlogDetail = () => {
@@ -15,6 +16,7 @@ const BlogDetail = () => {
     const { title, description } = location.state || {}; // Retrieve the title passed from the card
 
 
+console.log(description);
 
 
     return (
@@ -100,22 +102,8 @@ const BlogDetail = () => {
 
                 </Box>
             </Grid>
-
-            <Grid container sx={{ justifyContent: { md: "flex-start", xs: "center" }, alignItems: "flex-start", py: 20, px: 5 }}  >
-                <Grid item md={9} sm={11} xs={11}>
-                    <Grid
-                        container
-                        rowGap="40px"
-                        justifyContent="space-between"
-                        sx={{
-                            backgroundColor: "#6791DE", // Entire box background color
-                            opacity: 0.8,
-                            borderRadius: 0,
-                            p: "40px",
-                        }}
-                    >
-                        {/* Social Media Icons */}
-                        <Box
+   {/* Social Media Icons */}
+                        {/* <Box
                             sx={{
                                 display: "flex",
                                 flexWrap: { xs: "wrap", sm: "nowrap" }, // Wrap for xs, single row for sm and larger
@@ -179,169 +167,31 @@ const BlogDetail = () => {
                             >
                                 <Youtube fontSize="inherit" />
                             </IconButton>
-                        </Box>
+                        </Box> */}
+            <Grid container sx={{  py: 20, px: 5 }}  >
+                <Grid item md={9} sm={11} xs={11} sx={{ backgroundColor: "#6791DE", // Entire box background color
+                            opacity: 0.8,}}>
+                    <Box
+                        container
+                        rowGap="40px"
+                       
+                        sx={{
+                           
+                            borderRadius: 0,
+                            p: "40px",
+                        }}
+                        dangerouslySetInnerHTML={{ __html: description }}
+                    >
+                     
 
 
-                        <Box sx={{ width: "100%", mt: "20px", position: "relative" }}>
-                            <Grid
-                                container
-                                spacing={2}
-                                sx={{
-                                    display: "flex",
-                                    alignItems: "flex-start", // Center vertically
-                                    justifyContent: "space-between", // Space items apart horizontally
-                                    position: "relative",
-                                }}
-                            >
-                                {/* Left Section (Text) */}
-                                <Grid
-                                    item
-                                    xs={8}
-                                    sm={8}
-                                    md={8}
-                                    lg={8}
-                                    xl={8}
-                                    sx={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        alignItems: "flex-start",
-                                    }}
-                                >
-                                    <Typography
-                                        variant="body1"
-                                        sx={{
-                                            color: "white",
-                                            fontSize: "16px",
-                                            textAlign: "left",
-                                            lineHeight: "1.6",
-                                            fontSize:{xl:"25px"},
-                                            maxWidth: { md: "450px", sm: "250px", xl: "1500px", lg: "1200px" }, // Optional: limit paragraph width
-                                        }}
-                                    >
-                                        {description}
-                                    </Typography>
-                                </Grid>
-
-                                {/* Middle Section (Images) */}
-                                <Grid
-                                    item
-                                    xs={3}
-                                    sm={3}
-                                    md={3}
-                                    lg={2}
-                                    xl={2}
-                                    sx={{
-                                        display: "flex",
-                                        flexDirection: "column", // Stack images vertically
-                                        justifyContent: "space-between", // Space items apart horizontally
-                                        alignItems: "flex-start",
-                                        gap:60,
-                                    }}
-                                >
-                                    {/* First Image */}
-                                    <Box
-                                        component="img"
-                                        src={Images.blogDetail4} // Replace with the actual image URL or import
-                                        alt="Decorative"
-                                        sx={{
-                                            width: { xl: "200px", lg: "150px", md: "150px", sm: "120px", xs: "80px" }, // Set appropriate size
-                                            height: "auto",
-                                         
-                                        }}
-                                    />
-
-                                    {/* Second Image */}
-                                    <Box
-                                        component="img"
-                                        src={Images.blogDetail3} // Replace with the actual image URL or import
-                                        alt="Decorative"
-                                        sx={{
-                                            width: { xl: "200px", lg: "150px", md: "150px", sm: "120px", xs: "80px" }, // Set appropriate size
-                                            height: "auto",
-                                        }}
-                                    />
-                                </Grid>
-
-                                {/* Positioned Sun Image */}
-                                <Box
-                                    component="img"
-                                    src={Images.sun} // Replace with the actual image URL or import
-                                    alt="Decorative"
-                                    sx={{
-                                        position: "absolute",
-                                        top: { sm: -80, xs: -50 }, // Adjust the positioning as needed
-                                        right: "10px", // Position towards the top-right corner
-                                        width: { md: "100px", sm: "80px", xs: "50px" }, // Set appropriate size
-                                        height: "auto",
-                                        
-                                    }}
-                                />
-                            </Grid>
-                        </Box>
+                       
 
 
+                        
+                       
 
-
-                        <Grid
-                            item
-                            xs={8}
-                            sm={8}
-                            md={8}
-                            lg={8}
-                            xl={8}
-
-                            sx={{
-                                display: "flex",
-                                alignItems: "flex-start", // Center vertically
-                                justifyContent: "space-between", // Space items apart horizontally
-                                position: "relative",
-                            }}
-                        >
-                            {/* Description */}
-                            <Typography
-                                variant="body1"
-                                sx={{
-                                    color: "white",
-                                    fontSize: "16px",
-                                    textAlign: "left",
-                                    lineHeight: "1.6",
-                                    fontSize:{xl:"25px"},
-                                    maxWidth: { md: "450px", sm: "250px", xl: "1500px", lg: "1200px" }, // Optional: limit paragraph width
-                                }}
-                            >
-                                {description}
-                            </Typography>
-
-                        </Grid>
-                        <Grid
-                            item
-                            xs={3}
-                            sm={3}
-                            md={3}
-                            lg={2}
-                            xl={2}
-                            sx={{
-                                display: "flex",
-                                justifyContent: "space-between", // Space items apart horizontally
-                                position: "relative",
-                                alignItems: "flex-start",
-                            }}
-                        >
-
-                            {/* Image */}
-                            <Box
-                                component="img"
-                                src={Images.blogDetail2} // Replace with the actual image URL or import
-                                alt="Decorative"
-                                sx={{
-                                    width: { xl: "200px", lg: "150px", md: "150px", sm: "120px", xs: "80px" }, // Set appropriate size
-                                    height: "auto",
-                                }}
-                            />
-
-                        </Grid>
-
-                    </Grid>
+                    </Box>
 
                 </Grid>
 

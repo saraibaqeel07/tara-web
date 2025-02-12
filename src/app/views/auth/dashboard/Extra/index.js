@@ -17,16 +17,18 @@ import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
 
 
-function ManageExtraSheets() {
-
+function CreatePost() {
+  const [imgUrls, setImgUrls] = useState([]);
+  const [previewImages, setPreviewImages] = useState([]);
   const {
     register,
     handleSubmit,
     getValues,
     formState: { errors },
-    reset
+    reset,
+    watch
   } = useForm();
-  
+
   const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 }, control: control2 } = useForm();
 
   const firebaseConfig = {
@@ -38,7 +40,7 @@ function ManageExtraSheets() {
     appId: "1:182521981077:web:3cadc9d70d7fc25fab939c",
     measurementId: "G-BHYZDHJCK9"
   };
-  let productId=''
+  let productId = ''
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const [open, setOpen] = React.useState(false);
@@ -78,58 +80,49 @@ function ManageExtraSheets() {
   const handleClose = () => {
     setOpen1(false);
   };
-  const handleImageChange = (e) => {
-    const selectedImage = e.target.files[0];
 
-    if (selectedImage) {
-      setImage(URL.createObjectURL(selectedImage));
-  
-      uploadBytes(storageRef, selectedImage)
-        .then((snapshot) => {
-          console.log('Uploaded a blob or file!');
-          console.log(snapshot);
-  
-          // Get the download URL of the uploaded file
-          getDownloadURL(snapshot.ref)
-            .then((url) => {
-              console.log('Download URL:', url);
-              setImgUrl(url);
-              // You can use this URL for various purposes, such as displaying the image in an <img> element
-              const img = document.getElementById('myimg');
-              if (img) {
-                img.setAttribute('src', url);
-              } else {
-                console.error('Image element not found');
-              }
-            })
-            .catch((error) => {
-              // Handle any errors
-              console.error('Error getting download URL:', error);
-            });
-        })
-        .catch((error) => {
-          // Handle any errors during upload
-          console.error('Error uploading file:', error);
-        });
-    } else {
-      console.error('No file selected');
-    }
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+
+    setImage(files.map((file) => URL.createObjectURL(file))); // Local preview
+
+    const uploadPromises = files.map(async (file) => {
+      const storageRef = ref(storage, `uploads/${file.name}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(snapshot.ref);
+      return url;
+    });
+
+    Promise.all(uploadPromises)
+      .then((urls) => {
+        setImgUrls(urls);
+        console.log("Uploaded Image URLs:", urls);
+      })
+      .catch((error) => console.error("Error uploading files:", error));
   };
 
-
+  console.log(watch(),'watch');
   const addProduct = async () => {
-    console.log('submit');
+   
+
+
     try {
 
       // Add a new document with a generated id.
       const docRef = await addDoc(collection(db, "extra"), {
         name: getValues('productName'),
+        subHeading: getValues('subHeading'),
+        Pages: getValues('Pages'),
+        AgeGroup: getValues('AgeGroup'),
+        ParentReason: getValues('ParentReason'),
+        HelpChild: getValues('HelpChild'),
         price: getValues('productPrice'),
-        imgUrl: imgUrl
+        imgUrl: imgUrls
       });
       console.log("Document written with ID: ", docRef.id);
       if (docRef.id) {
-
+        setImgUrls([])
         SuccessToaster('Product Add Succesfully')
         reset()
         setImage('')
@@ -142,28 +135,29 @@ function ManageExtraSheets() {
     } catch (error) {
       console.log(error);
     }
+
   };
 
   const editProduct = async (id) => {
 
     try {
 
-      const productRef = doc(db,'extra',tableId);
+      const productRef = doc(db, 'extra', tableId);
 
       // Update the product fields
       await updateDoc(productRef, {
-        
+
         price: modalValue,  // Update the product price
-       
+
       })
-      .then(() => {
-        console.log("Document successfully updated!");
-        getProducts()
-        handleClose()
-      })
-      .catch((error) => {
-        console.error("Error updating document: ", error);
-      });
+        .then(() => {
+          console.log("Document successfully updated!");
+          getProducts()
+          handleClose()
+        })
+        .catch((error) => {
+          console.error("Error updating document: ", error);
+        });
 
     } catch (error) {
       console.log(error);
@@ -228,75 +222,119 @@ function ManageExtraSheets() {
         </DialogActions>
       </Dialog>
 
-      <Dialog  open={open1} onClose={handleClose}>
-        <DialogTitle sx={{width:'500px',color:'black'}} >{"Edit Price"}</DialogTitle>
-        <Box sx={{display:'flex',p:'20px'}}>
-        <TextField
-        inputProps={{ sx: { color: 'black !important' } }}
-        className='text-color'
-        value={modalValue}
-        sx={{ color: 'black' }}
-        error={!!errors.productPricemodal}
-        type='number'
-        helperText={errors.productPricemodal ? "Product price is required" : ""}
-        size='small'
-        id="outlined-basic"
-        label="Product Price"
-        variant="outlined"
-        {...register2('productPricemodal', {
-          required: true,
-          onChange: (e) => {
-            setModalValue(e.target.value);
-           
-          }
-        })}
-      />
-              
-</Box>
+      <Dialog open={open1} onClose={handleClose}>
+        <DialogTitle sx={{ width: '500px', color: 'black' }} >{"Edit Price"}</DialogTitle>
+        <Box sx={{ display: 'flex', p: '20px' }}>
+          <TextField
+            inputProps={{ sx: { color: 'black !important' } }}
+            className='text-color'
+            value={modalValue}
+            sx={{ color: 'black' }}
+            error={!!errors2.productPricemodal}
+            type='number'
+            helperText={errors2.productPricemodal ? "Product price is required" : ""}
+            size='small'
+            id="outlined-basic"
+            label="Product Price"
+            variant="outlined"
+            {...register2('productPricemodal', {
+              required: true,
+              onChange: (e) => {
+                setModalValue(e.target.value);
+
+              }
+            })}
+          />
+
+        </Box>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={()=> editProduct()} color="primary" autoFocus>
+          <Button onClick={() => editProduct()} color="primary" autoFocus>
             Update
           </Button>
         </DialogActions>
       </Dialog>
-      <Box component={'form'} onSubmit={handleSubmit(addProduct)} sx={{ width: "80%", margin: '0 auto', mt: 10 }}>
+      <Box component={'form'} onSubmit={handleSubmit(addProduct)} sx={{ width: "90%", margin: '0 auto', mt: 10 }}>
 
-        <Grid container>
+        <Grid container spacing={2}>
           <Grid item xs={6}>
 
-            <TextField inputProps={{sx:{color:'black !important'}}} sx={{color:'black'}}  {...register('productName', { required: true })} error={!!errors.productName}
+            <TextField inputProps={{ sx: { color: 'black !important' } }} sx={{ color: 'black' }} fullWidth {...register('productName', { required: true })} error={!!errors.productName}
               helperText={errors.productName ? "Product name is required" : ""} size='small' id="outlined-basic" label="Book Name" variant="outlined" />
           </Grid>
+          <Grid item xs={6} >
 
-          <Grid item xs={6}>
+            <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('subHeading', { required: true })} error={!!errors.subHeading}
+              helperText={errors.subHeading ? "sub heading is required" : ""} size='small' multiline id="outlined-basic" label="Sub Heading" variant="outlined" />
+          </Grid>
 
-            <TextField inputProps={{sx:{color:'black !important'}}}  className='text-color'  sx={{color:'black'}}  {...register('productPrice', { required: true })} error={!!errors.productPrice} type='number'
+          <Grid item xs={4} mt={2}>
+
+            <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('productPrice', { required: true })} error={!!errors.productPrice} type='number'
               helperText={errors.productPrice ? "Product price is required" : ""} size='small' id="outlined-basic" label="Book Price" variant="outlined" />
           </Grid>
+          <Grid item xs={4} mt={2}>
 
-          <Grid container justifyContent={'space-between'}>
-            <Grid item xs={4} mt={5}>
+            <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('Pages', { required: true })} error={!!errors.Pages} type='number'
+              helperText={errors.Pages ? "Pages is required" : ""} size='small' id="outlined-basic" label="No of Pages" variant="outlined" />
+          </Grid>
+          <Grid item xs={4} mt={2}>
 
-              <TextField size='small' type='file' onChange={handleImageChange} required={true} />
+            <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('AgeGroup', { required: true })} error={!!errors.AgeGroup} type='text'
+              helperText={errors.AgeGroup ? "Age Group is required" : ""} size='small' id="outlined-basic" label="Age Group" variant="outlined" />
+          </Grid>
+          <Grid item xs={12} >
+            <Grid container spacing={2}>
+              <Grid item xs={6} mt={2}>
+
+                <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('ParentReason', { required: true })} error={!!errors.ParentReason}
+                  helperText={errors.ParentReason ? "Parent Reason is required" : ""} size='small' multiline id="outlined-basic" label="Why Parent's Love it" variant="outlined" />
+              </Grid>
+              <Grid item xs={6} mt={2}>
+
+                <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('HelpChild', { required: true })} error={!!errors.HelpChild}
+                  helperText={errors.HelpChild ? "help child is required" : ""} size='small' multiline id="outlined-basic" label="How it help's children" variant="outlined" />
+              </Grid>
             </Grid>
+          </Grid>
+          <Grid container m={2} >
             <Grid item xs={4} mt={5}>
 
-              {image && (
-                <div>
-                  <h4>Image Preview:</h4>
-                  <img src={image} id='myimg' alt="Preview" style={{ maxWidth: '100%' }} />
-                </div>
-              )}
+              <TextField size='small' type='file' inputProps={{ multiple: true, accept: "image/*" }}
+                onChange={handleImageChange} required={true} />
+            </Grid>
+
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <h4>Image Preview:</h4>
+              </Grid>
+
+              {imgUrls && imgUrls.length > 0 && imgUrls.map((src, index) => (
+                <Grid item xs={6} sm={4} md={3} key={index}>
+                  <img
+                    src={src}
+                    alt={`Preview ${index}`}
+                    style={{
+                      width: "100%",
+                      height: "200px",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                      boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.2)"
+                    }}
+                  />
+                </Grid>
+              ))}
             </Grid>
 
           </Grid>
+
+
 
         </Grid>
 
-        <Grid container xs={9} mt={5} justifyContent={'flex-end'} s>
+        <Grid container xs={9} mt={5} justifyContent={'flex-end'} >
           <Button type='submit' variant="contained">Add</Button>
 
         </Grid>
@@ -331,9 +369,11 @@ function ManageExtraSheets() {
 
                   </Box>
                 </TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span  onClick={()=> {setOpen1(true); setModalValue(item?.price);  setTableId(item?.id)}} >Edit</span></TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => {setOpen(true)
-                setTableId(item?.id)}} >Delete</span></TableCell>
+                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => { setOpen1(true); setModalValue(item?.price); setTableId(item?.id) }} >Edit</span></TableCell>
+                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => {
+                  setOpen(true)
+                  setTableId(item?.id)
+                }} >Delete</span></TableCell>
 
               </TableRow>
             ))}
@@ -344,4 +384,4 @@ function ManageExtraSheets() {
   )
 }
 
-export default ManageExtraSheets
+export default CreatePost

@@ -141,6 +141,10 @@ function App() {
               <Route key={i} path={item.path} element={item.component} />
             ))}
           </Route>
+
+          <Route path="/login" element={<Login />}>
+            
+          </Route>
           {<Route path="/admin" element={ <AdminLayout />}>
             {Adminroutes.map((item, i) => (
               <Route key={i} path={item.path} element={item.component} />

@@ -47,6 +47,7 @@ function Blogs() {
     const db = getFirestore(app);
     const [open, setOpen] = React.useState(false);
     const [modalValue, setModalValue] = useState()
+    const [disabled, setDisabled] = useState(false)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -74,7 +75,7 @@ function Blogs() {
     const [products, setProducts] = useState([])
     const [tableId, setTableId] = useState()
     const [imgUrl, setImgUrl] = useState()
-    
+
     const [imgUrl2, setImgUrl2] = useState()
     const [open1, setOpen1] = useState(false);
     const [editorData, setEditorData] = useState("");
@@ -94,6 +95,7 @@ function Blogs() {
     };
     const handleImageChange = (e) => {
         const selectedImage = e.target.files[0];
+        setDisabled(true)
 
         if (selectedImage) {
             setImage(URL.createObjectURL(selectedImage));
@@ -107,6 +109,7 @@ function Blogs() {
                     getDownloadURL(snapshot.ref)
                         .then((url) => {
                             console.log('Download URL:', url);
+                            setDisabled(false)
                             setImgUrl(url);
                             // You can use this URL for various purposes, such as displaying the image in an <img> element
                             const img = document.getElementById('myimg');
@@ -130,22 +133,30 @@ function Blogs() {
         }
     };
 
-  
-    
-    
-    
+
+
+
+
 
     const addProduct = async () => {
         console.log('submit');
         try {
+            console.log(editorData);
+
 
             // Add a new document with a generated id.
             const docRef = await addDoc(collection(db, "blogs"), {
                 title: getValues('productName'),
-                description: getValues('productPrice'),
-                imgUrl: imgUrl
+
+                imgUrl: imgUrl,
+                html: editorData
             });
-            console.log("Document written with ID: ", docRef.id);
+            console.log("\dasdasd ", {
+                title: getValues('productName'),
+
+                imgUrl: imgUrl,
+                html: editorData
+            });
             if (docRef.id) {
 
                 SuccessToaster('Blog Added Succesfully')
@@ -211,46 +222,48 @@ function Blogs() {
 
     function uploadAdapter(loader) {
         return {
-          upload: () => {
-            return loader.file.then(file => {
-              return new Promise((resolve, reject) => {
-                const formData = new FormData();
-                formData.append("image", file);
-      
-                // Call handleImageChange2 to upload the image to Firebase Storage
-                const imageRef = ref(storage, `images/${file.name}`);
-      
-                uploadBytes(imageRef, file)
-                  .then((snapshot) => {
-                    console.log("Uploaded a blob or file!");
-                    getDownloadURL(snapshot.ref)
-                      .then((url) => {
-                        console.log("Download URL:", url);
-                        // Return the download URL as part of the upload process
-                        resolve({
-                          default: url // The key 'default' is required by CKEditor for image URLs
-                        });
-                      })
-                      .catch((error) => {
-                        console.error("Error getting download URL:", error);
-                        reject(error);
-                      });
-                  })
-                  .catch((error) => {
-                    console.error("Error uploading file:", error);
-                    reject(error);
-                  });
-              });
-            });
-          }
+            upload: () => {
+                return loader.file.then(file => {
+                    return new Promise((resolve, reject) => {
+                        const formData = new FormData();
+                        formData.append("image", file);
+
+                        // Call handleImageChange2 to upload the image to Firebase Storage
+                        const imageRef = ref(storage, `images/${file.name}`);
+
+                        uploadBytes(imageRef, file)
+                            .then((snapshot) => {
+                                console.log("Uploaded a blob or file!");
+                                getDownloadURL(snapshot.ref)
+                                    .then((url) => {
+                                        console.log("Download URL:", url);
+                                        setDisabled(false)
+                                        // Return the download URL as part of the upload process
+                                        resolve({
+                                            default: url // The key 'default' is required by CKEditor for image URLs
+                                        });
+                                    })
+                                    .catch((error) => {
+                                        console.error("Error getting download URL:", error);
+                                        reject(error);
+                                    });
+                            })
+                            .catch((error) => {
+                                console.error("Error uploading file:", error);
+                                reject(error);
+                            });
+                    });
+                });
+            }
         };
-      }
-      
-      function uploadPlugin(editor) {
+    }
+
+    function uploadPlugin(editor) {
+        setDisabled(true)
         editor.plugins.get("FileRepository").createUploadAdapter = loader => {
-          return uploadAdapter(loader);
+            return uploadAdapter(loader);
         };
-      }
+    }
     useEffect(() => {
         const token = localStorage.getItem("token");
         console.log(token, 'tokentokentokentoken');
@@ -267,6 +280,7 @@ function Blogs() {
         getProducts()
 
     }, [])
+
     return (
         <Box>
             <Dialog
@@ -343,7 +357,7 @@ function Blogs() {
                                 {image && (
                                     <div>
                                         <h4>Image Preview:</h4>
-                                        <img src={image} id='myimg' alt="Preview" style={{ maxWidth: '100%' }} />
+                                        <img src={image} id='myimg' alt="Preview" style={{ width: '200px', height: '200px' }} />
                                     </div>
                                 )}
                             </Grid>
@@ -351,31 +365,49 @@ function Blogs() {
                         </Grid>
                     </Grid>
 
-                    <Grid item xs={12}>
 
-                        <TextField multiline rows={5} inputProps={{ sx: { color: 'black !important' } }} className='text-color' sx={{ color: 'black', width: "92%" }}  {...register('productPrice', { required: true })} error={!!errors.productPrice}
-                            helperText={errors.productPrice ? "Description is required" : ""} size='small' id="outlined-basic" label="Description" variant="outlined" />
-                    </Grid>
 
                 </Grid>
                 <div>
-                    <h2>CKEditor 5 in React</h2>
+                    <h2>Blog Editor</h2>
                     <CKEditor
                         editor={ClassicEditor}
                         config={{
-                            extraPlugins: [uploadPlugin], // Ensure the custom plugin is passed here
-                          }}
-                  
+                            extraPlugins: [uploadPlugin],
+                            image: {
+                                toolbar: [
+                                    "imageStyle:alignLeft",
+                                    "imageStyle:alignCenter",
+                                    "imageStyle:alignRight",
+                                    "|",
+                                    "resizeImage",
+                                    
+
+                                ],
+                                styles: ["alignLeft", "alignCenter", "alignRight"], // Ensure alignment options
+                            },
+                            alignment: {
+                                options: ['left', 'right', 'center', 'justify']
+                            },
+                            htmlSupport: {
+                                allow: [
+                                    {
+                                        name: /.*/,
+                                        attributes: true,
+                                        classes: true,
+                                        styles: true
+                                    }
+                                ]
+                            },
+                        }}
+
                         data="<p>Start writing here...</p>"
                         onChange={handleEditorChange}
                     />
-                    <div>
-                        <h3>Editor Data:</h3>
-                        <p>{editorData}</p>
-                    </div>
+
                 </div>
                 <Grid container xs={9} mt={5} justifyContent={'flex-end'} >
-                    <Button type='submit' variant="contained">Add</Button>
+                    <Button type='submit' variant="contained" disabled={disabled}>Add</Button>
 
                 </Grid>
             </Box>

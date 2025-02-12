@@ -70,7 +70,7 @@ export default function Login() {
     try {
       const user = await signInWithEmailAndPassword(auth, formData.email, formData.password);
       if (user.user.uid) {
-        localStorage.setItem("token", user.user.uid)
+        localStorage.setItem("token", user?.user?.uid)
         console.log(user,'sasas');
         navigate("/admin/create-post");
        

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Button, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Select, MenuItem, Typography, Paper, TextField, IconButton, Divider } from '@mui/material';
 import Images from '../../assets/images';
 import reviewSection from "../../assets/images/review-section.webp"
@@ -9,11 +9,12 @@ import { initializeApp } from 'firebase/app';
 import { useNavigate } from 'react-router-dom';
 import { SuccessToaster } from '../../components/Toaster';
 import shopImg1 from "../../assets/images/shop-intro.webp"
+import { CartCounter } from '../../Context/CartCounter';
 
 const Cart = () => {
     let User = localStorage.getItem('user')
     const navigate = useNavigate()
-
+  const { setCount } = useContext(CartCounter);
     User = JSON.parse(User)
     const [cartItems, setCartItems] = useState([])
 
@@ -44,7 +45,7 @@ const Cart = () => {
 
 
 
-           
+            setCount(dataArray[0]?.data?.length)
             setCartItems(dataArray[0]?.data);
         } catch (error) {
             console.error("Error fetching cart data:", error);
@@ -80,7 +81,7 @@ const Cart = () => {
                 await updateDoc(cartDocRef, {
                     data: cartItems 
                 });
-    
+                setCount(cartItems?.length)
                SuccessToaster('Cart updated successfully');
             } else {
                 console.log('No cart found for this user');

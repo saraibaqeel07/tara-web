@@ -468,14 +468,14 @@ function Order() {
 
                                         </Grid>
                                     </Grid>
-                                    <Grid xs={6} >
+                                    <Grid lg={6} md={6} sm={12} xs={12} >
                                         <Paper sx={{ padding: 3, backgroundColor: '#b9ccf0', borderRadius: '12px' }}>
                                             {cartItems?.length > 0 ? cartItems?.map((item, index) => (
                                                 <Box key={index} sx={{ backgroundColor: 'transparent', borderRadius: "3px", position: 'relative', mt: 1, mb: 1 }}>
                                                     <Box component={'img'} width={'12px'} src={Images.crossIcon} sx={{ position: 'absolute', top: 10, right: 10, fontWeight: 'bold', cursor: 'pointer' }} ></Box>
                                                     <Grid container alignItems="center">
                                                         {/* Item Image */}
-                                                        <Grid item lg={6} md={6} sm={12} xs={12} display={'flex'} justifyContent={'flex-start'} alignItems={'center'} gap={2}>
+                                                        <Grid item lg={6} md={6} sm={6} xs={6} display={'flex'} justifyContent={'flex-start'} alignItems={'center'} gap={2}>
 
                                                             <Box sx={{ p: '1px', display: 'flex', justifyContent: 'center' }}>
 
@@ -504,8 +504,8 @@ function Order() {
 
 
                                                         {/* Total and Remove Button */}
-                                                        <Grid item lg={6} md={6} sm={4} xs={4} textAlign="right">
-                                                            <Typography sx={{ color: 'white' }}> {item?.price * item?.qty}</Typography>
+                                                        <Grid item lg={6} md={6} sm={6} xs={6} textAlign="right">
+                                                            <Typography sx={{ color: 'white' }}> {item?.price } x { item?.qty} = {item?.price * item?.qty}</Typography>
 
                                                         </Grid>
                                                     </Grid>

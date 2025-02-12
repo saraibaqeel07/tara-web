@@ -188,6 +188,9 @@ eventPic:require( "../../assets/images/event-pic.webp"),
 eventCharacters:require( "../../assets/images/event-characters.webp"),
 vector:require( "../../assets/images/vector.webp"),
 vectorStarFrame:require( "../../assets/images/vector-star-frame.webp"),
+butterfly:require( "../../assets/images/butterflyinsect.png"),
+flower2:require( "../../assets/images/flower.png"),
+child:require( "../../assets/images/child.png"),
 
 
 
