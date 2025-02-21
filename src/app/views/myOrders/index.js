@@ -155,15 +155,53 @@ function MyOrders() {
             <Box
                 component={"section"}
                 sx={{
-                    background: Colors.primaryGradient,
+                    backgroundImage: `url(${Images.mainBGPink})`,
+
+                    backgroundSize: "cover",
+                    backgroundPosition: "center center",
                     width: "100%",
                     py: "80px"
                 }}
             >
 
-                <Typography sx={{ fontSize: '30px', color: 'black', fontWeight: 'bold', textAlign: 'center', mb: '20px' }} variant="h6">
-                    Your Orders
-                </Typography>
+                 {/* Heading */}
+                                  <Typography
+                                    variant="h1"
+                                    className="heading-font"
+                                    sx={{
+                                      fontSize: {
+                                        xl: "100px",
+                                        lg: "90px",
+                                        md: "70px",
+                                        sm: "45px",
+                                        xs: "35px",
+                                      }, // Adjusts font size for different screens
+                                      fontWeight: 600,
+                                      whiteSpace: "nowrap",
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                      textTransform: "uppercase",
+                                      textAlign:'center',
+                
+                                      position: "relative", // Ensures alignment with image
+                                      zIndex: 1, // Keeps heading above the image
+                                    }}
+                                    style={{
+                                      WebkitTextStroke: "1px white",
+                                      WebkitTextFillColor: "#F9BF29",
+                                    }}
+                                  >
+                                    <span>Your </span>
+                                    <span
+                                      style={{
+                
+                                        WebkitTextStroke: "1px white",
+                                        WebkitTextFillColor: "#4FAAFB",
+                                      }}
+                                    >
+                                      ORDERS
+                                    </span>
+                                  </Typography>
 
                 <Box sx={{ width: '95%', margin: '0 auto' }}>
 
@@ -182,7 +220,7 @@ function MyOrders() {
                                                 primary={
                                                     <Typography sx={{ color: 'white' }}>
                                                         {`Order# ${product?.id} `}
-                                                        <Chip label={product.status} sx={{ color: 'white' }} />
+                                                       &nbsp; <Chip label={product.status} sx={{ color: 'white',textTransform:'capitalize' }} />
                                                     </Typography>
                                                 }
                                                 secondary={

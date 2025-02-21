@@ -1,6 +1,7 @@
 import ManageExtraSheets from "../views/auth/dashboard/Extra";
 import Faqs from "../views/auth/dashboard/Faqs";
 import Reviews from "../views/auth/dashboard/Reviews";
+import Toys from "../views/auth/dashboard/Toys";
 import Users from "../views/auth/dashboard/Users";
 import ManageActivitySheets from "../views/auth/dashboard/activitySheets";
 import Blogs from "../views/auth/dashboard/blogs";
@@ -32,6 +33,10 @@ const Adminroutes = [
   {
     path: "activity-sheets",
     component: <ManageActivitySheets />
+  },
+  {
+    path: "toys",
+    component: <Toys />
   },
   {
     path: "extra-sheets",

@@ -98,6 +98,7 @@ function Shop() {
   const [cardProduct, setCardProduct] = useState({});
   const [coloringSheets, setColoringSheets] = useState([]);
   const [activitySheets, setActivitySheets] = useState([]);
+  const [toys, setToys] = useState([])
   const [extraSheets, setExtraSheets] = useState([]);
   const { user, setUser } = useContext(AuthContext);
   let User = localStorage.getItem("user");
@@ -113,8 +114,9 @@ function Shop() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [activityCurrentPage, setActivityCurrentPage] = useState(1);
+  const [toysCurrentPage, setToysCurrentPage] = useState(1);
   const [coloringCurrentPage, setColoringCurrentPage] = useState(1);
-  const [activeButton, setActiveButton] = useState(4); // Default 'Show All Products' is active
+  const [activeButton, setActiveButton] = useState(0); // Default 'Show All Products' is active
   const [loading, setLoading] = useState(true); // Loader state
   const [delayPassed, setDelayPassed] = useState(false); // Delay state to control the visibility of loader
   const [cartData, setCartData] = useState(null);
@@ -124,6 +126,7 @@ function Shop() {
     "Activity Sheets",
     "Coloring Sheets",
     "Extra Sheets",
+    "Toys",
     "Show All Products",
   ];
 
@@ -233,6 +236,26 @@ function Shop() {
     setColoringCurrentPage(page);
   };
 
+  // Handle previous page
+  const handleToyPrevPage = () => {
+    if (toysCurrentPage > 1) {
+      setToysCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  // Handle next page
+  const handleToyNextPage = () => {
+    if (toysCurrentPage < ToysTotalPages) {
+      setToysCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  // Handle page number click
+  const handleToyPageClick = (page) => {
+    setToysCurrentPage(page);
+  };
+
+
   // Effect for loading state
   useEffect(() => {
     setColoringLoading(true);
@@ -262,6 +285,15 @@ function Shop() {
     activityCurrentPage * activityProductsPerPage
   );
 
+  // Activity Pagination
+  const ToysPerPage = 4; // Show 4 cards per page
+  const ToysTotalPages = Math.ceil(
+    toys.length / ToysPerPage
+  );
+  const toysCurrentProducts = toys.slice(
+    (toysCurrentPage - 1) * ToysPerPage,
+    toysCurrentPage * ToysPerPage
+  );
   // State for loading and delay
   const [activityLoading, setActivityLoading] = useState(true);
   const [activityDelayPassed, setActivityDelayPassed] = useState(false);
@@ -571,6 +603,21 @@ function Shop() {
 
     setExtraSheets(sortedData);
   };
+  const getToys = async () => {
+    const q = query(collection(db, "Toys"));
+
+    const querySnapshot = await getDocs(q);
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    const sortedData = dataArray.sort((a, b) => {
+      return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
+    });
+    console.log(sortedData);
+
+    setToys(sortedData);
+  };
 
   useEffect(() => {
     const delayTimer = setTimeout(() => {
@@ -618,6 +665,7 @@ function Shop() {
     getActivitySheets();
     getExtrasheets();
     getReviews();
+    getToys()
     getFaqs();
 
     if (state?.colorful) {
@@ -824,290 +872,7 @@ function Shop() {
           />
         </Box>
 
-        {/* <Box
-          component={"section"}
-          sx={{
-            background: Colors.primaryGradient,
-            width: "100%",
-            py: "80px"
-          }}
-        >
-          <Container>
-            <Box
-              sx={{
-                backgroundImage: { md: `url(${Images.bannerBg})`, sm: `url(${Images.backgroundSm})`, xs: `url(${Images.backgroundSm})` },
-                width: "100%",
-                height: { md: "624px", xs: "490px" },
-                backgroundSize: "cover",
-                backgroundPosition: "center center",
-                borderRadius: "20px"
-              }}
-            >
-              <Grid container>
-                <Grid item md={7} sm={12} xs={12}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      gap: "40px",
-                      pt: "60px",
-                      pl: { md: `48px !important`, sm: "12px", xs: "12px" },
-                      pr: { md: 0, sm: "12px", xs: "12px" }
-                    }}
-                  >
-                    <Typography
-                      variant='h1'
-                      sx={{
-                        fontFamily: Fonts.righteous,
-                        fontSize: { md: "70px", sm: "50px", xs: "40px" },
-                        fontWeight: 700,
-                        color: Colors.white,
-                      }}
-                    >
-                      <span id='follow-text' style={{ color: Colors.orange }}  >Follow</span>, <span id='learn-text'>Learn</span> and <span id='explore-text'>Explore</span> with Tara!
-                    </Typography>
-                    <Typography
-                      variant='h3'
-                      sx={{
-                        fontSize: { md: "38px", sm: "28px", xs: "20px" }
-                      }}
-                    >
-                      Click To See Latest Adventures!
-                    </Typography>
-                    <Grid container spacing={2} alignItems={"center"}>
-                      <Grid item md={5} sm={5} xs={12}>
-                        <Button
-                          fullWidth
-                          variant='contained'
-                          sx={{
-                            py: 1,
-                            px: 4,
-                            textTransform: "capitalize",
-                            fontSize: "18px"
-                          }}
-                          href='https://www.youtube.com/@Shinewithtara'
-                        >
-                          Start Adventure
-                        </Button>
-                      </Grid>
-                      <Grid item md={7} sm={7} xs={12}>
-                        <Grid container spacing={2} sx={{ justifyContent: { md: "flex-start", sm: "flex-start", xs: "center" } }}>
-                          <Grid item md={2}>
-                            <Button href='https://www.facebook.com/profile.php?id=61554711500749'>
-                              <FacebookRounded />
-                            </Button>
-                          </Grid>
-                          <Grid item md={2}>
-                            <Button href='https://www.instagram.com/shinewith.tara/ '>
-                              <InstagramRounded />
-                            </Button>
-                          </Grid>
-                          <Grid item md={2}>
-                            <Button href='https://www.youtube.com/@Shinewithtara'>
-                              <YoutubeRounded />
-                            </Button>
-                          </Grid>
-                          <Grid item md={2}>
-                            <Button href='https://www.tiktok.com/@shinewithtara'>
-                              <TiktokRounded />
-                            </Button>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
-          </Container>
-        </Box> */}
-        {/* <Box
-          component={"section"}
-          sx={{
-            background: Colors.whiteblue,
-            py: "80px"
-          }}
-        >
-          <Container>
-            <Grid
-              container
-              sx={{
-                background: `url(${Images.aboutImage})`,
-                backgroundSize: "cover",
-                backgroundPositionY: "center"
-              }}
-            >
-              <Grid item md={8}>
-                <Box
-                  sx={{
-                    mb: "40px"
-                  }}
-                >
-                  <Typography
-                    variant='h3'
-                    sx={{
-                      fontSize: { md: "48px", xs: "40px" },
-                      fontWeight: 900
-                    }}
-                  >
-                    Introducing <span style={{ color: Colors.darkblue }}>Tara and Shine</span>
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "40px"
-                  }}
-                >
-                  <Typography>
-                    At the heart of this initiative is Tara, a nine years old, a delightful character,
-                    and her imaginary companion, Shine. Together, they embody the essence
-                    of Islamic teachings and virtues.
-                  </Typography>
-                  <Typography>
-                    He delightful best friends who radiate joy, curiosity, and affection. Together, they embark on extraordinary journeys, captivating friends from all corners
-                    of the world and whisking them away into a realm of enchantment.
-                  </Typography>
-                  <Typography>
-                    Tara and Shine explore magical escapades that effortlessly impart Islamic teachings, moral values, and the importance of family bonds. The crux of our efforts revolves around delving into the profound teachings of Hadith from the Quran, the enchanting recitation of the Quran, and a fundamental introduction to Arabic. We aim to elucidate the Arabic alphabet, numbers, months, and more, ensuring a holistic understanding.
-                  </Typography>
-                  <Typography>
-                    This captivating series is specifically tailored for Muslim kids worldwide, aiming to foster spiritual and character development in their young children. Join Tara and Shine as they weave a tapestry of thrilling adventures, educational experiences, and heartwarming moments that will leave a lasting impact on young minds.
-                  </Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          </Container>
-        </Box> */}
-        {/* <Box
-          component={"section"}
-          sx={{
-            background: Colors.lightPurple,
-            backgroundImage: { md: selected == "merchandise" ? `url(${Images.merchBg})` : "none", sm: "none", xs: "none" },
-            py: "80px",
-            height: { md: selected == "merchandise" ? "770px" : "100%", sm: "100%", xs: "100%" },
-            backgroundSize: "cover",
-          }}
-        >
-          <Container>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "40px"
-              }}
-            >
-              <Box
-                sx={{
-                  textAlign: "center"
-                }}
-              >
-                <Typography
-                  variant='h3'
-                  sx={{
-                    fontSize: { md: "44px", xs: "32px" },
-                    fontWeight: 900
-                  }}
-                >
-                  What <span style={{ color: Colors.purple }}>Shine And Tara</span> Have For You
-                </Typography>
-                <Typography
-                  variant='h3'
-                  sx={{
-                    mt: '20px',
-                    fontSize: { md: "44px", xs: "32px" },
-                    fontWeight: 900
-                  }}
-                >
-                  <span style={{ color: Colors.purple }}>Shop</span>
-                </Typography>
-              </Box>
-              <Grid container columnSpacing={2} justifyContent={"center"} alignItems={"center"}>
-                <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center"
-                    }}
-                  >
-                    <CardMedia
-                      component={"img"}
-                      src={Images.shineStar}
-                      sx={{
 
-                        width: "80px",
-                        heigth: "80px",
-                        objectFit: "contain"
-                      }}
-                    />
-                  </Box>
-                </Grid>
-                <Grid item md={6} sm={12} xs={12}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <ButtonGroup sx={{ width: "100%" }}>
-                      {buttons}
-                    </ButtonGroup>
-                  </Box>
-                </Grid>
-                <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center"
-                    }}
-                  >
-                    <CardMedia
-                      component={"img"}
-                      src={Images.shineStar}
-                      sx={{
-                        width: "80px",
-                        heigth: "80px",
-                        objectFit: "contain"
-                      }}
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "20px"
-                }}
-              >
-                {selected == "episode" ? (
-                  <Fragment>
-                    <Typography>
-                      Come along with Tara and Shine as they explore enchanting locations and go about their daily activities, discovering important lessons about Islam, being good people, and the importance of family.In their exciting adventures, Tara and Shine visit magical places and experience everyday situations that teach them valuable things. They learn about Islamic teachings, how to be kind and do the right things, and why family is so special.
-                    </Typography>
-                    <Typography>
-                      This amazing series is made to be fun and educational for kids. Tara and Shine's journeys will help children understand Islamic values, learn good morals, and appreciate the love within their familie.Get ready to join Tara and Shine on their wonderful journey, where they learn, grow, and have lots of fun!
-                    </Typography>
-                  </Fragment>
-                ) : (
-                  <Grid container>
-                    <Grid item md={7}>
-                      <Typography>
-                        Each episode will provide day-to-day life coloring sheets.
-                        Worksheets - will have all different types of activities, coloring,
-                      </Typography>
-                      <Typography>
-                        Copyright 2024 © All rights Reserved By Shine With Tara Design by Sana Kazmi
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                )}
-              </Box>
-            </Box>
-          </Container>
-        </Box> */}
         {selected == "episode" ? (
           <Box
             component={"section"}
@@ -1308,14 +1073,14 @@ function Shop() {
                   ))}
                 </Box>
               </Box>
-              {(activeButton === 0 || activeButton === 4) && (
+              {(activeButton === 0 || activeButton === 5) && (
                 <Container sx={{ px: { sm: '0px !important', xs: '0px !important' }, }}>
                   <Grid
                     container
                     spacing={2}
                     justifyContent={"center"}
                     sx={{
-                    
+
                       display: "flex",
                       alignItems:
                         loading || !delayPassed
@@ -1415,11 +1180,75 @@ function Shop() {
                             >
 
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', alignItems: 'flex-end', width: '100%' }}>
-                                  <Box mt={2} sx={{ backgroundColor: '#FF9D04', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} component={'div'} onClick={() => addToCart(card)}>  <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} /></Box>
-                                  <Box mt={2} sx={{ backgroundColor: '#FF9D04', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><LocalMallIcon sx={{ cursor: "pointer", color: "white" }} onClick={() => { buyNow(card) }} /></Box>
-                                  <Box mt={2} sx={{ backgroundColor: '#FF9D04', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><OpenInNewIcon sx={{ cursor: "pointer", color: "white" }} onClick={() => navigate(`/products-detail/${card?.id}`, { state: { card } })} /></Box>
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-end',
+                                    width: '100%',
+                                  }}
+                                >
+                                  {[
+                                    { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
+                                    { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
+                                    { icon: <OpenInNewIcon />, action: () => navigate(`/products-detail/${card?.id}`, { state: { card } }), text: 'View Details' }
+                                  ].map((item, index) => (
+                                    <Box
+                                      key={index}
+                                      mt={2}
+                                      sx={{
+                                        backgroundColor: '#FF9D04',
+                                        width: '40px',
+                                        height: '40px',
+                                        color: 'white',
+                                        borderRadius: '50px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        overflow: 'hidden',
+                                        transition: 'width 0.3s ease-in-out',
+                                        '&:hover': {
+                                          width: '150px', // Adjust width to fit text
+                                          justifyContent: 'flex-start',
+                                          paddingLeft: '10px',
+                                        },
+                                        cursor: 'pointer',
+                                      }}
+                                      onClick={item.action}
+                                    >
+                                      <Box
+                                        sx={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: 1, // Provides space between icon and text
+                                          width: '100%',
+                                          ml:'15px'
+                                        }}
+                                      >
+                                        {item.icon}
+                                        <Box
+                                          component="span"
+                                          sx={{
+                                            color: 'white !important',
+                                            fontSize: '14px',
+                                            whiteSpace: 'nowrap',
+                                           
+                                            transition: 'opacity 0.2s ease-in-out',
+                                            '&:hover': {
+                                             
+                                              color: 'white',
+                                            },
+                                          }}
+                                        >
+                                          {item.text}
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  ))}
                                 </Box>
+
+
                               </Box>
                               <CardMedia
                                 className="product-image"
@@ -1489,7 +1318,7 @@ function Shop() {
               )}
 
             </Box>
-            {activeButton === 4 && (
+            {activeButton === 5 && (
               <Box
                 component={"section"}
                 id="activity-section"
@@ -1536,14 +1365,15 @@ function Shop() {
                 </Typography>
               </Box>
             )}
-            {(activeButton === 1 || activeButton === 4) && (
+
+            {(activeButton === 1 || activeButton === 5) && (
               <Box
                 sx={{
                   position: "relative",
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundImage: activeButton === 4 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                  backgroundImage: activeButton === 5 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -1565,7 +1395,7 @@ function Shop() {
 
                 <Container
                   sx={{
-                    backgroundImage: activeButton === 4 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                    backgroundImage: activeButton === 5 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -1580,7 +1410,7 @@ function Shop() {
                     spacing={2}
                     justifyContent={"center"}
                     sx={{
-                     // Adjust this value based on your card size and rows
+                      // Adjust this value based on your card size and rows
                       display: "flex",
                       alignItems:
                         loading ||
@@ -1643,10 +1473,72 @@ function Shop() {
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', alignItems: 'flex-end', width: '100%' }}>
-                                  <Box mt={2} sx={{ backgroundColor: '#FF9D04', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} component={'div'} onClick={() => addToCart(card)}>  <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} /></Box>
-                                  <Box mt={2} sx={{ backgroundColor: '#FF9D04', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><LocalMallIcon sx={{ cursor: "pointer", color: "white" }} component={'div'} onClick={() => { buyNow(card) }} /></Box>
-                                  <Box mt={2} sx={{ backgroundColor: '#FF9D04', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><OpenInNewIcon sx={{ cursor: "pointer", color: "white" }} component={'div'} onClick={() => navigate(`/products-detail/${card?.id}`, { state: { card } })} /></Box>
+                              <Box
+                                  sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-end',
+                                    width: '100%',
+                                  }}
+                                >
+                                  {[
+                                    { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
+                                    { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
+                                    { icon: <OpenInNewIcon />, action: () => navigate(`/products-detail/${card?.id}`, { state: { card } }), text: 'View Details' }
+                                  ].map((item, index) => (
+                                    <Box
+                                      key={index}
+                                      mt={2}
+                                      sx={{
+                                        backgroundColor: '#FF9D04',
+                                        width: '40px',
+                                        height: '40px',
+                                        color: 'white',
+                                        borderRadius: '50px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        overflow: 'hidden',
+                                        transition: 'width 0.3s ease-in-out',
+                                        '&:hover': {
+                                          width: '150px', // Adjust width to fit text
+                                          justifyContent: 'flex-start',
+                                          paddingLeft: '10px',
+                                        },
+                                        cursor: 'pointer',
+                                      }}
+                                      onClick={item.action}
+                                    >
+                                      <Box
+                                        sx={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: 1, // Provides space between icon and text
+                                          width: '100%',
+                                          ml:'15px'
+                                        }}
+                                      >
+                                        {item.icon}
+                                        <Box
+                                          component="span"
+                                          sx={{
+                                            color: 'white !important',
+                                            fontSize: '14px',
+                                            whiteSpace: 'nowrap',
+                                           
+                                            transition: 'opacity 0.2s ease-in-out',
+                                            '&:hover': {
+                                             
+                                              color: 'white',
+                                            },
+                                          }}
+                                        >
+                                          {item.text}
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  ))}
                                 </Box>
                               </Box>
                               <CardMedia
@@ -1706,7 +1598,7 @@ function Shop() {
             )}
 
 
-            {activeButton === 4 && (
+            {activeButton === 5 && (
               <Box
                 component={"section"}
                 id="coloring-section"
@@ -1750,6 +1642,290 @@ function Shop() {
                   }}
                 >
                   Coloring Sheets
+                </Typography>
+              </Box>
+            )}
+            {(activeButton === 2 || activeButton === 5) && (
+              <Box
+                sx={{
+                  position: "relative",
+                  "@media (min-width: 1200px)": {
+                    maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
+                  },
+                  backgroundImage: activeButton === 5 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
+                <Container
+                  sx={{
+                    backgroundImage: activeButton === 5 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    height: "100%", // Full height
+                    padding: "60px 0", // Padding adjustment
+                    width: "100%", // Full width
+                  }}
+                >
+                  {/* Absolute positioned image */}
+                  <Box
+                    component={"img"}
+                    src={Images.cuttingPapers} // Replace with your image source
+                    alt="Decorative"
+                    sx={{
+                      position: "absolute",
+                      top: "400px", // Adjusted to move the image slightly higher
+                      left: { xs: "1px", xl: 200 },
+                      width: "100px",
+                      zIndex: 2,
+                      display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                    }}
+                  />
+                  <Box
+                    component={"img"}
+                    src={Images.pencil} // Replace with your image source
+                    alt="Decorative"
+                    sx={{
+                      position: "absolute",
+                      top: "800px", // Adjusted to move the image slightly higher
+                      right: { xl: 200, md: 10 },
+                      width: { lg: "100px", md: "70px" },
+                      zIndex: 2,
+                      display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                    }}
+                  />
+
+                  {/* Grid for activity cards */}
+                  <Grid
+                    container
+                    spacing={2}
+                    justifyContent={"center"}
+                    sx={{
+                      // Adjust this value based on your card size and rows
+                      display: "flex",
+                      alignItems:
+                        coloringLoading || !coloringDelayPassed
+                          ? "center" // Center align if loading or delay not passed
+                          : displayedColoringSheets.length <= 2
+                            ? "center" // Center align when only 1 or 2 items
+                            : "flex-start", // Default alignment
+                    }}
+                  >
+                    {coloringLoading || !coloringDelayPassed ? (
+                      // Loader view with delay
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "455px",
+                        }}
+                      >
+                        <CircularProgress size={50} sx={{ color: "#5B73AD" }} />{" "}
+                        {/* Updated loader color */}
+                      </Grid>
+                    ) : currentCards.length === 0 ? (
+                      // Show "No Data Available" Message
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "455px",
+                        }}
+                      >
+                        <Typography className="para-text" variant="h6" color="textSecondary" sx={{ fontSize: "25px", color: "white" }}>
+                          No Data Available
+                        </Typography>
+                      </Grid>
+                    ) : (
+                      // Display coloring cards
+                      Array.isArray(displayedColoringSheets) &&
+                      displayedColoringSheets.map((card, i) => (
+                        <React.Fragment key={i}>
+                          <Grid className="product-card" component={'div'} lg={5} md={5} sm={11} xs={11} item>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                borderRadius: "20px",
+                                position: "relative",
+                              }}
+                            >
+                              <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
+                              <Box
+                                  sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-end',
+                                    width: '100%',
+                                  }}
+                                >
+                                  {[
+                                    { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
+                                    { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
+                                    { icon: <OpenInNewIcon />, action: () => navigate(`/products-detail/${card?.id}`, { state: { card } }), text: 'View Details' }
+                                  ].map((item, index) => (
+                                    <Box
+                                      key={index}
+                                      mt={2}
+                                      sx={{
+                                        backgroundColor: '#FF9D04',
+                                        width: '40px',
+                                        height: '40px',
+                                        color: 'white',
+                                        borderRadius: '50px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        overflow: 'hidden',
+                                        transition: 'width 0.3s ease-in-out',
+                                        '&:hover': {
+                                          width: '150px', // Adjust width to fit text
+                                          justifyContent: 'flex-start',
+                                          paddingLeft: '10px',
+                                        },
+                                        cursor: 'pointer',
+                                      }}
+                                      onClick={item.action}
+                                    >
+                                      <Box
+                                        sx={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: 1, // Provides space between icon and text
+                                          width: '100%',
+                                          ml:'15px'
+                                        }}
+                                      >
+                                        {item.icon}
+                                        <Box
+                                          component="span"
+                                          sx={{
+                                            color: 'white !important',
+                                            fontSize: '14px',
+                                            whiteSpace: 'nowrap',
+                                           
+                                            transition: 'opacity 0.2s ease-in-out',
+                                            '&:hover': {
+                                             
+                                              color: 'white',
+                                            },
+                                          }}
+                                        >
+                                          {item.text}
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  ))}
+                                </Box>
+                              </Box>
+                              <CardMedia
+                                className="product-image"
+                                component={"img"}
+                                src={card?.imgUrl}
+                                sx={{
+                                  width: "100%",
+                                  height: card?.price !== 0 ? "455px" : "455px",
+                                  borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px 20px 0px 0px",
+
+                                }}
+                              />
+                              {card?.price !== 0 && (
+                                <Box
+                                  sx={{
+                                    backgroundColor: "#FF9D04",
+                                    p: 2,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    borderRadius: "0px 0px 20px 20px",
+                                  }}
+                                >
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
+                                    {card?.name}
+                                  </Typography>
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
+                                    $ {card?.price}
+                                  </Typography>
+                                </Box>
+                              )}
+                            </Box>
+
+                          </Grid>
+                        </React.Fragment>
+                      ))
+                    )}
+                  </Grid>
+
+                  {/* Pagination */}
+                  {!loading && delayPassed && currentCards.length > 0 && (
+                    <Box sx={{ width: '90%', margin: '0  auto' }}>
+                      <PageNavigator
+                        currentPage={coloringCurrentPage}
+                        totalPages={coloringTotalPages}
+                        onPrevPage={handleColoringPrevPage}
+                        onNextPage={handleColoringNextPage}
+                        onPageClick={handleColoringPageClick}
+                        backwardArrow={backwardArrow}
+                        forwardArrow={forwardArrow}
+                      />
+                    </Box>
+
+                  )}
+                </Container>
+              </Box>
+            )}
+            {activeButton === 4 && (
+              <Box
+                component={"section"}
+                id="coloring-section"
+                sx={{
+                  backgroundImage: `url(${Images.coloringBg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                  height: "100%",
+                  width: "100%",
+                  pt: "40px",
+                }}
+              >
+                {/* Heading */}
+                <Typography
+                  variant="h1"
+                  className="heading-font"
+                  sx={{
+                    fontSize: {
+                      xl: "100px",
+                      lg: "90px",
+                      md: "70px",
+                      sm: "45px",
+                      xs: "35px",
+                    },
+                    fontWeight: 600,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    textTransform: "uppercase",
+                    paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+                    position: "relative",
+                    zIndex: 1,
+                    margin: "0 auto",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  style={{
+                    WebkitTextStroke: "1px white",
+                    WebkitTextFillColor: "#F9BF29",
+                  }}
+                >
+                  Toys
                 </Typography>
               </Box>
             )}
@@ -1811,12 +1987,12 @@ function Shop() {
                     spacing={2}
                     justifyContent={"center"}
                     sx={{
-                     // Adjust this value based on your card size and rows
+                      // Adjust this value based on your card size and rows
                       display: "flex",
                       alignItems:
                         coloringLoading || !coloringDelayPassed
                           ? "center" // Center align if loading or delay not passed
-                          : displayedColoringSheets.length <= 2
+                          : toysCurrentProducts.length <= 2
                             ? "center" // Center align when only 1 or 2 items
                             : "flex-start", // Default alignment
                     }}
@@ -1836,7 +2012,7 @@ function Shop() {
                         <CircularProgress size={50} sx={{ color: "#5B73AD" }} />{" "}
                         {/* Updated loader color */}
                       </Grid>
-                    ) : currentCards.length === 0 ? (
+                    ) : toysCurrentProducts.length === 0 ? (
                       // Show "No Data Available" Message
                       <Grid
                         item
@@ -1854,8 +2030,8 @@ function Shop() {
                       </Grid>
                     ) : (
                       // Display coloring cards
-                      Array.isArray(displayedColoringSheets) &&
-                      displayedColoringSheets.map((card, i) => (
+                      Array.isArray(toysCurrentProducts) &&
+                      toysCurrentProducts.map((card, i) => (
                         <React.Fragment key={i}>
                           <Grid className="product-card" component={'div'} lg={5} md={5} sm={11} xs={11} item>
                             <Box
@@ -1867,10 +2043,72 @@ function Shop() {
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', alignItems: 'flex-end', width: '100%' }}>
-                                  <Box mt={2} sx={{ backgroundColor: '#FF9D04', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} component={'div'} onClick={() => addToCart(card)}>  <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} /></Box>
-                                  <Box mt={2} sx={{ backgroundColor: '#FF9D04', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><LocalMallIcon sx={{ cursor: "pointer", color: "white" }} onClick={() => { buyNow(card) }} /></Box>
-                                  <Box mt={2} sx={{ backgroundColor: '#FF9D04', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><OpenInNewIcon sx={{ cursor: "pointer", color: "white" }} onClick={() => navigate(`/products-detail/${card?.id}`, { state: { card } })} /></Box>
+                              <Box
+                                  sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-end',
+                                    width: '100%',
+                                  }}
+                                >
+                                  {[
+                                    { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
+                                    { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
+                                    { icon: <OpenInNewIcon />, action: () => navigate(`/products-detail/${card?.id}`, { state: { card } }), text: 'View Details' }
+                                  ].map((item, index) => (
+                                    <Box
+                                      key={index}
+                                      mt={2}
+                                      sx={{
+                                        backgroundColor: '#FF9D04',
+                                        width: '40px',
+                                        height: '40px',
+                                        color: 'white',
+                                        borderRadius: '50px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        overflow: 'hidden',
+                                        transition: 'width 0.3s ease-in-out',
+                                        '&:hover': {
+                                          width: '150px', // Adjust width to fit text
+                                          justifyContent: 'flex-start',
+                                          paddingLeft: '10px',
+                                        },
+                                        cursor: 'pointer',
+                                      }}
+                                      onClick={item.action}
+                                    >
+                                      <Box
+                                        sx={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: 1, // Provides space between icon and text
+                                          width: '100%',
+                                          ml:'15px'
+                                        }}
+                                      >
+                                        {item.icon}
+                                        <Box
+                                          component="span"
+                                          sx={{
+                                            color: 'white !important',
+                                            fontSize: '14px',
+                                            whiteSpace: 'nowrap',
+                                           
+                                            transition: 'opacity 0.2s ease-in-out',
+                                            '&:hover': {
+                                             
+                                              color: 'white',
+                                            },
+                                          }}
+                                        >
+                                          {item.text}
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  ))}
                                 </Box>
                               </Box>
                               <CardMedia
@@ -1911,14 +2149,14 @@ function Shop() {
                   </Grid>
 
                   {/* Pagination */}
-                  {!loading && delayPassed && currentCards.length > 0 && (
+                  {!loading && delayPassed && toysCurrentProducts.length > 0 && (
                     <Box sx={{ width: '90%', margin: '0  auto' }}>
                       <PageNavigator
-                        currentPage={coloringCurrentPage}
-                        totalPages={coloringTotalPages}
-                        onPrevPage={handleColoringPrevPage}
-                        onNextPage={handleColoringNextPage}
-                        onPageClick={handleColoringPageClick}
+                        currentPage={toysCurrentPage}
+                        totalPages={ToysTotalPages}
+                        onPrevPage={handleToyPrevPage}
+                        onNextPage={handleToyNextPage}
+                        onPageClick={handleToyPageClick}
                         backwardArrow={backwardArrow}
                         forwardArrow={forwardArrow}
                       />
@@ -1928,8 +2166,7 @@ function Shop() {
                 </Container>
               </Box>
             )}
-
-            {activeButton === 4 && (
+            {activeButton === 5 && (
               <Box
                 component={"section"}
                 id="extra-section"
@@ -1977,14 +2214,14 @@ function Shop() {
               </Box>
             )}
 
-            {(activeButton === 3 || activeButton === 4) && (
+            {(activeButton === 3 || activeButton === 5) && (
               <Box
                 sx={{
                   position: "relative",
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundImage: activeButton === 4 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                  backgroundImage: activeButton === 5 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -1992,7 +2229,7 @@ function Shop() {
               >
                 <Container
                   sx={{
-                    backgroundImage: activeButton === 4 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                    backgroundImage: activeButton === 5 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -2034,7 +2271,7 @@ function Shop() {
                     spacing={2}
                     justifyContent={"center"}
                     sx={{
-                     // Adjust this value based on your card size and rows
+                      // Adjust this value based on your card size and rows
                       display: "flex",
                       alignItems:
                         extraLoading || !extraDelayPassed
@@ -2090,10 +2327,72 @@ function Shop() {
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', alignItems: 'flex-end', width: '100%' }}>
-                                  <Box mt={2} sx={{ backgroundColor: '#FF9D04', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} component={'div'} onClick={() => addToCart(card)}>  <ShoppingCartIcon sx={{ cursor: "pointer", color: "white" }} /></Box>
-                                  <Box mt={2} sx={{ backgroundColor: '#FF9D04', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><LocalMallIcon sx={{ cursor: "pointer", color: "white" }} onClick={() => { buyNow(card) }} /></Box>
-                                  <Box mt={2} sx={{ backgroundColor: '#FF9D04', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><OpenInNewIcon sx={{ cursor: "pointer", color: "white" }} onClick={() => navigate(`/products-detail/${card?.id}`, { state: { card } })} /></Box>
+                              <Box
+                                  sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-end',
+                                    width: '100%',
+                                  }}
+                                >
+                                  {[
+                                    { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
+                                    { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
+                                    { icon: <OpenInNewIcon />, action: () => navigate(`/products-detail/${card?.id}`, { state: { card } }), text: 'View Details' }
+                                  ].map((item, index) => (
+                                    <Box
+                                      key={index}
+                                      mt={2}
+                                      sx={{
+                                        backgroundColor: '#FF9D04',
+                                        width: '40px',
+                                        height: '40px',
+                                        color: 'white',
+                                        borderRadius: '50px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        overflow: 'hidden',
+                                        transition: 'width 0.3s ease-in-out',
+                                        '&:hover': {
+                                          width: '150px', // Adjust width to fit text
+                                          justifyContent: 'flex-start',
+                                          paddingLeft: '10px',
+                                        },
+                                        cursor: 'pointer',
+                                      }}
+                                      onClick={item.action}
+                                    >
+                                      <Box
+                                        sx={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: 1, // Provides space between icon and text
+                                          width: '100%',
+                                          ml:'15px'
+                                        }}
+                                      >
+                                        {item.icon}
+                                        <Box
+                                          component="span"
+                                          sx={{
+                                            color: 'white !important',
+                                            fontSize: '14px',
+                                            whiteSpace: 'nowrap',
+                                           
+                                            transition: 'opacity 0.2s ease-in-out',
+                                            '&:hover': {
+                                             
+                                              color: 'white',
+                                            },
+                                          }}
+                                        >
+                                          {item.text}
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  ))}
                                 </Box>
                               </Box>
                               <CardMedia
@@ -2158,7 +2457,7 @@ function Shop() {
               component={"section"}
               sx={{
                 position: "relative",
-                backgroundColor: activeButton === 4 ? "#FF9D04" : "#5B73AD",
+                backgroundColor: activeButton === 5 ? "#FF9D04" : "#5B73AD",
                 width: "100%",
                 height: { xs: "260px", sm: "250px", md: "500px" },
                 display: "flex",
@@ -2363,389 +2662,7 @@ function Shop() {
           </>
         )}
 
-        {/* <Box
-          component={"section"}
-          sx={{
-            background: Colors.lightPurple,
-            py: "80px"
-          }}
-        >
-          <Container>
-            <Grid container justifyContent={"center"} alignItems={"center"}>
-              <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-                <CardMedia
-                  component={"img"}
-                  src={Images.shineStar}
-                  sx={{
-                    width: "70px",
-                    heigth: "70px",
-                    objectFit: "contain"
-                  }}
-                />
-              </Grid>
-              <Grid item md={5.5}>
-                <Typography
-                  variant='h3'
-                  sx={{
-                    fontSize: { md: "48px", sm: "40px", xs: "32px" },
-                    fontWeight: 600,
-                    textAlign: "center"
-                  }}
-                >
-                  Collaborating With
-                </Typography>
-              </Grid>
-              <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-                <CardMedia
-                  component={"img"}
-                  src={Images.shineStar}
-                  sx={{
-                    width: "70px",
-                    heigth: "70px",
-                    objectFit: "contain"
-                  }}
-                />
-              </Grid>
-              <Grid item md={12}>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    textAlign: "center",
-                    fontSize: { md: "58px", xs: "40px" },
-                    fontWeight: 900,
-                    color: Colors.primary
-                  }}
-                >
-                  Islamic Relief Canada
-                </Typography>
-              </Grid>
-            </Grid>
-            <Box>
-            </Box>
-            <Box>
-              <CardMedia
-                component={"img"}
-                src={Images.islamicRelief}
-                sx={{
-                  width: "100%",
-                  height: { md: "350px", xs: "150px" },
-                  objectFit: "contain"
-                }}
-              />
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Grid container justifyContent={"center"} lg={6} md={6} sm={12}>
-                <Button
-                  fullWidth
-                  variant='contained'
-                  sx={{
-                    mt: 2,
-                    py: 2,
-                    px: 1,
-                    textTransform: "capitalize",
-                    fontSize: "18px",
-                    textAlign: 'center'
-                  }}
-                  target='blank'
-                  href='https://www.youtube.com/playlist?list=PLDQNq7EHiGH9lHkx1jYLhwwv4AtCXesaK'
-                >
-                  See More
-                </Button>
-              </Grid>
-            </Box>
-          </Container>
-        </Box> */}
-        {/* <Box
-          component={"section"}
-          sx={{
-            background: Colors.whiteblue,
-            p: { md: "64px", sm: "40px", xs: "20px" }
-          }}
-        >
-          <Grid
-            container
-            sx={{
-              background: Colors.secondaryGradient,
-              borderRadius: "25px",
-              height: { md: "320px", sm: "100%", xs: "100%" },
-              justifyContent: "space-between",
-              alignItems: "center",
-              p: 2
-            }}
-          >
-            <Grid item md={2} display={{ md: "block", sm: "none", xs: "none" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.girl1}
-                sx={{
-                  width: "170px",
-                  height: "250px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
-            <Grid item md={8}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: { md: "50px", xs: "25px" }
-                }}
-              >
-                <Typography
-                  variant='h5'
-                  sx={{
-                    fontSize: { md: "24px", xs: "16px" },
-                    fontWeight: 600,
-                    textAlign: "center"
-                  }}
-                >
-                  Subscribe to get information, latest news and other
-                  interesting offers about Shine With Tara
-                </Typography>
-                <TextField
-                  placeholder={"Your email"}
-                  sx={{
-                    background: Colors.white,
-                    borderRadius: "4px",
-                    width: { md: "60%", xs: "100%" },
-                    "& fieldset": {
-                      border: "none",
-                    },
-                    "& .MuiOutlinedInput-input": {
-                      color: `${Colors.primary} !important`
-                    }
-                  }}
-                  InputProps={{
-                    endAdornment:
-                      <Button
-                        sx={{
-                          color: `${Colors.white} !important`,
-                          background: `${Colors.primary} !important`,
-                          px: 4,
-                          textTransform: "capitalize"
-                        }}
-                      >
-                        Subscribe
-                      </Button>
-                  }}
-                />
-              </Box>
-            </Grid>
-            <Grid item md={2} display={{ md: "block", sm: "none", xs: "none" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.finalPose}
-                sx={{
-                  width: "200px",
-                  height: "280px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
-          </Grid>
-        </Box> */}
-        {/* <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
-          <Grid container justifyContent={"center"} alignItems={"center"} mb={5}>
-            <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.shineStar}
-                sx={{
-                  width: "70px",
-                  heigth: "70px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
-            <Grid item md={5.5}>
-              <Typography
-                variant="h3"
-                sx={{
-                  textAlign: "center",
-                  fontSize: { md: "58px", xs: "40px" },
-                  fontWeight: 900,
-                  color: Colors.primary
-                }}
-              >
-                What People Are Saying
-              </Typography>
-            </Grid>
-            <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.shineStar}
-                sx={{
-                  width: "70px",
-                  heigth: "70px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
 
-          </Grid>
-          <Box sx={{ width: '95%', margin: '0 auto' }}>
-            <Grid item md={11} sm={11} xs={11}>
-              <Swiper
-                loop={true}
-                spaceBetween={10}
-                slidesPerView={3}
-                autoplay={{
-                  delay: 2500,
-                  disableOnInteraction: false,
-                }}
-                modules={[Autoplay, Pagination, Navigation]}
-                breakpoints={{
-                  320: {
-                    slidesPerView: 1
-                  },
-                  786: {
-                    slidesPerView: 2
-                  },
-                  1080: {
-                    slidesPerView: 3
-                  }
-                }}
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => console.log(swiper)}
-              >
-                {reviewBoxes?.map((item, ind) => (
-                  <SwiperSlide key={ind}>
-                    <Box
-                      sx={{
-                        p: 4,
-                        borderRadius: "15px",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "10px",
-                        backgroundColor: '#021b51',
-                        height: '180px'
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "flex-start",
-                          gap: "12px"
-                        }}
-                      >
-                        <Avatar
-                          sx={{
-                            width: 64,
-                            height: 64
-                          }}
-                          src={item.profile}
-                          alt={item.name}
-                        />
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column"
-                          }}
-                        >
-                          <Typography
-                            sx={{
-
-                              display: 'flex',
-                              alignItems: "center",
-                              gap: "8px",
-                              fontWeight: 600,
-                              color: 'white'
-                            }}
-                          >
-                            {item?.name}
-                            <Typography
-                              variant='body2'
-                              sx={{ fontWeight: 400 }}
-                            >
-                              {item.designation}
-                            </Typography>
-                          </Typography>
-                          <Box
-                            sx={{
-                              display: "flex",
-                            }}
-                          >
-
-                          </Box>
-                          <Rating name="read-only" value={item?.rating} sx={{ borderColor: 'white' }} readOnly />
-                        </Box>
-                      </Box>
-                      <Typography
-                        variant={"body2"}
-                        sx={{
-
-                          color: 'white'
-                        }}
-                      >
-                        {item.comment}
-                      </Typography>
-                    </Box>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </Grid>
-          </Box>
-        </Box> */}
-        {/* <Box sx={{ backgroundColor: '#ABCAFF' }} pb={10}>
-          <Grid container justifyContent={"center"} alignItems={"center"} mb={5}>
-            <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.shineStar}
-                sx={{
-                  width: "70px",
-                  heigth: "70px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
-            <Grid item md={5.5}>
-              <Typography
-                variant="h3"
-                sx={{
-                  textAlign: "center",
-                  fontSize: { md: "58px", xs: "40px" },
-                  fontWeight: 900,
-                  color: Colors.primary
-                }}
-              >
-                FAQS
-              </Typography>
-            </Grid>
-            <Grid item md={1} display={{ xs: "none", sm: "none", md: "block" }}>
-              <CardMedia
-                component={"img"}
-                src={Images.shineStar}
-                sx={{
-                  width: "70px",
-                  heigth: "70px",
-                  objectFit: "contain"
-                }}
-              />
-            </Grid>
-
-          </Grid>
-          <Grid container spacing={2} sx={{ padding: '20px' }}>
-            {faqData.map((faq, index) => (
-              <Grid item xs={12} sm={6} key={index}>
-                <Accordion sx={{ backgroundColor: 'transparent' }}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls={`panel${index}-content`}
-                    id={`panel${index}-header`}
-                  >
-                    <Typography sx={{ color: 'black', fontSize: '12px' }}>{faq.question}</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography sx={{ color: 'black', fontSize: '12px' }}>{faq.answer}</Typography>
-                  </AccordionDetails>
-                </Accordion>
-              </Grid>
-            ))}
-          </Grid>
-        </Box> */}
       </Box>
     </>
   );

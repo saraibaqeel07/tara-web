@@ -11,9 +11,13 @@ import { useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close';
 import taraImage from "../../assets/images/tara-pic.webp"
 import moment from 'moment'
+import emailjs from "emailjs-com";
+import axios from 'axios'
+import { ErrorToaster, SuccessToaster } from '../../components/Toaster'
+
 
 function Contact() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit,reset, formState: { errors } } = useForm();
   const navigate = useNavigate()
   const [selected, setSelected] = useState("mission");
   const [cartItems, setCartItems] = useState([]);
@@ -52,9 +56,31 @@ function Contact() {
     toggleCartVisibility()
   };
 
-  const onSubmit = (formData) => {
-    console.log("🚀 ~ onSubmit ~ formData:", formData)
-  }
+  const onSubmit = (data) => {
+    emailjs.send(
+      "service_3k13jrz", // Replace with your service ID
+      "template_d6n3z75", // Replace with your template ID
+      {
+        to_email: "saraib.mangotech@gmail.com", // Define recipient email here
+        fName: data.fName,
+        lName: data.lName,
+        email: data.email,
+        phone: data.phone,
+        to_name:'Shine With Tara',
+        message: data.message,
+      },
+      "In9r4AywYQInFPG5E" // Replace with your public API key
+    )
+    .then((response) => {
+      reset()
+      console.log("Email sent successfully!", response.status, response.text);
+      SuccessToaster("Message sent successfully!");
+    })
+    .catch((error) => {
+      console.error("Error sending email:", error);
+      ErrorToaster("Failed to send message. Please try again.");
+    });
+  };
   useEffect(() => {
     let cart = localStorage.getItem('cartData')
     if (cart) {
@@ -99,6 +125,9 @@ function Contact() {
     return () => clearInterval(intervalId);
   }, []);
 
+  const handleEmailClick = (emailAddress) => {
+    window.location.href = `mailto:${emailAddress}`;
+  };
   useEffect(() => {
 
     setOpen(cartVisible)
@@ -112,89 +141,7 @@ function Contact() {
         width: "100%"
       }}
     >
-      <Drawer
-        anchor="right"
-        open={open}
-        onClose={toggleDrawer(false)}
-      >
-        <Box
-          sx={{ width: 400, padding: 2 }}
-          role="presentation"
-
-        >
-          <Box display="flex" flexWrap="wrap">
-
-            {cartItems?.length > 0 ? cartItems?.map((product, index) => (
-              <React.Fragment key={index}>
-                <Box
-                  component={'div'}
-                  onClick={() => {
-                    const updatedData = cartItems.filter(item => product.id != item.id)
-                    const totalPrice = updatedData.reduce((total, item) => {
-                      return total + (parseFloat(item.price) * item.quantity);
-                    }, 0);
-                    setTotalAmount(totalPrice)
-                    setCartItems(updatedData)
-                    setCount(updatedData?.length)
-                    localStorage.setItem('cartData', JSON.stringify(updatedData))
-                  }}
-                  sx={{ color: 'black', cursor: 'pointer', width: '100%' }}
-                >
-                  <CloseIcon />
-                </Box>
-
-                <Box
-                  sx={{
-                    height: 100,
-                    display: 'flex',
-                    padding: 2,
-                    textAlign: 'center',
-                  }}
-                >
-
-                  <img
-                    src={product.imgUrl}
-                    alt={product.name}
-                    style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-                  />
-                  <Typography sx={{ fontSize: '12px', color: 'black', width: '100px' }} variant="h6">
-                    {product.name}
-                  </Typography>
-                  <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1">
-                    ${product.price}
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: '12px', color: 'black', width: '50px', fontWeight: 'bold' }}
-                    variant="body1"
-                  >
-                    ${product.quantity ? product.quantity * product.price : 1 * product.price}
-                  </Typography>
-                  <Box display="flex" justifyContent="center" alignItems="center" sx={{ width: '10px' }} marginTop={1}>
-                    <Button variant="contained" color="secondary" onClick={() => handleDecrement(product.id)}>
-                      -
-                    </Button>
-                    <Typography sx={{ fontSize: '12px', color: 'black' }} variant="body1" marginX={2}>
-                      {product.quantity ? product.quantity : 1}
-                    </Typography>
-                    <Button variant="contained" color="secondary" onClick={() => handleIncrement(product.id)}>
-                      +
-                    </Button>
-
-                  </Box>
-                </Box>
-                <Divider />
-              </React.Fragment>
-            )) : <Box sx={{ color: 'black', fontWeight: 'bold', margin: '0 auto' }}>No Items in Cart</Box>}
-          </Box>
-          <Box sx={{ color: 'black', fontSize: '27px', textAlign: 'center', fontFamily: Fonts.righteous, }}>Sub Total :  $ {totalAmount}</Box>
-        </Box>
-        <Button sx={{ width: '90%', textAlign: 'center', margin: '0 auto' }} variant="contained" color="secondary" onClick={() => navigate(
-          `/order`,
-          { state: cartItems }
-        )}>
-          CheckOut
-        </Button>
-      </Drawer>
+     
       <Box
         component={"section"}
         sx={{
@@ -473,8 +420,8 @@ function Contact() {
                     <Box
                       sx={{ display: "flex", flexDirection: "column" }}
                     >
-                      <Typography className='para-text' sx={{ fontSize: '20px' }}>
-                        Email : <Box component={'span'} className='heading-font' sx={{ color: '#FCAE32', textDecoration: 'underline',fontSize: {lg:'20px',md:'20px',sm:'20px',xs:'14px'} }}> shineswithtara@gmail.com</Box>
+                      <Typography component={'p'} className='para-text' sx={{ fontSize: '20px',cursor:'pointer' }} onClick={()=> handleEmailClick('info@shinewithtara.com')}>
+                        Email : <Box component={'span'} className='heading-font' sx={{ color: '#FCAE32', textDecoration: 'underline',fontSize: {lg:'20px',md:'20px',sm:'20px',xs:'14px'} }}> info@shinewithtara.com</Box>
                       </Typography>
                       <Typography className='para-text' sx={{ fontSize: '20px' }}>
                         Copyright {moment().format('YYYY')} © All rights Reserved By Shine With Tara Design By Sana Kazmi

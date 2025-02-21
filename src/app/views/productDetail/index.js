@@ -330,7 +330,7 @@ function ProductDetail() {
     };
 
     const getProductDetail = async (productId) => {
-        const collections = ["products", "activitysheets", "coloringsheets", "extra"]; // List of all collections
+        const collections = ["products", "activitysheets", "coloringsheets", "extra",'Toys']; // List of all collections
 
         for (const collectionName of collections) {
             try {

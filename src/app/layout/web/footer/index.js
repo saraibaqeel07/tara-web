@@ -72,10 +72,10 @@ function Footer() {
           <Box
             component={'div'}
             sx={{ cursor: 'pointer', color: 'blue' }}
-            onClick={() => handleEmailClick('shineswithtara@gmail.com')}
+            onClick={() => handleEmailClick('info@shinewithtara.com')}
           >
             <Typography className='para-text' sx={{ color: Colors.white }}>
-              shineswithtara@gmail.com
+              info@shinewithtara.com
             </Typography>
           </Box>
           <Box>
