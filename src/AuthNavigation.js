@@ -24,6 +24,10 @@ const authNavigation = [
     name: "Toys"
   },
   {
+    path: "/admin/general-toys",
+    name: "General Toys"
+  },
+  {
     path: "/admin/blogs",
     name: " Blogs"
   },

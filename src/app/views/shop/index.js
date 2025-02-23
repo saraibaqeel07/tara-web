@@ -99,6 +99,7 @@ function Shop() {
   const [coloringSheets, setColoringSheets] = useState([]);
   const [activitySheets, setActivitySheets] = useState([]);
   const [toys, setToys] = useState([])
+  const [generalToys, setGeneralToys] = useState([])
   const [extraSheets, setExtraSheets] = useState([]);
   const { user, setUser } = useContext(AuthContext);
   let User = localStorage.getItem("user");
@@ -115,6 +116,7 @@ function Shop() {
   const [currentPage, setCurrentPage] = useState(1);
   const [activityCurrentPage, setActivityCurrentPage] = useState(1);
   const [toysCurrentPage, setToysCurrentPage] = useState(1);
+  const [generaloysCurrentPage, setGeneralToysCurrentPage] = useState(1);
   const [coloringCurrentPage, setColoringCurrentPage] = useState(1);
   const [activeButton, setActiveButton] = useState(0); // Default 'Show All Products' is active
   const [loading, setLoading] = useState(true); // Loader state
@@ -127,6 +129,7 @@ function Shop() {
     "Coloring Sheets",
     "Extra Sheets",
     "Toys",
+    "General Toys",
     "Show All Products",
   ];
 
@@ -255,7 +258,24 @@ function Shop() {
     setToysCurrentPage(page);
   };
 
+  // Handle previous page
+  const handleGeneralToyPrevPage = () => {
+    if (toysCurrentPage > 1) {
+      setGeneralToysCurrentPage((prev) => prev - 1);
+    }
+  };
 
+  // Handle next page
+  const handleGeneralToyNextPage = () => {
+    if (toysCurrentPage < ToysTotalPages) {
+      setGeneralToysCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  // Handle page number click
+  const handleGeneralToyPageClick = (page) => {
+    setGeneralToysCurrentPage(page);
+  };
   // Effect for loading state
   useEffect(() => {
     setColoringLoading(true);
@@ -293,6 +313,14 @@ function Shop() {
   const toysCurrentProducts = toys.slice(
     (toysCurrentPage - 1) * ToysPerPage,
     toysCurrentPage * ToysPerPage
+  );
+  const GeneralToysPerPage = 4; // Show 4 cards per page
+  const GeneralToysTotalPages = Math.ceil(
+    toys.length / GeneralToysPerPage
+  );
+  const generalToysCurrentProducts = generalToys.slice(
+    (generaloysCurrentPage - 1) * ToysPerPage,
+    generaloysCurrentPage * ToysPerPage
   );
   // State for loading and delay
   const [activityLoading, setActivityLoading] = useState(true);
@@ -618,6 +646,21 @@ function Shop() {
 
     setToys(sortedData);
   };
+  const getGeneralToys = async () => {
+    const q = query(collection(db, "GeneralToys"));
+
+    const querySnapshot = await getDocs(q);
+    const dataArray = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    const sortedData = dataArray.sort((a, b) => {
+      return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
+    });
+    console.log(sortedData);
+
+    setGeneralToys(sortedData);
+  };
 
   useEffect(() => {
     const delayTimer = setTimeout(() => {
@@ -664,6 +707,7 @@ function Shop() {
     getColoringSheets();
     getActivitySheets();
     getExtrasheets();
+    getGeneralToys()
     getReviews();
     getToys()
     getFaqs();
@@ -1073,7 +1117,7 @@ function Shop() {
                   ))}
                 </Box>
               </Box>
-              {(activeButton === 0 || activeButton === 5) && (
+              {(activeButton === 0 || activeButton === 6) && (
                 <Container sx={{ px: { sm: '0px !important', xs: '0px !important' }, }}>
                   <Grid
                     container
@@ -1318,7 +1362,7 @@ function Shop() {
               )}
 
             </Box>
-            {activeButton === 5 && (
+            {activeButton === 6 && (
               <Box
                 component={"section"}
                 id="activity-section"
@@ -1366,14 +1410,14 @@ function Shop() {
               </Box>
             )}
 
-            {(activeButton === 1 || activeButton === 5) && (
+            {(activeButton === 1 || activeButton === 6) && (
               <Box
                 sx={{
                   position: "relative",
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundImage: activeButton === 5 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                  backgroundImage: activeButton === 6 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -1395,7 +1439,7 @@ function Shop() {
 
                 <Container
                   sx={{
-                    backgroundImage: activeButton === 5 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                    backgroundImage: activeButton === 6 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -1598,7 +1642,7 @@ function Shop() {
             )}
 
 
-            {activeButton === 5 && (
+            {activeButton === 6 && (
               <Box
                 component={"section"}
                 id="coloring-section"
@@ -1645,14 +1689,14 @@ function Shop() {
                 </Typography>
               </Box>
             )}
-            {(activeButton === 2 || activeButton === 5) && (
+            {(activeButton === 2 || activeButton === 6) && (
               <Box
                 sx={{
                   position: "relative",
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundImage: activeButton === 5 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
+                  backgroundImage: activeButton === 6 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -1660,7 +1704,7 @@ function Shop() {
               >
                 <Container
                   sx={{
-                    backgroundImage: activeButton === 5 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
+                    backgroundImage: activeButton === 6 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -1882,7 +1926,293 @@ function Shop() {
                 </Container>
               </Box>
             )}
-            {activeButton === 4 && (
+          
+            {activeButton === 6 && (
+              <Box
+                component={"section"}
+                id="extra-section"
+                sx={{
+                  height: "100%",
+                  backgroundImage: `url(${Images.reviewBg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                  width: "100%",
+                  pt: "40px",
+                }}
+              >
+                {/* Heading */}
+                <Typography
+                  variant="h1"
+                  className="heading-font"
+                  sx={{
+                    fontSize: {
+                      xl: "100px",
+                      lg: "90px",
+                      md: "70px",
+                      sm: "45px",
+                      xs: "35px",
+                    },
+                    fontWeight: 600,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    textTransform: "uppercase",
+                    paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
+                    position: "relative",
+                    zIndex: 1,
+                    margin: "0 auto",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  style={{
+                    WebkitTextStroke: "1px white",
+                    WebkitTextFillColor: "#F9BF29",
+                  }}
+                >
+                  Extra Sheets
+                </Typography>
+              </Box>
+            )}
+
+            {(activeButton === 3 || activeButton === 6) && (
+              <Box
+                sx={{
+                  position: "relative",
+                  "@media (min-width: 1200px)": {
+                    maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
+                  },
+                  backgroundImage: activeButton === 6 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
+                <Container
+                  sx={{
+                    backgroundImage: activeButton === 6 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    height: "100%", // Full height
+                    padding: "60px 0", // Padding adjustment
+                    width: "100%", // Full width
+                  }}
+                >
+                  <Box
+                    component={"img"}
+                    src={Images.cloud} // Replace with your image source
+                    alt="Decorative"
+                    sx={{
+                      position: "absolute",
+                      top: "10px", // Adjusted to move the image slightly higher
+                      left: { xl: 200, md: "30px", lg: "60px" },
+                      width: { md: "60px", lg: "100px" },
+                      zIndex: 2,
+                      display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                    }}
+                  />
+                  <Box
+                    component={"img"}
+                    src={Images.pinkArrow} // Replace with your image source
+                    alt="Decorative"
+                    sx={{
+                      position: "absolute",
+                      top: "1000px", // Adjusted to move the image slightly higher
+                      right: { xl: 200, md: 10, lg: 20 },
+                      width: { lg: "100px", md: "70px" },
+                      zIndex: 2,
+                      display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
+                    }}
+                  />
+
+                  {/* Grid for extra sheets */}
+                  <Grid
+                    container
+                    spacing={2}
+                    justifyContent={"center"}
+                    sx={{
+                      // Adjust this value based on your card size and rows
+                      display: "flex",
+                      alignItems:
+                        extraLoading || !extraDelayPassed
+                          ? "center" // Center align if loading or delay not passed
+                          : extraCurrentProducts.length <= 2
+                            ? "center" // Center align when only 1 or 2 items
+                            : "flex-start", // Default alignment
+                    }}
+                  >
+                    {extraLoading || !extraDelayPassed ? (
+                      // Loader view with delay
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "455px",
+                        }}
+                      >
+                        <CircularProgress size={50} sx={{ color: "#F9BF29" }} />{" "}
+                        {/* Updated loader color */}
+                      </Grid>
+                    ) : currentCards.length === 0 ? (
+                      // Show "No Data Available" Message
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "455px",
+                        }}
+                      >
+                        <Typography className="para-text" variant="h6" color="textSecondary" sx={{ fontSize: "25px", color: "white" }}>
+                          No Data Available
+                        </Typography>
+                      </Grid>
+                    ) : (
+                      // Display extra sheets cards
+                      Array.isArray(extraCurrentProducts) &&
+                      extraCurrentProducts.map((card, i) => (
+                        <React.Fragment key={i}>
+                          <Grid className="product-card" component={'div'} lg={5} md={5} sm={11} xs={11} item>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                borderRadius: "20px",
+                                position: "relative",
+                              }}
+                            >
+                              <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
+                              <Box
+                                  sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-end',
+                                    width: '100%',
+                                  }}
+                                >
+                                  {[
+                                    { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
+                                    { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
+                                    { icon: <OpenInNewIcon />, action: () => navigate(`/products-detail/${card?.id}`, { state: { card } }), text: 'View Details' }
+                                  ].map((item, index) => (
+                                    <Box
+                                      key={index}
+                                      mt={2}
+                                      sx={{
+                                        backgroundColor: '#FF9D04',
+                                        width: '40px',
+                                        height: '40px',
+                                        color: 'white',
+                                        borderRadius: '50px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        overflow: 'hidden',
+                                        transition: 'width 0.3s ease-in-out',
+                                        '&:hover': {
+                                          width: '150px', // Adjust width to fit text
+                                          justifyContent: 'flex-start',
+                                          paddingLeft: '10px',
+                                        },
+                                        cursor: 'pointer',
+                                      }}
+                                      onClick={item.action}
+                                    >
+                                      <Box
+                                        sx={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: 1, // Provides space between icon and text
+                                          width: '100%',
+                                          ml:'15px'
+                                        }}
+                                      >
+                                        {item.icon}
+                                        <Box
+                                          component="span"
+                                          sx={{
+                                            color: 'white !important',
+                                            fontSize: '14px',
+                                            whiteSpace: 'nowrap',
+                                           
+                                            transition: 'opacity 0.2s ease-in-out',
+                                            '&:hover': {
+                                             
+                                              color: 'white',
+                                            },
+                                          }}
+                                        >
+                                          {item.text}
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  ))}
+                                </Box>
+                              </Box>
+                              <CardMedia
+                                className="product-image"
+                                component={"img"}
+                                src={card?.imgUrl}
+                                sx={{
+                                  width: "100%",
+                                  height: card?.price !== 0 ? "455px" : "455px",
+                                  borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px 20px 0px 0px",
+
+                                }}
+                              />
+                              {card?.price !== 0 && (
+                                <Box
+                                  sx={{
+                                    backgroundColor: "#FF9D04",
+                                    p: 2,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    borderRadius: "0px 0px 20px 20px",
+                                  }}
+                                >
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
+                                    {card?.name}
+                                  </Typography>
+                                  <Typography className="heading-font" sx={{ textTransform: "uppercase", fontSize: "20px" }}>
+                                    $ {card?.price}
+                                  </Typography>
+                                </Box>
+                              )}
+                            </Box>
+
+                          </Grid>
+                        </React.Fragment>
+                      ))
+                    )}
+                  </Grid>
+
+                  {/* Pagination */}
+                  {!loading && delayPassed && currentCards.length > 0 && (
+                    <Box sx={{ width: '90%', margin: '0  auto' }}>
+                      <PageNavigator
+                        currentPage={extraCurrentPage}
+                        totalPages={extraTotalPages}
+                        onPrevPage={handleExtraPrevPage}
+                        onNextPage={handleExtraNextPage}
+                        onPageClick={handleExtraPageClick}
+                        backwardArrow={backwardArrow}
+                        forwardArrow={forwardArrow}
+                      />
+                    </Box>
+
+                  )}
+                </Container>
+              </Box>
+            )}
+
+{activeButton === 4 || activeButton === 6 && (
               <Box
                 component={"section"}
                 id="coloring-section"
@@ -1929,7 +2259,7 @@ function Shop() {
                 </Typography>
               </Box>
             )}
-            {(activeButton === 2 || activeButton === 4) && (
+            {(activeButton === 6 || activeButton === 4) && (
               <Box
                 sx={{
                   position: "relative",
@@ -2166,16 +2496,16 @@ function Shop() {
                 </Container>
               </Box>
             )}
-            {activeButton === 5 && (
+            {activeButton === 5 || activeButton === 6  && (
               <Box
                 component={"section"}
-                id="extra-section"
+                id="coloring-section"
                 sx={{
-                  height: "100%",
-                  backgroundImage: `url(${Images.reviewBg})`,
+                  backgroundImage: `url(${Images.coloringBg})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
+                  height: "100%",
                   width: "100%",
                   pt: "40px",
                 }}
@@ -2209,19 +2539,18 @@ function Shop() {
                     WebkitTextFillColor: "#F9BF29",
                   }}
                 >
-                  Extra Sheets
+                  General Toys
                 </Typography>
               </Box>
             )}
-
-            {(activeButton === 3 || activeButton === 5) && (
+            {(activeButton === 6 || activeButton === 5) && (
               <Box
                 sx={{
                   position: "relative",
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundImage: activeButton === 5 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                  backgroundImage: activeButton === 5 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -2229,7 +2558,7 @@ function Shop() {
               >
                 <Container
                   sx={{
-                    backgroundImage: activeButton === 5 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                    backgroundImage: activeButton === 5 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -2238,34 +2567,35 @@ function Shop() {
                     width: "100%", // Full width
                   }}
                 >
+                  {/* Absolute positioned image */}
                   <Box
                     component={"img"}
-                    src={Images.cloud} // Replace with your image source
+                    src={Images.cuttingPapers} // Replace with your image source
                     alt="Decorative"
                     sx={{
                       position: "absolute",
-                      top: "10px", // Adjusted to move the image slightly higher
-                      left: { xl: 200, md: "30px", lg: "60px" },
-                      width: { md: "60px", lg: "100px" },
+                      top: "400px", // Adjusted to move the image slightly higher
+                      left: { xs: "1px", xl: 200 },
+                      width: "100px",
                       zIndex: 2,
                       display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
                     }}
                   />
                   <Box
                     component={"img"}
-                    src={Images.pinkArrow} // Replace with your image source
+                    src={Images.pencil} // Replace with your image source
                     alt="Decorative"
                     sx={{
                       position: "absolute",
-                      top: "1000px", // Adjusted to move the image slightly higher
-                      right: { xl: 200, md: 10, lg: 20 },
+                      top: "800px", // Adjusted to move the image slightly higher
+                      right: { xl: 200, md: 10 },
                       width: { lg: "100px", md: "70px" },
                       zIndex: 2,
                       display: { xs: "none", sm: "none", md: "block" }, // Hide for xs and sm screens
                     }}
                   />
 
-                  {/* Grid for extra sheets */}
+                  {/* Grid for activity cards */}
                   <Grid
                     container
                     spacing={2}
@@ -2274,14 +2604,14 @@ function Shop() {
                       // Adjust this value based on your card size and rows
                       display: "flex",
                       alignItems:
-                        extraLoading || !extraDelayPassed
+                        coloringLoading || !coloringDelayPassed
                           ? "center" // Center align if loading or delay not passed
-                          : extraCurrentProducts.length <= 2
+                          : generalToysCurrentProducts.length <= 2
                             ? "center" // Center align when only 1 or 2 items
                             : "flex-start", // Default alignment
                     }}
                   >
-                    {extraLoading || !extraDelayPassed ? (
+                    {coloringLoading || !coloringDelayPassed ? (
                       // Loader view with delay
                       <Grid
                         item
@@ -2293,10 +2623,10 @@ function Shop() {
                           height: "455px",
                         }}
                       >
-                        <CircularProgress size={50} sx={{ color: "#F9BF29" }} />{" "}
+                        <CircularProgress size={50} sx={{ color: "#5B73AD" }} />{" "}
                         {/* Updated loader color */}
                       </Grid>
-                    ) : currentCards.length === 0 ? (
+                    ) : generalToysCurrentProducts.length === 0 ? (
                       // Show "No Data Available" Message
                       <Grid
                         item
@@ -2313,9 +2643,9 @@ function Shop() {
                         </Typography>
                       </Grid>
                     ) : (
-                      // Display extra sheets cards
-                      Array.isArray(extraCurrentProducts) &&
-                      extraCurrentProducts.map((card, i) => (
+                      // Display coloring cards
+                      Array.isArray(generalToysCurrentProducts) &&
+                      generalToysCurrentProducts.map((card, i) => (
                         <React.Fragment key={i}>
                           <Grid className="product-card" component={'div'} lg={5} md={5} sm={11} xs={11} item>
                             <Box
@@ -2433,14 +2763,14 @@ function Shop() {
                   </Grid>
 
                   {/* Pagination */}
-                  {!loading && delayPassed && currentCards.length > 0 && (
+                  {!loading && delayPassed && generalToysCurrentProducts.length > 0 && (
                     <Box sx={{ width: '90%', margin: '0  auto' }}>
                       <PageNavigator
-                        currentPage={extraCurrentPage}
-                        totalPages={extraTotalPages}
-                        onPrevPage={handleExtraPrevPage}
-                        onNextPage={handleExtraNextPage}
-                        onPageClick={handleExtraPageClick}
+                        currentPage={generaloysCurrentPage}
+                        totalPages={GeneralToysTotalPages}
+                        onPrevPage={handleGeneralToyPrevPage}
+                        onNextPage={handleGeneralToyNextPage}
+                        onPageClick={handleToyPageClick}
                         backwardArrow={backwardArrow}
                         forwardArrow={forwardArrow}
                       />
@@ -2450,8 +2780,6 @@ function Shop() {
                 </Container>
               </Box>
             )}
-
-
 
             <Box
               component={"section"}
