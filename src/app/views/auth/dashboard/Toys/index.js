@@ -113,7 +113,7 @@ function Toys() {
       const docRef = await addDoc(collection(db, "Toys"), {
         name: getValues('productName'),
         subHeading: getValues('subHeading'),
-        Pages: getValues('Pages'),
+        // Pages: getValues('Pages'),
         AgeGroup: getValues('AgeGroup'),
         ParentReason: getValues('ParentReason'),
         HelpChild: getValues('HelpChild'),
@@ -275,11 +275,11 @@ function Toys() {
             <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('productPrice', { required: true })} error={!!errors.productPrice} type='number'
               helperText={errors.productPrice ? "Product price is required" : ""} size='small' id="outlined-basic" label="Toy Price" variant="outlined" />
           </Grid>
-          <Grid item xs={4} mt={2}>
+          {/* <Grid item xs={4} mt={2}>
 
             <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('Pages', { required: true })} error={!!errors.Pages} type='number'
               helperText={errors.Pages ? "Pages is required" : ""} size='small' id="outlined-basic" label="No of Pages" variant="outlined" />
-          </Grid>
+          </Grid> */}
           <Grid item xs={4} mt={2}>
 
             <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('AgeGroup', { required: true })} error={!!errors.AgeGroup} type='text'

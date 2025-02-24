@@ -37,6 +37,7 @@ function MyOrders() {
     let { state } = useLocation()
     const [orders, setOrders] = useState([])
     let user = localStorage.getItem('user')
+    console.log(orders , 'orders')
     user=JSON.parse(user)
     const [totalPrice, setTotalPrice] = useState(0)
     const [activeState  , setActiveState  ] = useState(0)
@@ -97,6 +98,14 @@ function MyOrders() {
             <Dialog open={open1} onClose={handleClose}>
                <Box component={'div'} onClick={()=> setOpen1(false)} sx={{color:'black',textAlign:'right',cursor:'pointer',p:'5px'}}><CloseIcon/></Box>
                 <DialogTitle sx={{ width: '600px', color: 'black', overflowX: 'hidden', textAlign: 'center' }} >{"Order Details"}</DialogTitle>
+                {status == -1 ? (
+                    <>
+                    <Typography sx={{color:"red" ,textAlign:'center',fontSize:"21px" }} >
+
+                        Order is Rejected
+                    </Typography>
+                    </>
+                ) : (
                 <Stepper activeStep={status} alternativeLabel connector={<ColorConnector />}>
                     {steps.map((label, index) => (
                         <Step key={label}>
@@ -109,7 +118,9 @@ function MyOrders() {
                             </ColorStepLabel>
                         </Step>
                     ))}
+                   
                 </Stepper>
+                )}
                 {selectedData?.length > 0 ? selectedData?.map((product, index) => (
                     <React.Fragment key={index}>
 
@@ -210,7 +221,7 @@ function MyOrders() {
                         {orders.length > 0 && orders.map((product) => {
 
 
-
+{console.log(product ,"product")}
                             return (
                                 <Grid container justifyContent={'center'}>
                                     <Grid item xs={12} sm={12} lg={6}>
@@ -225,7 +236,7 @@ function MyOrders() {
                                                 }
                                                 secondary={
                                                     <Typography sx={{ color: 'black' }}>
-                                                        {moment(product?.created_at).format('MMMM Do YYYY, h:mm a')}
+                                                        {product?.created_at}
                                                     </Typography>
                                                 }
                                             />
@@ -243,7 +254,7 @@ function MyOrders() {
                                                         // Find the index by comparing the lowercase versions of the elements
                                                         const index = steps.findIndex(step => step.toLowerCase() === normalizedStepToFind);
                                                         
-                                                        console.log(index); setStatus(index); }}
+                                                        console.log(index ,"ddind"); setStatus(index); }}
                                                     sx={{ color: 'white' }}
                                                 >
                                                     <MoreVertIcon />

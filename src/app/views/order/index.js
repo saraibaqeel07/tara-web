@@ -6,7 +6,7 @@ import Fonts from '../../styles/fonts'
 import InputField from '../../components/InputField'
 import { useForm } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { addDoc, collection, getDocs, getFirestore, query, where } from 'firebase/firestore'
+import { addDoc, collection, doc, getDocs, getFirestore, query, updateDoc, where } from 'firebase/firestore'
 import { initializeApp } from 'firebase/app'
 import { ErrorToaster, SuccessToaster } from '../../components/Toaster'
 import moment from 'moment'
@@ -21,6 +21,7 @@ import reviewSection from "../../assets/images/review-section.webp"
 import VisaIcon from '@mui/icons-material/CreditCard'; // Replace with actual Visa/Mastercard icons
 import MasterCardIcon from '@mui/icons-material/CreditCard'; // Replace with an appropriate icon
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'; // For cash on delivery
+import { CartCounter } from '../../Context/CartCounter'
 
 
 function Order() {
@@ -52,6 +53,8 @@ function Order() {
     const [comment, setComment] = useState('');
     const [cartItems, setCartItems] = useState([])
     const { user, setUser } = useContext(AuthContext);
+  const { setCount } = useContext(CartCounter);
+
     const handleRatingChange = (event, newRating) => {
         setRating(newRating);
     };
@@ -67,6 +70,26 @@ function Order() {
     const onSubmit2 = () => {
         submitReview()
 
+    };
+    const getCartData = async () => {
+        try {
+          
+            const userId = User.uid;
+
+            
+            const q = query(collection(db, "cartData"), where("userId", "==", userId));
+
+            const querySnapshot = await getDocs(q);
+            const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            console.log(dataArray[0]?.data, 'dataArray');
+
+
+
+            setCount(dataArray[0]?.data?.length)
+            setCartItems(dataArray[0]?.data);
+        } catch (error) {
+            console.error("Error fetching cart data:", error);
+        }
     };
     const firebaseConfig = {
         apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
@@ -130,6 +153,45 @@ function Order() {
             console.error("Error during Google login: ", error);
         }
     };
+    const updateCartInFirebase = async (userId) => {
+        try {
+            
+            if (!cartItems || (typeof cartItems !== 'object' && !Array.isArray(cartItems))) {
+                console.error('Invalid cartItems data:', cartItems);
+                return; 
+            }
+    
+           
+            const cartRef = collection(db, "cartData");
+    
+           
+            const querySnapshot = await getDocs(query(cartRef, where("userId", "==", User?.uid)));
+            console.log(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    
+           
+            if (!querySnapshot.empty) {
+               
+                const cartDocId = querySnapshot.docs[0].id;
+                console.log(cartDocId, 'cartDocId');
+    
+               
+                const cartDocRef = doc(db, "cartData", cartDocId);
+                console.log(cartDocRef, 'cartDocRef');
+    
+               
+                await updateDoc(cartDocRef, {
+                    data: [] 
+                });
+                setCount(0)
+                setCartItems([])
+            //    SuccessToaster('Cart updated successfully');
+            } else {
+                console.log('No cart found for this user');
+            }
+        } catch (error) {
+            console.error(`Error updating cart for User: ${userId}`, error);
+        }
+    };
     const placeOrder = async () => {
         console.log('submit');
         try {
@@ -144,7 +206,7 @@ function Order() {
                 userId: User.uid,
                 amount: totalPrice,
                 status: 'pending',
-                details: state,
+                details: cartItems,
                 paymentType:selectedOption,
 
                 created_at: moment().format('MMMM Do YYYY, h:mm a')
@@ -158,6 +220,7 @@ function Order() {
                 SuccessToaster('Order Placed')
                 setOpen(true)
                 reset()
+                updateCartInFirebase()
             }
             else {
                 ErrorToaster('Something Went Wrong')
@@ -173,10 +236,9 @@ function Order() {
 
             // Add a new document with a generated id.
             const docRef = await addDoc(collection(db, "reviews"), {
-                fname: getValues('fName'),
-                lname: getValues('lName'),
-                email: getValues('email'),
-                name: getValues('fname') + getValues('lname'),
+            
+                email: User.email,
+                name: User.displayName,
                 comment: comment,
                 profile: User.photoURL,
                 rating: rating,
@@ -185,7 +247,7 @@ function Order() {
 
             });
 
-            console.log("Document written with ID: ", docRef.id);
+            console.log("Document written with ID: ", docRef);
             if (docRef.id) {
 
                 SuccessToaster('Review Submitted')
@@ -215,26 +277,26 @@ function Order() {
         });
     }
 
-    const getCartData = async () => {
-        try {
+    // const getCartData = async () => {
+    //     try {
 
-            const userId = User.uid;
-
-
-            const q = query(collection(db, "cartData"), where("userId", "==", userId));
-
-            const querySnapshot = await getDocs(q);
-            const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            console.log(dataArray[0]?.data, 'dataArray');
+    //         const userId = User.uid;
 
 
+    //         const q = query(collection(db, "cartData"), where("userId", "==", userId));
+
+    //         const querySnapshot = await getDocs(q);
+    //         const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    //         console.log(dataArray[0]?.data, 'dataArray');
 
 
-            setCartItems(dataArray[0]?.data);
-        } catch (error) {
-            console.error("Error fetching cart data:", error);
-        }
-    };
+
+
+    //         setCartItems(dataArray[0]?.data);
+    //     } catch (error) {
+    //         console.error("Error fetching cart data:", error);
+    //     }
+    // };
 
     const onApproveOrder = (data, actions) => {
         return actions.order.capture().then((details) => {
