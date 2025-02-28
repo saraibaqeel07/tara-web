@@ -32,6 +32,7 @@ import {
   where,
   deleteDoc,
   updateDoc,
+  orderBy,
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
@@ -45,6 +46,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import EditIcon from "@mui/icons-material/Edit";
 import { Divider } from "antd";
 import Colors from "../../../../styles/colors";
+import moment from "moment";
 
 function Orders() {
   const {
@@ -192,14 +194,17 @@ function Orders() {
   };
 
   const getProducts = async () => {
-    const q = query(collection(db, "orders"));
-
+    const q = query(
+      collection(db, "orders"),
+      orderBy("created_at", "desc") // Sort by created_at in descending order
+    );
+  
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
-
+  
     console.log(dataArray);
     setProducts(dataArray);
   };
@@ -207,9 +212,9 @@ function Orders() {
   const handleDelete = async (id) => {
     console.log(id);
     console.log(tableId);
-    let result = await deleteDoc(doc(db, "products", tableId));
+    let result = await deleteDoc(doc(db, "orders", tableId));
     console.log(result);
-    SuccessToaster("Product Deleted Successfully");
+    SuccessToaster("Order Deleted Successfully");
     setOpen(false);
     getProducts();
   };
@@ -449,6 +454,15 @@ function Orders() {
               >
                 Sr.
               </TableCell>
+              <TableCell
+                sx={{
+                  color: "black !important",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                }}
+              >
+                Date
+              </TableCell>
 
               <TableCell
                 sx={{
@@ -510,6 +524,13 @@ function Orders() {
                 >
                   {index + 1}
                 </TableCell>
+                <TableCell
+                  sx={{ color: "black !important", textAlign: "center" }}
+                  component="th"
+                  scope="row"
+                >
+                  {item?.created_at}
+                </TableCell>
 
                 <TableCell
                   sx={{ color: "black !important", textAlign: "center" }}
@@ -532,7 +553,7 @@ function Orders() {
                   {item?.status}
                 </TableCell>
                 <TableCell
-                  sx={{  textAlign: "center" }}
+                  sx={{  textAlign: "center" ,display:'flex',gap:1 }}
                 >
                   <Button
                     sx={{
@@ -554,6 +575,24 @@ function Orders() {
                   >
                     Details
                   </Button>
+                  <Button
+                    sx={{
+                        backgroundColor:Colors.primary,
+                        color:"white !important",
+                        ":hover":{
+                            backgroundColor:Colors.primary,
+                            color:"white !important",
+
+                        }
+                    }}
+                    onClick={() => {
+                      setOpen(true)
+                      setTableId(item?.id)
+                    }} 
+                  >
+                    Delete
+                  </Button>
+                   
                 </TableCell>
               </TableRow>
             ))}

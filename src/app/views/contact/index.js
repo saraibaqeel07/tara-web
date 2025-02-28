@@ -58,10 +58,10 @@ function Contact() {
 
   const onSubmit = (data) => {
     emailjs.send(
-      "service_3k13jrz", // Replace with your service ID
-      "template_d6n3z75", // Replace with your template ID
+      "service_1vs02a3", // Replace with your service ID
+      "template_oe5h0gl", // Replace with your template ID
       {
-        to_email: "saraib.mangotech@gmail.com", // Define recipient email here
+       
         fName: data.fName,
         lName: data.lName,
         email: data.email,
@@ -69,7 +69,7 @@ function Contact() {
         to_name:'Shine With Tara',
         message: data.message,
       },
-      "In9r4AywYQInFPG5E" // Replace with your public API key
+      "ezlzwD4go4PYE0ZrD" // Replace with your public API key
     )
     .then((response) => {
       reset()

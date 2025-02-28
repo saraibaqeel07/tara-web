@@ -259,16 +259,12 @@ function Toys() {
       <Box component={'form'} onSubmit={handleSubmit(addProduct)} sx={{ width: "90%", margin: '0 auto', mt: 10 }}>
 
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={4} mt={2}>
 
             <TextField inputProps={{ sx: { color: 'black !important' } }} sx={{ color: 'black' }} fullWidth {...register('productName', { required: true })} error={!!errors.productName}
               helperText={errors.productName ? "Product name is required" : ""} size='small' id="outlined-basic" label="Toy Name" variant="outlined" />
           </Grid>
-          <Grid item xs={6} >
-
-            <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('subHeading', { required: true })} error={!!errors.subHeading}
-              helperText={errors.subHeading ? "sub heading is required" : ""} size='small' multiline id="outlined-basic" label="Sub Heading" variant="outlined" />
-          </Grid>
+       
 
           <Grid item xs={4} mt={2}>
 
@@ -285,20 +281,11 @@ function Toys() {
             <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('AgeGroup', { required: true })} error={!!errors.AgeGroup} type='text'
               helperText={errors.AgeGroup ? "Age Group is required" : ""} size='small' id="outlined-basic" label="Age Group" variant="outlined" />
           </Grid>
-          <Grid item xs={12} >
-            <Grid container spacing={2}>
-              <Grid item xs={6} mt={2}>
+          <Grid item xs={6} >
 
-                <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('ParentReason', { required: true })} error={!!errors.ParentReason}
-                  helperText={errors.ParentReason ? "Parent Reason is required" : ""} size='small' multiline id="outlined-basic" label="Why Parent's Love it" variant="outlined" />
-              </Grid>
-              <Grid item xs={6} mt={2}>
-
-                <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('HelpChild', { required: true })} error={!!errors.HelpChild}
-                  helperText={errors.HelpChild ? "help child is required" : ""} size='small' multiline id="outlined-basic" label="How it help's children" variant="outlined" />
-              </Grid>
-            </Grid>
-          </Grid>
+<TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('description', { required: true })} error={!!errors.subHeading}
+  helperText={errors.subHeading ? "description is required" : ""} size='small' multiline id="outlined-basic" label="Description" variant="outlined" />
+</Grid>
           <Grid container m={2} >
             <Grid item xs={4} mt={5}>
 

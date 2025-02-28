@@ -256,89 +256,76 @@ function GeneralToys() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Box component={'form'} onSubmit={handleSubmit(addProduct)} sx={{ width: "90%", margin: '0 auto', mt: 10 }}>
-
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-
-            <TextField inputProps={{ sx: { color: 'black !important' } }} sx={{ color: 'black' }} fullWidth {...register('productName', { required: true })} error={!!errors.productName}
-              helperText={errors.productName ? "Product name is required" : ""} size='small' id="outlined-basic" label="Toy Name" variant="outlined" />
-          </Grid>
-          <Grid item xs={6} >
-
-            <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('subHeading', { required: true })} error={!!errors.subHeading}
-              helperText={errors.subHeading ? "sub heading is required" : ""} size='small' multiline id="outlined-basic" label="Sub Heading" variant="outlined" />
-          </Grid>
-
-          <Grid item xs={4} mt={2}>
-
-            <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('productPrice', { required: true })} error={!!errors.productPrice} type='number'
-              helperText={errors.productPrice ? "Product price is required" : ""} size='small' id="outlined-basic" label="Toy Price" variant="outlined" />
-          </Grid>
-          {/* <Grid item xs={4} mt={2}>
-
-            <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('Pages', { required: true })} error={!!errors.Pages} type='number'
-              helperText={errors.Pages ? "Pages is required" : ""} size='small' id="outlined-basic" label="No of Pages" variant="outlined" />
-          </Grid> */}
-          <Grid item xs={4} mt={2}>
-
-            <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('AgeGroup', { required: true })} error={!!errors.AgeGroup} type='text'
-              helperText={errors.AgeGroup ? "Age Group is required" : ""} size='small' id="outlined-basic" label="Age Group" variant="outlined" />
-          </Grid>
-          <Grid item xs={12} >
-            <Grid container spacing={2}>
-              <Grid item xs={6} mt={2}>
-
-                <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('ParentReason', { required: true })} error={!!errors.ParentReason}
-                  helperText={errors.ParentReason ? "Parent Reason is required" : ""} size='small' multiline id="outlined-basic" label="Why Parent's Love it" variant="outlined" />
-              </Grid>
-              <Grid item xs={6} mt={2}>
-
-                <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('HelpChild', { required: true })} error={!!errors.HelpChild}
-                  helperText={errors.HelpChild ? "help child is required" : ""} size='small' multiline id="outlined-basic" label="How it help's children" variant="outlined" />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid container m={2} >
-            <Grid item xs={4} mt={5}>
-
-              <TextField size='small' type='file' inputProps={{ multiple: true, accept: "image/*" }}
-                onChange={handleImageChange} required={true} />
-            </Grid>
-
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <h4>Image Preview:</h4>
-              </Grid>
-
-              {imgUrls && imgUrls.length > 0 && imgUrls.map((src, index) => (
-                <Grid item xs={6} sm={4} md={3} key={index}>
-                  <img
-                    src={src}
-                    alt={`Preview ${index}`}
-                    style={{
-                      width: "100%",
-                      height: "200px",
-                      objectFit: "cover",
-                      borderRadius: "8px",
-                      boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.2)"
-                    }}
-                  />
+       <Box component={'form'} onSubmit={handleSubmit(addProduct)} sx={{ width: "90%", margin: '0 auto', mt: 10 }}>
+      
+              <Grid container spacing={2}>
+                <Grid item xs={4} mt={2}>
+      
+                  <TextField inputProps={{ sx: { color: 'black !important' } }} sx={{ color: 'black' }} fullWidth {...register('productName', { required: true })} error={!!errors.productName}
+                    helperText={errors.productName ? "Product name is required" : ""} size='small' id="outlined-basic" label="Toy Name" variant="outlined" />
                 </Grid>
-              ))}
-            </Grid>
-
-          </Grid>
-
-
-
-        </Grid>
-
-        <Grid container xs={9} mt={5} justifyContent={'flex-end'} >
-          <Button type='submit' variant="contained">Add</Button>
-
-        </Grid>
-      </Box>
+             
+      
+                <Grid item xs={4} mt={2}>
+      
+                  <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('productPrice', { required: true })} error={!!errors.productPrice} type='number'
+                    helperText={errors.productPrice ? "Product price is required" : ""} size='small' id="outlined-basic" label="Toy Price" variant="outlined" />
+                </Grid>
+                {/* <Grid item xs={4} mt={2}>
+      
+                  <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('Pages', { required: true })} error={!!errors.Pages} type='number'
+                    helperText={errors.Pages ? "Pages is required" : ""} size='small' id="outlined-basic" label="No of Pages" variant="outlined" />
+                </Grid> */}
+                <Grid item xs={4} mt={2}>
+      
+                  <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('AgeGroup', { required: true })} error={!!errors.AgeGroup} type='text'
+                    helperText={errors.AgeGroup ? "Age Group is required" : ""} size='small' id="outlined-basic" label="Age Group" variant="outlined" />
+                </Grid>
+                <Grid item xs={6} >
+      
+      <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('description', { required: true })} error={!!errors.subHeading}
+        helperText={errors.subHeading ? "description is required" : ""} size='small' multiline id="outlined-basic" label="Description" variant="outlined" />
+      </Grid>
+                <Grid container m={2} >
+                  <Grid item xs={4} mt={5}>
+      
+                    <TextField size='small' type='file' inputProps={{ multiple: true, accept: "image/*" }}
+                      onChange={handleImageChange} required={true} />
+                  </Grid>
+      
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <h4>Image Preview:</h4>
+                    </Grid>
+      
+                    {imgUrls && imgUrls.length > 0 && imgUrls.map((src, index) => (
+                      <Grid item xs={6} sm={4} md={3} key={index}>
+                        <img
+                          src={src}
+                          alt={`Preview ${index}`}
+                          style={{
+                            width: "100%",
+                            height: "200px",
+                            objectFit: "cover",
+                            borderRadius: "8px",
+                            boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.2)"
+                          }}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+      
+                </Grid>
+      
+      
+      
+              </Grid>
+      
+              <Grid container xs={9} mt={5} justifyContent={'flex-end'} >
+                <Button type='submit' variant="contained">Add</Button>
+      
+              </Grid>
+            </Box>
       <TableContainer component={Paper} sx={{ color: 'black !important', mt: 5, mb: 5, height: '500px', overflowY: 'scroll' }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ color: 'black !important' }}>

@@ -22,6 +22,7 @@ import VisaIcon from '@mui/icons-material/CreditCard'; // Replace with actual Vi
 import MasterCardIcon from '@mui/icons-material/CreditCard'; // Replace with an appropriate icon
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'; // For cash on delivery
 import { CartCounter } from '../../Context/CartCounter'
+import emailjs from "emailjs-com";
 
 
 function Order() {
@@ -53,7 +54,7 @@ function Order() {
     const [comment, setComment] = useState('');
     const [cartItems, setCartItems] = useState([])
     const { user, setUser } = useContext(AuthContext);
-  const { setCount } = useContext(CartCounter);
+    const { setCount } = useContext(CartCounter);
 
     const handleRatingChange = (event, newRating) => {
         setRating(newRating);
@@ -73,10 +74,10 @@ function Order() {
     };
     const getCartData = async () => {
         try {
-          
+
             const userId = User.uid;
 
-            
+
             const q = query(collection(db, "cartData"), where("userId", "==", userId));
 
             const querySnapshot = await getDocs(q);
@@ -119,7 +120,7 @@ function Order() {
                 setModalOpen(true)
             }
             else {
-
+                // sendEmail()
                 placeOrder()
             }
 
@@ -155,36 +156,36 @@ function Order() {
     };
     const updateCartInFirebase = async (userId) => {
         try {
-            
+
             if (!cartItems || (typeof cartItems !== 'object' && !Array.isArray(cartItems))) {
                 console.error('Invalid cartItems data:', cartItems);
-                return; 
+                return;
             }
-    
-           
+
+
             const cartRef = collection(db, "cartData");
-    
-           
+
+
             const querySnapshot = await getDocs(query(cartRef, where("userId", "==", User?.uid)));
             console.log(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-    
-           
+
+
             if (!querySnapshot.empty) {
-               
+
                 const cartDocId = querySnapshot.docs[0].id;
                 console.log(cartDocId, 'cartDocId');
-    
-               
+
+
                 const cartDocRef = doc(db, "cartData", cartDocId);
                 console.log(cartDocRef, 'cartDocRef');
-    
-               
+
+
                 await updateDoc(cartDocRef, {
-                    data: [] 
+                    data: []
                 });
                 setCount(0)
                 setCartItems([])
-            //    SuccessToaster('Cart updated successfully');
+                //    SuccessToaster('Cart updated successfully');
             } else {
                 console.log('No cart found for this user');
             }
@@ -207,7 +208,7 @@ function Order() {
                 amount: totalPrice,
                 status: 'pending',
                 details: cartItems,
-                paymentType:selectedOption,
+                paymentType: selectedOption,
 
                 created_at: moment().format('MMMM Do YYYY, h:mm a')
 
@@ -219,6 +220,8 @@ function Order() {
 
                 SuccessToaster('Order Placed')
                 setOpen(true)
+                sendEmail()
+                sendEmail2()
                 reset()
                 updateCartInFirebase()
             }
@@ -236,7 +239,7 @@ function Order() {
 
             // Add a new document with a generated id.
             const docRef = await addDoc(collection(db, "reviews"), {
-            
+
                 email: User.email,
                 name: User.displayName,
                 comment: comment,
@@ -305,6 +308,126 @@ function Order() {
             placeOrder()
         });
     }
+
+    const generateCartItemsHTML = (cartItems) => {
+        return cartItems.map(item => `
+          <tr>
+            <td style="padding: 8px; border-bottom: 1px solid #ddd;">${item.name}</td>
+            <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;">${item.quantity}</td>
+            <td style="padding: 8px; text-align: right; border-bottom: 1px solid #ddd;">$${item.price}</td>
+          </tr>
+        `).join('');
+    };
+
+    const emailSend = (data) => {
+        const cartItemsHTML = generateCartItemsHTML(cartItems);
+
+        emailjs.send(
+            "service_1vs02a3",
+            "template_xvlalim",
+            {
+                cartItems: cartItemsHTML,
+                subtotal: '100',
+                taxRate: '5',
+                taxAmount: '5',
+                total: '105',
+                to_email: getValues('email'),
+                to_name: 'Shine With Tara',
+            },
+            "ezlzwD4go4PYE0ZrD"
+        )
+            .then((response) => {
+                reset();
+                console.log("Email sent successfully!", response.status, response.text);
+                SuccessToaster("Message sent successfully!");
+            })
+            .catch((error) => {
+                console.error("Error sending email:", error);
+                ErrorToaster("Failed to send message. Please try again.");
+            });
+    };
+
+    const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0).toFixed(2)
+    const taxRate = 5
+    const taxAmount = ((subtotal * taxRate) / 100).toFixed(2)
+    const total = (Number.parseFloat(subtotal)).toFixed(2)
+
+    const generateCartItemsHtml = () => {
+        return cartItems
+            .map(
+                (item, index) => `
+      <tr key="${index}">
+        <td style="padding: 8px; border-bottom: 1px solid #ddd;">${item?.name}</td>
+        <td style="padding: 8px; text-align: center; border-bottom: 1px solid #ddd;">${item?.qty}</td>
+        <td style="padding: 8px; text-align: right; border-bottom: 1px solid #ddd;">${item?.qty}x${item?.price} = ${item?.qty*item?.price} </td>
+      </tr>
+    `,
+            )
+            .join("")
+    }
+
+    const sendEmail = async (data) => {
+
+
+        const cartItemsHtml = generateCartItemsHtml()
+
+
+        const templateParams = {
+            to_email: getValues('email'),
+            to_name: "Shine With Tara",
+            cart_items: cartItemsHtml,
+            subtotal: `$${subtotal}`,
+            taxRate: taxRate,
+            taxAmount: `$${taxAmount}`,
+            total: `$${total}`,
+        }
+
+
+
+        try {
+            const response = await emailjs.send('service_1vs02a3', 'template_xvlalim', templateParams, 'ezlzwD4go4PYE0ZrD')
+
+            reset()
+           
+        } catch (error) {
+
+            console.error("Error sending email:", error)
+            alert("Failed to send invoice. Please check the debug log.")
+        } finally {
+
+        }
+    }
+    const sendEmail2 = async (data) => {
+
+
+        const cartItemsHtml = generateCartItemsHtml()
+
+
+        const templateParams = {
+            to_email: 'info@shineswithtara.com',
+            to_name: "Shine With Tara",
+            cart_items: cartItemsHtml,
+            subtotal: `$${subtotal}`,
+            taxRate: taxRate,
+            taxAmount: `$${taxAmount}`,
+            total: `$${total}`,
+        }
+
+
+
+        try {
+            const response = await emailjs.send('service_1vs02a3', 'template_xvlalim', templateParams, 'ezlzwD4go4PYE0ZrD')
+
+            reset()
+           
+        } catch (error) {
+
+            console.error("Error sending email:", error)
+            alert("Failed to send invoice. Please check the debug log.")
+        } finally {
+
+        }
+    }
     useEffect(() => {
         const intervalId = setInterval(() => {
             // Generate a random color
@@ -336,10 +459,10 @@ function Order() {
         return () => clearInterval(intervalId);
     }, []);
     useEffect(() => {
-        
 
-            
-     
+
+
+
         getCartData()
     }, [])
     useEffect(() => {
@@ -347,7 +470,7 @@ function Order() {
 
         setTotalPrice(totalPriceSum)
     }, [cartItems])
-    
+
 
     return (
         <Box
@@ -567,7 +690,7 @@ function Order() {
 
                                                         {/* Total and Remove Button */}
                                                         <Grid item lg={6} md={6} sm={6} xs={6} textAlign="right">
-                                                            <Typography sx={{ color: 'white' }}> {item?.price } x { item?.qty} = {item?.price * item?.qty}</Typography>
+                                                            <Typography sx={{ color: 'white' }}> {item?.price} x {item?.qty} = {item?.price * item?.qty}</Typography>
 
                                                         </Grid>
                                                     </Grid>

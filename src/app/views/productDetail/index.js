@@ -647,7 +647,7 @@ function ProductDetail() {
                                     {/* Right Section: Content */}
                                     <Grid item xs={12} md={8} lg={8} justifyContent={'space-between'} sx={{ mt: { lg: 0, md: 0, sm: 10, xs: 10 } }}>
                                         {/* Why Parents Love It */}
-                                        <Box display="flex" alignItems="center" justifyContent={'center'} mb={2} gap={2}>
+                                       {detail?.ParentReason && <>  <Box display="flex" alignItems="center" justifyContent={'center'} mb={2} gap={2}>
                                             <Box component={'img'} src={Images.butterfly} width={'35px'}></Box>
                                             <Typography
                                                 variant="h3"
@@ -665,10 +665,10 @@ function ProductDetail() {
                                         </Box>
                                         <Typography variant="p" color="text.primary" style={{ textAlign: 'center' }} mb={4}>
                                             {detail?.ParentReason}
-                                        </Typography>
+                                        </Typography> </>}
 
                                         {/* How It Helps Your Child */}
-                                        <Box display="flex" alignItems="center" justifyContent={'center'} mb={2} mt={4} gap={2}>
+                                       { detail?.HelpChild && <>  <Box display="flex" alignItems="center" justifyContent={'center'} mb={2} mt={4} gap={2}>
                                             <Box component={'img'} src={Images.child} width={'35px'}></Box>
                                             <Typography
                                                 variant="h3"
@@ -686,7 +686,7 @@ function ProductDetail() {
                                         </Box>
                                         <Typography variant="p" color="text.primary" mb={4}>
                                             {detail?.HelpChild}
-                                        </Typography>
+                                        </Typography> </>}
 
 
                                     </Grid>
