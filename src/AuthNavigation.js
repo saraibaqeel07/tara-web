@@ -17,7 +17,7 @@ const authNavigation = [
   },
   {
     path: "/admin/extra-sheets",
-    name: " Manage Extra Sheets"
+    name: " Extra "
   },
   {
     path: "/admin/toys",

@@ -127,7 +127,7 @@ function Shop() {
     "Books",
     "Activity Sheets",
     "Coloring Sheets",
-    "Extra Sheets",
+    "Extra",
     "Toys",
     "General Toys",
     "Show All Products",
@@ -1970,7 +1970,7 @@ function Shop() {
                     WebkitTextFillColor: "#F9BF29",
                   }}
                 >
-                  Extra Sheets
+                  Extra
                 </Typography>
               </Box>
             )}
@@ -2026,7 +2026,7 @@ function Shop() {
                     }}
                   />
 
-                  {/* Grid for extra sheets */}
+                  {/* Grid for Extra */}
                   <Grid
                     container
                     spacing={2}
@@ -2074,7 +2074,7 @@ function Shop() {
                         </Typography>
                       </Grid>
                     ) : (
-                      // Display extra sheets cards
+                      // Display Extra cards
                       Array.isArray(extraCurrentProducts) &&
                       extraCurrentProducts.map((card, i) => (
                         <React.Fragment key={i}>
