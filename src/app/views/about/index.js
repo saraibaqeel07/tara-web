@@ -1182,7 +1182,7 @@ function About() {
         <Grid
           container
           sx={{
-            backgroundImage: `url(${Images.introBg})`, // Replace with the actual image path or import
+            backgroundImage: `url(${Images.mainBGPink})`, // Replace with the actual image path or import
             backgroundSize: "cover", // Ensures the image covers the entire container
             backgroundPosition: "center", // Centers the image
             backgroundRepeat: "no-repeat", // Prevents tiling
@@ -1479,7 +1479,7 @@ function About() {
         <Grid
           container
           sx={{
-            backgroundImage: `url(${Images.ceoBg})`, // Replace with the actual image path or import
+            backgroundImage: `url(${Images.reviewBg})`, // Replace with the actual image path or import
             backgroundSize: "cover", // Ensures the image covers the entire container
             backgroundPosition: "center", // Centers the image
             backgroundRepeat: "no-repeat", // Prevents tilin

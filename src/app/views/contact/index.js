@@ -189,7 +189,7 @@ function Contact() {
       <Box
         component={"section"}
         sx={{
-          backgroundImage: `url(${Images.introBg})`,
+          backgroundImage: `url(${Images.mainBGPink})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -420,8 +420,8 @@ function Contact() {
                     <Box
                       sx={{ display: "flex", flexDirection: "column" }}
                     >
-                      <Typography component={'p'} className='para-text' sx={{ fontSize: '20px',cursor:'pointer' }} onClick={()=> handleEmailClick('info@shinewithtara.com')}>
-                        Email : <Box component={'span'} className='heading-font' sx={{ color: '#FCAE32', textDecoration: 'underline',fontSize: {lg:'20px',md:'20px',sm:'20px',xs:'14px'} }}> info@shinewithtara.com</Box>
+                      <Typography component={'p'} className='para-text' sx={{ fontSize: '20px',cursor:'pointer' }} onClick={()=> handleEmailClick('info@shineswithtara.com')}>
+                        Email : <Box component={'span'} className='heading-font' sx={{ color: '#FCAE32', textDecoration: 'underline',fontSize: {lg:'20px',md:'20px',sm:'20px',xs:'14px'} }}> info@shineswithtara.com</Box>
                       </Typography>
                       <Typography className='para-text' sx={{ fontSize: '20px' }}>
                         Copyright {moment().format('YYYY')} © All rights Reserved By Shine With Tara Design By Sana Kazmi

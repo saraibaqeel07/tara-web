@@ -1016,7 +1016,7 @@ function Shop() {
             <Box
               component={"section"}
               sx={{
-                backgroundImage: `url(${Images.introBg})`,
+                backgroundImage: `url(${Images.mainBGPink})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
@@ -1417,7 +1417,7 @@ function Shop() {
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundImage: activeButton === 6 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                  backgroundImage: activeButton === 6 ? `url(${Images.reviewBg})` : `url(${Images.mainBGPink})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -1439,7 +1439,7 @@ function Shop() {
 
                 <Container
                   sx={{
-                    backgroundImage: activeButton === 6 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                    backgroundImage: activeButton === 6 ? `url(${Images.reviewBg})` : `url(${Images.mainBGPink})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -1696,7 +1696,7 @@ function Shop() {
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundImage: activeButton === 6 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
+                  backgroundImage: activeButton === 6 ? `url(${Images.coloringBg})` : `url(${Images.mainBGPink})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -1704,7 +1704,7 @@ function Shop() {
               >
                 <Container
                   sx={{
-                    backgroundImage: activeButton === 6 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
+                    backgroundImage: activeButton === 6 ? `url(${Images.coloringBg})` : `url(${Images.mainBGPink})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -1982,7 +1982,7 @@ function Shop() {
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundImage: activeButton === 6 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                  backgroundImage: activeButton === 6 ? `url(${Images.reviewBg})` : `url(${Images.mainBGPink})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -1990,7 +1990,7 @@ function Shop() {
               >
                 <Container
                   sx={{
-                    backgroundImage: activeButton === 6 ? `url(${Images.reviewBg})` : `url(${Images.introBg})`,
+                    backgroundImage: activeButton === 6 ? `url(${Images.reviewBg})` : `url(${Images.mainBGPink})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -2266,7 +2266,7 @@ function Shop() {
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundImage: activeButton === 4 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
+                  backgroundImage: activeButton === 4 ? `url(${Images.coloringBg})` : `url(${Images.mainBGPink})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -2274,7 +2274,7 @@ function Shop() {
               >
                 <Container
                   sx={{
-                    backgroundImage: activeButton === 4 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
+                    backgroundImage: activeButton === 4 ? `url(${Images.coloringBg})` : `url(${Images.mainBGPink})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -2550,7 +2550,7 @@ function Shop() {
                   "@media (min-width: 1200px)": {
                     maxWidth: "100%", // Set maxWidth to 100% for screens above 1200px
                   },
-                  backgroundImage: activeButton === 5 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
+                  backgroundImage: activeButton === 5 ? `url(${Images.coloringBg})` : `url(${Images.mainBGPink})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
@@ -2558,7 +2558,7 @@ function Shop() {
               >
                 <Container
                   sx={{
-                    backgroundImage: activeButton === 5 ? `url(${Images.coloringBg})` : `url(${Images.introBg})`,
+                    backgroundImage: activeButton === 5 ? `url(${Images.coloringBg})` : `url(${Images.mainBGPink})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -2785,7 +2785,10 @@ function Shop() {
               component={"section"}
               sx={{
                 position: "relative",
-                backgroundColor: activeButton === 5 ? "#FF9D04" : "#5B73AD",
+                backgroundImage: `url(${Images.reviewBg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
                 width: "100%",
                 height: { xs: "260px", sm: "250px", md: "500px" },
                 display: "flex",
@@ -2796,30 +2799,7 @@ function Shop() {
 
               }}
             >
-              {/* <Box
-            sx={{
-              position: "absolute",
-              top: 40,
-              left: 20,
-              zIndex: 0,
-              display: "block",
-              width: "60px",
-            }}
-            component={"img"}
-            src={Images.hand}
-          ></Box> */}
-              {/* <Box
-            sx={{
-              position: "absolute",
-              top: 20,
-              right: 50,
-              zIndex: 0,
-              display: "block",
-              width:"60px"
-            }}
-            component={'img'}
-            src={Images.rainbow}
-          ></Box> */}
+        
               <Box
                 sx={{
                   position: "absolute",
