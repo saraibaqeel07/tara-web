@@ -125,8 +125,8 @@ function ProductDetail() {
             if (!querySnapshot.empty) {
                 const docRef = querySnapshot.docs[0].ref;
                 const cartDoc = querySnapshot.docs[0].data();
-                console.log(cartDoc?.data,'cartDoc');
-                console.log(data,'cartDoc');
+                console.log(cartDoc?.data, 'cartDoc');
+                console.log(data, 'cartDoc');
                 const existingItemIndex = cartDoc.data.findIndex(
                     (item) => item.id === data.id
                 );
@@ -330,7 +330,7 @@ function ProductDetail() {
     };
 
     const getProductDetail = async (productId) => {
-        const collections = ["products", "activitysheets", "coloringsheets", "extra",'Toys']; // List of all collections
+        const collections = ["products", "activitysheets", "coloringsheets", "extra", 'Toys']; // List of all collections
 
         for (const collectionName of collections) {
             try {
@@ -461,7 +461,12 @@ function ProductDetail() {
                         }}
                     />
                 </Box>
-                <Box sx={{ bgcolor: "#cb6782", minHeight: "100vh" }}>
+                <Box sx={{
+                    backgroundImage: `url(${Images.mainBGPink})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat", minHeight: "100vh"
+                }}>
                     <Container maxWidth="lg" sx={{ py: 6 }}>
                         <Grid container spacing={4}>
                             {/* Left side - Images */}
@@ -647,7 +652,7 @@ function ProductDetail() {
                                     {/* Right Section: Content */}
                                     <Grid item xs={12} md={8} lg={8} justifyContent={'space-between'} sx={{ mt: { lg: 0, md: 0, sm: 10, xs: 10 } }}>
                                         {/* Why Parents Love It */}
-                                       {detail?.ParentReason && <>  <Box display="flex" alignItems="center" justifyContent={'center'} mb={2} gap={2}>
+                                        {detail?.ParentReason && <>  <Box display="flex" alignItems="center" justifyContent={'center'} mb={2} gap={2}>
                                             <Box component={'img'} src={Images.butterfly} width={'35px'}></Box>
                                             <Typography
                                                 variant="h3"
@@ -663,12 +668,12 @@ function ProductDetail() {
                                             </Typography>
                                             <Box component={'img'} src={Images.butterfly} width={'35px'}></Box>
                                         </Box>
-                                        <Typography variant="p" color="text.primary" style={{ textAlign: 'center' }} mb={4}>
-                                            {detail?.ParentReason}
-                                        </Typography> </>}
+                                            <Typography variant="p" color="text.primary" style={{ textAlign: 'center' }} mb={4}>
+                                                {detail?.ParentReason}
+                                            </Typography> </>}
 
                                         {/* How It Helps Your Child */}
-                                       { detail?.HelpChild && <>  <Box display="flex" alignItems="center" justifyContent={'center'} mb={2} mt={4} gap={2}>
+                                        {detail?.HelpChild && <>  <Box display="flex" alignItems="center" justifyContent={'center'} mb={2} mt={4} gap={2}>
                                             <Box component={'img'} src={Images.child} width={'35px'}></Box>
                                             <Typography
                                                 variant="h3"
@@ -684,9 +689,9 @@ function ProductDetail() {
                                             </Typography>
                                             <Box component={'img'} src={Images.child} width={'35px'}></Box>
                                         </Box>
-                                        <Typography variant="p" color="text.primary" mb={4}>
-                                            {detail?.HelpChild}
-                                        </Typography> </>}
+                                            <Typography variant="p" color="text.primary" mb={4}>
+                                                {detail?.HelpChild}
+                                            </Typography> </>}
 
 
                                     </Grid>
