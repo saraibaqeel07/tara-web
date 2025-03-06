@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { Box, Button, Grid, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { Box, Button, Grid, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, InputLabel, Typography, CircularProgress, IconButton } from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc, updateDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
@@ -15,6 +15,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import CloseIcon from "@mui/icons-material/Close";
 
 
 function Toys() {
@@ -25,6 +27,7 @@ function Toys() {
     handleSubmit,
     getValues,
     formState: { errors },
+    control,
     reset,
     watch
   } = useForm();
@@ -45,6 +48,7 @@ function Toys() {
   const db = getFirestore(app);
   const [open, setOpen] = React.useState(false);
   const [modalValue, setModalValue] = useState()
+  const [imageLoader, setImageLoader] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -81,30 +85,34 @@ function Toys() {
     setOpen1(false);
   };
 
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (!files.length) return;
+   const handleImageChange = (e) => {
+     setImageLoader(true)
+     const files = Array.from(e.target.files);
+     if (!files.length) return;
+ 
+     setImage(files.map((file) => URL.createObjectURL(file))); // Local preview
+ 
+     const uploadPromises = files.map(async (file) => {
+       const storageRef = ref(storage, `uploads/${file.name}`);
+       const snapshot = await uploadBytes(storageRef, file);
+       const url = await getDownloadURL(snapshot.ref);
+       return url;
+     });
+ 
+     Promise.all(uploadPromises)
+       .then((urls) => {
+         console.log([...imgUrls,...urls]);
+         
+         setImgUrls([...imgUrls,...urls]);
+         console.log("Uploaded Image URLs:", urls);
+         setImageLoader(false)
+       })
+       .catch((error) => console.error("Error uploading files:", error));
+   };
 
-    setImage(files.map((file) => URL.createObjectURL(file))); // Local preview
-
-    const uploadPromises = files.map(async (file) => {
-      const storageRef = ref(storage, `uploads/${file.name}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(snapshot.ref);
-      return url;
-    });
-
-    Promise.all(uploadPromises)
-      .then((urls) => {
-        setImgUrls(urls);
-        console.log("Uploaded Image URLs:", urls);
-      })
-      .catch((error) => console.error("Error uploading files:", error));
-  };
-
-  console.log(watch(),'watch');
+  console.log(watch(), 'watch');
   const addProduct = async () => {
-   
+
 
 
     try {
@@ -136,6 +144,10 @@ function Toys() {
       console.log(error);
     }
 
+  };
+
+  const handleRemoveImage = (index) => {
+    setImgUrls(prevImages => prevImages.filter((_, i) => i !== index));
   };
 
   const editProduct = async (id) => {
@@ -264,7 +276,7 @@ function Toys() {
             <TextField inputProps={{ sx: { color: 'black !important' } }} sx={{ color: 'black' }} fullWidth {...register('productName', { required: true })} error={!!errors.productName}
               helperText={errors.productName ? "Product name is required" : ""} size='small' id="outlined-basic" label="Toy Name" variant="outlined" />
           </Grid>
-       
+
 
           <Grid item xs={4} mt={2}>
 
@@ -283,39 +295,170 @@ function Toys() {
           </Grid>
           <Grid item xs={6} >
 
-<TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('description', { required: true })} error={!!errors.subHeading}
-  helperText={errors.subHeading ? "description is required" : ""} size='small' multiline id="outlined-basic" label="Description" variant="outlined" />
-</Grid>
+            <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('description', { required: true })} error={!!errors.subHeading}
+              helperText={errors.subHeading ? "description is required" : ""} size='small' multiline id="outlined-basic" label="Description" variant="outlined" />
+          </Grid>
+      
+
           <Grid container m={2} >
-            <Grid item xs={4} mt={5}>
+            <Grid item xs={12} sm={5}>
+              <InputLabel sx={{ textTransform: "capitalize", textAlign: 'left', fontWeight: 700, display: 'block', mb: 2 }}>
 
-              <TextField size='small' type='file' inputProps={{ multiple: true, accept: "image/*" }}
-                onChange={handleImageChange} required={true} />
+                Upload  Images :*
+              </InputLabel>
+
+              <Controller
+                name="media"
+                control={control}
+                rules={{
+                  required: "At least one media file is required",
+                  validate: (value) => {
+                    if (!value || value.length === 0) {
+                      return "At least one media file is required";
+                    }
+                    for (let i = 0; i < value.length; i++) {
+                      if (value[i].size > 10 * 1024 * 1024) { // Increased limit to 10MB
+                        return "Each file must be smaller than 10MB";
+                      }
+                      if (!["image/"].some(type => value[i].type.startsWith(type))) {
+                        return "Only images are allowed";
+                      }
+                    }
+                    return true;
+                  },
+                }}
+                render={({ field: { onChange } }) => (
+                  <>
+                    <Box
+                      sx={{
+                        border: "2px dashed #0EA5EA",
+                        borderRadius: "8px",
+                        padding: "20px",
+                        textAlign: "center",
+                        cursor: "pointer",
+                        backgroundColor: "#f9f9f9",
+                        height: '135px',
+                        "&:hover": { backgroundColor: "#eef7ff" },
+                      }}
+                      onClick={() => document.getElementById("upload-media").click()}
+                    >
+                      {!imageLoader ? (
+                        <>
+                          <input
+                            type="file"
+                            accept="image/*,audio/*,video/*"
+                            multiple
+                            style={{ display: "none" }}
+                            id="upload-media"
+                            onChange={(e) => {
+                              const files = Array.from(e.target.files);
+                              onChange(files); // Update react-hook-form
+                              handleImageChange(e); // Handle upload logic
+                            }}
+                          />
+                          <CloudUploadIcon sx={{ fontSize: 40, color: "#0EA5EA" }} />
+                          <Typography variant="body1" sx={{ color: "#333", mt: 1 }}>
+                            Drag & drop or click to upload image
+                          </Typography>
+                          <Typography variant="caption" sx={{ color: "#666" }}>
+                            Allowed: Images (Max 10MB per file)
+                          </Typography>
+                        </>
+                      ) : (
+                        <CircularProgress size={90} />
+                      )}
+                    </Box>
+
+                    {errors.media && (
+                      <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                        {errors.media.message}
+                      </Typography>
+                    )}
+                  </>
+                )}
+              />
+
+
+
+
+
+
             </Grid>
+            <Grid container>
+            {imgUrls?.length > 0 && <InputLabel sx={{ textTransform: "capitalize", textAlign: 'left', fontWeight: 700, display: 'block', mb: 3, mt: 3 }}>
 
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <h4>Image Preview:</h4>
-              </Grid>
+              Images :
+            </InputLabel>}
+            </Grid>
+            <Grid container>
 
-              {imgUrls && imgUrls.length > 0 && imgUrls.map((src, index) => (
-                <Grid item xs={6} sm={4} md={3} key={index}>
-                  <img
-                    src={src}
-                    alt={`Preview ${index}`}
-                    style={{
-                      width: "100%",
-                      height: "200px",
-                      objectFit: "cover",
-                      borderRadius: "8px",
-                      boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.2)"
-                    }}
-                  />
-                </Grid>
-              ))}
+
+
+              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                {imgUrls?.length > 0 ? (
+                  imgUrls.map((file, index) => {
+                    const isVideo = file.endsWith(".mp4") || file.endsWith(".mov") || file.endsWith(".avi") || file.endsWith(".webm");
+
+                    return (
+                      <Box key={index} sx={{ position: "relative", display: "inline-block", mt: 1 }}>
+                        {/* Image or Video */}
+                        {isVideo ? (
+                          <video
+                            width="300px"
+                            height="200px"
+                            controls
+                            style={{ borderRadius: "5px", objectFit: "cover" }}
+                          >
+                            <source src={file} type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                        ) : (
+                          <img
+                            className="rounded"
+                            src={file}
+                            width="300px"
+                            height="200px"
+                            alt={`media-${index}`}
+                            style={{ borderRadius: "5px", objectFit: "cover" }}
+                          />
+                        )}
+
+                        {/* Remove Button */}
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            top: 5,
+                            right: 5,
+                          }}
+                        >
+                          <IconButton
+                            onClick={() => handleRemoveImage(index)}
+                            sx={{
+                              backgroundColor: "rgba(0,0,0,0.6)",
+                              color: "#fff",
+                              "&:hover": { backgroundColor: "red" },
+                              width: 10,
+                              height: 10,
+                              borderRadius: "50%",
+                              display: "flex",
+                              alignItems: "center",
+                              p: 2,
+                            }}
+                          >
+                            <CloseIcon />
+                          </IconButton>
+                        </Box>
+                      </Box>
+                    );
+                  })
+                ) : (
+                  <p></p>
+                )}
+              </Box>
             </Grid>
 
           </Grid>
+
 
 
 
