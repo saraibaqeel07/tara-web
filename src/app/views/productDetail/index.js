@@ -632,7 +632,7 @@ function ProductDetail() {
                                                 border: "4px solid #F6921E",
                                             }}
                                         >
-                                            <Box
+                                            {detail?.imgUrl[1] && <Box
                                                 sx={{
                                                     position: "absolute",
                                                     bottom: -60,
@@ -645,7 +645,7 @@ function ProductDetail() {
                                                     zIndex: 2, // Ensures it appears above the first Box
                                                     border: "4px solid #F6921E",
                                                 }}
-                                            />
+                                            />}
                                         </Box>
                                     </Grid>
 
