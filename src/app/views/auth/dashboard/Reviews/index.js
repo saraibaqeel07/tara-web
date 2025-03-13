@@ -92,7 +92,7 @@ function Reviews() {
             console.log("Document written with ID: ", docRef.id);
             if (docRef.id) {
 
-                SuccessToaster('Review Add Succesfully')
+                SuccessToaster('Review Add Successfully')
                 reset()
 
                 getProducts()

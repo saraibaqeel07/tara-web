@@ -1236,7 +1236,11 @@ function Shop() {
                                   {[
                                     { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
                                     { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
-                                    { icon: <OpenInNewIcon />, action: () => navigate(`/products-detail/${card?.id}`, { state: { card } }), text: 'View Details' }
+                                    { 
+                                      icon: <OpenInNewIcon />, 
+                                      action: () => navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }), 
+                                      text: 'View Details'  
+                                    }
                                   ].map((item, index) => (
                                     <Box
                                       key={index}
@@ -1529,7 +1533,11 @@ function Shop() {
                                   {[
                                     { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
                                     { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
-                                    { icon: <OpenInNewIcon />, action: () => navigate(`/products-detail/${card?.id}`, { state: { card } }), text: 'View Details' }
+                                    { 
+                                      icon: <OpenInNewIcon />, 
+                                      action: () => navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }), 
+                                      text: 'View Details'  
+                                    }
                                   ].map((item, index) => (
                                     <Box
                                       key={index}
@@ -1815,7 +1823,11 @@ function Shop() {
                                   {[
                                     { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
                                     { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
-                                    { icon: <OpenInNewIcon />, action: () => navigate(`/products-detail/${card?.id}`, { state: { card } }), text: 'View Details' }
+                                    { 
+                                      icon: <OpenInNewIcon />, 
+                                      action: () => navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }), 
+                                      text: 'View Details'  
+                                    }
                                   ].map((item, index) => (
                                     <Box
                                       key={index}
@@ -2100,7 +2112,11 @@ function Shop() {
                                   {[
                                     { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
                                     { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
-                                    { icon: <OpenInNewIcon />, action: () => navigate(`/products-detail/${card?.id}`, { state: { card } }), text: 'View Details' }
+                                    { 
+                                      icon: <OpenInNewIcon />, 
+                                      action: () => navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }), 
+                                      text: 'View Details'  
+                                    }
                                   ].map((item, index) => (
                                     <Box
                                       key={index}
@@ -2385,7 +2401,11 @@ function Shop() {
                                   {[
                                     { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
                                     { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
-                                    { icon: <OpenInNewIcon />, action: () => navigate(`/products-detail/${card?.id}`, { state: { card } }), text: 'View Details' }
+                                    { 
+                                      icon: <OpenInNewIcon />, 
+                                      action: () => navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }), 
+                                      text: 'View Details'  
+                                    }
                                   ].map((item, index) => (
                                     <Box
                                       key={index}
@@ -2669,7 +2689,11 @@ function Shop() {
                                   {[
                                     { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
                                     { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
-                                    { icon: <OpenInNewIcon />, action: () => navigate(`/products-detail/${card?.id}`, { state: { card } }), text: 'View Details' }
+                                    { 
+                                      icon: <OpenInNewIcon />, 
+                                      action: () => navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }), 
+                                      text: 'View Details'  
+                                    }
                                   ].map((item, index) => (
                                     <Box
                                       key={index}

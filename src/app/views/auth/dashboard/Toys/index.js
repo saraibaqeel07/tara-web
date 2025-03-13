@@ -31,6 +31,7 @@ function Toys() {
     reset,
     watch
   } = useForm();
+console.log(watch());
 
   const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 }, control: control2 } = useForm();
 
@@ -120,18 +121,17 @@ function Toys() {
       // Add a new document with a generated id.
       const docRef = await addDoc(collection(db, "Toys"), {
         name: getValues('productName'),
-        subHeading: getValues('subHeading'),
+        subHeading: getValues('description'),
         // Pages: getValues('Pages'),
         AgeGroup: getValues('AgeGroup'),
-        ParentReason: getValues('ParentReason'),
-        HelpChild: getValues('HelpChild'),
+       
         price: getValues('productPrice'),
         imgUrl: imgUrls
       });
       console.log("Document written with ID: ", docRef.id);
       if (docRef.id) {
         setImgUrls([])
-        SuccessToaster('Product Add Succesfully')
+        SuccessToaster('Product Add Successfully')
         reset()
         setImage('')
         getProducts()

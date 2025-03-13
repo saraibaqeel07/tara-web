@@ -17,6 +17,7 @@ import Cart from "../views/cart";
 import Blog from "../views/blog";
 import BlogDescription from "../views/blogDescription";
 import ProductDetail from "../views/productDetail";
+import BundleDetail from "../views/bundledetail";
 
 
 
@@ -32,6 +33,10 @@ const Webroutes = [
   {
     path: "/products-detail/:id",
     component: <ProductDetail />
+  },
+  {
+    path: "/bundle-detail/:id",
+    component: <BundleDetail />
   },
   {
     path: "/watch",

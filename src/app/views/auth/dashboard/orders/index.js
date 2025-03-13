@@ -181,7 +181,7 @@ function Orders() {
       });
       console.log("Document written with ID: ", docRef.id);
       if (docRef.id) {
-        SuccessToaster("Product Add Succesfully");
+        SuccessToaster("Product Add Successfully");
         reset();
         setImage("");
         getProducts();

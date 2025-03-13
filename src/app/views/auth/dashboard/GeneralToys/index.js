@@ -120,18 +120,17 @@ function Toys() {
       // Add a new document with a generated id.
       const docRef = await addDoc(collection(db, "GeneralToys"), {
         name: getValues('productName'),
-        subHeading: getValues('subHeading'),
+        subHeading: getValues('description'),
         // Pages: getValues('Pages'),
         AgeGroup: getValues('AgeGroup'),
-        ParentReason: getValues('ParentReason'),
-        HelpChild: getValues('HelpChild'),
+        
         price: getValues('productPrice'),
         imgUrl: imgUrls
       });
       console.log("Document written with ID: ", docRef.id);
       if (docRef.id) {
         setImgUrls([])
-        SuccessToaster('Product Add Succesfully')
+        SuccessToaster('Product Add Successfully')
         reset()
         setImage('')
         getProducts()
@@ -298,16 +297,7 @@ function Toys() {
             <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('description', { required: true })} error={!!errors.subHeading}
               helperText={errors.subHeading ? "description is required" : ""} size='small' multiline id="outlined-basic" label="Description" variant="outlined" />
           </Grid>
-          <Grid container m={2} >
-            <Grid item xs={4} mt={5}>
-
-              <TextField size='small' type='file' inputProps={{ multiple: true, accept: "image/*" }}
-                onChange={handleImageChange} required={true} />
-            </Grid>
-
-        
-
-          </Grid>
+          
 
           <Grid container m={2} >
             <Grid item xs={12} sm={5}>

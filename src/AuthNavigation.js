@@ -28,6 +28,10 @@ const authNavigation = [
     name: "General Toys"
   },
   {
+    path: "/admin/bundles",
+    name: "Bundles"
+  },
+  {
     path: "/admin/blogs",
     name: " Blogs"
   },

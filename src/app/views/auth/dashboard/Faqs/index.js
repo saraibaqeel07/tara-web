@@ -91,7 +91,7 @@ function Faqs() {
       console.log("Document written with ID: ", docRef.id);
       if (docRef.id) {
 
-        SuccessToaster('Faq Add Succesfully')
+        SuccessToaster('Faq Add Successfully')
         reset()
         
         getProducts()

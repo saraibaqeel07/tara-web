@@ -1,6 +1,7 @@
 import ManageExtraSheets from "../views/auth/dashboard/Extra";
 import Faqs from "../views/auth/dashboard/Faqs";
 import GeneralToys from "../views/auth/dashboard/GeneralToys";
+import Bundles from "../views/auth/dashboard/Bundles";
 import Reviews from "../views/auth/dashboard/Reviews";
 import Toys from "../views/auth/dashboard/Toys";
 import Users from "../views/auth/dashboard/Users";
@@ -42,6 +43,10 @@ const Adminroutes = [
   {
     path: "general-toys",
     component: <GeneralToys />
+  },
+  {
+    path: "bundles",
+    component: <Bundles />
   },
   {
     path: "extra-sheets",
