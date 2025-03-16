@@ -1,12 +1,13 @@
 
 
 import React, { useContext, useEffect, useState, useRef } from "react"
-import { Box, Button, CardMedia, Grid, Typography, TextField, Drawer, Rating, useMediaQuery } from "@mui/material"
+import { Box, Button, CardMedia, Grid, Typography, TextField, Drawer, Rating, useMediaQuery, IconButton } from "@mui/material"
 import Carousel from "react-material-ui-carousel"
 import FacebookIcon from "@mui/icons-material/Facebook"
 import InstagramIcon from "@mui/icons-material/Instagram"
 import YouTubeIcon from "@mui/icons-material/YouTube"
 import TwitterIcon from "@mui/icons-material/Twitter"
+
 
 import { FacebookRounded, InstagramRounded, TiktokRounded, YoutubeRounded } from "../../assets/images"
 import Images from "../../assets/images"
@@ -929,7 +930,7 @@ function Home() {
           </Box>
         </Box>
 
-       
+
 
         {/* Introduction Section */}
         <Grid
@@ -1396,11 +1397,11 @@ function Home() {
                           }
                         >
                           {item.title === "Portfolio" ? (
-                            <Box sx={{ display: "flex", gap: 2, py: "18px" }}>
-                              <FacebookIcon />
-                              <InstagramIcon />
-                              <YouTubeIcon />
-                              <TwitterIcon />
+                            <Box sx={{ display: "flex", gap: 2, py: "0px" }}>
+                              <IconButton onClick={()=> window.open("https://www.facebook.com/profile.php?id=61554711500749", "_blank")}>  <FacebookRounded /></IconButton>
+                              <IconButton onClick={()=> window.open("https://www.instagram.com/shinewith.tara/", "_blank")} ><InstagramRounded /></IconButton>
+                              <IconButton onClick={()=> window.open("https://www.youtube.com/@Shinewithtara", "_blank")}>  <YoutubeRounded /> </IconButton>
+                              <IconButton onClick={()=> window.open("https://www.tiktok.com/@shinewithtara", "_blank")}>   <TiktokRounded /> </IconButton>
                             </Box>
                           ) : (
                             item.title
