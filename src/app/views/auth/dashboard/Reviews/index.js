@@ -113,7 +113,7 @@ function Reviews() {
         const querySnapshot = await getDocs(q);
         const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        console.log(dataArray);
+        
         setProducts(dataArray)
 
     }

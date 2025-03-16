@@ -11,6 +11,7 @@ import {
 import React, { useContext, useEffect, useState, useRef } from "react";
 import Colors from "../../styles/colors";
 import Fonts from "../../styles/fonts";
+import EmailIcon from '@mui/icons-material/Email';
 import Images, {
   FacebookRounded,
   InstagramRounded,
@@ -65,7 +66,7 @@ function Character() {
   const [open, setOpen] = useState(false);
   // const [reviewBoxes, setReviewBoxes] = useState([]);
 
-  console.log(cartVisible, "cartVisible");
+
 
   // const getReviews = async () => {
   //   try {
@@ -75,7 +76,7 @@ function Character() {
   //       id: doc.id,
   //       ...doc.data(),
   //     }));
-  //     console.log(dataArray);
+  //     
   //     setReviewBoxes(dataArray);
   //   } catch (error) {
   //     console.error("Error fetching reviews:", error);
@@ -542,7 +543,7 @@ function Character() {
           position: "relative",
           overflow: "hidden",
           [theme.breakpoints.between(200, 450)]: {
-            height:"250px"
+            height: "250px"
           },
         })}
       >
@@ -820,7 +821,7 @@ function Character() {
 
       </Box>
 
-      <Box
+      {/* <Box
         component={"section"}
         sx={{
           backgroundImage: `url(${Images.reviewBg})`,
@@ -915,28 +916,29 @@ function Character() {
         </Typography>
         <Grid container justifyContent={"center"} gap={"40px"}>
 
-          <Grid item md={8} sm={12} xs={12}>
+          <Grid item md={12} sm={12} xs={12}>
             <Grid container spacing={4} justifyContent={"space-between"}>
               {teamData.map((item, i) => (
-                <Grid key={i} item md={6} sm={12} xs={12}
-                  sx={{
-                    height: { xl: "100%" }
-                  }}
-                >
+                <Grid key={i} item md={3} sm={4} xs={6}>
                   <Box
                     sx={{
                       display: "flex",
                       flexDirection: "column",
+                      alignItems: "center",
+                      width: "100%",
+                      height: "100%", // Ensure equal height
+                      borderRadius: "20px",
+                      overflow: "hidden",
+                      boxShadow: 3,
                     }}
                   >
                     <CardMedia
-                      component={"img"}
+                      component="img"
                       src={item.image}
                       sx={{
                         width: "100%",
-                        height: { md: "350px", xl: "950px" },
-                        objectFit: "cover",
-                        objectPosition: "top",
+                        height: "350px", // Fixed height for uniformity
+                        objectFit: "cover", // Ensures proper scaling
                       }}
                     />
                     <Box
@@ -947,7 +949,8 @@ function Character() {
                         gap: "5px",
                         backgroundColor: "#CA6680",
                         p: 2,
-                        borderRadius: "0 0 20px 20px"
+                        flex: 1, // Ensures equal height
+                        width: "100%",
                       }}
                     >
                       <Typography
@@ -955,28 +958,31 @@ function Character() {
                         fontWeight="bold"
                         sx={{
                           fontSize: {
-                            lg: "25px", // Large screens
-                            md: "18px", // Medium screens
-                            sm: "16px", // Small screens
-                            xs: "16px", // Extra small screens
+                            lg: "25px",
+                            md: "18px",
+                            sm: "16px",
+                            xs: "16px",
                           },
                         }}
                       >
                         {item.name}
                       </Typography>
-                      <Typography variant="caption" sx={{
-                        fontSize: {
-                          lg: "16px", // Large screens
-                          md: "12px", // Medium screens
-                          sm: "10px", // Small screens
-                          xs: "10px", // Extra small screens
-                        },
-                        textAlign: "center"
-                      }}>
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          fontSize: {
+                            lg: "16px",
+                            md: "12px",
+                            sm: "10px",
+                            xs: "10px",
+                          },
+                          textAlign: "center",
+                        }}
+                      >
                         {item.profession}
                       </Typography>
                       <Box
-                        component={"div"}
+                        component="div"
                         sx={{
                           cursor: "pointer",
                           textDecoration: "underline",
@@ -984,24 +990,33 @@ function Character() {
                         }}
                         onClick={() => handleEmailClick(item.email)}
                       >
-                        <Typography variant="caption" color="#78C1FF"
+                        <Typography
+                          variant="caption"
+                          color="#78C1FF"
                           sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1,
                             fontSize: {
-                              lg: "13px", // Large screens
-                              md: "10px", // Medium screens
-                              sm: "8px", // Small screens
-                              xs: "8px", // Extra small screens
+                              lg: "13px",
+                              md: "10px",
+                              sm: "8px",
+                              xs: "8px",
                             },
-                          }}> {item.email}</Typography>
+                          }}
+                        >
+                          <EmailIcon />  {item.email}
+                        </Typography>
                       </Box>
                     </Box>
                   </Box>
                 </Grid>
               ))}
             </Grid>
+
           </Grid>
         </Grid>
-      </Box>
+      </Box> */}
     </Box>
   );
 }

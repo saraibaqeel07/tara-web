@@ -5,7 +5,7 @@ const navigation = [
   // },
   // {
   //   path: "/products",
-  //   name: "Products"
+  //   name: "Shop"
   // },
   // {
   //   path: "/watch",
@@ -38,7 +38,7 @@ const navigation = [
   },
   {
     path: "/products",
-    name: "Products"
+    name: "Shop"
   },
   {
     path: "/watch",
@@ -65,12 +65,12 @@ const navigation = [
 ]
 export const navigationNested = [
   {
-    path: "/",
+    path: "/about",
     name: "About Us"
   },
   {
     path: "/products",
-    name: "Products"
+    name: "Shop"
   },
   {
     path: "/watch",

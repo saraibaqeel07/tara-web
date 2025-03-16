@@ -63,7 +63,7 @@ function Watch() {
   const handleBeforeChange = (current, next) => {
     setActiveIndex(next); // Update active index when the slide changes
   };
-  console.log(cartVisible, "cartVisible");
+  
 
   const firebaseConfig = {
     apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
@@ -147,7 +147,7 @@ function Watch() {
       id: doc.id,
       ...doc.data(),
     }));
-    console.log(dataArray);
+    
     setReviewBoxes(dataArray);
   };
   const showModal = (item) => {
@@ -278,7 +278,7 @@ function Watch() {
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
-    console.log("books", sortedData);
+   
     // Update state with sorted data
     setProducts(sortedData);
   };
@@ -399,7 +399,7 @@ function Watch() {
       <div>
         <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
           <Box sx={{ width: 400, padding: 2 }} role="presentation">
-            {console.log(cartItems)}
+            
             <Box display="flex" flexWrap="wrap">
               {cartItems?.length > 0 ? (
                 cartItems?.map((product, index) => (

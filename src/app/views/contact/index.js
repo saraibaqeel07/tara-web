@@ -26,7 +26,7 @@ function Contact() {
   const { setCount } = useContext(CartCounter);
   const [open, setOpen] = useState(false);
 
-  console.log(cartVisible, 'cartVisible');
+ 
 
 
   const handleIncrement = (id) => {

@@ -152,7 +152,8 @@ function Header(props) {
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box
             component={"div"}
-            sx={{ width: '20%' }}
+            sx={{ width: '20%',cursor:'pointer' }}
+            onClick={()=> navigate('/')}
           >
             <CardMedia
               component={"img"}

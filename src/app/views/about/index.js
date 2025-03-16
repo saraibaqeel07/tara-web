@@ -21,7 +21,13 @@ import {
   Rating,
   useMediaQuery
 } from "@mui/material";
+import EmailIcon from '@mui/icons-material/Email';
 import Carousel from 'react-material-ui-carousel';
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import TwitterIcon from "@mui/icons-material/Twitter";
+
 
 import {
   FacebookRounded,
@@ -75,7 +81,36 @@ function About() {
   const isSmallScreen = useMediaQuery('(max-width:900px)');
 
   const [highLighted, setHighlighted] = useState("I");
+  const handleEmailClick = (emailAddress) => {
+    window.location.href = `mailto:${emailAddress}`;
+  };
 
+  const teamData = [
+    {
+      name: "Sohaib Ali Khan",
+      email: "sohaibalikhann@gmail.com",
+      profession: "Social Media Content Writer",
+      image: Images.contentWriter,
+    },
+    {
+      name: "Onam",
+      email: "onamdoesart@gmail.com ",
+      profession: "Animator, Storyboard, Illustrator, Character",
+      image: Images.storyBoard,
+    },
+    {
+      name: "Hussnain Shafay",
+      email: "hhussnain542@gmail.com",
+      profession: "Web Developer And Graphic Design",
+      image: Images.webDeveloper,
+    },
+    {
+      name: "Amna Farooq",
+      email: "amna.publications@gmail.com",
+      profession: "Illustrator,  2D Animator",
+      image: Images.team4,
+    },
+  ];
   useEffect(() => {
     const interval = setInterval(() => {
       setHighlighted((prev) => {
@@ -94,7 +129,7 @@ function About() {
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
 
-  console.log(cartVisible, "cartVisible");
+  
   const [currentSlide, setCurrentSlide] = useState(0);
   const [autoSlideInterval, setAutoSlideInterval] = useState(null);
   const CarouselItems = [
@@ -232,7 +267,7 @@ function About() {
       id: doc.id,
       ...doc.data(),
     }));
-    console.log(dataArray);
+    
     setReviewBoxes(dataArray);
   };
   const showModal = (item) => {
@@ -310,7 +345,7 @@ function About() {
         "Tara is 9 years old. She is a shy Muslim girl. Her imaginary best friend is Shine. She is very kind, helpful, and loving. Her special skill is drawing. She gets nervous around a lot of people, but Shine overcomes her weakness.",
       image: Images.Shop,
       logo: Images.logoTara,
-      title:"Shop",
+      title: "Shop",
       path: "/products",
     },
     {
@@ -319,7 +354,7 @@ function About() {
         "Tara's best imaginary friend is named Shine. She always lends a hand to Tara. She has a lot of energy. She has a bold personality and inspires confidence",
       image: Images.watch,
       logo: Images.logoShine,
-      title:"Watch",
+      title: "Watch",
       path: "/watch",
     },
     {
@@ -327,7 +362,7 @@ function About() {
       detail:
         "Ahmed is Tara’s younger brother; he is 8 years old. Ahmed is very kind and helpful boy. He loves to play video games.",
       image: Images.portfolio,
-      title:"Portfolio",
+      title: "Portfolio",
       logo: Images.logoAhmed,
 
     },
@@ -337,7 +372,7 @@ function About() {
         "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.character,
       logo: Images.logoLaila,
-      title:"Character",
+      title: "Character",
       path: "/main-character",
     },
     {
@@ -346,7 +381,7 @@ function About() {
         "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.faq,
       logo: Images.logoLaila,
-      title:"FAQ",
+      title: "FAQ",
       path: "/faq",
     },
     {
@@ -355,7 +390,7 @@ function About() {
         "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.ContactUs,
       logo: Images.logoLaila,
-      title:"Contact",
+      title: "Contact",
       path: "/contact-us",
     },
     {
@@ -364,7 +399,7 @@ function About() {
         "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.EventShow,
       logo: Images.logoLaila,
-      title:"Event Show",
+      title: "Event Show",
       path: "/event-show",
     },
     {
@@ -373,7 +408,7 @@ function About() {
         "Laila is Tara’s eldest sister. She is 11 years old. She is funny and smart. She loves to eat Ice cream.",
       image: Images.blog,
       logo: Images.logoLaila,
-      title:"Blog",
+      title: "Blog",
       path: "/blog",
     },
   ];
@@ -423,7 +458,7 @@ function About() {
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
-    console.log("books", sortedData);
+   
     // Update state with sorted data
     setProducts(sortedData);
   };
@@ -552,7 +587,7 @@ function About() {
       <div>
         <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
           <Box sx={{ width: 400, padding: 2 }} role="presentation">
-            {console.log(cartItems)}
+            
             <Box display="flex" flexWrap="wrap">
               {cartItems?.length > 0 ? (
                 cartItems?.map((product, index) => (
@@ -1177,305 +1212,6 @@ function About() {
 
 
         </Box>
-
-
-        <Grid
-          container
-          sx={{
-            backgroundImage: `url(${Images.mainBGPink})`, // Replace with the actual image path or import
-            backgroundSize: "cover", // Ensures the image covers the entire container
-            backgroundPosition: "center", // Centers the image
-            backgroundRepeat: "no-repeat", // Prevents tiling
-            padding: 0,
-            margin: 0,
-            position: "relative", // Keeps it ready for absolute positioning of child elements
-          }}
-        >
-          {/* Flex container for image and heading */}
-          <Grid
-            container
-            sx={{
-              position: "relative",
-              display: "flex",
-              justifyContent: "center", // Centers content horizontally
-              alignItems: "center", // Centers content vertically
-              padding: { xs: 2, sm: 3, md: 4 }, // Adjusts padding for smaller screens
-            }}
-          >
-            {/* Container for Image and Heading */}
-            <Box
-              sx={{
-                mt: 4,
-                position: "relative", // Allows absolute positioning for the image
-                textAlign: "center", // Centers the heading text
-                width: "100%", // Ensures proper alignment
-              }}
-            >
-              {/* Tara Image */}
-              <Box
-                sx={{
-                  position: "absolute", // Positioned relative to the container
-                  top: {
-                    xl: "50%",
-                    lg: "50%",
-                    md: "50%",
-                    sm: "40%",
-                    xs: "30%",
-                  }, // Adjusts vertical positioning
-                  left: {
-                    xl: "50%",
-                    lg: "50%",
-                    md: "50%",
-                    sm: "40%",
-                    xs: "30%",
-                  }, // Adjusts horizontal positioning
-                  transform: {
-                    xl: "translate(-550%, -90%)",
-                    lg: "translate(-450%, -90%)",
-                    md: "translate(-400%, -70%)",
-                    sm: "translate(-290%, -50%)",
-                    xs: "translate(-220%, -40%)",
-                  }, // Dynamically adjusts based on screen size
-                  width: {
-                    xl: "143.56px",
-                    lg: "130px",
-                    md: "110px",
-                    sm: "90px",
-                    xs: "70px",
-                  },
-                  height: {
-                    xl: "139px",
-                    lg: "120px",
-                    md: "100px",
-                    sm: "80px",
-                    xs: "60px",
-                  },
-                  backgroundImage: `url(${taraImage})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  display: { xs: "none", sm: "block" }
-                }}
-              />
-
-              {/* Heading */}
-              <Typography
-                variant="h1"
-                className="heading-font"
-                sx={{
-                  fontSize: {
-                    xl: "140px",
-                    lg: "90px",
-                    md: "70px",
-                    sm: "45px",
-                    xs: "35px",
-                  }, // Adjusts font size for different screens
-                  fontWeight: 600,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textTransform: "uppercase",
-                  paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
-                  position: "relative", // Ensures alignment with image
-                  zIndex: 1, // Keeps heading above the image
-                }}
-                style={{
-                  WebkitTextStroke: "1px white",
-                  WebkitTextFillColor: "#F9BF29",
-                }}
-              >
-                <span>Introducing</span>
-                <span
-                  style={{
-                    display: "block",
-                    WebkitTextStroke: "1px white",
-                    WebkitTextFillColor: "#4FAAFB",
-                  }}
-                >
-                  Tara and Shine
-                </span>
-              </Typography>
-            </Box>
-          </Grid>
-
-          {/* Paragraph and Image Section */}
-          <Grid
-            container
-            className="para-text"
-            sx={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "space-between",
-              gap: "20px",
-              width: "100%",
-            }}
-          >
-            {/* Left Side: Paragraph */}
-            <Grid
-              item
-              md={5}
-              xs={12}
-              sx={{
-                textAlign: "left",
-                paddingLeft: { lg: 6, md: 4, sm: 2, xs: 2 }, // Adjust padding based on screen size
-              }}
-            >
-              <Box
-                className="para-text"
-                sx={{
-                  textAlign: "left",
-                  padding: { lg: 6, md: 4, sm: 3, xs: 2 }, // Adjust padding
-                  width: "100%",
-                }}
-              >
-                <Typography
-                  className="para-text"
-                  sx={{
-                    paddingBottom: 3,
-                    fontSize: { sm: "18px", xs: "16px", xl: "35px" },
-                  }}
-                >
-                  Welcome to "Shine with Tara"! ✨
-                </Typography>
-                <Typography
-                  className="para-text"
-                  sx={{
-                    paddingBottom: 2,
-                    fontSize: { sm: "18px", xs: "16px", xl: "35px" },
-                  }}
-                >
-                  "Shine with Tara" is an enchanting Islamic cartoon series
-                  designed especially for Muslim children worldwide. At the
-                  heart of our stories is Tara, a delightful, adventurous
-                  character, and her imaginary friend Shine, a radiant companion
-                  who brings joy, curiosity, and wonder to every journey.
-                  Together, Tara and Shine travel through magical realms,
-                  bringing Islamic teachings to life in a way that captivates
-                  and inspires.
-                </Typography>
-                <Typography
-                  className="para-text"
-                  sx={{
-                    paddingBottom: 2,
-                    fontSize: { sm: "18px", xs: "16px", xl: "35px" },
-                  }}
-                >
-                  Through each adventure, Tara and Shine explore timeless
-                  stories from the Qur'an, dive into the beautiful recitation of
-                  verses, and share the moral lessons of the Hadith. They weave
-                  essential values like kindness, courage, and the importance of
-                  family into every episode, making spiritual growth and
-                  character building both enjoyable and relatable for young
-                  minds.
-                </Typography>
-                <Typography
-                  className="para-text"
-                  sx={{
-                    paddingBottom: 5,
-                    fontSize: { sm: "18px", xs: "16px", xl: "40px" },
-                  }}
-                >
-                  Join us as Tara and Shine illuminate the wonders of Islamic
-                  teachings, taking young viewers on a path filled with
-                  thrilling discoveries, heartfelt moments, and lessons that
-                  will stay with them for life. Perfect for nurturing your
-                  child’s faith, values, and character! 🌙
-                </Typography>
-              </Box>
-            </Grid>
-
-            {isSmallScreen ? (
-              // This grid will be shown for screens below 900px
-              <Grid
-                item
-                xs={12}
-                sx={{
-                  textAlign: "left",
-                  backgroundImage: `url(${introImage})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  width: "100%",
-                  height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: '1700px' },
-                  '@media (min-width: 1536px)and (max-width:2150px)': {
-                    height: "1350px"
-                  },
-                  '@media (min-width: 1300px)and (max-width:1535px)': {
-                    height: "980px"
-                  },
-                }}
-              />
-            ) : (
-              // This grid will be shown for screens above 900px
-              <Grid
-                item
-                md={6}
-                xs={12}
-                sx={{
-                  textAlign: "left",
-                  backgroundImage: `url(${Images.vector})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  width: "100%",
-                  height: { xs: "800px", sm: "900px", md: "100%", lg: "100%", xl: "1700px" },
-                  "@media (min-width: 1536px) and (max-width:2150px)": {
-                    height: "1840px",
-                  },
-                  "@media (min-width: 1300px) and (max-width:1535px)": {
-                    height: "980px",
-                  },
-                  position: "relative",
-                }}
-              >
-                {/* Second Image Box Inside Grid */}
-                <Box
-                  sx={(theme) => ({
-                    backgroundImage: `url(${Images.vectorStarFrame})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    width: "100%", // Increase width to extend towards the right
-                    height: "100%", // Make it full height
-                    position: "absolute", // Allow free positioning
-                    bottom: 0, // Align to the bottom
-                    right: 0, // Align to the right
-                    zIndex: 11, // Ensure it stays behind text
-                    [theme.breakpoints.between(900, 1200)]: {
-                      height: "800px",
-                      width: "678px",
-                      bottom: "-54px",
-                    },
-                    [theme.breakpoints.between(1200, 1300)]: {
-                      height: "667px",
-                      width: "679px",
-                      bottom: "0",
-                      right: "4px"
-                    },
-                    [theme.breakpoints.between(1300, 1536)]: {
-                      height: "910px",
-                      width: "900px",
-                      bottom: "0",
-                    }, [theme.breakpoints.between(1536, 2200)]: {
-                      height: "1873px",
-                      width: "1205px",
-                      bottom: "-135px",
-                    },
-
-                    [theme.breakpoints.between(2200, 3000)]: {
-                      height: "1872px",
-                      width: "1548px",
-                      bottom: "-135px",
-                    },
-                  })}
-                ></Box>
-
-
-              </Grid>
-            )}
-
-
-
-
-          </Grid>
-        </Grid>
         <Grid
           container
           sx={{
@@ -1621,496 +1357,205 @@ function About() {
           </Box>
         </Grid>
 
-        <Grid
-          container
+        <Box
+        component={"section"}
+        sx={{
+          backgroundImage: `url(${Images.reviewBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          width: "100%",
+          p: "60px",
+          position: "relative"
+        }}
+      >
+        <Box
+          component="img"
+          src={Images.star} // Replace with actual right image URL
+          alt="Right Decorative Image"
           sx={{
-            backgroundImage: `url(${Images.pagesNavBg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            minHeight: "80vh",
-            position: "relative",
+            width: { xs: "50px", sm: "60px", md: "80px" },
+            height: "auto",
+            position: "absolute",
+            right: { lg: 80, xs: 0, sm: 0, md: 40 },
+            top: "180px",
+            // display:{xs:"none", sm:"none",md:"block"}
+          }}
+        />
+        <Box
+          component="img"
+          src={Images.pinkArrow} // Replace with actual right image URL
+          alt="Right Decorative Image"
+          sx={{
+            width: { xs: "50px", sm: "60px", md: "80px" },
+            height: "auto",
+            position: "absolute",
+            right: { lg: 80, xs: 0, sm: 0, md: 40 },
+            bottom: "100px",
+            // display:{xs:"none", sm:"none",md:"block"}
+          }}
+        />
+        <Box
+          component="img"
+          src={Images.cloud} // Replace with actual right image URL
+          alt="Right Decorative Image"
+          sx={{
+            width: { xs: "50px", sm: "60px", md: "80px" },
+            height: "auto",
+            position: "absolute",
+            left: { md: 80, xs: 0, sm: 25 },
+            top: "50px"
+          }}
+        />
+        <Box
+          component="img"
+          src={Images.sun} // Replace with actual right image URL
+          alt="Right Decorative Image"
+          sx={{
+            width: { xs: "50px", sm: "60px", md: "80px" },
+            height: "auto",
+            position: "absolute",
+            left: { md: 80, xs: 0, sm: 0 },
+            bottom: "500px",
+
+          }}
+        />
+        <Typography
+          variant="h1"
+          className="heading-font"
+          sx={{
+            fontSize: {
+              xl: "100px",
+              lg: "90px",
+              md: "70px",
+              sm: "45px",
+              xs: "35px",
+            }, // Adjusts font size for different screens
+            fontWeight: 600,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textTransform: "uppercase",
+            paddingBottom: { xl: 12, lg: 5, md: 4, sm: 3, xs: 2 },
+            position: "relative", // Ensures alignment with image
+            zIndex: 1, // Keeps heading above the image
+            margin: "0 auto",
             display: "flex",
-            justifyContent: "center", // Centers content horizontally
-            alignItems: "center", // Centers content vertically
-            padding: "5rem 0",
+            justifyContent: "center", pt: "50px"
+          }}
+          style={{
+            WebkitTextStroke: "1px white",
+            WebkitTextFillColor: "#F9BF29",
           }}
         >
-          <Grid>
-            {/* Container for Image and Heading */}
-            <Box
-              sx={{
-                position: "relative", // Allows absolute positioning for the image
-                textAlign: "center", // Centers the heading text
-                width: "100%", // Ensures proper alignment
-              }}
-            >
-              {/* Tara Image */}
-              <Box
-                sx={{
-                  position: "absolute", // Positioned relative to the container
-                  top: {
-                    xl: "50%",
-                    lg: "50%",
-                    md: "50%",
-                    sm: "40%",
-                    xs: "30%",
-                  }, // Adjusts vertical positioning
-                  left: {
-                    xl: "50%",
-                    lg: "50%",
-                    md: "50%",
-                    sm: "40%",
-                    xs: "30%",
-                  }, // Adjusts horizontal positioning
-                  transform: {
-                    xl: "translate(-450%, -110%)",
-                    lg: "translate(-450%, -110%)",
-                    md: "translate(-400%, -110%)",
-                    sm: "translate(-290%, -90%)",
-                    xs: "translate(-220%, -70%)",
-                  }, // Dynamically adjusts based on screen size
-                  width: {
-                    xl: "143.56px",
-                    lg: "130px",
-                    md: "110px",
-                    sm: "90px",
-                    xs: "70px",
-                  },
-                  height: {
-                    xl: "139px",
-                    lg: "120px",
-                    md: "100px",
-                    sm: "80px",
-                    xs: "60px",
-                  },
-                  backgroundImage: `url(${haveforyou})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              />
+          Team
 
-              {/* Heading */}
-              <Typography
-                variant="h1"
-                className="heading-font"
-                sx={{
-                  fontSize: {
-                    xl: "100px",
-                    lg: "90px",
-                    md: "70px",
-                    sm: "45px",
-                    xs: "35px",
-                  }, // Adjusts font size for different screens
-                  fontWeight: 600,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  textTransform: "uppercase",
-                  paddingBottom: { xl: 6, lg: 5, md: 4, sm: 3, xs: 2 },
-                  position: "relative", // Ensures alignment with image
-                  zIndex: 1, // Keeps heading above the image
-                }}
-                style={{
-                  WebkitTextStroke: "1px white",
-                  WebkitTextFillColor: "#4FAAFB",
-                }}
-              >
-                <span> Tara and Shine </span>
-                <span
-                  style={{
-                    display: "block",
-                    WebkitTextStroke: "1px white",
-                    WebkitTextFillColor: "#F9BF29",
-                  }}
-                >
-                  hAVE For you
-                </span>
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid container mt={5} mb={10} spacing={2} xs={11}>
-            {/* {navigation.map((item, index) => {
-                return (
-                  <Grid item lg={4} md={6} xs={12} display={'flex'} justifyContent={'center'} mt={5}>
-                    <Button
-                      fullWidth
-                      variant='contained'
-                      sx={{
-                        py: 1,
-                        px: 4,
-                        textTransform: "capitalize",
-                        fontSize: "18px"
-                      }}
-                      onClick={() => navigate(item?.path)}
-                    >
-                      {item?.name}
-                    </Button>
-                  </Grid>
-                )
-              })} */}
-            {routingData?.map((item, i) => (
-              <Grid
-                key={i}
-                component={"div"}
-                sx={{ cursor: "pointer", mt: 4 }}
-              
-                item
-                md={4}
-                sm={4}
-                xs={12}
-              >
-                <Grid
-                  container
-                  sx={{
-                    borderRadius: "20px",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Grid
-                    item
-                    md={12}
-                    sm={12}
-                    xs={12}
+        </Typography>
+        <Grid container justifyContent={"center"} gap={"40px"}>
+
+          <Grid item md={12} sm={12} xs={12}>
+            <Grid container spacing={4} justifyContent={"space-between"}>
+              {teamData.map((item, i) => (
+                <Grid key={i} item md={3} sm={4} xs={6}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      width: "100%",
+                      height: "100%", // Ensure equal height
+                      borderRadius: "20px",
+                      overflow: "hidden",
+                      boxShadow: 3,
+                    }}
                   >
-                    <Box
+                    <CardMedia
+                      component="img"
+                      src={item.image}
                       sx={{
-                        position: "relative", // Make Box the relative container
                         width: "100%",
-                        height: "100%",
+                        height: "350px", // Fixed height for uniformity
+                        objectFit: "cover", // Ensures proper scaling
                       }}
-                    >
-                      <CardMedia
-                        component={"img"}
-                        src={item.image}
-                        sx={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          borderRadius: "12px",
-                        }}
-                      />
-                      <Box
-                        sx={{
-                          position: "absolute",
-                          width:'90%',
-                          bottom: "-2%",
-                          left: "50%",
-                          transform: "translate(-50%, -50%)",
-                          zIndex: 2, // Ensures the button appears over the image
-                        }}
-                      >
-                        <Button
-                         className="heading-font"
-                          variant="contained"
-                          fullWidth
-                          color="primary"
-                          sx={{backgroundColor:"#FF9D04" ,WebkitTextStroke: "1px white",
-                            WebkitTextFillColor: "#57ABF1",fontSize:'35px',px:'35px',border:'3px solid white',borderRadius:"12px"}}
-                            onClick={() =>
-                              item.name === "Ahmed"
-                                ? window.open("https://www.instagram.com/shinewith.tara/", "_blank")
-                                : navigate(item?.path)
-                            }
-                        >
-                         {item.title}
-                        </Button>
-                      </Box>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Grid>
-            ))}
-
-          </Grid>
-        </Grid>
-
-        <Grid
-          container
-          sx={{
-            backgroundImage: `url(${Images.reviewBg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            maxHeight: "1500vh", // Adjusted height
-            paddingTop: "20rem",
-            margin: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-            gap: 0, // Prevent gaps between children
-          }}
-        >
-          <Grid
-            item
-            xs={12}
-            md={8}
-            sx={{
-              padding: "5rem 0",
-              position: "relative",
-              marginTop: "-22rem",
-            }}
-          >
-            {/* Centered Heading with Images */}
-            <Box
-              sx={{
-                position: "relative",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 2,
-              }}
-            >
-              {/* Left Image */}
-              <Box
-                component="img"
-                src={Images.cloud}
-                alt="Left Decorative Image"
-                sx={{
-                  width: { xs: "40px", sm: "60px", md: "80px" },
-                  height: "auto",
-                  padding: 0,
-                }}
-              />
-              {/* Heading */}
-              <Typography
-                variant="h1"
-                className="heading-font"
-                sx={{
-                  fontSize: {
-                    xl: "80px",
-                    lg: "70px",
-                    md: "60px",
-                    sm: "35px",
-                    xs: "28px",
-                  },
-                  fontWeight: 600,
-                  color: "#F9BF29",
-                  textTransform: "uppercase",
-                  margin: 0, // Ensure no top or bottom margin
-                }}
-                style={{
-                  WebkitTextStroke: "1px white",
-                  WebkitTextFillColor: "#F9BF29",
-                }}
-              >
-                Reviews
-              </Typography>
-            </Box>
-          </Grid>
-          <Box
-            sx={{
-              width: "95%",
-              margin: "0 auto",
-              display: "flex",
-              justifyContent: "center",
-              position: "relative",
-            }}
-          >
-            <Grid item md={11} sm={11} xs={11}>
-              <Swiper
-                ref={swiperRef}
-                loop={true}
-                spaceBetween={10}
-                slidesPerView={3}
-                autoplay={{
-                  delay: 2500,
-                  disableOnInteraction: false,
-                }}
-                modules={[Autoplay, Pagination, Navigation]}
-                breakpoints={{
-                  320: { slidesPerView: 1 },
-                  786: { slidesPerView: 2 },
-                  1080: { slidesPerView: 3 },
-                  1550: { slidesPerView: 4 },
-                  2000: { slidesPerView: 5 },
-                  2550: { slidesPerView: 6 },
-                }}
-                pagination={{
-                  clickable: true,
-                  el: ".swiper-pagination",
-                  bulletClass: "swiper-pagination-bullet",
-                  bulletActiveClass: "swiper-pagination-bullet-active",
-                }}
-                onSlideChange={updateActiveCard} // Update active card on slide change
-                speed={1000}
-              >
-                {reviewBoxes?.map((item, ind) => (
-                  <SwiperSlide key={ind}>
+                    />
                     <Box
                       sx={{
-                        p: 4,
-                        borderRadius: "15px",
                         display: "flex",
                         flexDirection: "column",
-                        gap: "10px",
-                        backgroundColor:
-                          activeCard === ind ? "#FF9D04" : "#CA6680",
-                        height: "120px",
-                        paddingBottom: 8,
-                        cursor: "pointer",
-                      }}
-                      onClick={() => {
-                        setActiveCard(ind); // Set active card manually on click
-                        swiperRef.current.swiper.slideToLoop(ind); // Navigate to clicked card
+                        alignItems: "center",
+                        gap: "5px",
+                        backgroundColor: "#CA6680",
+                        p: 2,
+                        flex: 1, // Ensures equal height
+                        width: "100%",
                       }}
                     >
-                      {/* Rating */}
-                      <Box
+                      <Typography
+                        variant="caption"
+                        fontWeight="bold"
                         sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
+                          fontSize: {
+                            lg: "25px",
+                            md: "18px",
+                            sm: "16px",
+                            xs: "16px",
+                          },
                         }}
                       >
-                        <Rating
-                          name="read-only"
-                          value={item?.rating}
-                          sx={{ borderColor: "white" }}
-                          readOnly
-                        />
-                      </Box>
-
-                      {/* Comment */}
-                      <Typography variant={"body2"} sx={{ color: "white" }}>
-                        {item.comment}
+                        {item.name}
                       </Typography>
-
-                      {/* Name, Designation */}
-                      <Box
+                      <Typography
+                        variant="caption"
                         sx={{
-                          display: "flex",
-                          alignItems: "flex-start",
-                          gap: "12px",
+                          fontSize: {
+                            lg: "16px",
+                            md: "12px",
+                            sm: "10px",
+                            xs: "10px",
+                          },
+                          textAlign: "center",
                         }}
                       >
-                        <Avatar
-                          sx={{ width: 64, height: 64 }}
-                          src={item.profile}
-                          alt={item.name}
-                        />
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
-                          <Typography
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "8px",
-                              fontWeight: 600,
-                              color: "white",
-                            }}
-                          >
-                            {item?.name}
-                            <Typography
-                              variant="body2"
-                              sx={{ fontWeight: 400 }}
-                            >
-                              {item.designation}
-                            </Typography>
-                          </Typography>
-                        </Box>
+                        {item.profession}
+                      </Typography>
+                      <Box
+                        component="div"
+                        sx={{
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                          color: "#78C1FF",
+                        }}
+                        onClick={() => handleEmailClick(item.email)}
+                      >
+                        <Typography
+                          variant="caption"
+                          color="#78C1FF"
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1,
+                            fontSize: {
+                              lg: "13px",
+                              md: "10px",
+                              sm: "8px",
+                              xs: "8px",
+                            },
+                          }}
+                        >
+                          <EmailIcon />  {item.email}
+                        </Typography>
                       </Box>
                     </Box>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                  </Box>
+                </Grid>
+              ))}
             </Grid>
 
-            {/* Navigation Buttons */}
-            <Box
-              sx={{
-                position: "absolute",
-                top: "35%",
-                left: 0,
-                zIndex: 10,
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                if (swiperRef.current?.swiper) {
-                  swiperRef.current.swiper.slidePrev();
-                  updateActiveCard(); // Sync active card with previous slide
-                }
-              }}
-            >
-              <Box
-                component="img"
-                src={Images.backwardArrow}
-                alt="Previous Slide"
-                sx={{
-                  width: "80px",
-                  height: "60px",
-                  padding: "6px",
-                }}
-              />
-            </Box>
-
-            <Box
-              sx={{
-                position: "absolute",
-                top: "35%",
-                right: 0,
-                zIndex: 10,
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                if (swiperRef.current?.swiper) {
-                  swiperRef.current.swiper.slideNext();
-                  updateActiveCard(); // Sync active card with next slide
-                }
-              }}
-            >
-              <Box
-                component="img"
-                src={Images.forwardArrow}
-                alt="Next Slide"
-                sx={{
-                  width: "80px",
-                  height: "60px",
-                  padding: "6px",
-                }}
-              />
-            </Box>
-          </Box>
-
-          <Grid
-            container
-            sx={{
-              backgroundImage: `url(${Images.reviewSection})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              height: {
-                xs: "300px", // Smallest screens
-                sm: "430px", // Small screens
-                md: "530px", // Medium screens
-                lg: "700px", // Large screens
-                xl: "1600px"
-              },
-              mt: "40px",
-              "@media (min-width: 2300px) and (max-width: 2700px)": {
-                height: "1400px"
-              },
-              "@media (min-width: 1536px) and (max-width: 2299px)": {
-                height: "1050px"
-              },
-            }}
-          ></Grid>
-
-          {/* <Box
-            component="img"
-            src={reviewSection}
-            alt="Review Section Image"
-            sx={{
-              position: "absolute", // Relative to the parent container
-              bottom: 0, // Align to the bottom
-              left: "50%", // Center horizontally
-              transform: "translateX(-50%)", // Center correctly
-              width: { xs: "100%", sm: "100%", md: "100%", lg: "100%", xl: "90%" }, // Adjust width for responsiveness
-              height: "auto", // Maintain aspect ratio
-              maxHeight: "600px",
-            }}
-          /> */}
+          </Grid>
         </Grid>
+      </Box>
+        
+
+        
 
         <Box
           component={"section"}

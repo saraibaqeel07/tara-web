@@ -205,7 +205,7 @@ function Orders() {
       ...doc.data(),
     }));
   
-    console.log(dataArray);
+    
     setProducts(dataArray);
   };
 

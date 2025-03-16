@@ -125,7 +125,7 @@ function Users() {
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     setUsers(dataArray)
-    console.log(dataArray);
+    
     setProducts(dataArray)
 
   }

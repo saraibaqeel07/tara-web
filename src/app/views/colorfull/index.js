@@ -19,7 +19,7 @@ function Colorfull() {
   const { setCount } = useContext(CartCounter);
   const [open, setOpen] = useState(false);
 
-  console.log(cartVisible, 'cartVisible');
+ 
   const buttons = [
     <Button
       key="mission"

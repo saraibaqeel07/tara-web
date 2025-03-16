@@ -23,7 +23,7 @@ import BundleDetail from "../views/bundledetail";
 
 const Webroutes = [
   {
-    path: "/",
+    path: "/about",
     component: <About />
   },
   {
@@ -47,7 +47,7 @@ const Webroutes = [
     component: <EventShow />
   },
   {
-    path: "/home",
+    path: "/",
     component: <Home />
   },
   {

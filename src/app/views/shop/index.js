@@ -74,7 +74,7 @@ function Shop() {
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
 
-  console.log(cartVisible, "cartVisible");
+  
 
   const firebaseConfig = {
     apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
@@ -464,7 +464,7 @@ function Shop() {
       id: doc.id,
       ...doc.data(),
     }));
-    console.log(dataArray);
+    
     setReviewBoxes(dataArray);
   };
   const showModal = (item) => {
@@ -580,7 +580,7 @@ function Shop() {
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
-    console.log("books", sortedData);
+   
     // Update state with sorted data
     setProducts(sortedData);
   };
@@ -884,7 +884,7 @@ function Shop() {
           width: "100%",
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             backgroundImage: `url(${Images.bannerBg})`,
 
@@ -892,16 +892,16 @@ function Shop() {
             backgroundPosition: "bottom center",
             width: "100%",
             height: { md: "578px", xs: "490px", xl: "730px" },
-            position: "relative", // Ensure child content is positioned relative to this container
-            overflow: "hidden", // Prevent content from going outside
+            position: "relative", 
+            overflow: "hidden", 
           }}
         >
-          {/* Right-side Image */}
+          
           <Box
             sx={{
               margin: "0 auto",
-              width: { md: "100%", sm: "100%", xs: "100%" }, // Adjust width for each screen size
-              height: "100%", // Full height of the parent container
+              width: { md: "100%", sm: "100%", xs: "100%" }, 
+              height: "100%", 
               backgroundImage: `url(${shopImg1})`,
               backgroundSize: {
                 md: "contain",
@@ -911,10 +911,10 @@ function Shop() {
                 sm: "contain",
               },
               backgroundRepeat: "no-repeat",
-              backgroundPosition: "center", // Ensures the image is aligned at the bottom
+              backgroundPosition: "center",
             }}
           />
-        </Box>
+        </Box> */}
 
 
         {selected == "episode" ? (

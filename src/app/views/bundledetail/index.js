@@ -84,7 +84,7 @@ function BundleDetail() {
     const { cartVisible, toggleCartVisibility } = useContext(CartContext);
     const { setCount } = useContext(CartCounter);
     const { id } = useParams();
-    console.log(cartVisible, "cartVisible");
+    
 
     const firebaseConfig = {
         apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",

@@ -32,7 +32,7 @@ function FAQ() {
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
 
-  console.log(cartVisible, 'cartVisible');
+ 
 
   const firebaseConfig = {
     apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
@@ -115,7 +115,7 @@ function FAQ() {
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    console.log(dataArray);
+    
     setReviewBoxes(dataArray)
 
   }
@@ -370,7 +370,7 @@ function FAQ() {
           role="presentation"
 
         >
-          {console.log(cartItems)}
+          
           <Box display="flex" flexWrap="wrap">
 
             {cartItems?.length > 0 ? cartItems?.map((product, index) => (
