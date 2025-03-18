@@ -1220,6 +1220,11 @@ function Shop() {
                                 flexDirection: "column",
                                 borderRadius: "20px",
                                 position: "relative",
+                                cursor:'pointer',
+                                transition: 'transform 0.3s ease-in-out',
+                                '&:hover': {
+                                  transform: 'scale(1.03)',
+                                },
                               }}
                             >
 
@@ -1518,6 +1523,11 @@ function Shop() {
                                 flexDirection: "column",
                                 borderRadius: "20px",
                                 position: "relative",
+                                cursor:'pointer',
+                                transition: 'transform 0.3s ease-in-out',
+                                '&:hover': {
+                                  transform: 'scale(1.03)',
+                                },
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
@@ -1808,6 +1818,11 @@ function Shop() {
                                 flexDirection: "column",
                                 borderRadius: "20px",
                                 position: "relative",
+                                cursor:'pointer',
+                                transition: 'transform 0.3s ease-in-out',
+                                '&:hover': {
+                                  transform: 'scale(1.03)',
+                                },
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
@@ -2097,6 +2112,11 @@ function Shop() {
                                 flexDirection: "column",
                                 borderRadius: "20px",
                                 position: "relative",
+                                cursor:'pointer',
+                                transition: 'transform 0.3s ease-in-out',
+                                '&:hover': {
+                                  transform: 'scale(1.03)',
+                                },
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
@@ -2386,6 +2406,11 @@ function Shop() {
                                 flexDirection: "column",
                                 borderRadius: "20px",
                                 position: "relative",
+                                cursor:'pointer',
+                                transition: 'transform 0.3s ease-in-out',
+                                '&:hover': {
+                                  transform: 'scale(1.03)',
+                                },
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
@@ -2674,6 +2699,11 @@ function Shop() {
                                 flexDirection: "column",
                                 borderRadius: "20px",
                                 position: "relative",
+                                cursor:'pointer',
+                                transition: 'transform 0.3s ease-in-out',
+                                '&:hover': {
+                                  transform: 'scale(1.03)',
+                                },
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>

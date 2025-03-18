@@ -1455,7 +1455,7 @@ function About() {
           <Grid item md={12} sm={12} xs={12}>
             <Grid container spacing={4} justifyContent={"space-between"}>
               {teamData.map((item, i) => (
-                <Grid key={i} item md={3} sm={4} xs={6}>
+                <Grid key={i} item lg={3} md={4} sm={6} xs={12}>
                   <Box
                     sx={{
                       display: "flex",
@@ -1473,7 +1473,7 @@ function About() {
                       src={item.image}
                       sx={{
                         width: "100%",
-                        height: "350px", // Fixed height for uniformity
+                        height: { xs: "420px", sm: "350px", md: "350px", lg: "380px", xl: "550px" },// Fixed height for uniformity
                         objectFit: "cover", // Ensures proper scaling
                       }}
                     />
@@ -1541,7 +1541,7 @@ function About() {
                             },
                           }}
                         >
-                          <EmailIcon />  {item.email}
+                          <EmailIcon /> 
                         </Typography>
                       </Box>
                     </Box>
