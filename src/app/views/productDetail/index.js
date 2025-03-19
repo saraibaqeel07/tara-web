@@ -480,8 +480,8 @@ function ProductDetail() {
                                         style={{
                                             width: "100%",
                                             height: "auto",
-                                            maxHeight: "550px",
-                                            objectFit: "cover",
+                                            
+                                            objectFit: "contain",
                                             borderRadius: '15px'
                                         }}
                                     />
@@ -489,7 +489,7 @@ function ProductDetail() {
 
                                 <Grid container spacing={2}>
                                     {detail?.imgUrl?.map((img, index) => (
-                                        <Grid item xs={12} sm={6} md={4} key={index} sx={{ height: '180px' }}>
+                                        <Grid item xs={12} sm={6} md={4} key={index} sx={{ height: '240px' }}>
                                             <Box
                                                 sx={{
                                                     border: selectedImage === index ? "5px solid #F6921E" : "3px solid transparent",
@@ -503,6 +503,7 @@ function ProductDetail() {
                                                     backgroundSize: "cover",
                                                     backgroundPosition: "center",
                                                     backgroundRepeat: "no-repeat",
+                                                    objectFit:'contain'
                                                 }}
                                                 onClick={() => setSelectedImage(index)}
                                             />
@@ -625,7 +626,7 @@ function ProductDetail() {
                                             sx={{
                                                 position: "relative",
                                                 width: "200px",
-                                                height: "200px",
+                                                height: "240px",
                                                 backgroundImage: `url(${detail?.imgUrl[0]})`,
                                                 backgroundSize: "cover",
                                                 backgroundPosition: "center",
@@ -638,7 +639,7 @@ function ProductDetail() {
                                                     bottom: -60,
                                                     right: -60,
                                                     width: "150px",
-                                                    height: "150px",
+                                                    height: "200px",
                                                     backgroundImage: `url(${detail?.imgUrl[1]})`,
                                                     backgroundSize: "cover",
                                                     backgroundPosition: "center",

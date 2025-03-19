@@ -74,7 +74,7 @@ function Shop() {
   const { cartVisible, toggleCartVisibility } = useContext(CartContext);
   const { setCount } = useContext(CartCounter);
 
-  
+
 
   const firebaseConfig = {
     apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
@@ -464,7 +464,7 @@ function Shop() {
       id: doc.id,
       ...doc.data(),
     }));
-    
+
     setReviewBoxes(dataArray);
   };
   const showModal = (item) => {
@@ -580,7 +580,7 @@ function Shop() {
     const sortedData = dataArray.sort((a, b) => {
       return a.price === "0" ? 1 : b.price === "0" ? -1 : 0;
     });
-   
+
     // Update state with sorted data
     setProducts(sortedData);
   };
@@ -1213,18 +1213,21 @@ function Shop() {
                       currentCards.map((card, i) => (
                         <React.Fragment key={i}>
                           <Grid component={'div'}
-                            className="product-card" lg={5} md={5} sm={11} xs={11} item>
+                            onClick={()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } })}
+                            className="product-card" lg={5} md={5} sm={11} xs={11} sx={{
+                              cursor: 'pointer',
+                              transition: 'transform 0.3s ease-in-out',
+                              '&:hover': {
+                                transform: 'scale(1.03)',
+                              },
+                            }} item>
                             <Box
                               sx={{
                                 display: "flex",
                                 flexDirection: "column",
                                 borderRadius: "20px",
                                 position: "relative",
-                                cursor:'pointer',
-                                transition: 'transform 0.3s ease-in-out',
-                                '&:hover': {
-                                  transform: 'scale(1.03)',
-                                },
+
                               }}
                             >
 
@@ -1241,10 +1244,10 @@ function Shop() {
                                   {[
                                     { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
                                     { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
-                                    { 
-                                      icon: <OpenInNewIcon />, 
-                                      action: () => navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }), 
-                                      text: 'View Details'  
+                                    {
+                                      icon: <OpenInNewIcon />,
+                                      action: () => ()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }),
+                                      text: 'View Details'
                                     }
                                   ].map((item, index) => (
                                     <Box
@@ -1276,7 +1279,7 @@ function Shop() {
                                           alignItems: 'center',
                                           gap: 1, // Provides space between icon and text
                                           width: '100%',
-                                          ml:'15px'
+                                          ml: '15px'
                                         }}
                                       >
                                         {item.icon}
@@ -1286,10 +1289,10 @@ function Shop() {
                                             color: 'white !important',
                                             fontSize: '14px',
                                             whiteSpace: 'nowrap',
-                                           
+
                                             transition: 'opacity 0.2s ease-in-out',
                                             '&:hover': {
-                                             
+
                                               color: 'white',
                                             },
                                           }}
@@ -1309,7 +1312,7 @@ function Shop() {
                                 src={card?.imgUrl}
                                 sx={{
                                   width: "100%",
-                                  height: card?.price !== 0 ? "455px" : "455px",
+
                                   borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px 20px 0px 0px",
 
                                 }}
@@ -1516,14 +1519,22 @@ function Shop() {
                       Array.isArray(activityCurrentProducts) &&
                       activityCurrentProducts.map((card, i) => (
                         <React.Fragment key={i}>
-                          <Grid className="product-card" component={'div'} lg={5} md={5} sm={11} xs={11} item>
+                          <Grid component={'div'}
+                            onClick={()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } })}
+                            className="product-card" lg={5} md={5} sm={11} xs={11} sx={{
+                              cursor: 'pointer',
+                              transition: 'transform 0.3s ease-in-out',
+                              '&:hover': {
+                                transform: 'scale(1.03)',
+                              },
+                            }} item>
                             <Box
                               sx={{
                                 display: "flex",
                                 flexDirection: "column",
                                 borderRadius: "20px",
                                 position: "relative",
-                                cursor:'pointer',
+                                cursor: 'pointer',
                                 transition: 'transform 0.3s ease-in-out',
                                 '&:hover': {
                                   transform: 'scale(1.03)',
@@ -1531,7 +1542,7 @@ function Shop() {
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
-                              <Box
+                                <Box
                                   sx={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
@@ -1543,10 +1554,10 @@ function Shop() {
                                   {[
                                     { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
                                     { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
-                                    { 
-                                      icon: <OpenInNewIcon />, 
-                                      action: () => navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }), 
-                                      text: 'View Details'  
+                                    {
+                                      icon: <OpenInNewIcon />,
+                                      action: () => ()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }),
+                                      text: 'View Details'
                                     }
                                   ].map((item, index) => (
                                     <Box
@@ -1578,7 +1589,7 @@ function Shop() {
                                           alignItems: 'center',
                                           gap: 1, // Provides space between icon and text
                                           width: '100%',
-                                          ml:'15px'
+                                          ml: '15px'
                                         }}
                                       >
                                         {item.icon}
@@ -1588,10 +1599,10 @@ function Shop() {
                                             color: 'white !important',
                                             fontSize: '14px',
                                             whiteSpace: 'nowrap',
-                                           
+
                                             transition: 'opacity 0.2s ease-in-out',
                                             '&:hover': {
-                                             
+
                                               color: 'white',
                                             },
                                           }}
@@ -1811,14 +1822,22 @@ function Shop() {
                       Array.isArray(displayedColoringSheets) &&
                       displayedColoringSheets.map((card, i) => (
                         <React.Fragment key={i}>
-                          <Grid className="product-card" component={'div'} lg={5} md={5} sm={11} xs={11} item>
+                          <Grid component={'div'}
+                            onClick={()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } })}
+                            className="product-card" lg={5} md={5} sm={11} xs={11} sx={{
+                              cursor: 'pointer',
+                              transition: 'transform 0.3s ease-in-out',
+                              '&:hover': {
+                                transform: 'scale(1.03)',
+                              },
+                            }} item>
                             <Box
                               sx={{
                                 display: "flex",
                                 flexDirection: "column",
                                 borderRadius: "20px",
                                 position: "relative",
-                                cursor:'pointer',
+                                cursor: 'pointer',
                                 transition: 'transform 0.3s ease-in-out',
                                 '&:hover': {
                                   transform: 'scale(1.03)',
@@ -1826,7 +1845,7 @@ function Shop() {
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
-                              <Box
+                                <Box
                                   sx={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
@@ -1838,10 +1857,10 @@ function Shop() {
                                   {[
                                     { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
                                     { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
-                                    { 
-                                      icon: <OpenInNewIcon />, 
-                                      action: () => navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }), 
-                                      text: 'View Details'  
+                                    {
+                                      icon: <OpenInNewIcon />,
+                                      action: () => ()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }),
+                                      text: 'View Details'
                                     }
                                   ].map((item, index) => (
                                     <Box
@@ -1873,7 +1892,7 @@ function Shop() {
                                           alignItems: 'center',
                                           gap: 1, // Provides space between icon and text
                                           width: '100%',
-                                          ml:'15px'
+                                          ml: '15px'
                                         }}
                                       >
                                         {item.icon}
@@ -1883,10 +1902,10 @@ function Shop() {
                                             color: 'white !important',
                                             fontSize: '14px',
                                             whiteSpace: 'nowrap',
-                                           
+
                                             transition: 'opacity 0.2s ease-in-out',
                                             '&:hover': {
-                                             
+
                                               color: 'white',
                                             },
                                           }}
@@ -1953,7 +1972,7 @@ function Shop() {
                 </Container>
               </Box>
             )}
-          
+
             {activeButton === 6 && (
               <Box
                 component={"section"}
@@ -2105,14 +2124,22 @@ function Shop() {
                       Array.isArray(extraCurrentProducts) &&
                       extraCurrentProducts.map((card, i) => (
                         <React.Fragment key={i}>
-                          <Grid className="product-card" component={'div'} lg={5} md={5} sm={11} xs={11} item>
+                          <Grid component={'div'}
+                            onClick={()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } })}
+                            className="product-card" lg={5} md={5} sm={11} xs={11} sx={{
+                              cursor: 'pointer',
+                              transition: 'transform 0.3s ease-in-out',
+                              '&:hover': {
+                                transform: 'scale(1.03)',
+                              },
+                            }} item>
                             <Box
                               sx={{
                                 display: "flex",
                                 flexDirection: "column",
                                 borderRadius: "20px",
                                 position: "relative",
-                                cursor:'pointer',
+                                cursor: 'pointer',
                                 transition: 'transform 0.3s ease-in-out',
                                 '&:hover': {
                                   transform: 'scale(1.03)',
@@ -2120,7 +2147,7 @@ function Shop() {
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
-                              <Box
+                                <Box
                                   sx={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
@@ -2132,10 +2159,10 @@ function Shop() {
                                   {[
                                     { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
                                     { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
-                                    { 
-                                      icon: <OpenInNewIcon />, 
-                                      action: () => navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }), 
-                                      text: 'View Details'  
+                                    {
+                                      icon: <OpenInNewIcon />,
+                                      action: () => ()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }),
+                                      text: 'View Details'
                                     }
                                   ].map((item, index) => (
                                     <Box
@@ -2167,7 +2194,7 @@ function Shop() {
                                           alignItems: 'center',
                                           gap: 1, // Provides space between icon and text
                                           width: '100%',
-                                          ml:'15px'
+                                          ml: '15px'
                                         }}
                                       >
                                         {item.icon}
@@ -2177,10 +2204,10 @@ function Shop() {
                                             color: 'white !important',
                                             fontSize: '14px',
                                             whiteSpace: 'nowrap',
-                                           
+
                                             transition: 'opacity 0.2s ease-in-out',
                                             '&:hover': {
-                                             
+
                                               color: 'white',
                                             },
                                           }}
@@ -2248,7 +2275,7 @@ function Shop() {
               </Box>
             )}
 
-{activeButton === 4 || activeButton === 6 && (
+            {activeButton === 4 || activeButton === 6 && (
               <Box
                 component={"section"}
                 id="coloring-section"
@@ -2399,14 +2426,22 @@ function Shop() {
                       Array.isArray(toysCurrentProducts) &&
                       toysCurrentProducts.map((card, i) => (
                         <React.Fragment key={i}>
-                          <Grid className="product-card" component={'div'} lg={5} md={5} sm={11} xs={11} item>
+                          <Grid component={'div'}
+                            onClick={()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } })}
+                            className="product-card" lg={5} md={5} sm={11} xs={11} sx={{
+                              cursor: 'pointer',
+                              transition: 'transform 0.3s ease-in-out',
+                              '&:hover': {
+                                transform: 'scale(1.03)',
+                              },
+                            }} item>
                             <Box
                               sx={{
                                 display: "flex",
                                 flexDirection: "column",
                                 borderRadius: "20px",
                                 position: "relative",
-                                cursor:'pointer',
+                                cursor: 'pointer',
                                 transition: 'transform 0.3s ease-in-out',
                                 '&:hover': {
                                   transform: 'scale(1.03)',
@@ -2414,7 +2449,7 @@ function Shop() {
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
-                              <Box
+                                <Box
                                   sx={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
@@ -2426,10 +2461,10 @@ function Shop() {
                                   {[
                                     { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
                                     { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
-                                    { 
-                                      icon: <OpenInNewIcon />, 
-                                      action: () => navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }), 
-                                      text: 'View Details'  
+                                    {
+                                      icon: <OpenInNewIcon />,
+                                      action: () => ()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }),
+                                      text: 'View Details'
                                     }
                                   ].map((item, index) => (
                                     <Box
@@ -2461,7 +2496,7 @@ function Shop() {
                                           alignItems: 'center',
                                           gap: 1, // Provides space between icon and text
                                           width: '100%',
-                                          ml:'15px'
+                                          ml: '15px'
                                         }}
                                       >
                                         {item.icon}
@@ -2471,10 +2506,10 @@ function Shop() {
                                             color: 'white !important',
                                             fontSize: '14px',
                                             whiteSpace: 'nowrap',
-                                           
+
                                             transition: 'opacity 0.2s ease-in-out',
                                             '&:hover': {
-                                             
+
                                               color: 'white',
                                             },
                                           }}
@@ -2541,7 +2576,7 @@ function Shop() {
                 </Container>
               </Box>
             )}
-            {activeButton === 5 || activeButton === 6  && (
+            {activeButton === 5 || activeButton === 6 && (
               <Box
                 component={"section"}
                 id="coloring-section"
@@ -2692,14 +2727,20 @@ function Shop() {
                       Array.isArray(generalToysCurrentProducts) &&
                       generalToysCurrentProducts.map((card, i) => (
                         <React.Fragment key={i}>
-                          <Grid className="product-card" component={'div'} lg={5} md={5} sm={11} xs={11} item>
+<Grid component={'div'} 
+                          onClick={()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } })}
+                            className="product-card" lg={5} md={5} sm={11} xs={11} sx={{cursor:'pointer',
+                              transition: 'transform 0.3s ease-in-out',
+                              '&:hover': {
+                                transform: 'scale(1.03)',
+                              },}} item>
                             <Box
                               sx={{
                                 display: "flex",
                                 flexDirection: "column",
                                 borderRadius: "20px",
                                 position: "relative",
-                                cursor:'pointer',
+                                cursor: 'pointer',
                                 transition: 'transform 0.3s ease-in-out',
                                 '&:hover': {
                                   transform: 'scale(1.03)',
@@ -2707,7 +2748,7 @@ function Shop() {
                               }}
                             >
                               <Box sx={{ position: 'absolute', bottom: 100, width: "100%", right: 15 }}>
-                              <Box
+                                <Box
                                   sx={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
@@ -2719,10 +2760,10 @@ function Shop() {
                                   {[
                                     { icon: <ShoppingCartIcon />, action: () => addToCart(card), text: 'Add to Cart' },
                                     { icon: <LocalMallIcon />, action: () => buyNow(card), text: 'Buy Now' },
-                                    { 
-                                      icon: <OpenInNewIcon />, 
-                                      action: () => navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }), 
-                                      text: 'View Details'  
+                                    {
+                                      icon: <OpenInNewIcon />,
+                                      action: () => ()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } }),
+                                      text: 'View Details'
                                     }
                                   ].map((item, index) => (
                                     <Box
@@ -2754,7 +2795,7 @@ function Shop() {
                                           alignItems: 'center',
                                           gap: 1, // Provides space between icon and text
                                           width: '100%',
-                                          ml:'15px'
+                                          ml: '15px'
                                         }}
                                       >
                                         {item.icon}
@@ -2764,10 +2805,10 @@ function Shop() {
                                             color: 'white !important',
                                             fontSize: '14px',
                                             whiteSpace: 'nowrap',
-                                           
+
                                             transition: 'opacity 0.2s ease-in-out',
                                             '&:hover': {
-                                             
+
                                               color: 'white',
                                             },
                                           }}
@@ -2853,7 +2894,7 @@ function Shop() {
 
               }}
             >
-        
+
               <Box
                 sx={{
                   position: "absolute",

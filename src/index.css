@@ -183,3 +183,6 @@ margin: 0;
 .add-to-cart{
   z-index: 1111
 }
+.blog-detail p{
+  font-family: Poppins !important;
+}
