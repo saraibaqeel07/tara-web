@@ -1212,6 +1212,7 @@ function Shop() {
                       // Show Cards
                       currentCards.map((card, i) => (
                         <React.Fragment key={i}>
+                          
                           <Grid component={'div'}
                             onClick={()=>navigate(`/${card?.type === 'bundle' ? 'bundle-detail' : 'products-detail'}/${card?.id}`, { state: { card } })}
                             className="product-card" lg={5} md={5} sm={11} xs={11} sx={{
@@ -2213,7 +2214,7 @@ function Shop() {
                                 src={card?.imgUrl}
                                 sx={{
                                   width: "100%",
-                                  height: card?.price !== 0 ? "455px" : "455px",
+                                  height: card?.price !== 0 ? "588px" : "588px",
                                   borderRadius: card?.price !== 0 ? "20px 20px 0px 0px" : "20px 20px 0px 0px",
 
                                 }}

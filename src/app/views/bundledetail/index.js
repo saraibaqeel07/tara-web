@@ -84,7 +84,7 @@ function BundleDetail() {
     const { cartVisible, toggleCartVisibility } = useContext(CartContext);
     const { setCount } = useContext(CartCounter);
     const { id } = useParams();
-    
+
 
     const firebaseConfig = {
         apiKey: "AIzaSyCn_Ph5AlAi_wuxR0D7CBIY8_vBCNgD5r8",
@@ -473,43 +473,101 @@ function BundleDetail() {
                             {/* Left side - Images */}
                             <Grid item xs={12} md={6}>
                                 <Box sx={{ position: "relative", mb: 3 }}>
-                                    <img
-                                        src={detail?.imgUrl[selectedImage] || "/placeholder.svg"}
-                                        alt="Product"
-                                        className="w-full rounded-lg cursor-pointer"
-                                        onClick={() => setModalOpen(true)}
-                                        style={{
-                                            width: "100%",
-                                            height: "auto",
-                                            
-                                            objectFit: "contain",
-                                            borderRadius: '15px'
-                                        }}
-                                    />
+                                    {[".mp4", ".mov", ".avi", ".webm"].some((ext) =>
+                                        detail?.imgUrl[selectedImage]?.includes(ext)
+                                    ) ? (
+                                        <video
+                                            autoPlay
+                                            className="w-full rounded-lg cursor-pointer"
+                                            onClick={() => setModalOpen(true)}
+                                            style={{
+                                                width: "100%",
+                                                height: "600px", // Set fixed height
+                                                objectFit: "cover",
+                                                borderRadius: "15px",
+                                            }}
+                                        >
+                                            <source src={detail?.imgUrl[selectedImage]} type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    ) : (
+                                        <img
+                                            src={detail?.imgUrl[selectedImage] || "/placeholder.svg"}
+                                            alt="Product"
+                                            className="w-full rounded-lg cursor-pointer"
+                                            onClick={() => setModalOpen(true)}
+                                            style={{
+                                                width: "100%",
+                                                height: "auto",
+                                                objectFit: "contain",
+                                                borderRadius: "15px",
+                                            }}
+                                        />
+                                    )}
                                 </Box>
 
                                 <Grid container spacing={2}>
-                                    {detail?.imgUrl?.map((img, index) => (
-                                        <Grid item xs={12} sm={6} md={4} key={index} sx={{ height: '240px' }}>
-                                            <Box
-                                                sx={{
-                                                    border: selectedImage === index ? "5px solid #F6921E" : "3px solid transparent",
-                                                    borderRadius: 5,
-                                                    overflow: "hidden",
-                                                    cursor: "pointer",
-                                                    mb: 2,
-                                                    width: "100%",
-                                                    height: '100%',
-                                                    backgroundImage: `url(${img || "/placeholder.svg"})`,
-                                                    backgroundSize: "cover",
-                                                    backgroundPosition: "center",
-                                                    backgroundRepeat: "no-repeat",
-                                                }}
-                                                onClick={() => setSelectedImage(index)}
-                                            />
-                                        </Grid>
+                                    {detail?.imgUrl?.map((file, index) => {
+                                        const isVideo = [".mp4", ".mov", ".avi", ".webm"].some((ext) => file.includes(ext));
 
-                                    ))}
+                                        return (
+                                            <Grid item xs={12} sm={6} md={4} key={index} sx={{ height: "240px" }}>
+                                                <Box
+                                                    sx={{
+                                                        border: selectedImage === index ? "5px solid #F6921E" : "3px solid transparent",
+                                                        borderRadius: 5,
+                                                        overflow: "hidden",
+                                                        cursor: "pointer",
+                                                        mb: 2,
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        backgroundImage: isVideo ? "none" : `url(${file || "/placeholder.svg"})`,
+                                                        backgroundSize: "cover",
+                                                        backgroundPosition: "center",
+                                                        backgroundRepeat: "no-repeat",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        position: "relative",
+                                                    }}
+                                                    onClick={() => setSelectedImage(index)}
+                                                >
+                                                    {isVideo ? (
+                                                        <video
+                                                            src={file}
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "100%",
+                                                                objectFit: "cover",
+                                                            }}
+                                                            muted
+                                                        />
+                                                    ) : null}
+
+                                                    {/* Play button overlay */}
+                                                    {isVideo && (
+                                                        <Box
+                                                            sx={{
+                                                                position: "absolute",
+                                                                top: "50%",
+                                                                left: "50%",
+                                                                transform: "translate(-50%, -50%)",
+                                                                backgroundColor: "rgba(255, 255, 255, 0.7)",
+                                                                borderRadius: "50%",
+                                                                width: "50px",
+                                                                height: "50px",
+                                                                display: "flex",
+                                                                alignItems: "center",
+                                                                justifyContent: "center",
+                                                            }}
+                                                        >
+                                                            ▶️
+                                                        </Box>
+                                                    )}
+                                                </Box>
+                                            </Grid>
+                                        );
+                                    })}
                                 </Grid>
                             </Grid>
 
@@ -528,12 +586,16 @@ function BundleDetail() {
                                         {detail?.name}
                                     </Typography>
                                     <Typography
-                                        variant="p"
+
 
                                         gutterBottom
                                         sx={{
 
-                                            fontSize: { xs: "1rem", md: "1.5rem" },
+                                            fontSize: { xs: "1rem", md: "1.2rem" },
+                                            textAlign: 'justify',
+
+                                            fontFamily: 'Poppins !important',
+
                                         }}
                                     >
                                         {detail?.subHeading}
@@ -578,85 +640,85 @@ function BundleDetail() {
                                                 <Typography
                                                     key={item.id}
                                                     variant="h6"
-                                                    sx={{ fontSize: { xs: "1rem", md: "1rem" },mt:3 }}
+                                                    sx={{ fontSize: { xs: "1rem", md: "1rem" }, mt: 3 }}
                                                 >
                                                     Name : {item.name}
                                                 </Typography>
-                                               
+
                                                 <Box
                                                     sx={{
                                                         display: 'flex',
                                                         justifyContent: 'flex-end',
-                                                        alignItems:'center',
-                                                        gap:1
-                                                       
-                                                        
-                                                       
+                                                        alignItems: 'center',
+                                                        gap: 1
+
+
+
                                                     }}
                                                 >
-                                                     <Typography
-                                                    key={item.id}
-                                                    variant="h6"
-                                                    sx={{ fontSize: { xs: "1rem", md: "1rem" },mt:2 }}
-                                                >
-                                                    Price : $ {item.price}
-                                                </Typography>
+                                                    <Typography
+                                                        key={item.id}
+                                                        variant="h6"
+                                                        sx={{ fontSize: { xs: "1rem", md: "1rem" }, mt: 2 }}
+                                                    >
+                                                        Price : $ {item.price}
+                                                    </Typography>
                                                     {[
                                                         { icon: <ShoppingCartIcon />, action: () => addToCart(item), text: 'Add to Cart' },
 
                                                     ].map((item, index) => (
-                                                        <IconButton     onClick={item.action}>
-                                                        <Box
-                                                            key={index}
-                                                            mt={2}
-                                                            sx={{
-                                                                backgroundColor: '#FF9D04',
-                                                                width: '40px',
-                                                                height: '40px',
-                                                                color: 'white',
-                                                                borderRadius: '50px',
-                                                                display: 'flex',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'center',
-                                                                overflow: 'hidden',
-                                                                transition: 'width 0.3s ease-in-out',
-                                                                // '&:hover': {
-                                                                //     width: '150px', // Adjust width to fit text
-                                                                //     justifyContent: 'flex-start',
-                                                                //     paddingLeft: '10px',
-                                                                // },
-                                                                cursor: 'pointer',
-                                                            }}
-                                                        
-                                                        >
+                                                        <IconButton onClick={item.action}>
                                                             <Box
+                                                                key={index}
+                                                                mt={2}
                                                                 sx={{
+                                                                    backgroundColor: '#FF9D04',
+                                                                    width: '40px',
+                                                                    height: '40px',
+                                                                    color: 'white',
+                                                                    borderRadius: '50px',
                                                                     display: 'flex',
                                                                     alignItems: 'center',
-                                                                    gap: 1, // Provides space between icon and text
-                                                                    width: '100%',
-                                                                    ml: '15px'
+                                                                    justifyContent: 'center',
+                                                                    overflow: 'hidden',
+                                                                    transition: 'width 0.3s ease-in-out',
+                                                                    // '&:hover': {
+                                                                    //     width: '150px', // Adjust width to fit text
+                                                                    //     justifyContent: 'flex-start',
+                                                                    //     paddingLeft: '10px',
+                                                                    // },
+                                                                    cursor: 'pointer',
                                                                 }}
+
                                                             >
-                                                                {item.icon}
                                                                 <Box
-                                                                    component="span"
                                                                     sx={{
-                                                                        color: 'white !important',
-                                                                        fontSize: '14px',
-                                                                        whiteSpace: 'nowrap',
-
-                                                                        transition: 'opacity 0.2s ease-in-out',
-                                                                        '&:hover': {
-
-                                                                            color: 'white',
-                                                                        },
+                                                                        display: 'flex',
+                                                                        alignItems: 'center',
+                                                                        gap: 1, // Provides space between icon and text
+                                                                        width: '100%',
+                                                                        ml: '15px'
                                                                     }}
                                                                 >
-                                                                    {item.text}
+                                                                    {item.icon}
+                                                                    <Box
+                                                                        component="span"
+                                                                        sx={{
+                                                                            color: 'white !important',
+                                                                            fontSize: '14px',
+                                                                            whiteSpace: 'nowrap',
+
+                                                                            transition: 'opacity 0.2s ease-in-out',
+                                                                            '&:hover': {
+
+                                                                                color: 'white',
+                                                                            },
+                                                                        }}
+                                                                    >
+                                                                        {item.text}
+                                                                    </Box>
                                                                 </Box>
                                                             </Box>
-                                                        </Box>
                                                         </IconButton>
                                                     ))}
                                                 </Box>

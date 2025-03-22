@@ -303,7 +303,7 @@ function Toys() {
             <Grid item xs={12} sm={5}>
               <InputLabel sx={{ textTransform: "capitalize", textAlign: 'left', fontWeight: 700, display: 'block', mb: 2 }}>
 
-                Upload  Images :*
+                Upload  Media :*
               </InputLabel>
 
               <Controller
@@ -319,9 +319,7 @@ function Toys() {
                       if (value[i].size > 10 * 1024 * 1024) { // Increased limit to 10MB
                         return "Each file must be smaller than 10MB";
                       }
-                      if (!["image/"].some(type => value[i].type.startsWith(type))) {
-                        return "Only images are allowed";
-                      }
+                      
                     }
                     return true;
                   },
@@ -357,10 +355,10 @@ function Toys() {
                           />
                           <CloudUploadIcon sx={{ fontSize: 40, color: "#0EA5EA" }} />
                           <Typography variant="body1" sx={{ color: "#333", mt: 1 }}>
-                            Drag & drop or click to upload image
+                            Drag & drop or click to upload media
                           </Typography>
                           <Typography variant="caption" sx={{ color: "#666" }}>
-                            Allowed: Images (Max 10MB per file)
+                            Allowed: Images and Videos (Max 10MB per file)
                           </Typography>
                         </>
                       ) : (
@@ -386,7 +384,7 @@ function Toys() {
             <Grid container>
             {imgUrls?.length > 0 && <InputLabel sx={{ textTransform: "capitalize", textAlign: 'left', fontWeight: 700, display: 'block', mb: 3, mt: 3 }}>
 
-              Images :
+              Media :
             </InputLabel>}
             </Grid>
             <Grid container>
@@ -396,7 +394,7 @@ function Toys() {
               <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
                 {imgUrls?.length > 0 ? (
                   imgUrls.map((file, index) => {
-                    const isVideo = file.endsWith(".mp4") || file.endsWith(".mov") || file.endsWith(".avi") || file.endsWith(".webm");
+                    const isVideo = file.includes(".mp4") || file.includes(".mov") || file.includes(".avi") || file.includes(".webm");
 
                     return (
                       <Box key={index} sx={{ position: "relative", display: "inline-block", mt: 1 }}>

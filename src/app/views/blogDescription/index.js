@@ -156,7 +156,7 @@ const BlogDetail = () => {
                             fontWeight: 600, // Fallback styling
                         }}
                     >
-                        Feb 20, 2024
+                        Feb 20, 2025
                     </Typography>
 
                     <Typography className="para-text" sx={{ fontSize: "14px" }}>
@@ -248,7 +248,7 @@ const BlogDetail = () => {
             </Grid>
             <Grid container sx={{ py: 5, px: 5 }}  >
                 <Grid item md={12} sm={12} xs={12} component={'div'} className="blog-detail" sx={{
-                    backgroundColor: "#6791DE", // Entire box background color
+                    backgroundColor: "#f9f8f6", // Entire box background color
                     opacity: 0.8,
                     borderRadius: '10px'
                     , fontFamily: 'Poppins !important',
@@ -313,7 +313,7 @@ const BlogDetail = () => {
                                 }}
                                 style={{
                                     WebkitTextStroke: "1px white",
-                                    WebkitTextFillColor: "#F9BF29",
+                                    WebkitTextFillColor: "rgb(202, 102, 128)",
                                 }}
                             >
                                 {title} {/* Display the title */}
@@ -329,6 +329,8 @@ const BlogDetail = () => {
 
                             borderRadius: 0,
                             p: "40px",
+                            color:'black !important',
+                            fontSize:'20px'
                         }}
                         dangerouslySetInnerHTML={{ __html: description }}
                     >
