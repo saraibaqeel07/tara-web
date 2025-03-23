@@ -87,31 +87,42 @@ console.log(watch());
   };
 
   const handleImageChange = (e) => {
-     setImageLoader(true);
-     const files = Array.from(e.target.files);
-     if (!files.length) return;
-   
-     setImage(files.map((file) => URL.createObjectURL(file))); // Local preview
-   
-     const uploadPromises = files.map(async (file) => {
-       const storageRef = ref(storage, `uploads/${file.name}`);
-       const snapshot = await uploadBytes(storageRef, file);
-       const url = await getDownloadURL(snapshot.ref);
-       return { url, type: file.type.startsWith("video/") ? "video" : "image" };
-     });
-   
-     Promise.all(uploadPromises)
-       .then((uploadedFiles) => {
-         const sortedUrls = [...imgUrls, ...uploadedFiles]
-           .sort((a, b) => (a.type === "video" ? 1 : -1))
-           .map((item) => item.url);
-   
-         setImgUrls(sortedUrls);
-         console.log("Sorted Uploaded Image URLs:", sortedUrls);
-         setImageLoader(false);
-       })
-       .catch((error) => console.error("Error uploading files:", error));
-   };
+    setImageLoader(true);
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+  
+    setImage(files.map((file) => URL.createObjectURL(file))); // Local preview
+  
+    const uploadPromises = files.map(async (file) => {
+      const storageRef = ref(storage, `uploads/${file.name}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(snapshot.ref);
+      return { url, type: file.type.startsWith("video/") ? "video" : "image" };
+    });
+  
+    Promise.all(uploadPromises)
+      .then((uploadedFiles) => {
+        // Convert existing imgUrls to objects with url and type properties
+        const existingUrls = imgUrls.map(url => ({
+          url,
+          // Determine type based on file extension or set default to "image"
+          type: url.toLowerCase().endsWith('.mp4') || 
+                url.toLowerCase().endsWith('.mov') || 
+                url.toLowerCase().endsWith('.webm') ? "video" : "image"
+        }));
+        
+        // Combine and sort
+        const sortedUrls = [...existingUrls, ...uploadedFiles]
+          .sort((a, b) => (a.type === "video" ? 1 : -1))
+          .map((item) => item.url);
+  
+        setImgUrls(sortedUrls);
+        console.log("Sorted Uploaded Image URLs:", sortedUrls);
+        setImageLoader(false);
+      })
+      .catch((error) => console.error("Error uploading files:", error));
+  };
+
 
   console.log(watch(), 'watch');
   const addProduct = async () => {
@@ -397,7 +408,7 @@ console.log(watch());
                        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
                          {imgUrls?.length > 0 ? (
                            imgUrls.map((file, index) => {
-                             const isVideo = file.includes(".mp4") || file.includes(".mov") || file.includes(".avi") || file.includes(".webm");
+                             const isVideo = file?.includes(".mp4") || file?.includes(".mov") || file?.includes(".avi") || file?.includes(".webm");
          
                              return (
                                <Box key={index} sx={{ position: "relative", display: "inline-block", mt: 1 }}>

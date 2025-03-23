@@ -100,7 +100,17 @@ function CreatePost() {
   
     Promise.all(uploadPromises)
       .then((uploadedFiles) => {
-        const sortedUrls = [...imgUrls, ...uploadedFiles]
+        // Convert existing imgUrls to objects with url and type properties
+        const existingUrls = imgUrls.map(url => ({
+          url,
+          // Determine type based on file extension or set default to "image"
+          type: url.toLowerCase().endsWith('.mp4') || 
+                url.toLowerCase().endsWith('.mov') || 
+                url.toLowerCase().endsWith('.webm') ? "video" : "image"
+        }));
+        
+        // Combine and sort
+        const sortedUrls = [...existingUrls, ...uploadedFiles]
           .sort((a, b) => (a.type === "video" ? 1 : -1))
           .map((item) => item.url);
   
@@ -110,7 +120,7 @@ function CreatePost() {
       })
       .catch((error) => console.error("Error uploading files:", error));
   };
-  
+
 
   console.log(watch(), 'watch');
   const addProduct = async () => {
@@ -407,7 +417,7 @@ function CreatePost() {
               <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
                 {imgUrls?.length > 0 ? (
                   imgUrls.map((file, index) => {
-                    const isVideo = file.includes(".mp4") || file.includes(".mov") || file.includes(".avi") || file.includes(".webm");
+                    const isVideo = file?.includes(".mp4") || file?.includes(".mov") || file?.includes(".avi") || file?.includes(".webm");
 
                     return (
                       <Box key={index} sx={{ position: "relative", display: "inline-block", mt: 1 }}>

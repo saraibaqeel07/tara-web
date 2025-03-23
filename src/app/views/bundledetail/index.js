@@ -508,7 +508,7 @@ function BundleDetail() {
 
                                 <Grid container spacing={2}>
                                     {detail?.imgUrl?.map((file, index) => {
-                                        const isVideo = [".mp4", ".mov", ".avi", ".webm"].some((ext) => file.includes(ext));
+                                        const isVideo = [".mp4", ".mov", ".avi", ".webm"].some((ext) => file?.includes(ext));
 
                                         return (
                                             <Grid item xs={12} sm={6} md={4} key={index} sx={{ height: "240px" }}>

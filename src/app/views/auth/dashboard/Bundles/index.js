@@ -146,29 +146,42 @@ function Bundles() {
     };
 
     const handleImageChange = (e) => {
-        setImageLoader(true)
+        setImageLoader(true);
         const files = Array.from(e.target.files);
         if (!files.length) return;
-
+      
         setImage(files.map((file) => URL.createObjectURL(file))); // Local preview
-
+      
         const uploadPromises = files.map(async (file) => {
-            const storageRef = ref(storage, `uploads/${file.name}`);
-            const snapshot = await uploadBytes(storageRef, file);
-            const url = await getDownloadURL(snapshot.ref);
-            return url;
+          const storageRef = ref(storage, `uploads/${file.name}`);
+          const snapshot = await uploadBytes(storageRef, file);
+          const url = await getDownloadURL(snapshot.ref);
+          return { url, type: file.type.startsWith("video/") ? "video" : "image" };
         });
-
+      
         Promise.all(uploadPromises)
-            .then((urls) => {
-                console.log([...imgUrls, ...urls]);
-
-                setImgUrls([...imgUrls, ...urls]);
-                console.log("Uploaded Image URLs:", urls);
-                setImageLoader(false)
-            })
-            .catch((error) => console.error("Error uploading files:", error));
-    };
+          .then((uploadedFiles) => {
+            // Convert existing imgUrls to objects with url and type properties
+            const existingUrls = imgUrls.map(url => ({
+              url,
+              // Determine type based on file extension or set default to "image"
+              type: url.toLowerCase().endsWith('.mp4') || 
+                    url.toLowerCase().endsWith('.mov') || 
+                    url.toLowerCase().endsWith('.webm') ? "video" : "image"
+            }));
+            
+            // Combine and sort
+            const sortedUrls = [...existingUrls, ...uploadedFiles]
+              .sort((a, b) => (a.type === "video" ? 1 : -1))
+              .map((item) => item.url);
+      
+            setImgUrls(sortedUrls);
+            console.log("Sorted Uploaded Image URLs:", sortedUrls);
+            setImageLoader(false);
+          })
+          .catch((error) => console.error("Error uploading files:", error));
+      };
+    
 
     console.log(watch(), 'watch');
     const addProduct = async (formData) => {
