@@ -27,7 +27,7 @@ import "slick-carousel/slick/slick.css";
 import "../../../App.css";
 import Fonts from "../../styles/fonts";
 import { initializeApp } from "firebase/app";
-import { getFirestore, increment, updateDoc } from "firebase/firestore";
+import { getFirestore, increment, orderBy, updateDoc } from "firebase/firestore";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import {
   collection,
@@ -569,7 +569,8 @@ function Shop() {
   ];
 
   const getProducts = async () => {
-    const q = query(collection(db, "products"));
+    const q = query(collection(db, "products"), 
+    orderBy("createdAt", "desc") );
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map((doc) => ({
@@ -601,7 +602,8 @@ function Shop() {
   };
 
   const getColoringSheets = async () => {
-    const q = query(collection(db, "coloringsheets"));
+    const q = query(collection(db, "coloringsheets"), 
+    orderBy("createdAt", "desc") );
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map((doc) => ({
@@ -618,7 +620,8 @@ function Shop() {
   };
 
   const getExtrasheets = async () => {
-    const q = query(collection(db, "extra"));
+    const q = query(collection(db, "extra"), 
+    orderBy("createdAt", "desc") );
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map((doc) => ({
@@ -632,7 +635,8 @@ function Shop() {
     setExtraSheets(sortedData);
   };
   const getToys = async () => {
-    const q = query(collection(db, "Toys"));
+    const q = query(collection(db, "Toys"), 
+    orderBy("createdAt", "desc") );
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map((doc) => ({
@@ -647,7 +651,8 @@ function Shop() {
     setToys(sortedData);
   };
   const getGeneralToys = async () => {
-    const q = query(collection(db, "GeneralToys"));
+    const q = query(collection(db, "GeneralToys"), 
+    orderBy("createdAt", "desc") );
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map((doc) => ({

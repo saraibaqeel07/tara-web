@@ -4,7 +4,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Box, Button, Grid, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, InputLabel, Typography, CircularProgress, IconButton } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc, updateDoc, orderBy } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { Bounce, toast } from 'react-toastify';
@@ -17,6 +17,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CloseIcon from "@mui/icons-material/Close";
+import moment from 'moment';
 
 
 function CreatePost() {
@@ -89,32 +90,32 @@ function CreatePost() {
     setImageLoader(true);
     const files = Array.from(e.target.files);
     if (!files.length) return;
-  
+
     setImage(files.map((file) => URL.createObjectURL(file))); // Local preview
-  
+
     const uploadPromises = files.map(async (file) => {
       const storageRef = ref(storage, `uploads/${file.name}`);
       const snapshot = await uploadBytes(storageRef, file);
       const url = await getDownloadURL(snapshot.ref);
       return { url, type: file.type.startsWith("video/") ? "video" : "image" };
     });
-  
+
     Promise.all(uploadPromises)
       .then((uploadedFiles) => {
         // Convert existing imgUrls to objects with url and type properties
         const existingUrls = imgUrls.map(url => ({
           url,
           // Determine type based on file extension or set default to "image"
-          type: url.toLowerCase().endsWith('.mp4') || 
-                url.toLowerCase().endsWith('.mov') || 
-                url.toLowerCase().endsWith('.webm') ? "video" : "image"
+          type: url.toLowerCase().endsWith('.mp4') ||
+            url.toLowerCase().endsWith('.mov') ||
+            url.toLowerCase().endsWith('.webm') ? "video" : "image"
         }));
-        
+
         // Combine and sort
         const sortedUrls = [...existingUrls, ...uploadedFiles]
           .sort((a, b) => (a.type === "video" ? 1 : -1))
           .map((item) => item.url);
-  
+
         setImgUrls(sortedUrls);
         console.log("Sorted Uploaded Image URLs:", sortedUrls);
         setImageLoader(false);
@@ -139,6 +140,7 @@ function CreatePost() {
         ParentReason: getValues('ParentReason'),
         HelpChild: getValues('HelpChild'),
         price: getValues('productPrice'),
+        createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
         imgUrl: imgUrls
       });
       console.log("Document written with ID: ", docRef.id);
@@ -185,12 +187,13 @@ function CreatePost() {
     }
   };
   const getProducts = async () => {
-    const q = query(collection(db, 'activitysheets'));
+    const q = query(collection(db, 'activitysheets'),
+      orderBy("createdAt", "desc"));
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-    
+
     setProducts(dataArray)
 
   }
@@ -343,7 +346,7 @@ function CreatePost() {
                       if (value[i].size > 10 * 1024 * 1024) { // Increased limit to 10MB
                         return "Each file must be smaller than 10MB";
                       }
-                      
+
                     }
                     return true;
                   },
@@ -406,10 +409,10 @@ function CreatePost() {
 
             </Grid>
             <Grid container>
-            {imgUrls?.length > 0 && <InputLabel sx={{ textTransform: "capitalize", textAlign: 'left', fontWeight: 700, display: 'block', mb: 3, mt: 3 }}>
+              {imgUrls?.length > 0 && <InputLabel sx={{ textTransform: "capitalize", textAlign: 'left', fontWeight: 700, display: 'block', mb: 3, mt: 3 }}>
 
-              Media :
-            </InputLabel>}
+                Media :
+              </InputLabel>}
             </Grid>
             <Grid container>
 

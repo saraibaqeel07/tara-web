@@ -4,7 +4,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Box, Button, Grid, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, InputLabel, Typography, CircularProgress, IconButton } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc, updateDoc, orderBy } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { Bounce, toast } from 'react-toastify';
@@ -17,6 +17,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CloseIcon from "@mui/icons-material/Close";
+import moment from 'moment/moment';
 
 
 function CreatePost() {
@@ -138,6 +139,7 @@ function CreatePost() {
         ParentReason: getValues('ParentReason'),
         HelpChild: getValues('HelpChild'),
         price: getValues('productPrice'),
+        createdAt:moment().format('YYYY-MM-DD HH:mm:ss'),
         imgUrl: imgUrls
       });
       console.log("Document written with ID: ", docRef.id);
@@ -184,14 +186,16 @@ function CreatePost() {
     }
   };
   const getProducts = async () => {
-    const q = query(collection(db, "products"));
-
+    // Order by any existing field that might indicate recency
+    const q = query(
+      collection(db, "products"), 
+      orderBy("createdAt", "desc") // Assuming document IDs have some chronological order
+    );
+  
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
     
-    setProducts(dataArray)
-
+    setProducts(dataArray);
   }
 
   const handleDelete = async (id) => {

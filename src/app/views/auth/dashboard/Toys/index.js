@@ -4,7 +4,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Box, Button, Grid, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, InputLabel, Typography, CircularProgress, IconButton } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc, getDocs, query, where, deleteDoc, updateDoc, orderBy } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { Bounce, toast } from 'react-toastify';
@@ -17,6 +17,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CloseIcon from "@mui/icons-material/Close";
+import moment from 'moment';
 
 
 function Toys() {
@@ -137,7 +138,7 @@ console.log(watch());
         subHeading: getValues('description'),
         // Pages: getValues('Pages'),
         AgeGroup: getValues('AgeGroup'),
-       
+        createdAt:moment().format('YYYY-MM-DD HH:mm:ss'),
         price: getValues('productPrice'),
         imgUrl: imgUrls
       });
@@ -189,7 +190,8 @@ console.log(watch());
     }
   };
   const getProducts = async () => {
-    const q = query(collection(db, "Toys"));
+    const q = query(collection(db, "Toys"), 
+    orderBy("createdAt", "desc") );
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
