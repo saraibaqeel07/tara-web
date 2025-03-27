@@ -570,7 +570,7 @@ function Shop() {
 
   const getProducts = async () => {
     const q = query(collection(db, "products"), 
-    orderBy("createdAt", "desc") );
+    orderBy("createdAt", "asc") );
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map((doc) => ({
@@ -603,7 +603,7 @@ function Shop() {
 
   const getColoringSheets = async () => {
     const q = query(collection(db, "coloringsheets"), 
-    orderBy("createdAt", "desc") );
+    orderBy("createdAt", "asc") );
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map((doc) => ({
@@ -621,7 +621,7 @@ function Shop() {
 
   const getExtrasheets = async () => {
     const q = query(collection(db, "extra"), 
-    orderBy("createdAt", "desc") );
+    orderBy("createdAt", "asc") );
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map((doc) => ({
@@ -636,7 +636,7 @@ function Shop() {
   };
   const getToys = async () => {
     const q = query(collection(db, "Toys"), 
-    orderBy("createdAt", "desc") );
+    orderBy("createdAt", "asc") );
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map((doc) => ({
@@ -652,7 +652,7 @@ function Shop() {
   };
   const getGeneralToys = async () => {
     const q = query(collection(db, "GeneralToys"), 
-    orderBy("createdAt", "desc") );
+    orderBy("createdAt", "asc") );
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map((doc) => ({
