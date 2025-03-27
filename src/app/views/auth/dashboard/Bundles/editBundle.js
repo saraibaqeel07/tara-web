@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Box, Button, Grid, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, InputLabel, Typography, CircularProgress, IconButton, FormControl, Select, OutlinedInput, MenuItem, Checkbox, ListItemText, FormHelperText } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
@@ -17,7 +17,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CloseIcon from "@mui/icons-material/Close";
-import moment from 'moment';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -44,7 +43,7 @@ const names = [
 ];
 
 
-function Bundles() {
+function EditBundle() {
     const [imgUrls, setImgUrls] = useState([]);
     const [previewImages, setPreviewImages] = useState([]);
     const [personName, setPersonName] = React.useState([]);
@@ -79,11 +78,13 @@ function Bundles() {
         });
     };
 
-
+    const { state } = useLocation()
+    const { id } = useParams()
     const {
         register,
         handleSubmit,
         getValues,
+        setValue,
         formState: { errors },
         control,
         reset,
@@ -150,39 +151,39 @@ function Bundles() {
         setImageLoader(true);
         const files = Array.from(e.target.files);
         if (!files.length) return;
-      
+
         setImage(files.map((file) => URL.createObjectURL(file))); // Local preview
-      
+
         const uploadPromises = files.map(async (file) => {
-          const storageRef = ref(storage, `uploads/${file.name}`);
-          const snapshot = await uploadBytes(storageRef, file);
-          const url = await getDownloadURL(snapshot.ref);
-          return { url, type: file.type.startsWith("video/") ? "video" : "image" };
+            const storageRef = ref(storage, `uploads/${file.name}`);
+            const snapshot = await uploadBytes(storageRef, file);
+            const url = await getDownloadURL(snapshot.ref);
+            return { url, type: file.type.startsWith("video/") ? "video" : "image" };
         });
-      
+
         Promise.all(uploadPromises)
-          .then((uploadedFiles) => {
-            // Convert existing imgUrls to objects with url and type properties
-            const existingUrls = imgUrls.map(url => ({
-              url,
-              // Determine type based on file extension or set default to "image"
-              type: url.toLowerCase().endsWith('.mp4') || 
-                    url.toLowerCase().endsWith('.mov') || 
-                    url.toLowerCase().endsWith('.webm') ? "video" : "image"
-            }));
-            
-            // Combine and sort
-            const sortedUrls = [...existingUrls, ...uploadedFiles]
-              .sort((a, b) => (a.type === "video" ? 1 : -1))
-              .map((item) => item.url);
-      
-            setImgUrls(sortedUrls);
-            console.log("Sorted Uploaded Image URLs:", sortedUrls);
-            setImageLoader(false);
-          })
-          .catch((error) => console.error("Error uploading files:", error));
-      };
-    
+            .then((uploadedFiles) => {
+                // Convert existing imgUrls to objects with url and type properties
+                const existingUrls = imgUrls.map(url => ({
+                    url,
+                    // Determine type based on file extension or set default to "image"
+                    type: url.toLowerCase().endsWith('.mp4') ||
+                        url.toLowerCase().endsWith('.mov') ||
+                        url.toLowerCase().endsWith('.webm') ? "video" : "image"
+                }));
+
+                // Combine and sort
+                const sortedUrls = [...existingUrls, ...uploadedFiles]
+                    .sort((a, b) => (a.type === "video" ? 1 : -1))
+                    .map((item) => item.url);
+
+                setImgUrls(sortedUrls);
+                console.log("Sorted Uploaded Image URLs:", sortedUrls);
+                setImageLoader(false);
+            })
+            .catch((error) => console.error("Error uploading files:", error));
+    };
+
 
     console.log(watch(), 'watch');
     const addProduct = async (formData) => {
@@ -199,9 +200,8 @@ function Bundles() {
                 // Pages: getValues('Pages'),
                 AgeGroup: getValues('AgeGroup'),
                 type: 'bundle',
-                cat: formData?.cat,
                 price: getValues('productPrice'),
-                  createdAt:moment().format('YYYY-MM-DD HH:mm:ss'),
+                cat: formData?.cat,
                 imgUrl: imgUrls,
                 products: selectedList
             });
@@ -227,16 +227,24 @@ function Bundles() {
         setImgUrls(prevImages => prevImages.filter((_, i) => i !== index));
     };
 
-    const editProduct = async (id) => {
+    const editProduct = async (formData) => {
 
         try {
 
-            const productRef = doc(db, 'Bundles', tableId);
+            const productRef = doc(db, 'Bundles', id);
 
             // Update the product fields
             await updateDoc(productRef, {
 
-                price: modalValue,  // Update the product price
+                name: getValues('productName'),
+                subHeading: getValues('description'),
+                // Pages: getValues('Pages'),
+                AgeGroup: getValues('AgeGroup'),
+                type: 'bundle',
+                price: getValues('productPrice'),
+                cat: formData?.cat,
+                imgUrl: imgUrls,
+                products: selectedList
 
             })
                 .then(() => {
@@ -275,13 +283,15 @@ function Bundles() {
         console.log("All products:", allProducts);
         return allProducts;
     };
+        // Watch the current selected value
+        const selectedValue = watch("cat", "products"); 
     const getProducts = async () => {
         const q = query(collection(db, "Bundles"));
 
         const querySnapshot = await getDocs(q);
         const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        
+
         setProducts(dataArray)
 
     }
@@ -311,6 +321,25 @@ function Bundles() {
         }
         getAllProducts()
         getProducts()
+
+    }, [])
+
+    useEffect(() => {
+        console.log(state);
+        if (state) {
+            setValue('productName', state?.name)
+            setValue('subHeading', state?.subHeading)
+            setValue('productPrice', state?.price)
+            setValue('Pages', state?.Pages)
+            setValue('AgeGroup', state?.AgeGroup)
+            setValue('ParentReason', state?.ParentReason)
+            setValue('HelpChild', state?.HelpChild)
+            setValue('cat', state?.cat)
+            setValue('description', state?.subHeading)
+            setImgUrls(state?.imgUrl)
+            setSelectedList(state?.products)
+            setValue("media", { shouldValidate: true });
+        }
 
     }, [])
     return (
@@ -368,7 +397,7 @@ function Bundles() {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Box component={'form'} onSubmit={handleSubmit(addProduct)} sx={{ width: "90%", margin: '0 auto', mt: 10 }}>
+            <Box component={'form'} onSubmit={handleSubmit(editProduct)} sx={{ width: "90%", margin: '0 auto', mt: 10 }}>
 
                 <Grid container spacing={2}>
                     <Grid item xs={4} mt={2}>
@@ -396,20 +425,24 @@ function Bundles() {
 
                     <Grid item xs={4}>
                         <FormControl fullWidth size="small" required error={!!errors.description}>
-                            <InputLabel id="description-select-label">Categories</InputLabel>
+                            <InputLabel id="description-select-label">Category</InputLabel>
                             <Select
                                 labelId="description-select-label"
                                 id="description-select"
-                                {...register('cat', { required: 'required' })}
+                                value={selectedValue} // ✅ Controlled component
+                                {...register("cat", {
+                                    required: "Category is required",
+                                    onChange: (e) => setValue("cat", e.target.value), // ✅ onChange inside register
+                                })}
                                 label="Category"
                                 sx={{ color: 'black' }}
                             >
                                 <MenuItem sx={{ color: 'black' }} value="products">Books</MenuItem>
-                                <MenuItem sx={{ color: 'black' }} value="coloringsheets">Coloring Sheets </MenuItem>
-                                <MenuItem sx={{ color: 'black' }} value="activitysheets">Activity Sheets </MenuItem>
-                                <MenuItem sx={{ color: 'black' }} value="extra">Extra </MenuItem>
-                                <MenuItem sx={{ color: 'black' }} value="Toys">Toys </MenuItem>
-                                <MenuItem sx={{ color: 'black' }} value="GeneralToys">General Toys </MenuItem>
+                                <MenuItem sx={{ color: 'black' }} value="coloringsheets">Coloring Sheets</MenuItem>
+                                <MenuItem sx={{ color: 'black' }} value="activitysheets">Activity Sheets</MenuItem>
+                                <MenuItem sx={{ color: 'black' }} value="extra">Extra</MenuItem>
+                                <MenuItem sx={{ color: 'black' }} value="Toys">Toys</MenuItem>
+                                <MenuItem sx={{ color: 'black' }} value="GeneralToys">General Toys</MenuItem>
                             </Select>
                             <FormHelperText>{errors.description ? 'Description is required' : ''}</FormHelperText>
                         </FormControl>
@@ -610,7 +643,7 @@ function Bundles() {
                 </Grid>
 
                 <Grid container xs={9} mt={5} justifyContent={'flex-end'} >
-                    <Button type='submit' variant="contained">Add</Button>
+                    <Button type='submit' variant="contained">Update</Button>
 
                 </Grid>
             </Box>
@@ -659,4 +692,4 @@ function Bundles() {
     )
 }
 
-export default Bundles
+export default EditBundle

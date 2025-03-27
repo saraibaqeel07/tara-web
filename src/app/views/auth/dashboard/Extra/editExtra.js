@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Box, Button, Grid, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, InputLabel, Typography, CircularProgress, IconButton } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
@@ -17,15 +17,18 @@ import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CloseIcon from "@mui/icons-material/Close";
-import moment from 'moment';
+import moment from 'moment/moment';
 
 
-function Toys() {
+function EditExtra() {
   const [imgUrls, setImgUrls] = useState([]);
+  const [imageLoader, setImageLoader] = useState(false)
   const [previewImages, setPreviewImages] = useState([]);
+  const {state} = useLocation()
   const {
     register,
     handleSubmit,
+    setValue,
     getValues,
     formState: { errors },
     control,
@@ -49,7 +52,6 @@ function Toys() {
   const db = getFirestore(app);
   const [open, setOpen] = React.useState(false);
   const [modalValue, setModalValue] = useState()
-  const [imageLoader, setImageLoader] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -67,7 +69,7 @@ function Toys() {
   };
 
   const navigate = useNavigate();
-
+const {id} = useParams()
   const auth = getAuth();
   const storage = getStorage();
   const storageRef = ref(storage, 'images' + Math.random());
@@ -85,7 +87,6 @@ function Toys() {
   const handleClose = () => {
     setOpen1(false);
   };
-
   const handleImageChange = (e) => {
     setImageLoader(true);
     const files = Array.from(e.target.files);
@@ -124,7 +125,6 @@ function Toys() {
   };
 
 
-
   console.log(watch(), 'watch');
   const addProduct = async () => {
 
@@ -133,13 +133,15 @@ function Toys() {
     try {
 
       // Add a new document with a generated id.
-      const docRef = await addDoc(collection(db, "GeneralToys"), {
+      const docRef = await addDoc(collection(db, "products"), {
         name: getValues('productName'),
-        subHeading: getValues('description'),
-        // Pages: getValues('Pages'),
+        subHeading: getValues('subHeading'),
+        Pages: getValues('Pages'),
         AgeGroup: getValues('AgeGroup'),
-        createdAt:moment().format('YYYY-MM-DD HH:mm:ss'),
+        ParentReason: getValues('ParentReason'),
+        HelpChild: getValues('HelpChild'),
         price: getValues('productPrice'),
+        createdAt:moment().format('YYYY-MM-DD HH:mm:ss'),
         imgUrl: imgUrls
       });
       console.log("Document written with ID: ", docRef.id);
@@ -160,24 +162,28 @@ function Toys() {
 
   };
 
-  const handleRemoveImage = (index) => {
-    setImgUrls(prevImages => prevImages.filter((_, i) => i !== index));
-  };
-
-  const editProduct = async (id) => {
+  const editProduct = async () => {
 
     try {
 
-      const productRef = doc(db, 'Toys', tableId);
+      const productRef = doc(db, 'extra', id);
 
       // Update the product fields
       await updateDoc(productRef, {
-
-        price: modalValue,  // Update the product price
+        name: getValues('productName'),
+        subHeading: getValues('subHeading'),
+        Pages: getValues('Pages'),
+        AgeGroup: getValues('AgeGroup'),
+        ParentReason: getValues('ParentReason'),
+        HelpChild: getValues('HelpChild'),
+        price: getValues('productPrice'),
+    
+        imgUrl: imgUrls
 
       })
         .then(() => {
-          console.log("Document successfully updated!");
+          SuccessToaster("Document successfully updated!");
+          navigate('/admin/create-post')
           getProducts()
           handleClose()
         })
@@ -190,27 +196,31 @@ function Toys() {
     }
   };
   const getProducts = async () => {
-    const q = query(collection(db, "GeneralToys"), 
-    orderBy("createdAt", "asc") );
-
+    // Order by any existing field that might indicate recency
+    const q = query(
+      collection(db, "products"), 
+      orderBy("createdAt", "asc") // Assuming document IDs have some chronological order
+    );
+  
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
     
-    setProducts(dataArray)
-
+    setProducts(dataArray);
   }
 
   const handleDelete = async (id) => {
     console.log(id);
     console.log(tableId);
-    let result = await deleteDoc(doc(db, "GeneralToys", tableId));
+    let result = await deleteDoc(doc(db, "products", tableId));
     console.log(result);
     SuccessToaster('Product Deleted Successfully')
     setOpen(false)
     getProducts()
 
   }
+  const handleRemoveImage = (index) => {
+    setImgUrls(prevImages => prevImages.filter((_, i) => i !== index));
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -228,6 +238,23 @@ function Toys() {
     getProducts()
 
   }, [])
+
+  useEffect(() => {
+    console.log(state);
+    if(state){
+        setValue('productName',state?.name)
+        setValue('subHeading',state?.subHeading)
+        setValue('productPrice',state?.price)
+        setValue('Pages',state?.Pages)
+        setValue('AgeGroup',state?.AgeGroup)
+        setValue('ParentReason',state?.ParentReason)
+        setValue('HelpChild',state?.HelpChild)
+        setImgUrls(state?.imgUrl)
+        setValue("media", { shouldValidate: true });
+    }
+    
+  }, [])
+  
   return (
     <Box>
       <Dialog
@@ -283,38 +310,49 @@ function Toys() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Box component={'form'} onSubmit={handleSubmit(addProduct)} sx={{ width: "90%", margin: '0 auto', mt: 10 }}>
+      <Box component={'form'} onSubmit={handleSubmit(editProduct)} sx={{ width: "90%", margin: '0 auto', mt: 10 }}>
 
         <Grid container spacing={2}>
-          <Grid item xs={4} mt={2}>
+          <Grid item xs={6}>
 
             <TextField inputProps={{ sx: { color: 'black !important' } }} sx={{ color: 'black' }} fullWidth {...register('productName', { required: true })} error={!!errors.productName}
-              helperText={errors.productName ? "Product name is required" : ""} size='small' id="outlined-basic" label="Toy Name" variant="outlined" />
+              helperText={errors.productName ? "Product name is required" : ""} size='small' id="outlined-basic" label="Book Name" variant="outlined" />
           </Grid>
+          <Grid item xs={6} >
 
+            <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('subHeading', { required: true })} error={!!errors.subHeading}
+              helperText={errors.subHeading ? "sub heading is required" : ""} size='small' multiline id="outlined-basic" label="Sub Heading" variant="outlined" />
+          </Grid>
 
           <Grid item xs={4} mt={2}>
 
             <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('productPrice', { required: true })} error={!!errors.productPrice} type='number'
-              helperText={errors.productPrice ? "Product price is required" : ""} size='small' id="outlined-basic" label="Toy Price" variant="outlined" />
+              helperText={errors.productPrice ? "Product price is required" : ""} size='small' id="outlined-basic" label="Book Price" variant="outlined" />
           </Grid>
-          {/* <Grid item xs={4} mt={2}>
+          <Grid item xs={4} mt={2}>
 
             <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('Pages', { required: true })} error={!!errors.Pages} type='number'
               helperText={errors.Pages ? "Pages is required" : ""} size='small' id="outlined-basic" label="No of Pages" variant="outlined" />
-          </Grid> */}
+          </Grid>
           <Grid item xs={4} mt={2}>
 
             <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth className='text-color' sx={{ color: 'black' }}  {...register('AgeGroup', { required: true })} error={!!errors.AgeGroup} type='text'
               helperText={errors.AgeGroup ? "Age Group is required" : ""} size='small' id="outlined-basic" label="Age Group" variant="outlined" />
           </Grid>
-          <Grid item xs={6} >
+          <Grid item xs={12} >
+            <Grid container spacing={2}>
+              <Grid item xs={6} mt={2}>
 
-            <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('description', { required: true })} error={!!errors.subHeading}
-              helperText={errors.subHeading ? "description is required" : ""} size='small' multiline id="outlined-basic" label="Description" variant="outlined" />
+                <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('ParentReason', { required: true })} error={!!errors.ParentReason}
+                  helperText={errors.ParentReason ? "Parent Reason is required" : ""} size='small' multiline id="outlined-basic" label="Why Parent's Love it" variant="outlined" />
+              </Grid>
+              <Grid item xs={6} mt={2}>
+
+                <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('HelpChild', { required: true })} error={!!errors.HelpChild}
+                  helperText={errors.HelpChild ? "help child is required" : ""} size='small' multiline id="outlined-basic" label="How it help's children" variant="outlined" />
+              </Grid>
+            </Grid>
           </Grid>
-          
-
           <Grid container m={2} >
             <Grid item xs={12} sm={5}>
               <InputLabel sx={{ textTransform: "capitalize", textAlign: 'left', fontWeight: 700, display: 'block', mb: 2 }}>
@@ -474,64 +512,16 @@ function Toys() {
 
 
 
-
         </Grid>
 
         <Grid container xs={9} mt={5} justifyContent={'flex-end'} >
-          <Button type='submit' variant="contained">Add</Button>
+          <Button type='submit' variant="contained">Update</Button>
 
         </Grid>
       </Box>
-      <TableContainer component={Paper} sx={{ color: 'black !important', mt: 5, mb: 5, height: '500px', overflowY: 'scroll' }}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead sx={{ color: 'black !important' }}>
-            <TableRow>
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Sr.</TableCell>
 
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }}>Name</TableCell>
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Price</TableCell>
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Picture</TableCell>
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {products?.map((item, index) => (
-              <TableRow
-                key={index}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} component="th" scope="row">
-                  {index + 1}
-                </TableCell>
-
-                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.name}</TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.price}</TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >
-
-                  <Box component={'img'} src={item?.imgUrl} sx={{ width: '80px', textAlign: 'center' }} >
-
-                  </Box>
-                </TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => {
-                    if(item?.type == 'bundle'){
-                      navigate(`/admin/edit-bundle/${item?.id}`,{state:item})
-                    }
-                    else{
-                      navigate(`/admin/edit-generaltoys/${item?.id}`,{state:item});
-                    }
-                  setModalValue(item?.price); setTableId(item?.id) }} >Edit</span></TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => {
-                  setOpen(true)
-                  setTableId(item?.id)
-                }} >Delete</span></TableCell>
-
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
     </Box>
   )
 }
 
-export default Toys
+export default EditExtra

@@ -189,11 +189,12 @@ function CreatePost() {
     // Order by any existing field that might indicate recency
     const q = query(
       collection(db, "products"), 
-      orderBy("createdAt", "desc") // Assuming document IDs have some chronological order
+      orderBy("createdAt", "asc") // Assuming document IDs have some chronological order
     );
   
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    console.log(dataArray);
     
     setProducts(dataArray);
   }
@@ -522,7 +523,15 @@ function CreatePost() {
 
                   </Box>
                 </TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => { setOpen1(true); setModalValue(item?.price); setTableId(item?.id) }} >Edit</span></TableCell>
+                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => { 
+                  
+                  if(item?.type == 'bundle'){
+                    navigate(`/admin/edit-bundle/${item?.id}`,{state:item})
+                  }
+                  else{
+                    navigate(`/admin/update-post/${item?.id}`,{state:item}); 
+                  }
+                  setModalValue(item?.price); setTableId(item?.id) }} >Edit</span></TableCell>
                 <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => {
                   setOpen(true)
                   setTableId(item?.id)

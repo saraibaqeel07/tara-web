@@ -188,7 +188,7 @@ function CreatePost() {
   };
   const getProducts = async () => {
     const q = query(collection(db, 'activitysheets'),
-      orderBy("createdAt", "desc"));
+      orderBy("createdAt", "asc"));
 
     const querySnapshot = await getDocs(q);
     const dataArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -522,7 +522,14 @@ function CreatePost() {
 
                   </Box>
                 </TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => { setOpen1(true); setModalValue(item?.price); setTableId(item?.id) }} >Edit</span></TableCell>
+                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => { 
+                    if(item?.type == 'bundle'){
+                      navigate(`/admin/edit-bundle/${item?.id}`,{state:item})
+                    }
+                    else{
+                      navigate(`/admin/edit-activitysheet/${item?.id}`,{state:item});
+                    }
+                   setModalValue(item?.price); setTableId(item?.id) }} >Edit</span></TableCell>
                 <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => {
                   setOpen(true)
                   setTableId(item?.id)

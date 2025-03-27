@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Box, Button, Grid, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, InputLabel, Typography, CircularProgress, IconButton } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
@@ -20,18 +20,22 @@ import CloseIcon from "@mui/icons-material/Close";
 import moment from 'moment';
 
 
-function Toys() {
+function EditGeneralToys() {
+    const {state}=useLocation()
   const [imgUrls, setImgUrls] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
     control,
     reset,
     watch
   } = useForm();
+console.log(watch());
+const {id}=useParams()
 
   const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 }, control: control2 } = useForm();
 
@@ -124,7 +128,6 @@ function Toys() {
   };
 
 
-
   console.log(watch(), 'watch');
   const addProduct = async () => {
 
@@ -133,7 +136,7 @@ function Toys() {
     try {
 
       // Add a new document with a generated id.
-      const docRef = await addDoc(collection(db, "GeneralToys"), {
+      const docRef = await addDoc(collection(db, "Toys"), {
         name: getValues('productName'),
         subHeading: getValues('description'),
         // Pages: getValues('Pages'),
@@ -164,16 +167,22 @@ function Toys() {
     setImgUrls(prevImages => prevImages.filter((_, i) => i !== index));
   };
 
-  const editProduct = async (id) => {
+  const editProduct = async () => {
 
     try {
 
-      const productRef = doc(db, 'Toys', tableId);
+      const productRef = doc(db, 'GeneralToys', id);
 
       // Update the product fields
       await updateDoc(productRef, {
 
-        price: modalValue,  // Update the product price
+        name: getValues('productName'),
+        subHeading: getValues('description'),
+        // Pages: getValues('Pages'),
+        AgeGroup: getValues('AgeGroup'),
+       
+        price: getValues('productPrice'),
+        imgUrl: imgUrls
 
       })
         .then(() => {
@@ -190,7 +199,7 @@ function Toys() {
     }
   };
   const getProducts = async () => {
-    const q = query(collection(db, "GeneralToys"), 
+    const q = query(collection(db, "Toys"), 
     orderBy("createdAt", "asc") );
 
     const querySnapshot = await getDocs(q);
@@ -204,7 +213,7 @@ function Toys() {
   const handleDelete = async (id) => {
     console.log(id);
     console.log(tableId);
-    let result = await deleteDoc(doc(db, "GeneralToys", tableId));
+    let result = await deleteDoc(doc(db, "Toys", tableId));
     console.log(result);
     SuccessToaster('Product Deleted Successfully')
     setOpen(false)
@@ -228,6 +237,21 @@ function Toys() {
     getProducts()
 
   }, [])
+  useEffect(() => {
+      console.log(state);
+      if(state){
+          setValue('productName',state?.name)
+          setValue('subHeading',state?.subHeading)
+          setValue('productPrice',state?.price)
+          setValue('Pages',state?.Pages)
+          setValue('AgeGroup',state?.AgeGroup)
+          setValue('ParentReason',state?.ParentReason)
+          setValue('HelpChild',state?.HelpChild)
+          setImgUrls(state?.imgUrl)
+          setValue("media", { shouldValidate: true });
+      }
+      
+    }, [])
   return (
     <Box>
       <Dialog
@@ -283,7 +307,7 @@ function Toys() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Box component={'form'} onSubmit={handleSubmit(addProduct)} sx={{ width: "90%", margin: '0 auto', mt: 10 }}>
+      <Box component={'form'} onSubmit={handleSubmit(editProduct)} sx={{ width: "90%", margin: '0 auto', mt: 10 }}>
 
         <Grid container spacing={2}>
           <Grid item xs={4} mt={2}>
@@ -313,164 +337,164 @@ function Toys() {
             <TextField inputProps={{ sx: { color: 'black !important' } }} fullWidth rows={4} sx={{ color: 'black' }}  {...register('description', { required: true })} error={!!errors.subHeading}
               helperText={errors.subHeading ? "description is required" : ""} size='small' multiline id="outlined-basic" label="Description" variant="outlined" />
           </Grid>
-          
+      
 
-          <Grid container m={2} >
-            <Grid item xs={12} sm={5}>
-              <InputLabel sx={{ textTransform: "capitalize", textAlign: 'left', fontWeight: 700, display: 'block', mb: 2 }}>
-
-                Upload  Media :*
-              </InputLabel>
-
-              <Controller
-                name="media"
-                control={control}
-                rules={{
-                  required: "At least one media file is required",
-                  validate: (value) => {
-                    if (!value || value.length === 0) {
-                      return "At least one media file is required";
-                    }
-                    for (let i = 0; i < value.length; i++) {
-                      if (value[i].size > 10 * 1024 * 1024) { // Increased limit to 10MB
-                        return "Each file must be smaller than 10MB";
-                      }
-                      
-                    }
-                    return true;
-                  },
-                }}
-                render={({ field: { onChange } }) => (
-                  <>
-                    <Box
-                      sx={{
-                        border: "2px dashed #0EA5EA",
-                        borderRadius: "8px",
-                        padding: "20px",
-                        textAlign: "center",
-                        cursor: "pointer",
-                        backgroundColor: "#f9f9f9",
-                        height: '135px',
-                        "&:hover": { backgroundColor: "#eef7ff" },
-                      }}
-                      onClick={() => document.getElementById("upload-media").click()}
-                    >
-                      {!imageLoader ? (
-                        <>
-                          <input
-                            type="file"
-                            accept="image/*,audio/*,video/*"
-                            multiple
-                            style={{ display: "none" }}
-                            id="upload-media"
-                            onChange={(e) => {
-                              const files = Array.from(e.target.files);
-                              onChange(files); // Update react-hook-form
-                              handleImageChange(e); // Handle upload logic
-                            }}
-                          />
-                          <CloudUploadIcon sx={{ fontSize: 40, color: "#0EA5EA" }} />
-                          <Typography variant="body1" sx={{ color: "#333", mt: 1 }}>
-                            Drag & drop or click to upload media
-                          </Typography>
-                          <Typography variant="caption" sx={{ color: "#666" }}>
-                            Allowed: Images and Videos (Max 10MB per file)
-                          </Typography>
-                        </>
-                      ) : (
-                        <CircularProgress size={90} />
-                      )}
-                    </Box>
-
-                    {errors.media && (
-                      <Typography color="error" variant="body2" sx={{ mt: 1 }}>
-                        {errors.media.message}
-                      </Typography>
-                    )}
-                  </>
-                )}
-              />
-
-
-
-
-
-
-            </Grid>
-            <Grid container>
-            {imgUrls?.length > 0 && <InputLabel sx={{ textTransform: "capitalize", textAlign: 'left', fontWeight: 700, display: 'block', mb: 3, mt: 3 }}>
-
-              Media :
-            </InputLabel>}
-            </Grid>
-            <Grid container>
-
-
-
-              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                {imgUrls?.length > 0 ? (
-                  imgUrls.map((file, index) => {
-                    const isVideo = file?.includes(".mp4") || file?.includes(".mov") || file?.includes(".avi") || file?.includes(".webm");
-
-                    return (
-                      <Box key={index} sx={{ position: "relative", display: "inline-block", mt: 1 }}>
-                        {/* Image or Video */}
-                        {isVideo ? (
-                          <video
-                            width="300px"
-                            height="200px"
-                            controls
-                            style={{ borderRadius: "5px", objectFit: "cover" }}
-                          >
-                            <source src={file} type="video/mp4" />
-                            Your browser does not support the video tag.
-                          </video>
-                        ) : (
-                          <img
-                            className="rounded"
-                            src={file}
-                            width="300px"
-                            height="200px"
-                            alt={`media-${index}`}
-                            style={{ borderRadius: "5px", objectFit: "cover" }}
-                          />
-                        )}
-
-                        {/* Remove Button */}
-                        <Box
-                          sx={{
-                            position: "absolute",
-                            top: 5,
-                            right: 5,
-                          }}
-                        >
-                          <IconButton
-                            onClick={() => handleRemoveImage(index)}
-                            sx={{
-                              backgroundColor: "rgba(0,0,0,0.6)",
-                              color: "#fff",
-                              "&:hover": { backgroundColor: "red" },
-                              width: 10,
-                              height: 10,
-                              borderRadius: "50%",
-                              display: "flex",
-                              alignItems: "center",
-                              p: 2,
-                            }}
-                          >
-                            <CloseIcon />
-                          </IconButton>
-                        </Box>
-                      </Box>
-                    );
-                  })
-                ) : (
-                  <p></p>
-                )}
-              </Box>
-            </Grid>
-
-          </Grid>
+            <Grid container m={2} >
+                     <Grid item xs={12} sm={5}>
+                       <InputLabel sx={{ textTransform: "capitalize", textAlign: 'left', fontWeight: 700, display: 'block', mb: 2 }}>
+         
+                         Upload  Media :*
+                       </InputLabel>
+         
+                       <Controller
+                         name="media"
+                         control={control}
+                         rules={{
+                           required: "At least one media file is required",
+                           validate: (value) => {
+                             if (!value || value.length === 0) {
+                               return "At least one media file is required";
+                             }
+                             for (let i = 0; i < value.length; i++) {
+                               if (value[i].size > 10 * 1024 * 1024) { // Increased limit to 10MB
+                                 return "Each file must be smaller than 10MB";
+                               }
+                               
+                             }
+                             return true;
+                           },
+                         }}
+                         render={({ field: { onChange } }) => (
+                           <>
+                             <Box
+                               sx={{
+                                 border: "2px dashed #0EA5EA",
+                                 borderRadius: "8px",
+                                 padding: "20px",
+                                 textAlign: "center",
+                                 cursor: "pointer",
+                                 backgroundColor: "#f9f9f9",
+                                 height: '135px',
+                                 "&:hover": { backgroundColor: "#eef7ff" },
+                               }}
+                               onClick={() => document.getElementById("upload-media").click()}
+                             >
+                               {!imageLoader ? (
+                                 <>
+                                   <input
+                                     type="file"
+                                     accept="image/*,audio/*,video/*"
+                                     multiple
+                                     style={{ display: "none" }}
+                                     id="upload-media"
+                                     onChange={(e) => {
+                                       const files = Array.from(e.target.files);
+                                       onChange(files); // Update react-hook-form
+                                       handleImageChange(e); // Handle upload logic
+                                     }}
+                                   />
+                                   <CloudUploadIcon sx={{ fontSize: 40, color: "#0EA5EA" }} />
+                                   <Typography variant="body1" sx={{ color: "#333", mt: 1 }}>
+                                     Drag & drop or click to upload media
+                                   </Typography>
+                                   <Typography variant="caption" sx={{ color: "#666" }}>
+                                     Allowed: Images and Videos (Max 10MB per file)
+                                   </Typography>
+                                 </>
+                               ) : (
+                                 <CircularProgress size={90} />
+                               )}
+                             </Box>
+         
+                             {errors.media && (
+                               <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                                 {errors.media.message}
+                               </Typography>
+                             )}
+                           </>
+                         )}
+                       />
+         
+         
+         
+         
+         
+         
+                     </Grid>
+                     <Grid container>
+                     {imgUrls?.length > 0 && <InputLabel sx={{ textTransform: "capitalize", textAlign: 'left', fontWeight: 700, display: 'block', mb: 3, mt: 3 }}>
+         
+                       Media :
+                     </InputLabel>}
+                     </Grid>
+                     <Grid container>
+         
+         
+         
+                       <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                         {imgUrls?.length > 0 ? (
+                           imgUrls.map((file, index) => {
+                             const isVideo = file?.includes(".mp4") || file?.includes(".mov") || file?.includes(".avi") || file?.includes(".webm");
+         
+                             return (
+                               <Box key={index} sx={{ position: "relative", display: "inline-block", mt: 1 }}>
+                                 {/* Image or Video */}
+                                 {isVideo ? (
+                                   <video
+                                     width="300px"
+                                     height="200px"
+                                     controls
+                                     style={{ borderRadius: "5px", objectFit: "cover" }}
+                                   >
+                                     <source src={file} type="video/mp4" />
+                                     Your browser does not support the video tag.
+                                   </video>
+                                 ) : (
+                                   <img
+                                     className="rounded"
+                                     src={file}
+                                     width="300px"
+                                     height="200px"
+                                     alt={`media-${index}`}
+                                     style={{ borderRadius: "5px", objectFit: "cover" }}
+                                   />
+                                 )}
+         
+                                 {/* Remove Button */}
+                                 <Box
+                                   sx={{
+                                     position: "absolute",
+                                     top: 5,
+                                     right: 5,
+                                   }}
+                                 >
+                                   <IconButton
+                                     onClick={() => handleRemoveImage(index)}
+                                     sx={{
+                                       backgroundColor: "rgba(0,0,0,0.6)",
+                                       color: "#fff",
+                                       "&:hover": { backgroundColor: "red" },
+                                       width: 10,
+                                       height: 10,
+                                       borderRadius: "50%",
+                                       display: "flex",
+                                       alignItems: "center",
+                                       p: 2,
+                                     }}
+                                   >
+                                     <CloseIcon />
+                                   </IconButton>
+                                 </Box>
+                               </Box>
+                             );
+                           })
+                         ) : (
+                           <p></p>
+                         )}
+                       </Box>
+                     </Grid>
+         
+                   </Grid>
 
 
 
@@ -478,60 +502,13 @@ function Toys() {
         </Grid>
 
         <Grid container xs={9} mt={5} justifyContent={'flex-end'} >
-          <Button type='submit' variant="contained">Add</Button>
+          <Button type='submit' variant="contained">Update</Button>
 
         </Grid>
       </Box>
-      <TableContainer component={Paper} sx={{ color: 'black !important', mt: 5, mb: 5, height: '500px', overflowY: 'scroll' }}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead sx={{ color: 'black !important' }}>
-            <TableRow>
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Sr.</TableCell>
-
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }}>Name</TableCell>
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Price</TableCell>
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Picture</TableCell>
-              <TableCell sx={{ color: 'black !important', textAlign: 'center', fontWeight: 'bold' }} >Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {products?.map((item, index) => (
-              <TableRow
-                key={index}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} component="th" scope="row">
-                  {index + 1}
-                </TableCell>
-
-                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.name}</TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >{item?.price}</TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center' }} >
-
-                  <Box component={'img'} src={item?.imgUrl} sx={{ width: '80px', textAlign: 'center' }} >
-
-                  </Box>
-                </TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => {
-                    if(item?.type == 'bundle'){
-                      navigate(`/admin/edit-bundle/${item?.id}`,{state:item})
-                    }
-                    else{
-                      navigate(`/admin/edit-generaltoys/${item?.id}`,{state:item});
-                    }
-                  setModalValue(item?.price); setTableId(item?.id) }} >Edit</span></TableCell>
-                <TableCell sx={{ color: 'black !important', textAlign: 'center', cursor: 'pointer' }} > <span onClick={() => {
-                  setOpen(true)
-                  setTableId(item?.id)
-                }} >Delete</span></TableCell>
-
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+  
     </Box>
   )
 }
 
-export default Toys
+export default EditGeneralToys
